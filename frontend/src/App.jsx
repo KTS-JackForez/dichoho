@@ -11,6 +11,8 @@ import {
   Login,
   Register,
   NotFound,
+  Contact,
+  About,
 } from "./pages";
 function App() {
   const ProtectedRoute = ({ children }) => {
@@ -24,17 +26,21 @@ function App() {
       <Routes>
         <Route path="/">
           <Route index element={<Home />} />
-          <Route path="login" element={<Login />} />
           <Route path="news" element={<News />} />
-          <Route path="register" element={<Register />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="about" element={<About />} />
+          <Route path="products" element={<Products />} />
+
           {/* <Route
             path="dashboard/*"
             element={
               <ProtectedRoute>
-                <Layout />
+              <Layout />
               </ProtectedRoute>
             }
           /> */}
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
