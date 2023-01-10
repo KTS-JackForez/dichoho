@@ -19,7 +19,7 @@ const NotFound = () => {
         </div>
         <div className="grid grid-cols-2 gap-3 mt-4 font-semibold p-3">
           <button className="p-3 rounded border border-primary text-primary uppercase hover:bg-primary hover:text-white">
-            liên hệ chúng tôi
+            <Link to="/contact">liên hệ chúng tôi</Link>
           </button>
           <button className="p-3 rounded bg-primary text-white uppercase hover:bg-ktshover">
             <Link to="/">trang chủ</Link>
