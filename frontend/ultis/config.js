@@ -11,5 +11,6 @@ export const ktsConfig = {
     wokingTime: " 8h-17h30",
     phone: " (+84) 788 300 894",
     email: " ktscropvn@gmail.com",
+    copyRight: "Copyright 2022 © Thiết kế bởi Hoa Sen Đỏ",
   },
 };
