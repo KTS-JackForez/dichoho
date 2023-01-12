@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 //import routes
 import authRoute from "./routes/auth.js";
 import userRoute from "./routes/user.js";
+import productRoute from "./routes/product.js";
 //
 const app = express();
 dotenv.config();
@@ -33,6 +34,7 @@ app.use(cors());
 //routes
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
+app.use("/api/products", productRoute);
 
 //error handler
 app.use((err, req, res, next) => {
