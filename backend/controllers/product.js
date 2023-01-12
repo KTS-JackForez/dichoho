@@ -2,6 +2,17 @@ import { createError } from "../error.js";
 import Product from "../models/Product.js";
 const permission = ["admin", "staff"];
 //get tất cả products
+
+export const createProduct = async (req, res, next) => {
+  try {
+    const newProduct = new Product({ shopID: req.user.id, ...req.body });
+    await newProduct.save();
+    res.status(200).json("Tạo mới sản phẩm thành công");
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const getProducts = async (req, res, next) => {
   try {
     const products = await Product.find();

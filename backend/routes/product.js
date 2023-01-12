@@ -2,6 +2,7 @@ import express from "express";
 import {
   addLike,
   addTag,
+  createProduct,
   deleteProduct,
   getProduct,
   getProductByTag,
@@ -26,6 +27,7 @@ router.put("/:id", verifyToken, updateProduct);
 router.put("/:id", verifyToken, updatePrice);
 router.post("/addtag", verifyToken, addTag);
 router.post("/remove", verifyToken, removeTag);
+router.post("/", verifyToken, createProduct);
 router.delete("/:id", verifyToken, deleteProduct);
 
 export default router;
