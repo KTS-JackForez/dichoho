@@ -21,10 +21,10 @@ export const signup = async (req, res, next) => {
 export const signin = async (req, res, next) => {
   try {
     const user = await User.findOne({ username: req.body.username });
-    if (!user) return next(createError(404, "Sai tên đăng nhập hoặc mật khẩu"));
+    if (!user) return res.status(404).json("Sai tên đăng nhập hoặc mật khẩu");
     const checkPass = await bcrypt.compare(req.body.password, user.password);
     if (!checkPass)
-      return next(createError(400, "Sai tên đăng nhập hoặc mật khẩu"));
+      return res.status(404).json("Sai tên đăng nhập hoặc mật khẩu");
     const token = jwt.sign(
       { id: user._id, role: user.role },
       process.env.JWT_KEY,

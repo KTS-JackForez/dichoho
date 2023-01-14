@@ -6,7 +6,7 @@ import { setMsg } from "../redux/msgSlice";
 import ktsRequest from "../../ultis/ktsrequest";
 import { ToastContainer, toast } from "react-toastify";
 import { useSelector } from "react-redux";
-
+import axios from "axios";
 const Login = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -29,18 +29,20 @@ const Login = () => {
     dispatch(loginStart());
     try {
       const res = await ktsRequest.post("/auth/signin", {
-        name,
+        username: name,
         password,
       });
       dispatch(loginSuccess(res.data));
-      navigate("/dashboard");
+      navigate("/admin");
     } catch (err) {
       dispatch(loginFailure());
-      err.response
-        ? toast.error(err.response.data.message)
+      console.log(err);
+      err.response.status === 404
+        ? toast.error(err.response.data)
         : toast.error("Network Error!");
       <ToastContainer />;
     }
+    // if(name==="jackforez" && pass)
   };
   return (
     <div className="flex h-screen items-center bg-primary bg-cover bg-fixed bg-center bg-no-repeat">

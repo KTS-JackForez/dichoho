@@ -3,6 +3,8 @@ import reactLogo from "./assets/react.svg";
 import "./App.css";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Header, Footer, Navbar } from "./components";
+import "react-toastify/dist/ReactToastify.css";
+
 import {
   Home,
   News,
@@ -35,7 +37,7 @@ function App() {
             path="dashboard/*"
             element={
               <ProtectedRoute>
-              <Layout />
+                <Layout />
               </ProtectedRoute>
             }
           /> */}
