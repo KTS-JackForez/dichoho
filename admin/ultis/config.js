@@ -16,7 +16,6 @@ export const ktsConfig = {
 };
 export const dashboard = {
   navLinks: [
-    { title: "dashboard", path: "/admin/" },
     { title: "sản phẩm", path: "/admin/san-pham" },
     { title: "đơn hàng", path: "/admin/don-hang" },
     { title: "tài khoản", path: "/admin/tai-khoan" },

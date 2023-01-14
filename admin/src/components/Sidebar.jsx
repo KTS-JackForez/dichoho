@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { dashboard } from "../../ultis/config";
 import { logout } from "../redux/userSlice";
 
@@ -13,7 +13,11 @@ const Sidebar = () => {
     "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded text-xs text-gray-500 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2 font-semibold";
   return (
     <div className="border border-r-gray-300 h-screen w-72 px-3">
-      <h3 className="uppercase font-bold py-5 text-2xl">dashboard</h3>
+      <div className="py-6">
+        <Link className="uppercase font-bold text-2xl" to="/admin">
+          dashboard
+        </Link>
+      </div>
       <div className="flex flex-col gap-3 uppercase">
         {dashboard.navLinks.map((i, index) => {
           return (
@@ -30,6 +34,7 @@ const Sidebar = () => {
           );
         })}
         <button
+          className="flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded  border-primary border text-md m-2 font-semibold mt-12 hover:bg-primary hover:text-white uppercase "
           onClick={(e) => {
             e.preventDefault();
             dispatch(logout());
