@@ -6,6 +6,15 @@ export const ktsConfig = {
     { title: "tin tức", path: "/news" },
     { title: "liên hệ", path: "/contact" },
   ],
+  categories: [
+    { title: "Rau củ quả", query: "rau,cu,qua" },
+    { title: "Thịt cá trứng", query: "thit,ca,trung" },
+    { title: "Mì cháo phở", query: "mi,chao,pho" },
+    { title: "Đồ uống", query: "douong" },
+    { title: "Gia vị", query: "giavi" },
+    { title: "Đồ đông lạnh", query: "donglanh" },
+    { title: "Chế biến sẵn", query: "chebiensan" },
+  ],
   footer: {
     address: " 20C/75/213 Thiên Lôi",
     wokingTime: " 8h-17h30",

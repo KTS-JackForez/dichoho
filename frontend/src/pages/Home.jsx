@@ -1,10 +1,12 @@
 import React from "react";
-import { Navbar, Footer, Slider } from "../components";
+import { Navbar, Footer, Slider, Promotion, Category } from "../components";
 const Home = () => {
   return (
-    <div className="max-w-screen-xl mx-auto text-center">
+    <div className="h-screen relative">
+      <Promotion />
       <Navbar />
       <Slider />
+      <Category />
       <Footer />
     </div>
   );
