@@ -154,13 +154,13 @@ const Register = () => {
   };
 
   return (
-    <div className="flex h-screen items-center bg-primary bg-cover bg-fixed bg-center bg-no-repeat">
+    <div className="flex h-screen items-center bg-login bg-cover bg-fixed bg-center bg-no-repeat">
       <div className="mx-auto flex w-5/6 flex-col items-center justify-center px-6 py-8 md:h-screen md:w-4/6 lg:w-8/12 lg:py-0">
         <div className="w-full rounded-lg bg-white shadow sm:max-w-md md:mt-0 xl:p-0">
           <div className="space-y-4 p-6 sm:p-4 md:space-y-3">
             <div className="flex justify-center">
               {/* <img src={logo} className="mr-3 h-12" alt="ktscorp Logo" /> */}
-              <h3 className="uppercase font-bold">đăng nhập hệ thống</h3>
+              <h3 className="uppercase font-bold">đăng ký tài khoản</h3>
             </div>
             {/* content */}
             <div className=" flex flex-col gap-2">

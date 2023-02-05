@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       backgroundImage: {
         "not-found": "url('./assets/imgs/notfound.png')",
+        login: "url('./assets/imgs/login-min.jpg')",
       },
       colors: {
         primary: "#3da04d",

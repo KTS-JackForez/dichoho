@@ -12,6 +12,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const { currentUser } = useSelector((state) => state.user);
   const { currentMsg } = useSelector((state) => state.msg);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -27,27 +28,31 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     dispatch(loginStart());
+    setLoading(true);
     try {
       const res = await ktsRequest.post("/auth/signin", {
         username: name,
         password,
       });
       dispatch(loginSuccess(res.data));
+      setLoading(false);
       navigate("/admin");
     } catch (err) {
       dispatch(loginFailure());
-      console.log(err);
-      err.response.status === 404
+      setLoading(false);
+      err.response
         ? toast.error(err.response.data)
         : toast.error("Network Error!");
       <ToastContainer />;
     }
+
     // if(name==="jackforez" && pass)
   };
   return (
-    <div className="flex h-screen items-center bg-primary bg-cover bg-fixed bg-center bg-no-repeat">
+    // <div className="flex h-screen items-center bg-primary bg-cover bg-fixed bg-center bg-no-repeat">
+    <div className="bg-login bg-cover bg-fixed bg-center bg-no-repeat h-screen flex justify-center items-center">
       <div className="mx-auto flex w-full flex-col items-center justify-center px-6 py-8 md:h-screen md:w-4/6 lg:w-8/12 lg:py-0">
-        <div className="w-full rounded-lg bg-white shadow sm:max-w-md md:mt-0 xl:p-0">
+        <div className="w-full rounded-lg shadow sm:max-w-md md:mt-0 xl:p-0 bg-white">
           <div className="space-y-4 p-6 sm:p-8 md:space-y-6">
             <div className="flex justify-center">
               {/* <img src={logo} className="mr-3 h-8 lg:h-16" alt="ktscorp Logo" /> */}
@@ -79,10 +84,33 @@ const Login = () => {
 
               <button
                 type="submit"
-                className="w-full rounded bg-primary px-5 py-3 text-center text-sm font-medium text-white hover:bg-primary focus:outline-none focus:ring"
+                className="w-full rounded bg-primary px-5 py-3 text-center text-sm font-medium text-white hover:bg-green-700 focus:outline-none"
                 onClick={handleLogin}
               >
-                Đăng nhập
+                {loading ? (
+                  <svg
+                    class="h-5  w-5 animate-spin text-white mx-auto"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      class="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      stroke-width="4"
+                    ></circle>
+                    <path
+                      class="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                ) : (
+                  "Đăng nhập"
+                )}
               </button>
               <ToastContainer />
               <div className="flex items-center justify-between">
