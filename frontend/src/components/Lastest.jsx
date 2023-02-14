@@ -1,7 +1,7 @@
 import React from "react";
 import ItemCard from "./ItemCard";
-import logo from "../assets/imgs/logo.png";
-const ProductCat = (props) => {
+
+const Lastest = () => {
   return (
     <div className="w-full bottom-0 mt-1 py-2">
       <div className="max-w-screen-xl mx-auto">
@@ -11,9 +11,7 @@ const ProductCat = (props) => {
               src="https://green.web5phut.com/wp-content/themes/flatsome-child/images/icon_ns.png"
               alt=""
             />
-            <h3 className="uppercase font-semibold ">
-              {props.catTitle ? props.catTitle : "tiêu đề"}
-            </h3>
+            <h3 className="uppercase font-semibold ">mới nhất</h3>
           </div>
           <div className="flex items-center pr-4">
             Xem tất cả
@@ -34,13 +32,8 @@ const ProductCat = (props) => {
           </div>
         </div>
         <div className="gap-2 mx-auto grid grid-cols-2 md:grid-cols-5 justify-center grid-rows-2 p-3">
-          <div className="col-span-2 mx-auto">
-            <img
-              src={props.picCover}
-              alt=""
-              className="h-full object-contain "
-            />
-          </div>
+          <ItemCard />
+          <ItemCard />
           <ItemCard />
           <ItemCard />
           <ItemCard />
@@ -55,4 +48,4 @@ const ProductCat = (props) => {
   );
 };
 
-export default ProductCat;
+export default Lastest;

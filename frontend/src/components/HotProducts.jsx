@@ -1,7 +1,7 @@
 import React from "react";
 import ItemCard from "./ItemCard";
 import hot from "../assets/imgs/hot.png";
-const HotProducts = () => {
+const HotProducts = (props) => {
   return (
     <div className="w-ful bottom-0 mt-1 py-2">
       <div className="max-w-screen-xl mx-auto border-4 border-green-500 rounded-md overflow-hidden">
@@ -13,11 +13,11 @@ const HotProducts = () => {
               className="mb-3"
             />
             <h3 className="uppercase font-bold text-green-600">
-              sản phẩm nổi bật
+              {props.title ? props.title : " sản phẩm "}
             </h3>
           </div>
           <div className="flex items-center gap-2">
-            <button className="bg-green-600 p-2 rounded text-white hover:bg-white hover:text-green-600 hover:border hover:border-green-600 ">
+            <button className="bg-green-600 p-2 rounded text-white hover:bg-white hidden md:block hover:text-green-600 hover:border hover:border-green-600 ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -33,7 +33,7 @@ const HotProducts = () => {
                 />
               </svg>
             </button>
-            <button className="bg-green-600 p-2 rounded text-white hover:bg-white hover:text-green-600 hover:border hover:border-green-600">
+            <button className="bg-green-600 p-2 rounded text-white hover:bg-white hidden md:block hover:text-green-600 hover:border hover:border-green-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

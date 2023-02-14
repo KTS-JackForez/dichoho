@@ -7,3 +7,4 @@ export { default as Category } from "./Category";
 export { default as ItemCard } from "./ItemCard";
 export { default as ProductCat } from "./ProductCat";
 export { default as HotProducts } from "./HotProducts";
+export { default as Lastest } from "./Lastest";

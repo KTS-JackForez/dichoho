@@ -9,6 +9,7 @@ import {
   ProductCat,
   HotProducts,
   Header,
+  Lastest,
 } from "../components";
 const Home = () => {
   return (
@@ -18,7 +19,8 @@ const Home = () => {
       <Navbar />
       <Slider />
       <Category />
-      <HotProducts />
+      <HotProducts title="nổi bật" />
+      <Lastest />
       <ProductCat
         catTitle="rau - củ - quả"
         picCover="https://green.web5phut.com/wp-content/uploads/2022/08/banner_prduct3.png"

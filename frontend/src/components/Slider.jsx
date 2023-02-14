@@ -1,24 +1,33 @@
 import React, { useState } from "react";
 import promo from "../assets/imgs/promo.jpg";
 const Slider = () => {
-  const dots = [1, 2, 3, 4];
+  const dots = [1, 2, 3];
   const [activeSlide, setActiveSlide] = useState(0);
   const data = [
-    "https://picsum.photos/1360/540?random=1",
-    "https://picsum.photos/1360/540?random=2",
-    "https://picsum.photos/1360/540?random=3",
-    "https://picsum.photos/1360/540?random=4",
+    "https://green.web5phut.com/wp-content/uploads/2022/07/banner1.jpg",
+    "https://green.web5phut.com/wp-content/uploads/2022/07/banner4.jpg",
+    "https://green.web5phut.com/wp-content/uploads/2022/07/banner3.jpg",
   ];
   return (
     //wrapper
-    <div className="w-full bottom-0 mt-1">
+    <div className="w-full bottom-0 my-2">
       <div className="max-w-screen-xl mx-auto">
-        <div className="relative h-96 w-full bg-white">
-          <img
-            src={data[activeSlide]}
-            alt=""
-            className="mx-auto w-full h-full object-cover"
-          />
+        <div className="relative w-full bg-white overflow-hidden">
+          <div
+            className="flex w-full duration-300"
+            // style={{ transform: `translateX(-${activeSlide * 100}%)` }}
+            style={{ transform: `translateX(-${activeSlide * 100}%)` }}
+          >
+            {data.map((i) => {
+              return (
+                <img
+                  src={data[activeSlide]}
+                  alt=""
+                  className="max-w-full h-auto object-fill inline-block align-middle"
+                />
+              );
+            })}
+          </div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -27,9 +36,9 @@ const Slider = () => {
             stroke="currentColor"
             className="w-8 h-8 absolute top-[50%] text-gray-600 hover:text-black cursor-pointer hover:bg-gray-200 rounded-full"
             onClick={() => {
-              activeSlide > 0
-                ? setActiveSlide((activeSlide) => activeSlide - 1)
-                : setActiveSlide(3);
+              setActiveSlide(
+                activeSlide === 0 ? data.length - 1 : (prev) => prev - 1
+              );
             }}
           >
             <path
@@ -47,9 +56,9 @@ const Slider = () => {
             stroke="currentColor"
             className="w-8 h-8 absolute top-[50%] right-0 text-gray-600 hover:text-black cursor-pointer hover:bg-gray-200 rounded-full"
             onClick={() => {
-              activeSlide < 3
-                ? setActiveSlide((activeSlide) => activeSlide + 1)
-                : setActiveSlide(0);
+              setActiveSlide(
+                activeSlide === data.length - 1 ? 0 : (prev) => prev + 1
+              );
             }}
           >
             <path
@@ -65,9 +74,9 @@ const Slider = () => {
                   <button
                     className={`${
                       activeSlide === index
-                        ? "bg-white"
+                        ? "bg-green-600 text-white"
                         : "hover:bg-white bg-white/20"
-                    }  mx-1 px-2 rounded-full`}
+                    }  mx-1 px-2 rounded-full block`}
                     onClick={() => setActiveSlide(i - 1)}
                   >
                     {i}
