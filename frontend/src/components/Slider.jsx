@@ -3,14 +3,22 @@ import promo from "../assets/imgs/promo.jpg";
 const Slider = () => {
   const dots = [1, 2, 3, 4];
   const [activeSlide, setActiveSlide] = useState(0);
-  const data = [""];
+  const data = [
+    "https://picsum.photos/1360/540?random=1",
+    "https://picsum.photos/1360/540?random=2",
+    "https://picsum.photos/1360/540?random=3",
+    "https://picsum.photos/1360/540?random=4",
+  ];
   return (
     //wrapper
-    <div className="w-full bg-red-400 bottom-0 mt-1">
+    <div className="w-full bottom-0 mt-1">
       <div className="max-w-screen-xl mx-auto">
-        <div className="relative">
-          <img src={promo} alt="" />
-
+        <div className="relative h-96 w-full bg-white">
+          <img
+            src={data[activeSlide]}
+            alt=""
+            className="mx-auto w-full h-full object-cover"
+          />
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
