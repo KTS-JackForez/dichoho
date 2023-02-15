@@ -2,6 +2,18 @@ import React from "react";
 import ItemCard from "./ItemCard";
 import hot from "../assets/imgs/hot.png";
 const HotProducts = (props) => {
+  const slideLeft = () => {
+    var slider = document.getElementById("wrraper");
+    slider.scrollLeft = slider.scrollLeft - 896;
+    console.log("L");
+  };
+
+  const slideRight = () => {
+    var slider = document.getElementById("wrraper");
+    slider.scrollLeft = slider.scrollLeft + 896;
+    console.log("R");
+  };
+
   return (
     <div className="w-ful bottom-0 mt-1 py-2">
       <div className="max-w-screen-xl mx-auto border-4 border-green-500 rounded-md overflow-hidden">
@@ -17,7 +29,10 @@ const HotProducts = (props) => {
             </h3>
           </div>
           <div className="flex items-center gap-2">
-            <button className="bg-green-600 p-2 rounded text-white hover:bg-white hidden md:block hover:text-green-600 hover:border hover:border-green-600 ">
+            <button
+              className="bg-green-600 p-2 rounded text-white hover:bg-white hidden md:block hover:text-green-600 hover:border hover:border-green-600 "
+              onClick={slideLeft}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -33,7 +48,10 @@ const HotProducts = (props) => {
                 />
               </svg>
             </button>
-            <button className="bg-green-600 p-2 rounded text-white hover:bg-white hidden md:block hover:text-green-600 hover:border hover:border-green-600">
+            <button
+              className="bg-green-600 p-2 rounded text-white hover:bg-white hidden md:block hover:text-green-600 hover:border hover:border-green-600"
+              onClick={slideRight}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -51,7 +69,18 @@ const HotProducts = (props) => {
             </button>
           </div>
         </div>
-        <div className="gap-2 mx-auto grid grid-cols-2 md:grid-cols-5 justify-center p-3">
+        <div
+          className="flex gap-2 p-2 overflow-x-hidden scroll whitespace-nowrap scroll-smooth scrollbar-hide"
+          id="wrraper"
+        >
+          <ItemCard />
+          <ItemCard />
+          <ItemCard />
+          <ItemCard />
+          <ItemCard />
+          <ItemCard />
+          <ItemCard />
+          <ItemCard />
           <ItemCard />
           <ItemCard />
           <ItemCard />

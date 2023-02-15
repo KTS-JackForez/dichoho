@@ -8,7 +8,7 @@ const Navbar = () => {
         {ktsConfig.navLinks.map((i) => {
           return (
             <Link
-              className="p-3 uppercase inline-block text-white font-semibold"
+              className="p-3 uppercase inline-block text-white font-semibold hover:bg-green-700"
               to={i.path}
             >
               {i.title}

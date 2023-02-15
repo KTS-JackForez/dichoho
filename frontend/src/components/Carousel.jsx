@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight } from "react-feather";
+import React, { useState, useEffect } from "react";
 
-export default function Carousel({
+const Carousel = ({
   children: slides,
   autoSlide = false,
   autoSlideInterval = 3000,
-}) {
+}) => {
   const [curr, setCurr] = useState(0);
 
   const prev = () =>
@@ -31,13 +30,39 @@ export default function Carousel({
           onClick={prev}
           className="p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white"
         >
-          <ChevronLeft size={40} />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-8 h-8 absolute top-[50%] text-gray-600 hover:text-black cursor-pointer hover:bg-gray-200 rounded-full"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15.75 19.5L8.25 12l7.5-7.5"
+            />
+          </svg>
         </button>
         <button
           onClick={next}
           className="p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white"
         >
-          <ChevronRight size={40} />
+          {/* <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-8 h-8 absolute top-[50%] right-0 text-gray-600 hover:text-black cursor-pointer hover:bg-gray-200 rounded-full"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M8.25 4.5l7.5 7.5-7.5 7.5"
+            />
+          </svg> */}
         </button>
       </div>
 
@@ -45,6 +70,7 @@ export default function Carousel({
         <div className="flex items-center justify-center gap-2">
           {slides.map((_, i) => (
             <div
+              key={i}
               className={`
               transition-all w-3 h-3 bg-white rounded-full
               ${curr === i ? "p-2" : "bg-opacity-50"}
@@ -55,4 +81,5 @@ export default function Carousel({
       </div>
     </div>
   );
-}
+};
+export default Carousel;

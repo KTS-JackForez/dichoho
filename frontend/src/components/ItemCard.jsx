@@ -5,7 +5,7 @@ const ItemCard = () => {
   const myStyle = {};
   return (
     <div>
-      <div class="bg-white rounded-lg relative  flex flex-col justify-between hover:border-green-600 hover:border">
+      <div class="bg-white rounded-lg relative  flex flex-col justify-between hover:border-green-600 hover:border w-52">
         <div className="z-10 w-12 h-12 border-double border-4 border-white bg-red-600 absolute top-3 right-3 rounded-tl-3xl rounded-tr-3xl rounded-bl rounded-br-3xl flex items-center text-center pl-0.5 text-white">
           <p className="font-semibold">-19%</p>
         </div>

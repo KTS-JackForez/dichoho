@@ -10,6 +10,8 @@ import {
   HotProducts,
   Header,
   Lastest,
+  Carousel,
+  MySlider,
 } from "../components";
 const Home = () => {
   return (
@@ -19,6 +21,7 @@ const Home = () => {
       <Navbar />
       <Slider />
       <Category />
+      {/* <MySlider /> */}
       <HotProducts title="nổi bật" />
       <Lastest />
       <ProductCat

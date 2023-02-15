@@ -14,7 +14,7 @@ const Slider = () => {
       <div className="max-w-screen-xl mx-auto">
         <div className="relative w-full bg-white overflow-hidden">
           <div
-            className="flex w-full duration-300"
+            className="flex w-full duration-300 h-96 bg-red-500"
             // style={{ transform: `translateX(-${activeSlide * 100}%)` }}
             style={{ transform: `translateX(-${activeSlide * 100}%)` }}
           >
@@ -23,7 +23,7 @@ const Slider = () => {
                 <img
                   src={data[activeSlide]}
                   alt=""
-                  className="max-w-full h-auto object-fill inline-block align-middle"
+                  className="max-w-fit object-cover"
                 />
               );
             })}
@@ -34,7 +34,7 @@ const Slider = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-8 h-8 absolute top-[50%] text-gray-600 hover:text-black cursor-pointer hover:bg-gray-200 rounded-full"
+            className="w-8 h-8 p-1 bg-green-500/50 absolute top-[50%] text-white hover:text-black cursor-pointer hover:bg-green-700/50 rounded-full"
             onClick={() => {
               setActiveSlide(
                 activeSlide === 0 ? data.length - 1 : (prev) => prev - 1
@@ -54,7 +54,7 @@ const Slider = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-8 h-8 absolute top-[50%] right-0 text-gray-600 hover:text-black cursor-pointer hover:bg-gray-200 rounded-full"
+            className="w-8 h-8 p-1 bg-green-500/50 absolute top-[50%] right-0 text-white hover:text-black cursor-pointer hover:bg-green-700/50 rounded-full"
             onClick={() => {
               setActiveSlide(
                 activeSlide === data.length - 1 ? 0 : (prev) => prev + 1
@@ -68,19 +68,17 @@ const Slider = () => {
             />
           </svg>
           <div className=" absolute bottom-1 w-full">
-            <div className="flex justify-center">
+            <div className="flex justify-center gap-3 items-center">
               {dots.map((i, index) => {
                 return (
                   <button
                     className={`${
                       activeSlide === index
-                        ? "bg-green-600 text-white"
-                        : "hover:bg-white bg-white/20"
-                    }  mx-1 px-2 rounded-full block`}
+                        ? "bg-green-600 text-white w-4 h-4"
+                        : "hover:bg-white bg-white/20 w-3 h-3"
+                    } rounded-full border border-double border-green-500`}
                     onClick={() => setActiveSlide(i - 1)}
-                  >
-                    {i}
-                  </button>
+                  ></button>
                 );
               })}
             </div>
