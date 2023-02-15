@@ -4,7 +4,7 @@ const Promotion = () => {
   const [show, setShow] = useState(true);
   return (
     show && (
-      <div className="w-full bg-red-200">
+      <div className="w-full">
         <div className="max-w-screen-xl mx-auto h-24 relative">
           <img src={img} alt="" className="h-24 w-full" />
           <button
