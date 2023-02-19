@@ -1,5 +1,5 @@
 import React from "react";
-
+import logo from "../assets/imgs/logo.png";
 const MyCart = ({
   children: cart,
   show = true,
@@ -52,6 +52,33 @@ const Footer = () => {
           text2="nhanh chóng"
           size="56"
         />
+      </div>
+      <div className="flex gap-2">
+        <div>
+          <img src={logo} alt="" />
+          <ul>
+            <li>Địa chỉ</li>
+            <li>Email</li>
+            <li>Điện thoại</li>
+          </ul>
+        </div>
+        <div>
+          <h3>về chúng tôi</h3>
+          <ul>
+            <li>Địa chỉ</li>
+            <li>Email</li>
+            <li>Điện thoại</li>
+          </ul>
+        </div>
+        <div>
+          <h3>chính sách</h3>
+          <ul>
+            <li>Địa chỉ</li>
+            <li>Email</li>
+            <li>Điện thoại</li>
+          </ul>
+        </div>
+        <div></div>
       </div>
       <div className=" bg-green-600 mx-auto py-3 text-white font-semibold text-center">
         Copyright 2023 © Thiết kế bởi sale168.com
