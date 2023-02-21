@@ -11,7 +11,7 @@ const MyCart = ({
   return (
     show && (
       <div
-        className={`p-3 border flex w-${size} justify-center items-center rounded gap-2`}
+        className={`p-3 border border-primary flex w-${size} justify-center items-center gap-2 bg-white rounded-lg `}
       >
         <div>
           <img src={img} alt="" />

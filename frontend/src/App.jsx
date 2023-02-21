@@ -15,6 +15,7 @@ import {
   NotFound,
   Contact,
   About,
+  Cart,
 } from "./pages";
 function App() {
   const ProtectedRoute = ({ children }) => {
@@ -33,6 +34,7 @@ function App() {
           <Route path="about" element={<About />} />
           <Route path="products" element={<Products />} />
           <Route path="product" element={<Product />} />
+          <Route path="cart" element={<Cart />} />
 
           {/* <Route
             path="dashboard/*"
