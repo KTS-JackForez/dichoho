@@ -1,7 +1,75 @@
-import React from "react";
+import React,{useState} from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/imgs/logo.png";
+import { vnd } from "../../ultis/ktsFunc";
+const Cart = (props)=>{
+  return(<div className="bg-white text-black rounded shadow absolute top-12 right-0 z-50 p-3 flex flex-col w-96 gap-2">
+    
+    <div>
+    <div className="divide-y divide-dashed divide-primary">
+                <div className="py-1 flex gap-2">
+                  <img
+                    src="https://green.web5phut.com/wp-content/uploads/2022/06/5-600x600.jpg"
+                    alt=""
+                    className="w-1/3"
+                  />
+                  <div className="flex flex-col justify-center items-start flex-1">
+                    <p className="font-semibold">sản phẩm hữu cơ sạch</p>
+                    <p className="text-green-400">{vnd(20000)}</p>
+                  </div>
+                </div>
+                <div className="py-1 flex gap-2">
+                  <img
+                    src="https://green.web5phut.com/wp-content/uploads/2022/06/5-600x600.jpg"
+                    alt=""
+                    className="w-1/3"
+                  />
+                  <div className="flex flex-col justify-center items-start flex-1">
+                    <p className="font-semibold">sản phẩm hữu cơ sạch</p>
+                    <p className="text-green-400">{vnd(20000)}</p>
+                  </div>
+                </div>
+                <div className="py-1 flex gap-2">
+                  <img
+                    src="https://green.web5phut.com/wp-content/uploads/2022/06/5-600x600.jpg"
+                    alt=""
+                    className="w-1/3"
+                  />
+                  <div className="flex flex-col justify-center items-start flex-1">
+                    <p className="font-semibold">sản phẩm hữu cơ sạch</p>
+                    <p className="text-green-400">{vnd(20000)}</p>
+                  </div>
+                </div>
+                <div className="py-1 flex gap-2">
+                  <img
+                    src="https://green.web5phut.com/wp-content/uploads/2022/06/5-600x600.jpg"
+                    alt=""
+                    className="w-1/3"
+                  />
+                  <div className="flex flex-col justify-center items-start flex-1">
+                    <p className="font-semibold">sản phẩm hữu cơ sạch</p>
+                    <p className="text-green-400">{vnd(20000)}</p>
+                  </div>
+                </div>
+              </div>
+    </div>
+    <div>tổng tiền</div>
+    <div className="flex flex-col gap-2">
+      <button className="p-2 bg-primary rounded">
+      Xem giỏ hàng
+      </button>
+      <button className="p-2 bg-primary rounded">thanh toán</button>
+    </div>
+  </div>)
+}
 const Header = () => {
+  const [openCart, setOpenCart] = useState(false)
+  const hoverOn = ()=>{
+    setOpenCart(true)
+  }
+  const hoverOut = ()=>{
+    setOpenCart(false)
+  }
   return (
     <div className="max-w-screen-xl mx-auto text-center flex items-center justify-between">
       <Link to="/">
@@ -53,7 +121,7 @@ const Header = () => {
             <p className="text-primary font-extrabold text-xl">0123456789</p>
           </div>
         </div>
-        <Link className="flex items-center bg-green-600 rounded px-4 uppercase text-white font-semibold gap-2  hover:bg-green-700">
+        <Link className="flex items-center relative bg-green-600 rounded px-4 uppercase text-white font-semibold gap-2  hover:bg-green-700" onMouseOver={hoverOn} onMouseOut={hoverOut}>
           <p>giỏ hàng</p>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -69,6 +137,7 @@ const Header = () => {
               d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
             />
           </svg>
+          {openCart &&<Cart/>}
         </Link>
         <Link className="bg-primary p-4 flex items-center rounded-full text-white hover:bg-green-700">
           <svg
