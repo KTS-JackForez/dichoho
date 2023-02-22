@@ -53,13 +53,13 @@ const Cart = (props) => {
       </div>
       <div className="flex flex-col gap-2">
         <Link
-          to="#"
+          to="/cart"
           className="p-2 bg-primary rounded uppercase font-semibold text-white hover:bg-green-700"
         >
           Xem giỏ hàng
         </Link>
         <Link
-          to="#"
+          to="/checkout"
           className="p-2 bg-orange-500 rounded uppercase font-semibold text-white hover:bg-orange-700"
         >
           thanh toán
