@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Footer, Header, Navbar, Promotion } from "../components";
 import { vnd } from "../../ultis/ktsFunc";
+import './Products.css'
 const Product = () => {
   const [weight, setWeight] = useState(1);
   const [activeImg, setActiveImg] = useState(0);
@@ -280,17 +281,103 @@ const Product = () => {
                     className={openTab === 2 ? "flex" : "hidden"}
                     id="link2"
                   >
-                    <p>
-                     Thông tin về sản phẩm
-                    </p>
+                      <table>
+                                        <thead>
+                                            <tr>
+                                                <th>KÍCH THƯỚC</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+
+                                                    M, L, S, XL, XXL
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                   
                   </div>
                   <div
                     className={openTab === 3 ? "flex" : "hidden"}
                     id="link3"
                   >
-                    <p>
-                     hãy là người đầu tiên đánh giá về sản phẩm
-                    </p>
+                    <div className="comments">
+                                    <h3>Đánh giá</h3>
+                                    <p>Chưa có đánh giá nào.</p>
+                                </div>
+                                <div className="comment-form-wrapper">
+                                    <div className="comment-respond">
+                                        <h3 className="comment-respond-title">Hãy là người đầu tiên nhận xét “Thực phẩm hữu
+                                            cơ sạch” </h3>
+                                        <form action="" className="comment-form">
+                                            <label for="rating">Đánh giá của bạn<span
+                                                    className="required">*</span></label>
+                                            <div className="product-item-rating-selected">
+                                                <div className="product-item__rating">
+                                                    <i className="product-item__star-gold fas fa-star"></i>
+                                                </div>
+                                                <div className="product-item__rating">
+                                                    <i className="product-item__star-gold fas fa-star"></i>
+                                                    <i className="product-item__star-gold fas fa-star"></i>
+                                                </div>
+                                                <div className="product-item__rating">
+                                                    <i className="product-item__star-gold fas fa-star"></i>
+                                                    <i className="product-item__star-gold fas fa-star"></i>
+                                                    <i className="product-item__star-gold fas fa-star"></i>
+                                                </div>
+                                                <div className="product-item__rating">
+                                                    <i className="product-item__star-gold fas fa-star"></i>
+                                                    <i className="product-item__star-gold fas fa-star"></i>
+                                                    <i className="product-item__star-gold fas fa-star"></i>
+                                                    <i className="product-item__star-gold fas fa-star"></i>
+                                                </div>
+                                                <div className="product-item__rating">
+                                                    <i className="product-item__star-gold fas fa-star"></i>
+                                                    <i className="product-item__star-gold fas fa-star"></i>
+                                                    <i className="product-item__star-gold fas fa-star"></i>
+                                                    <i className="product-item__star-gold fas fa-star"></i>
+                                                    <i className="product-item__star-gold fas fa-star"></i>
+                                                </div>
+                                            </div>
+                                            <label for="comment">Nhận xét của bạn&nbsp;<span
+                                                    className="required">*</span></label>
+                                            <textarea id="comment" name="comment"
+                                                required=""></textarea>
+                                            <div className="modal-comment">
+                                                <div className="modal-comment-author">
+                                                    <div>
+                                                        <label for="name" className="modal-label">
+                                                            Tên
+                                                        </label>
+                                                        <input id="name" type="text" className="modal-input"
+                                                            placeholder="Nhập tên của bạn"/>
+                                                    </div>
+
+                                                    <div>
+                                                        <label for="email" className="modal-label">
+                                                            Email
+                                                        </label>
+                                                        <input id="email" type="text" className="modal-input"
+                                                            placeholder="Nhập email của bạn"/>
+                                                    </div>
+                                                </div>
+
+
+                                                <label  className="modal-label">
+
+                                                    <input 
+                                                        type="checkbox"/>
+                                                    <span> Lưu tên của tôi, email, và trang web
+                                                        trong trình duyệt này cho lần bình luận kế tiếp của tôi.</span>
+                                                </label>
+
+                                                <button className="submit btn--primary">GỬI ĐI</button>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                   </div>
                 </div>
               </div>
