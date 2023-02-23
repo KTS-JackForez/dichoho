@@ -269,7 +269,7 @@ const Product = () => {
               <div className="px-4 py-5 flex-auto">
                 <div className="tab-content tab-space">
                   <div
-                    className={openTab === 1 ? "block" : "hidden"}
+                    className={openTab === 1 ? "flex" : "hidden"}
                     id="link1"
                   >
                     <p>
@@ -277,7 +277,7 @@ const Product = () => {
                     </p>
                   </div>
                   <div
-                    className={openTab === 2 ? "block" : "hidden"}
+                    className={openTab === 2 ? "flex" : "hidden"}
                     id="link2"
                   >
                     <p>
@@ -285,7 +285,7 @@ const Product = () => {
                     </p>
                   </div>
                   <div
-                    className={openTab === 3 ? "block" : "hidden"}
+                    className={openTab === 3 ? "flex" : "hidden"}
                     id="link3"
                   >
                     <p>
