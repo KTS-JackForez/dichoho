@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Footer, Header, Navbar, Promotion } from "../components";
 import { vnd } from "../../ultis/ktsFunc";
 import './Products.css';
+
 const Product = () => {
   const [weight, setWeight] = useState(1);
   const [activeImg, setActiveImg] = useState(0);
@@ -299,85 +300,92 @@ const Product = () => {
                    
                   </div>
                   <div
-                    className={openTab === 3 ? "flex" : "hidden"}
+                    className={openTab === 3 ? "block" : "hidden"}
                     id="link3"
                   >
-                    <div className="comments">
+                <div class="product-main grid">
+                    
+                    <div class="product-footer">
+                   
+                        <div class="product-footer-content">
+                        
+                            <div class="product-footer-content-pane product-footer-content-comment active">
+                                <div class="comments">
                                     <h3>Đánh giá</h3>
                                     <p>Chưa có đánh giá nào.</p>
                                 </div>
-                                <div className="comment-form-wrapper">
-                                    <div className="comment-respond">
-                                        <h3 className="comment-respond-title">Hãy là người đầu tiên nhận xét “Thực phẩm hữu
+                                <div class="comment-form-wrapper">
+                                    <div class="comment-respond">
+                                        <h3 class="comment-respond-title">Hãy là người đầu tiên nhận xét “Thực phẩm hữu
                                             cơ sạch” </h3>
-                                        <form action="" className="comment-form">
-                                            <label for="rating">Đánh giá của bạn<span
-                                                    className="required">*</span></label>
-                                            <div className="product-item-rating-selected">
-                                                <div className="product-item__rating">
-                                                    <i className="product-item__star-gold fas fa-star"></i>
+                                        <form action="" class="comment-form">
+                                            <label for="rating">Đánh giá của bạn&nbsp;<span class="required">*</span></label>
+                                            <div class="product-item-rating-selected">
+                                                <div class="product-item__rating active">
+                                                    <i class="product-item__star-gold fas fa-star"></i>
                                                 </div>
-                                                <div className="product-item__rating">
-                                                    <i className="product-item__star-gold fas fa-star"></i>
-                                                    <i className="product-item__star-gold fas fa-star"></i>
+                                                <div class="product-item__rating">
+                                                    <i class="product-item__star-gold fas fa-star"></i>
+                                                    <i class="product-item__star-gold fas fa-star"></i>
                                                 </div>
-                                                <div className="product-item__rating">
-                                                    <i className="product-item__star-gold fas fa-star"></i>
-                                                    <i className="product-item__star-gold fas fa-star"></i>
-                                                    <i className="product-item__star-gold fas fa-star"></i>
+                                                <div class="product-item__rating">
+                                                    <i class="product-item__star-gold fas fa-star"></i>
+                                                    <i class="product-item__star-gold fas fa-star"></i>
+                                                    <i class="product-item__star-gold fas fa-star"></i>
                                                 </div>
-                                                <div className="product-item__rating">
-                                                    <i className="product-item__star-gold fas fa-star"></i>
-                                                    <i className="product-item__star-gold fas fa-star"></i>
-                                                    <i className="product-item__star-gold fas fa-star"></i>
-                                                    <i className="product-item__star-gold fas fa-star"></i>
+                                                <div class="product-item__rating">
+                                                    <i class="product-item__star-gold fas fa-star"></i>
+                                                    <i class="product-item__star-gold fas fa-star"></i>
+                                                    <i class="product-item__star-gold fas fa-star"></i>
+                                                    <i class="product-item__star-gold fas fa-star"></i>
                                                 </div>
-                                                <div className="product-item__rating">
-                                                    <i className="product-item__star-gold fas fa-star"></i>
-                                                    <i className="product-item__star-gold fas fa-star"></i>
-                                                    <i className="product-item__star-gold fas fa-star"></i>
-                                                    <i className="product-item__star-gold fas fa-star"></i>
-                                                    <i className="product-item__star-gold fas fa-star"></i>
+                                                <div class="product-item__rating">
+                                                    <i class="product-item__star-gold fas fa-star"></i>
+                                                    <i class="product-item__star-gold fas fa-star"></i>
+                                                    <i class="product-item__star-gold fas fa-star"></i>
+                                                    <i class="product-item__star-gold fas fa-star"></i>
+                                                    <i class="product-item__star-gold fas fa-star"></i>
                                                 </div>
                                             </div>
-                                            <label for="comment">Nhận xét của bạn&nbsp;<span
-                                                    className="required">*</span></label>
-                                            <textarea id="comment" name="comment"
-                                                required=""></textarea>
-                                            <div className="modal-comment">
-                                                <div className="modal-comment-author">
+                                            <label for="comment">Nhận xét của bạn&nbsp;<span class="required">*</span></label>
+                                            <textarea id="comment" name="comment" cols="45" rows="8" required=""></textarea>
+                                            <div class="modal-comment">
+                                                <div class="modal-comment-author">
                                                     <div>
-                                                        <label for="name" className="modal-label">
-                                                            Tên
+                                                        <label for="name" class="modal-label">
+                                                            Tên&nbsp;
                                                         </label>
-                                                        <input id="name" type="text" className="modal-input"
-                                                            placeholder="Nhập tên của bạn"/>
+                                                        <input id="name" type="text" class="modal-input" placeholder="Nhập tên của bạn"/>
                                                     </div>
 
                                                     <div>
-                                                        <label for="email" className="modal-label">
-                                                            Email
+                                                        <label for="email" class="modal-label">
+                                                            Email&nbsp;
                                                         </label>
-                                                        <input id="email" type="text" className="modal-input"
-                                                            placeholder="Nhập email của bạn"/>
+                                                        <input id="email" type="text" class="modal-input" placeholder="Nhập email của bạn"/>
                                                     </div>
                                                 </div>
 
 
-                                                <label  className="modal-label">
+                                                <label for="send" class="modal-label">
 
-                                                    <input 
-                                                        type="checkbox"/>
+                                                    <input id="send" type="checkbox"/>
                                                     <span> Lưu tên của tôi, email, và trang web
                                                         trong trình duyệt này cho lần bình luận kế tiếp của tôi.</span>
                                                 </label>
 
-                                                <button className="submit btn--primary">GỬI ĐI</button>
+                                                <button class="submit btn--primary">GỬI ĐI</button>
 
                                             </div>
                                         </form>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                  
+
+                </div>
                   </div>
                 </div>
               </div>
