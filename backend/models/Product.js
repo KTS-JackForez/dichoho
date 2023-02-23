@@ -20,17 +20,21 @@ const ProductSchema = new mongoose.Schema(
     // giá niêm yết sản phẩm
     stockPrice: {
       type: Number,
+      default: 0,
     },
     // giá bán sản phẩm
     currentPrice: {
       type: Number,
+      default: 0,
     },
     // số lượng tồn kho
     inStock: {
       type: Number,
+      default: true,
     },
     outStock: {
       type: Number,
+      default: 0,
     },
     like: {
       type: Number,
