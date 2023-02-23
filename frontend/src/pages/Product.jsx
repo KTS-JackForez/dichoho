@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Footer, Header, Navbar, Promotion } from "../components";
 import { vnd } from "../../ultis/ktsFunc";
+import { useParams } from "react-router-dom";
 const Product = () => {
   const [weight, setWeight] = useState(1);
   const [activeImg, setActiveImg] = useState(0);
@@ -82,7 +83,7 @@ const Product = () => {
                         className={`w-1/4 opacity-${
                           activeImg === i
                             ? "100 border border-primary rounded"
-                            : "50"
+                            : "30"
                         } cursor-pointer h-auto`}
                         onClick={() => setActiveImg(i)}
                       />
@@ -94,9 +95,9 @@ const Product = () => {
                 <h3 className="text-gray-700 text-xl font-bold">
                   Thực phẩm hữu cơ sạch
                 </h3>
-                <p3 className="text-green-600 font-bold text-xl">
+                <h3 className="text-green-600 font-bold text-xl">
                   {vnd(20000) + "- " + vnd(30000)}
-                </p3>
+                </h3>
                 <ul className="list-disc ml-5">
                   <li>Đạt chuẩn an toàn VietGap</li>
                   <li>Hàng tươi mới mỗi ngày</li>
