@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Footer, Header, Navbar, Promotion } from "../components";
 import { vnd } from "../../ultis/ktsFunc";
+import './Products.css';
 const Product = () => {
   const [weight, setWeight] = useState(1);
   const [activeImg, setActiveImg] = useState(0);
