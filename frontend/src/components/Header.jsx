@@ -4,7 +4,7 @@ import logo from "../assets/imgs/logo.png";
 import { vnd } from "../../ultis/ktsFunc";
 const Cart = (props) => {
   return (
-    <div className="bg-gray-200 text-black rounded shadow absolute top-12 right-0 z-50 p-3 flex flex-col w-96 gap-2 ">
+    <div className="text-gray-800 bg-white rounded shadow absolute top-12 right-0 z-50 p-3 flex flex-col w-96 gap-2 ">
       <div>
         <div className="divide-y divide-dashed divide-primary">
           <div className="pb-3 flex justify-end items-center">
@@ -153,7 +153,7 @@ const Header = () => {
           </div>
           {openCart && <Cart />}
         </Link>
-        <Link className="bg-primary p-4 flex items-center rounded-full text-white hover:bg-green-700">
+        <Link to="/login"  tooltip="Tài khoản" className="bg-primary p-4 flex items-center rounded-full text-white hover:bg-green-700">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -161,6 +161,7 @@ const Header = () => {
             strokeWidth={1.5}
             stroke="currentColor"
             className="w-5 h-5"
+           
           >
             <path
               strokeLinecap="round"

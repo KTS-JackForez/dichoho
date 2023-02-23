@@ -15,8 +15,10 @@ import {
 } from "../components";
 const Home = () => {
   return (
-    <div className="h-screen relative">
-      <Promotion />
+    <div className="bg-gray-100">
+    
+     <div className="max-w-screen-xl bg-white mx-auto">
+     <Promotion />
       <Header />
       <Navbar />
       <Slider />
@@ -37,6 +39,8 @@ const Home = () => {
         picCover="https://green.web5phut.com/wp-content/uploads/2022/08/banner_prduct1.png"
       />
       <Footer />
+     </div>
+    
     </div>
   );
 };

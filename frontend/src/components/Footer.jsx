@@ -26,8 +26,8 @@ const MyCart = ({
 };
 const Footer = () => {
   return (
-    <div className="w-full bg-green-100 py-4">
-      <div className="max-w-screen-xl mx-auto flex flex-wrap justify-between pt-3 mb-8">
+    <div className="w-full bg-green-100 pt-4">
+      <div className="max-w-screen-xl mx-auto flex flex-wrap justify-around pt-3 mb-8">
         <MyCart
           img="https://green.web5phut.com/wp-content/uploads/2022/07/p1.png"
           text1="sản phẩm"

@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 const ItemCard = () => {
   const myStyle = {};
   return (
-    <div class="bg-white rounded-lg relative flex flex-col justify-betwee hover:shadow-lg w-52">
+    <div class="bg-white rounded-lg relative flex flex-col justify-betwee hover:shadow-lg w-full mx-atuto">
       <div className="z-10 w-12 h-12 border-double border-4 border-white bg-red-600 absolute top-3 right-3 rounded-tl-3xl rounded-tr-3xl rounded-bl rounded-br-3xl flex items-center text-center pl-0.5 text-white">
         <p className="font-semibold">-19%</p>
       </div>
       <div className="overflow-hidden p-3 rounded-lg">
-        <Link to="/products">
+        <Link to="/product">
           <img
             class="rounded-t-lg  object-cover transition duration-500 hover:scale-125 rounded-md"
             src={img}

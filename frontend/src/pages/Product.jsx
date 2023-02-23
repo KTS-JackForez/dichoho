@@ -10,7 +10,7 @@ const Product = () => {
       <Promotion />
       <Header />
       <Navbar />
-      <div>
+      <div className="min-h-screen">
         <div>
           <div className="mb-12 max-w-screen-xl mx-auto py-4 flex gap-3">
             <div className="flex w-3/4 gap-2">
