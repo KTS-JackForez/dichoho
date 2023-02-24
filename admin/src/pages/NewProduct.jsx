@@ -6,19 +6,20 @@ const NewProduct = () => {
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState([]);
   const [showButton, setShowButton] = useState(true);
-
+  const [inputs, setInputs] = useState({});
   return (
     <div className="p-3">
-      <h3>thêm mới sản phẩm</h3>
-      <div className="bg-white p-3 rounded-md">
+      <h3 className="py-3 uppercase font-bold">thêm mới sản phẩm</h3>
+      <div className="bg-white p-3 rounded-md text-gray-800 font-semibold shadow-md">
         <div className="space-y-4 md:space-y-6">
           <div className="flex w-full items-center">
-            <label htmlFor="" className="w-1/3">
+            <label htmlFor="name" className="w-1/3 hidden md:block">
               Tên sản phẩm
             </label>
             <input
               type="text"
               name="name"
+              id="name"
               className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
               placeholder="Tên sản phẩm"
               required="a-z"
@@ -28,12 +29,13 @@ const NewProduct = () => {
             />
           </div>
           <div className="flex w-full items-center">
-            <label htmlFor="" className="w-1/3">
+            <label htmlFor="desc" className="w-1/3 hidden md:block">
               Mô tả sản phẩm
             </label>
             <input
               type="text"
-              name="name"
+              name="desc"
+              id="desc"
               className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
               placeholder="Mô tả sản phẩm"
               required="a-z"
@@ -43,12 +45,13 @@ const NewProduct = () => {
             />
           </div>
           <div className="flex w-full items-center">
-            <label htmlFor="" className="w-1/3">
+            <label htmlFor="cats" className="w-1/3 hidden md:block">
               Danh mục
             </label>
             <input
               type="text"
-              name="name"
+              name="cats"
+              id="cats"
               className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
               placeholder="Phân cách nhau bởi dấu ; "
               required="a-z"
@@ -58,29 +61,15 @@ const NewProduct = () => {
             />
           </div>
           <div className="flex w-full items-center">
-            <label htmlFor="" className="w-1/3">
-              Danh mục
-            </label>
-            <input
-              type="text"
-              name="name"
-              className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-              placeholder="Phân cách nhau bởi dấu ; "
-              required="a-z"
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-            />
-          </div>
-          <div className="flex w-full items-center">
-            <label htmlFor="" className="w-1/3">
+            <label htmlFor="stockPrice" className="w-1/3 hidden md:block">
               Giá niêm yết
             </label>
             <input
               type="text"
-              name="name"
+              name="stockPrice"
+              id="stockPrice"
               className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-              placeholder="Giá niêm yết"
+              placeholder="Giá niêm yết (VNĐ)"
               required="a-z"
               onChange={(e) => {
                 setName(e.target.value);
@@ -88,14 +77,15 @@ const NewProduct = () => {
             />
           </div>
           <div className="flex w-full items-center">
-            <label htmlFor="" className="w-1/3">
+            <label htmlFor="currentPrice" className="w-1/3 hidden md:block">
               Giá bán
             </label>
             <input
               type="text"
-              name="name"
+              name="currentPrice"
+              id="currentPrice"
               className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-              placeholder="Giá bán"
+              placeholder="Giá bán (VNĐ)"
               required="a-z"
               onChange={(e) => {
                 setName(e.target.value);
@@ -103,29 +93,28 @@ const NewProduct = () => {
             />
           </div>
           <div className="flex w-full items-center">
-            <div className="w-1/4">
-              <label htmlFor="">Hình ảnh sản phẩm</label>
+            <div className="w-1/4 hidden md:block">
+              <label htmlFor="">Hình ảnh sản phẩm </label>
             </div>
-            <div className="w-3/4 flex items-center gap-2 rounded-md border border-dashed border-primary p-3 overflow-x-auto">
-              {file && (
-                <div className="flex gap-3 bg-gray-200">
+            <div className="max-w-3/4 flex items-center gap-2 rounded-md border border-dashed border-primary p-3 overflow-x-auto">
+              {file?.length > 0 ? (
+                <div className="flex gap-3">
                   {file.map((f, i) => {
                     return (
-                      <div className="w-32 flex flex-col" key={i}>
-                        <div className="w-32 h-32 overflow-hidden flex rounded-md bg-white">
+                      <div className="w-24 relative" key={i}>
+                        <div className="w-24 h-24 overflow-hidden flex rounded-md bg-white">
                           <img
                             src={URL.createObjectURL(f)}
                             alt=""
                             className="object-cover w-full h-auto"
                           />
                         </div>
-                        <div className="flex justify-between">
+                        <div className="flex justify-between absolute bottom-0 w-full bg-white/50">
                           <p className="truncate">{f.name}</p>
                           <button
                             className="hover:text-white hover:bg-red-500 p-1.5 rounded-full"
                             onClick={() => {
                               setFile(file.filter((e) => e.name !== f.name));
-                              setShowButton(file.length > 0 ? false : true);
                             }}
                           >
                             <svg
@@ -148,12 +137,8 @@ const NewProduct = () => {
                     );
                   })}
                 </div>
-              )}
-              {showButton && (
-                <div
-                  className="w-32 h-32 flex
-                items-center justify-center"
-                >
+              ) : (
+                <div className="w-24 h-24 flex items-center justify-center">
                   <button
                     className="p-2 rounded-full bg-primary"
                     onClick={() => {
