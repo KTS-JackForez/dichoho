@@ -1,41 +1,12 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { Link } from "react-router-dom";
-const ImageBox = (props) => {
-  return (
-    <div className="w-32 flex flex-col">
-      <div className="w-32 h-32 overflow-hidden flex rounded-md bg-white">
-        <img
-          src={URL.createObjectURL(props.data)}
-          alt=""
-          className="object-cover"
-        />
-      </div>
-      <div className="flex justify-between">
-        <span>{props.data.name}</span>
-        <button className="hover:text-white hover:bg-red-500 p-1.5 rounded-full">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={3}
-            stroke="currentColor"
-            className="w-3 h-3"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
-      </div>
-    </div>
-  );
-};
+
 const NewProduct = () => {
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState([]);
+  const [showButton, setShowButton] = useState(true);
+
   return (
     <div className="p-3">
       <h3>thêm mới sản phẩm</h3>
@@ -135,96 +106,90 @@ const NewProduct = () => {
             <div className="w-1/4">
               <label htmlFor="">Hình ảnh sản phẩm</label>
             </div>
-            <div className="w-3/4 flex items-center gap-2">
-              {/* <div>
-                <div
-                  className={`w-32 h-32 border rounded-md border-dashed border-${
-                    file ? "none" : "primary"
-                  } bg-slate-200 flex overflow-hidden`}
-                >
-                  <input
-                    type="file"
-                    hidden
-                    id="img1"
-                    onChange={(e) => {
-                      setFile(e.target.files[0]);
-                      console.log(e.target.files);
-                    }}
-                  />
-                  {file ? (
-                    <img
-                      src={URL.createObjectURL(file)}
-                      alt=""
-                      className="object-cover"
-                    />
-                  ) : (
-                    <button
-                      className="p-2 rounded-full bg-primary block mx-auto my-auto"
-                      onClick={() => {
-                        document.getElementById("img1").click();
-                      }}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="white"
-                        className="w-6 h-6"
-                      >
-                        i
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M12 6v12m6-6H6"
-                        />
-                      </svg>
-                    </button>
-                  )}
+            <div className="w-3/4 flex items-center gap-2 rounded-md border border-dashed border-primary p-3 overflow-x-auto">
+              {file && (
+                <div className="flex gap-3 bg-gray-200">
+                  {file.map((f, i) => {
+                    return (
+                      <div className="w-32 flex flex-col" key={i}>
+                        <div className="w-32 h-32 overflow-hidden flex rounded-md bg-white">
+                          <img
+                            src={URL.createObjectURL(f)}
+                            alt=""
+                            className="object-cover w-full h-auto"
+                          />
+                        </div>
+                        <div className="flex justify-between">
+                          <p className="truncate">{f.name}</p>
+                          <button
+                            className="hover:text-white hover:bg-red-500 p-1.5 rounded-full"
+                            onClick={() => {
+                              setFile(file.filter((e) => e.name !== f.name));
+                              setShowButton(file.length > 0 ? false : true);
+                            }}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={3}
+                              stroke="currentColor"
+                              className="w-3 h-3"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M6 18L18 6M6 6l12 12"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-                {file && (
-                  <div className="flex justify-between">
-                    <span>{file.name}</span>
-                    <button
-                      className="hover:text-white hover:bg-red-500 p-1.5 rounded-full"
-                      onClick={() => {
-                        setFile(null);
-                      }}
+              )}
+              {showButton && (
+                <div
+                  className="w-32 h-32 flex
+                items-center justify-center"
+                >
+                  <button
+                    className="p-2 rounded-full bg-primary"
+                    onClick={() => {
+                      document.getElementById("imgInputs").click();
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="white"
+                      className="w-6 h-6"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={3}
-                        stroke="currentColor"
-                        className="w-3 h-3"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M6 18L18 6M6 6l12 12"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                )}
-              </div> */}
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 6v12m6-6H6"
+                      />
+                    </svg>{" "}
+                  </button>
+                </div>
+              )}
               <input
                 type="file"
                 multiple
+                id="imgInputs"
+                hidden
                 onChange={(e) => {
-                  setFile(e.target.files);
+                  setFile(Array.from(e.target.files));
+                  setShowButton(false);
                 }}
               />
             </div>
           </div>
-          {file && (
-            <div className="flex gap-3 bg-gray-200">
-              {Array.from(file).map((f, i) => {
-                return <ImageBox data={f} key={i} />;
-              })}
-            </div>
-          )}
+
           <button
             type="submit"
             className="w-full rounded bg-primary px-5 py-3 text-center text-sm font-medium text-white hover:bg-green-700 focus:outline-none"
