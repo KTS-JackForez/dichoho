@@ -1,15 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { Link } from "react-router-dom";
+const ImageBox = (props) => {
+  return (
+    <div className="w-32 flex flex-col">
+      <div className="w-32 h-32 overflow-hidden flex rounded-md bg-white">
+        <img
+          src={URL.createObjectURL(props.data)}
+          alt=""
+          className="object-cover"
+        />
+      </div>
+      <div className="flex justify-between">
+        <span>{props.data.name}</span>
+        <button className="hover:text-white hover:bg-red-500 p-1.5 rounded-full">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={3}
+            stroke="currentColor"
+            className="w-3 h-3"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
+};
 const NewProduct = () => {
   const [loading, setLoading] = useState(false);
-  const [file, setFile] = useState();
-  const [preview, setPreview] = useState();
+  const [file, setFile] = useState([]);
   return (
     <div className="p-3">
       <h3>thêm mới sản phẩm</h3>
-      <div>
-        <div className="space-y-4 md:space-y-6" action="#">
+      <div className="bg-white p-3 rounded-md">
+        <div className="space-y-4 md:space-y-6">
           <div className="flex w-full items-center">
             <label htmlFor="" className="w-1/3">
               Tên sản phẩm
@@ -55,74 +86,145 @@ const NewProduct = () => {
               }}
             />
           </div>
-          <div className="flex w-full items-center gap-3">
-            <div className="w-1/2 flex items-center">
-              <label htmlFor="" className="w-1/3">
-                Giá niêm yết
-              </label>
-              <input
-                type="text"
-                name="name"
-                className="block w-2/3 rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-                placeholder="Phân cách nhau bởi dấu ; "
-                required="a-z"
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-              />
-            </div>
-            <div className="w-1/2 flex items-center">
-              <label htmlFor="" className="w-1/3">
-                Giá niêm yết
-              </label>
-              <input
-                type="text"
-                name="name"
-                className="block w-2/3 rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-                placeholder="Phân cách nhau bởi dấu ; "
-                required="a-z"
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-              />
-            </div>
+          <div className="flex w-full items-center">
+            <label htmlFor="" className="w-1/3">
+              Danh mục
+            </label>
+            <input
+              type="text"
+              name="name"
+              className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
+              placeholder="Phân cách nhau bởi dấu ; "
+              required="a-z"
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+            />
           </div>
           <div className="flex w-full items-center">
-            <div className="w-1/3">
+            <label htmlFor="" className="w-1/3">
+              Giá niêm yết
+            </label>
+            <input
+              type="text"
+              name="name"
+              className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
+              placeholder="Giá niêm yết"
+              required="a-z"
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+            />
+          </div>
+          <div className="flex w-full items-center">
+            <label htmlFor="" className="w-1/3">
+              Giá bán
+            </label>
+            <input
+              type="text"
+              name="name"
+              className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
+              placeholder="Giá bán"
+              required="a-z"
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+            />
+          </div>
+          <div className="flex w-full items-center">
+            <div className="w-1/4">
               <label htmlFor="">Hình ảnh sản phẩm</label>
             </div>
-            <div className="w-2/3 flex items-center gap-2">
+            <div className="w-3/4 flex items-center gap-2">
+              {/* <div>
+                <div
+                  className={`w-32 h-32 border rounded-md border-dashed border-${
+                    file ? "none" : "primary"
+                  } bg-slate-200 flex overflow-hidden`}
+                >
+                  <input
+                    type="file"
+                    hidden
+                    id="img1"
+                    onChange={(e) => {
+                      setFile(e.target.files[0]);
+                      console.log(e.target.files);
+                    }}
+                  />
+                  {file ? (
+                    <img
+                      src={URL.createObjectURL(file)}
+                      alt=""
+                      className="object-cover"
+                    />
+                  ) : (
+                    <button
+                      className="p-2 rounded-full bg-primary block mx-auto my-auto"
+                      onClick={() => {
+                        document.getElementById("img1").click();
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="white"
+                        className="w-6 h-6"
+                      >
+                        i
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 6v12m6-6H6"
+                        />
+                      </svg>
+                    </button>
+                  )}
+                </div>
+                {file && (
+                  <div className="flex justify-between">
+                    <span>{file.name}</span>
+                    <button
+                      className="hover:text-white hover:bg-red-500 p-1.5 rounded-full"
+                      onClick={() => {
+                        setFile(null);
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={3}
+                        stroke="currentColor"
+                        className="w-3 h-3"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                )}
+              </div> */}
               <input
                 type="file"
-                name="name"
-                className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-                required="a-z"
+                multiple
                 onChange={(e) => {
-                  setFile(e.target.files[0]);
+                  setFile(e.target.files);
                 }}
               />
-              {file && (
-                <img src={URL.createObjectURL(file)} alt="" className="w-32" />
-              )}
-              <button className="p-2 bg-primary rounded-full">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 6v12m6-6H6"
-                  />
-                </svg>
-              </button>
             </div>
           </div>
-
+          {file && (
+            <div className="flex gap-3 bg-gray-200">
+              {Array.from(file).map((f, i) => {
+                return <ImageBox data={f} key={i} />;
+              })}
+            </div>
+          )}
           <button
             type="submit"
             className="w-full rounded bg-primary px-5 py-3 text-center text-sm font-medium text-white hover:bg-green-700 focus:outline-none"
@@ -155,20 +257,11 @@ const NewProduct = () => {
           <ToastContainer />
           <div className="flex items-center justify-between">
             <Link
-              to="/"
+              to="/admin/san-pham"
               className="text-sm font-medium text-primary hover:underline"
             >
-              Trang chủ
+              Quản lý sản phẩm
             </Link>
-            <p className="text-sm font-light text-gray-500">
-              Chưa có tài khoản?
-              <Link
-                to="/register"
-                className="ml-2 font-medium text-primary hover:underline"
-              >
-                Đăng ký
-              </Link>
-            </p>
           </div>
         </div>
       </div>
