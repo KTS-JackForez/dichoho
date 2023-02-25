@@ -174,7 +174,8 @@ const NewProduct = () => {
               />
             </div>
           </div>
-
+          <label for="file">Downloading progress:</label>
+<progress id="file" value="32" max="100" className="bg-red-500"> 32% </progress>    
           <button
             type="submit"
             className="w-full rounded bg-primary px-5 py-3 text-center text-sm font-medium text-white hover:bg-green-700 focus:outline-none"
