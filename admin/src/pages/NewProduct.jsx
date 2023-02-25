@@ -7,6 +7,7 @@ const NewProduct = () => {
   const [file, setFile] = useState([]);
   const [showButton, setShowButton] = useState(true);
   const [inputs, setInputs] = useState({});
+  const [isLoadingFiles, setIsLoadingFiles] = useState(false);
   return (
     <div className="p-3">
       <h3 className="py-3 uppercase font-bold">thêm mới sản phẩm</h3>
@@ -96,12 +97,12 @@ const NewProduct = () => {
             <div className="w-1/4 hidden md:block">
               <label htmlFor="">Hình ảnh sản phẩm </label>
             </div>
-            <div className="max-w-3/4 flex items-center gap-2 rounded-md border border-dashed border-primary p-3 overflow-x-auto">
+            <div className="max-w-3/4 flex items-center gap-2 rounded-md border border-dashed border-primary p-1.5 overflow-x-auto">
               {file?.length > 0 ? (
                 <div className="flex gap-3">
                   {file.map((f, i) => {
                     return (
-                      <div className="w-24 relative" key={i}>
+                      <div className="w-24 relative overflow-hidden" key={i}>
                         <div className="w-24 h-24 overflow-hidden flex rounded-md bg-white">
                           <img
                             src={URL.createObjectURL(f)}
@@ -109,10 +110,14 @@ const NewProduct = () => {
                             className="object-cover w-full h-auto"
                           />
                         </div>
-                        <div className="flex justify-between absolute bottom-0 w-full bg-white/50">
-                          <p className="truncate">{f.name}</p>
+                        <div
+                          className={`flex justify-between absolute bottom-0 w-full h-4 z-20 ${
+                            isLoadingFiles ? "text-white" : "bg-white/30"
+                          }`}
+                        >
+                          <p className="truncate text-xs">{f.name}</p>
                           <button
-                            className="hover:text-white hover:bg-red-500 p-1.5 rounded-full"
+                            className="hover:text-white hover:bg-red-500 p-1 rounded-full"
                             onClick={() => {
                               setFile(file.filter((e) => e.name !== f.name));
                             }}
@@ -123,7 +128,7 @@ const NewProduct = () => {
                               viewBox="0 0 24 24"
                               strokeWidth={3}
                               stroke="currentColor"
-                              className="w-3 h-3"
+                              className="w-2 h-2"
                             >
                               <path
                                 strokeLinecap="round"
@@ -133,6 +138,9 @@ const NewProduct = () => {
                             </svg>
                           </button>
                         </div>
+                        <div
+                          className={`flex justify-between absolute bottom-0 w-[20%] h-4 bg-primary rounded-b-md`}
+                        ></div>
                       </div>
                     );
                   })}
@@ -174,8 +182,6 @@ const NewProduct = () => {
               />
             </div>
           </div>
-          <label for="file">Downloading progress:</label>
-<progress id="file" value="32" max="100" className="bg-red-500"> 32% </progress>    
           <button
             type="submit"
             className="w-full rounded bg-primary px-5 py-3 text-center text-sm font-medium text-white hover:bg-green-700 focus:outline-none"
