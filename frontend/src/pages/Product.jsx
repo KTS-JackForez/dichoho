@@ -114,6 +114,7 @@ const Product = () => {
                           } cursor-pointer h-auto`}
                           onClick={() => {
                             setActiveImg(k);
+                            console.log(activeImg);
                           }}
                         />
                       );
