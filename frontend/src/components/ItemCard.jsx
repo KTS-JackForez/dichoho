@@ -13,7 +13,7 @@ const ItemCard = (props) => {
         <p className="font-semibold">{`${discount}%`}</p>
       </div>
       <div className="overflow-hidden p-3 rounded-lg ">
-        <Link to="/product">
+        <Link to={`/products/${props.data?._id}`}>
           <img
             className="w-full h-54 object-contain transition duration-500 hover:scale-125 rounded-md"
             src={

@@ -32,8 +32,12 @@ function App() {
           <Route path="news" element={<News />} />
           <Route path="contact" element={<Contact />} />
           <Route path="about" element={<About />} />
-          <Route path="products" element={<Products />} />
-          <Route path="product" element={<Product />} />
+          {/* <Route path="products" element={<Products />}> */}
+          <Route path="products">
+            <Route index element={<Products />} />
+            <Route path=":productId" element={<Product />} />
+          </Route>
+          {/* <Route path="product" element={<Product />} /> */}
           <Route path="cart" element={<Cart />} />
 
           {/* <Route
