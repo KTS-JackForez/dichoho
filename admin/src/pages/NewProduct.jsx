@@ -63,6 +63,8 @@ const NewProduct = () => {
       ktsRequest(config)
         .then((res) => {
           toast.success(res.data);
+          setFile([]);
+          setUrls([]);
         })
         .catch((er) => toast.error(er));
     } catch (error) {

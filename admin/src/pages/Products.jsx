@@ -37,12 +37,14 @@ const Products = () => {
         </div>
         {data.map((p, i) => {
           return (
-            <div className="w-full flex p-2 gap-1 items-center" key={i}>
+            <div className="w-full flex p-1 gap-1 items-center" key={i}>
               <div className="w-1/6">
                 <img
-                  src={p?.imgs[0]}
+                  src={
+                    p?.imgs[0] || "https://via.placeholder.com/300.png/09f/fff"
+                  }
                   alt=""
-                  className="w-20 object-contain rounded-md"
+                  className="w-16 h-16 object-contain rounded-md"
                 />
               </div>
               <div className="w-2/6">{p?.productName}</div>
