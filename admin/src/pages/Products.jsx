@@ -4,6 +4,8 @@ import ktsRequest from "../../ultis/ktsrequest";
 import { vnd } from "../../ultis/ktsFunc";
 const Products = () => {
   const [data, setData] = useState([]);
+  const [query, setQuery] = useState("");
+  const keys = ["productName"];
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -16,10 +18,42 @@ const Products = () => {
 
     fetchData();
   }, []);
-
+  const search = (data) => {
+    return data.filter((item) =>
+      keys.some((key) => item[key].toLowerCase().includes(query))
+    );
+  };
   return (
     <div className="p-3 text-xs md:text-base">
-      <div className="flex justify-end">
+      <div className="flex justify-between">
+        <div className="flex">
+          <input
+            type="text"
+            name="name"
+            className="block w-full rounded-l-lg border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
+            placeholder="Tìm kiếm tên sản phẩm"
+            required="a-z"
+            onChange={(e) => {
+              setQuery(e.target.value);
+            }}
+          />
+          <button className="border-primary border rounded-r-lg p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary sm:text-sm hover:bg-primary hover:text-white">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+              />
+            </svg>
+          </button>
+        </div>
         <Link
           to="new"
           className="py-2 px-4 hover:bg-primary rounded font-bold border border-primary text-primary bg-white hover:text-white"
@@ -29,16 +63,16 @@ const Products = () => {
       </div>
       <div className="w-full mt-4 border border-dashed border-primary rounded divide-y divide-primary divide-dashed bg-white shadow-lg">
         <div className=" flex p-3 font-semibold items-center bg-primary text-white">
-          <div className="w-1/6">Sản phẩm</div>
-          <div className="w-2/6">Tên</div>
-          <div className="w-1/6">Giá bán</div>
-          <div className="w-1/6">Trạng thái</div>
-          <div className="w-1/6">Thao tác</div>
+          <div className="w-1/12">Sản phẩm</div>
+          <div className="w-6/12">Tên</div>
+          <div className="w-2/12">Giá bán</div>
+          <div className="w-2/12">Trạng thái</div>
+          <div className="w-1/12">Thao tác</div>
         </div>
-        {data.map((p, i) => {
+        {search(data).map((p, i) => {
           return (
             <div className="w-full flex p-1 gap-1 items-center" key={i}>
-              <div className="w-1/6">
+              <div className="w-1/12">
                 <img
                   src={
                     p.imgs[0] || "https://via.placeholder.com/300.png/09f/fff"
@@ -47,10 +81,10 @@ const Products = () => {
                   className="w-16 h-16 object-contain rounded-md"
                 />
               </div>
-              <div className="w-2/6">{p?.productName}</div>
-              <div className="w-1/6">{vnd(p?.currentPrice)}</div>
-              <div className="w-1/6">còn hàng</div>
-              <div className="w-1/6 flex gap-2">
+              <div className="w-6/12">{p?.productName}</div>
+              <div className="w-2/12">{vnd(p?.currentPrice)}</div>
+              <div className="w-2/12">còn hàng</div>
+              <div className="w-1/12 flex gap-2">
                 <button className="p-1.5 bg-white rounded border border-orange-400 text-orange-400 hover:border-orange-400 hover:bg-orange-400 hover:text-white">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
