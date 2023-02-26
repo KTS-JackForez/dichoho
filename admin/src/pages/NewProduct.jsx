@@ -1,109 +1,107 @@
 import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import app from "../../ultis/firebase";
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
+import { storage } from "../../ultis/firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { useSelector } from "react-redux";
+import ktsRequest from "../../ultis/ktsrequest";
 
 const NewProduct = () => {
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState([]);
-  const [showButton, setShowButton] = useState(true);
+  const [urls, setUrls] = useState([]);
   const [inputs, setInputs] = useState({});
   const [isLoadingFiles, setIsLoadingFiles] = useState(false);
-  const [percs, setPercs] = useState([]);
+  const [percs, setPercs] = useState(0);
+  const { currentUser } = useSelector((state) => state.user);
+  useEffect(() => {
+    // https://stackoverflow.com/questions/75570241/cant-get-urls-after-upload-fire-to-firebase
+    const uploadFile = async () => {
+      setUrls([]);
+      setPercs(0);
+      await Promise.all(
+        file.map((f, i) => {
+          const name = new Date().getTime() + currentUser._id + "_" + f.name;
+          const storageRef = ref(
+            storage,
+            `images/products/${currentUser._id}/${name}`
+          );
+          const uploadTask = uploadBytesResumable(storageRef, f);
+
+          uploadTask.on(
+            "state_changed",
+            (snapshot) => {},
+            (error) => {},
+            () => {
+              getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                setUrls((prev) => [...prev, downloadURL]);
+              });
+            }
+          );
+        })
+      );
+      setPercs(100);
+    };
+    file && uploadFile();
+  }, [file]);
   const handleChange = (e) => {
     setInputs((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
   };
-
-  const handleCat = (e) => {
-    setCat(e.target.value.split(","));
+  const handleClick = async () => {
+    try {
+      const config = {
+        method: "post",
+        url: "/products",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${currentUser.token}`,
+        },
+        data: { ...inputs, imgs: urls, shopID: currentUser._id },
+      };
+      ktsRequest(config)
+        .then((res) => {
+          toast.success(res.data);
+        })
+        .catch((er) => toast.error(er));
+    } catch (error) {
+      error.response
+        ? toast.error(error.response.data.message)
+        : toast.error("Network Error!");
+    }
   };
-
-  const handleClick = (e) => {
-    e.preventDefault();
-    const fileName = new Date().getTime() + file.name;
-    const storage = getStorage(app);
-    const storageRef = ref(storage, fileName);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-
-    // Register three observers:
-    // 1. 'state_changed' observer, called any time the state changes
-    // 2. Error observer, called on failure
-    // 3. Completion observer, called on successful completion
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        // Observe state change events such as progress, pause, and resume
-        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
-        switch (snapshot.state) {
-          case "paused":
-            console.log("Upload is paused");
-            break;
-          case "running":
-            console.log("Upload is running");
-            break;
-          default:
-        }
-      },
-      (error) => {
-        // Handle unsuccessful uploads
-      },
-      () => {
-        // Handle successful uploads on complete
-        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          // const product = { ...inputs, img: downloadURL, categories: cat };
-          // addProduct(product, dispatch);
-        });
-      }
-    );
-  };
-
   return (
     <div className="p-3">
       <h3 className="py-3 uppercase font-bold">thêm mới sản phẩm</h3>
       <div className="bg-white p-3 rounded-md text-gray-800 font-semibold shadow-md">
         <div className="space-y-4 md:space-y-6">
           <div className="flex w-full items-center">
-            <label htmlFor="name" className="w-1/3 hidden md:block">
+            <label htmlFor="productName" className="w-1/3 hidden md:block">
               Tên sản phẩm
             </label>
             <input
               type="text"
-              name="name"
-              id="name"
+              name="productName"
+              id="productName"
               className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
               placeholder="Tên sản phẩm"
               required="a-z"
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
+              onChange={handleChange}
             />
           </div>
           <div className="flex w-full items-center">
-            <label htmlFor="desc" className="w-1/3 hidden md:block">
+            <label htmlFor="description" className="w-1/3 hidden md:block">
               Mô tả sản phẩm
             </label>
             <input
               type="text"
-              name="desc"
-              id="desc"
+              name="description"
+              id="description"
               className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
               placeholder="Mô tả sản phẩm"
               required="a-z"
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
+              onChange={handleChange}
             />
           </div>
           <div className="flex w-full items-center">
@@ -117,9 +115,7 @@ const NewProduct = () => {
               className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
               placeholder="Phân cách nhau bởi dấu ; "
               required="a-z"
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
+              onChange={handleChange}
             />
           </div>
           <div className="flex w-full items-center">
@@ -132,10 +128,8 @@ const NewProduct = () => {
               id="stockPrice"
               className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
               placeholder="Giá niêm yết (VNĐ)"
-              required="a-z"
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
+              required="^[0-9]*$"
+              onChange={handleChange}
             />
           </div>
           <div className="flex w-full items-center">
@@ -148,10 +142,8 @@ const NewProduct = () => {
               id="currentPrice"
               className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
               placeholder="Giá bán (VNĐ)"
-              required="a-z"
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
+              required="^[0-9]*$"
+              onChange={handleChange}
             />
           </div>
           <div className="flex w-full items-center">
@@ -200,7 +192,7 @@ const NewProduct = () => {
                           </button>
                         </div>
                         <div
-                          className={`flex justify-between absolute bottom-0 w-[20%] h-4 bg-primary rounded-b-md`}
+                          className={`flex justify-between absolute bottom-0 w-[${percs}%] h-4 bg-primary rounded-b-md`}
                         ></div>
                       </div>
                     );
@@ -238,32 +230,32 @@ const NewProduct = () => {
                 hidden
                 onChange={(e) => {
                   setFile(Array.from(e.target.files));
-                  setShowButton(false);
+                  // setShowButton(false);
                 }}
               />
             </div>
           </div>
           <button
-            type="submit"
+            onClick={handleClick}
             className="w-full rounded bg-primary px-5 py-3 text-center text-sm font-medium text-white hover:bg-green-700 focus:outline-none"
           >
             {loading ? (
               <svg
-                class="h-5  w-5 animate-spin text-white mx-auto"
+                className="h-5  w-5 animate-spin text-white mx-auto"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
               >
                 <circle
-                  class="opacity-25"
+                  className="opacity-25"
                   cx="12"
                   cy="12"
                   r="10"
                   stroke="currentColor"
-                  stroke-width="4"
+                  strokeWidth="4"
                 ></circle>
                 <path
-                  class="opacity-75"
+                  className="opacity-75"
                   fill="currentColor"
                   d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                 ></path>

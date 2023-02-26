@@ -9,13 +9,25 @@ export const createProduct = async (req, res, next) => {
     await newProduct.save();
     res.status(200).json("Tạo mới sản phẩm thành công");
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
 
 export const getProducts = async (req, res, next) => {
+  console.log("get products");
   try {
     const products = await Product.find();
+    res.status(200).json(products);
+  } catch (error) {
+    next(error);
+  }
+};
+//get sản phẩm của user
+export const getMyProducts = async (req, res, next) => {
+  console.log("get my products");
+  try {
+    const products = await Product.findById(req.user.id);
     res.status(200).json(products);
   } catch (error) {
     next(error);

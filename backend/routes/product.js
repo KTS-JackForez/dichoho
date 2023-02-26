@@ -4,6 +4,7 @@ import {
   addTag,
   createProduct,
   deleteProduct,
+  getMyProducts,
   getProduct,
   getProductByTag,
   getProducts,
@@ -17,7 +18,8 @@ import { verifyToken } from "../verifyToken.js";
 
 const router = express.Router();
 
-router.get("/", verifyToken, getProducts);
+router.get("/", getProducts);
+router.get("/my", verifyToken, getMyProducts);
 router.get("/:id", verifyToken, getProduct);
 router.get("/tags", verifyToken, getProductByTag);
 router.get("/addlike", verifyToken, addLike);
