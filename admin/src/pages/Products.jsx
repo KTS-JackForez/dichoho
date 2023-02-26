@@ -41,7 +41,7 @@ const Products = () => {
               <div className="w-1/6">
                 <img
                   src={
-                    p?.imgs[0] || "https://via.placeholder.com/300.png/09f/fff"
+                    p.imgs[0] || "https://via.placeholder.com/300.png/09f/fff"
                   }
                   alt=""
                   className="w-16 h-16 object-contain rounded-md"
