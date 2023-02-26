@@ -1,7 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ItemCard from "./ItemCard";
+import { ToastContainer, toast } from "react-toastify";
+import ktsRequest from "../../ultis/ktsrequest";
 
 const Lastest = () => {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await ktsRequest.get("/products");
+        setData(res.data);
+      } catch (err) {
+        err.response
+          ? toast.error(err.response.data.message)
+          : toast.error("Network Error!");
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <div className="w-full bottom-0 mt-1 py-2">
       <div className="max-w-screen-xl mx-auto">
@@ -32,18 +48,12 @@ const Lastest = () => {
           </div>
         </div>
         <div className="gap-2 mx-auto grid grid-cols-2 md:grid-cols-5 justify-center grid-rows-2 p-3">
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
+          {data.map((p, i) => {
+            return <ItemCard data={p} />;
+          })}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
