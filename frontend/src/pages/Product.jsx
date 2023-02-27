@@ -2,17 +2,21 @@ import React, { useEffect, useState } from "react";
 import { Footer, Header, Navbar, Promotion } from "../components";
 import { vnd } from "../../ultis/ktsFunc";
 import "./Products.css";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import ktsRequest from "../../ultis/ktsrequest";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../redux/cartReducer";
 
 const Product = () => {
   const [weight, setWeight] = useState(1);
   const [activeImg, setActiveImg] = useState(0);
   const [openTab, setOpenTab] = useState(1);
   const [product, setProduct] = useState({});
+  const [quantity,setQuantity] = useState(1)
   const { productId } = useParams();
   const { imgs } = product;
+  const dispatch = useDispatch()
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -170,12 +174,20 @@ const Product = () => {
                   </div>
                 </div>
                 <div className="w-full grid grid-cols-2 gap-2">
-                  <button className="p-3 font-semibold text-white bg-primary rounded-md">
+                  <button className="p-3 font-semibold text-white bg-primary hover:bg-green-700 rounded-md"
+                  onClick={dispatch(addToCart({
+                    id: productId,
+                    title: product.productName,
+                    desc: product.description,
+                    price: product.currentPrice,
+                    img: "https://via.placeholder.com/300.png/09f/fff",
+                    quantity,
+                  }))}>
                     Thêm vào giỏ hàng
                   </button>
-                  <button className="p-3 font-semibold text-white bg-orange-400 rounded-md">
+                  <Link className="p-3 font-semibold text-white bg-orange-400 rounded-md text-center hover:bg-orange-600">
                     Mua luôn
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

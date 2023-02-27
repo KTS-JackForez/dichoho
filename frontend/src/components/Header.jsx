@@ -180,7 +180,8 @@ const Header = () => {
               {products.length}
             </div>
           )}
-          {openCart && <Cart data={data} />}
+          {openCart && <Cart data={products} />}
+          {console.log(products)}
         </Link>
         <Link
           to="/login"
