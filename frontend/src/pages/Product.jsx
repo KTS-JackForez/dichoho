@@ -34,7 +34,7 @@ const Product = () => {
       <div className="min-h-screen">
         <div>
           <div className="mb-12 max-w-screen-xl mx-auto py-4 flex gap-3">
-            <div className="flex w-3/4 gap-2">
+            <div className="flex lg:w-3/4 gap-2">
               <div className="w-1/2">
                 <div className="relative overflow-hidden w-full">
                   <button
@@ -101,20 +101,20 @@ const Product = () => {
                   </div>
                 </div>
                 {imgs && (
-                  <div className="w-auto flex overflow-hidden h-24 ">
+                  <div className="w-auto flex overflow-hidden h-24 gap-1 mt-1">
                     {imgs.map((i, k) => {
                       return (
                         <img
                           src={i}
                           alt=""
-                          className={`w-24 opacity-${
-                            activeImg === k
-                              ? "100 border border-primary rounded"
-                              : "30"
-                          } cursor-pointer h-auto`}
+                          // className={`w-24 opacity-${   
+                          //   activeImg === k
+                          //     ? "100 border border-primary rounded"
+                          //     : "30"
+                          // } cursor-pointer h-auto`}
+                          className={`w-1/4 bg-white/50`}
                           onClick={() => {
                             setActiveImg(k);
-                            console.log(activeImg);
                           }}
                         />
                       );
@@ -180,7 +180,7 @@ const Product = () => {
                 </div>
               </div>
             </div>
-            <div className="w-1/4">
+            <div className="lg:w-1/4 lg:block hidden">
               <h3 className="p-3 bg-primary w-full text-center text-white rounded-md block uppercase fo">
                 sản phẩm nổi bật
               </h3>
