@@ -8,14 +8,14 @@ const ItemCard = (props) => {
       props.data?.stockPrice
   );
   return (
-    <div class="bg-white rounded-lg relative flex flex-col justify-between hover:shadow-lg max-w-full mx-atuto">
+    <div class="bg-white rounded-lg relative flex flex-col justify-between shadow-lg max-w-full mx-atuto w-60 overflow-hidden">
       <div className="z-10 w-12 h-12 border-double border-4 border-white bg-red-600 absolute top-3 right-3 rounded-tl-3xl rounded-tr-3xl rounded-bl rounded-br-3xl flex items-center text-center pl-1.5 text-white">
         <p className="font-semibold">{`${discount}%`}</p>
       </div>
-      <div className="overflow-hidden p-3 rounded-lg ">
+      <div className="overflow-hidden w-full h-56 bg-white">
         <Link to={`/products/${props.data?._id}`}>
           <img
-            className="w-full h-54 object-contain transition duration-500 hover:scale-125 rounded-md"
+            className="transition duration-500 hover:scale-125 h-full w-full object-fit object-center"
             src={
               props.data?.imgs[0] ||
               "https://via.placeholder.com/300.png/09f/fff"

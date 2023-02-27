@@ -9,7 +9,7 @@ const Lastest = () => {
     const fetchData = async () => {
       try {
         const res = await ktsRequest.get("/products");
-        setData(res.data);
+        setData(res.data.slice(0,10));
       } catch (err) {
         err.response
           ? toast.error(err.response.data.message)
