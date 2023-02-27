@@ -2,34 +2,45 @@ import React, { useEffect, useState } from "react";
 import { Footer, Header, Navbar, Promotion } from "../components";
 import { vnd } from "../../ultis/ktsFunc";
 import "./Products.css";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import ktsRequest from "../../ultis/ktsrequest";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/cartReducer";
 
 const Product = () => {
+  const { products } = useSelector((state) => state.cart);
   const [weight, setWeight] = useState(1);
   const [activeImg, setActiveImg] = useState(0);
   const [openTab, setOpenTab] = useState(1);
   const [product, setProduct] = useState({});
-  const [quantity,setQuantity] = useState(1)
+  const [quantity, setQuantity] = useState(1);
   const { productId } = useParams();
   const { imgs } = product;
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await ktsRequest.get(`/products/${productId}`);
         setProduct(res.data);
       } catch (err) {
-        err.response
-          ? toast.error(err.response.data.message)
-          : toast.error("Network Error!");
+        err.response ? navigate("/notfound") : toast.error("Network Error!");
       }
     };
     fetchData();
   }, []);
+  const handleClick = () => {
+    const data = {
+      id: productId,
+      productName: product.productName,
+      description: product.description,
+      currentPrice: product.currentPrice,
+      img: product.imgs[0],
+      quantity,
+    };
+    dispatch(addToCart(data));
+  };
   return (
     <div className="">
       <Promotion />
@@ -111,7 +122,7 @@ const Product = () => {
                         <img
                           src={i}
                           alt=""
-                          className={`w-24 opacity-${   
+                          className={`w-24 opacity-${
                             activeImg === k
                               ? "100 border border-primary rounded"
                               : "30"
@@ -160,29 +171,32 @@ const Product = () => {
                     Trọng lượng (KG)
                   </span>
                   <div className="flex w-1/2 mx-auto">
-                    <button className="bg-gray-300 px-2.5 hover:bg-gray-500">
+                    <button
+                      className="bg-gray-300 px-2.5 hover:bg-gray-500"
+                      onClick={() =>
+                        setQuantity((prev) => (prev > 0 ? prev - 1 : 0))
+                      }
+                    >
                       -
                     </button>
                     <input
                       type="text"
                       className="border border-gray-300 w-1/4 text-center"
-                      value={1}
+                      value={quantity}
                     />
-                    <button className="bg-gray-300 px-2.5 hover:bg-gray-500">
+                    <button
+                      className="bg-gray-300 px-2.5 hover:bg-gray-500"
+                      onClick={() => setQuantity((prev) => prev + 1)}
+                    >
                       +
                     </button>
                   </div>
                 </div>
                 <div className="w-full grid grid-cols-2 gap-2">
-                  <button className="p-3 font-semibold text-white bg-primary hover:bg-green-700 rounded-md"
-                  onClick={dispatch(addToCart({
-                    id: productId,
-                    title: product.productName,
-                    desc: product.description,
-                    price: product.currentPrice,
-                    img: "https://via.placeholder.com/300.png/09f/fff",
-                    quantity,
-                  }))}>
+                  <button
+                    className="p-3 font-semibold text-white bg-primary hover:bg-green-700 rounded-md"
+                    onClick={handleClick}
+                  >
                     Thêm vào giỏ hàng
                   </button>
                   <Link className="p-3 font-semibold text-white bg-orange-400 rounded-md text-center hover:bg-orange-600">
