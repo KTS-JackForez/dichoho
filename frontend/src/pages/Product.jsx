@@ -107,12 +107,11 @@ const Product = () => {
                         <img
                           src={i}
                           alt=""
-                          // className={`w-24 opacity-${   
-                          //   activeImg === k
-                          //     ? "100 border border-primary rounded"
-                          //     : "30"
-                          // } cursor-pointer h-auto`}
-                          className={`w-1/4 bg-white/50`}
+                          className={`w-24 opacity-${   
+                            activeImg === k
+                              ? "100 border border-primary rounded"
+                              : "30"
+                          } cursor-pointer h-auto`}
                           onClick={() => {
                             setActiveImg(k);
                           }}
