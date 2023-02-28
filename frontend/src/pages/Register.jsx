@@ -25,7 +25,7 @@ const Register = () => {
   useEffect(() => {
     const getCities = async () => {
       try {
-        const res = await ktsRequest.get("/cities");
+        const res = await axios.get("https://api.ktscorp.vn/api/cities");
         const data = Object.values(res.data);
         setCities(data);
       } catch (error) {
@@ -37,7 +37,9 @@ const Register = () => {
   useEffect(() => {
     const getDistricts = async () => {
       try {
-        const resd = await ktsRequest.get(`/cities/districts/${cityCode}`);
+        const resd = await axios.get(
+          `https://api.ktscorp.vn/api/cities/districts/${cityCode}`
+        );
         const cName = cities.find((city) => city.code === cityCode);
         const data = Object.values(resd.data);
         setDistricts(data);
@@ -52,7 +54,9 @@ const Register = () => {
   useEffect(() => {
     const getWards = async () => {
       try {
-        const resw = await ktsRequest.get(`/cities/wards/${districtCode}`);
+        const resw = await axios.get(
+          `https://api.ktscorp.vn/api/cities/wards/${districtCode}`
+        );
         const data = Object.values(resw.data);
         const dName = districts.find((d) => d.code === districtCode);
         setWards(data);
