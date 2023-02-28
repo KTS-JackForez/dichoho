@@ -1,9 +1,16 @@
 import React from "react";
+import { Footer, Header, Navbar, Promotion } from "../components";
 import './News.css';
 import '../assets/css/base.css';
 
 const News = () => {
-  return  <div class="main">
+    return  <div className="bg-gray-100">
+    
+    <div className="max-w-screen-xl bg-white mx-auto">
+    <Promotion />
+     <Header />
+     <Navbar />
+     <div class="main">
 
   <div class="news">
       <div class="news-main grid">
@@ -167,6 +174,11 @@ const News = () => {
 
   </div>
 </div>
+     <Footer />
+    </div>
+   
+   </div>;
+ 
 ;
 };
 
