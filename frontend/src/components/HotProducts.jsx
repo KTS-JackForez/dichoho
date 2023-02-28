@@ -1,19 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ItemCard from "./ItemCard";
 import hot from "../assets/imgs/hot.png";
+import { ToastContainer, toast } from "react-toastify";
+import ktsRequest from "../../ultis/ktsrequest";
 const HotProducts = (props) => {
   const slideLeft = () => {
     var slider = document.getElementById("wrraper");
     slider.scrollLeft = slider.scrollLeft - 896;
-    console.log("L");
   };
 
   const slideRight = () => {
     var slider = document.getElementById("wrraper");
     slider.scrollLeft = slider.scrollLeft + 896;
-    console.log("R");
   };
-
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await ktsRequest.get("/products");
+        setData(res.data.slice(0, 5));
+      } catch (err) {
+        err.response
+          ? toast.error(err.response.data.message)
+          : toast.error("Network Error!");
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <div className="w-ful bottom-0 mt-1 py-2">
       <div className="max-w-screen-xl mx-auto border-4 border-green-500 rounded-md overflow-hidden">
@@ -69,24 +82,12 @@ const HotProducts = (props) => {
             </button>
           </div>
         </div>
-        <div
-          className="flex gap-2 p-2 overflow-x-hidden scroll whitespace-nowrap scroll-smooth scrollbar-hide"
-          id="wrraper"
-        >
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
+        <div className="w-full overflow-hidden grid grid-cols-5 grid-rows-1 gap-2 p-2">
+          {data.map((p, i) => {
+            return <ItemCard data={p} />;
+          })}
         </div>
+        <ToastContainer />
       </div>
     </div>
   );

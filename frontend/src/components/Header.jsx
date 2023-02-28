@@ -1,107 +1,112 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/imgs/logo.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { vnd } from "../../ultis/ktsFunc";
+import { removeItem, resetCart } from "../redux/cartReducer";
 const Cart = (props) => {
   const show = window.location.pathname === "/cart" ? false : true;
   const [subtotal, setSubtotal] = useState(0);
   let subtotal1 = 0;
+  const dispatch = useDispatch();
   return (
     show && (
       <div className="text-gray-800 bg-white rounded shadow absolute top-12 right-0 z-50 p-3 flex flex-col w-96 gap-2 ">
-        <div>
-          <div className="divide-y divide-dashed divide-primary">
-            <div className="pb-3 flex justify-end items-center">
-              <button className="block border border-primary px-3 py-1 rounded hover:bg-primary hover:text-white">
-                xóa giỏ hàng
-              </button>
-            </div>
-            {props.data.map((i) => {
-              subtotal1 += i.price * i.sl;
-              return (
-                <div
-                  className="py-1 flex gap-2 justify-between items-center"
-                  key={i.id}
-                >
-                  <img
-                    src="https://green.web5phut.com/wp-content/uploads/2022/06/5-600x600.jpg"
-                    alt=""
-                    className="w-16"
-                  />
-                  <div className="flex flex-col justify-center items-start flex-1">
-                    <p className="font-semibold">{i.name + " - " + i.sl}</p>
-                    <p className="text-green-400">{vnd(i.price)}</p>
-                  </div>
-                  <div className="text-center w-1/5">
-                    <button className="bg-white p-2 rounded-full hover:bg-primary hover:text-white">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={3}
-                        stroke="currentColor"
-                        className="w-3 h-3"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M6 18L18 6M6 6l12 12"
-                        />
-                      </svg>
-                    </button>
-                  </div>
+        {props.data.length > 0 ? (
+          <div>
+            <div>
+              <div className="divide-y divide-dashed divide-primary">
+                <div className="pb-3 flex justify-end items-center">
+                  <button
+                    className="block border border-primary px-3 py-1 rounded hover:bg-primary hover:text-white"
+                    onClick={() => dispatch(resetCart())}
+                  >
+                    xóa giỏ hàng
+                  </button>
                 </div>
-              );
-            })}
+                {props.data.map((i, k) => {
+                  subtotal1 += i.currentPrice * i.quantity;
+                  return (
+                    <div
+                      className="py-1 flex gap-2 justify-between items-center"
+                      key={k}
+                    >
+                      <img src={i.img} alt="" className="w-16" />
+                      <div className="flex flex-col justify-center items-start flex-1">
+                        <p className="font-semibold text-left">
+                          {i.productName}
+                        </p>
+                        <p className="text-green-600">
+                          {vnd(i.currentPrice) + " * " + i.quantity}
+                        </p>
+                      </div>
+                      <div className="text-center w-1/5">
+                        <button
+                          className="bg-white p-2 rounded-full hover:bg-primary hover:text-white"
+                          onClick={() => dispatch(removeItem(i.id))}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={3}
+                            stroke="currentColor"
+                            className="w-3 h-3"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M6 18L18 6M6 6l12 12"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="flex justify-between pr-6">
+              <span>tổng tiền</span>
+              <span className="font-bold">{vnd(subtotal1)}</span>
+            </div>
+            <div className="flex flex-col gap-2">
+              <Link
+                to="/cart"
+                className="p-2 bg-primary rounded uppercase font-semibold text-white hover:bg-green-700"
+              >
+                Xem giỏ hàng
+              </Link>
+              <Link
+                to="/checkout"
+                className="p-2 bg-orange-500 rounded uppercase font-semibold text-white hover:bg-orange-700"
+              >
+                thanh toán
+              </Link>
+            </div>
           </div>
-        </div>
-        <div className="flex justify-between pr-6">
-          <span>tổng tiền</span>
-          <span className="font-bold">{vnd(subtotal1)}</span>
-        </div>
-        <div className="flex flex-col gap-2">
-          <Link
-            to="/cart"
-            className="p-2 bg-primary rounded uppercase font-semibold text-white hover:bg-green-700"
-          >
-            Xem giỏ hàng
-          </Link>
-          <Link
-            to="/checkout"
-            className="p-2 bg-orange-500 rounded uppercase font-semibold text-white hover:bg-orange-700"
-          >
-            thanh toán
-          </Link>
-        </div>
+        ) : (
+          "Chưa có sản phẩm nào"
+        )}
       </div>
     )
   );
 };
 const Header = () => {
   const [openCart, setOpenCart] = useState(false);
-  const products = useSelector((state) => state.cart.products);
-  const data = [
-    {
-      id: "145",
-      img: "https://green.web5phut.com/wp-content/uploads/2022/06/4-300x300.jpg",
-      price: "123456",
-      sl: "1",
-      name: "Rau sạch Đồ Sơn",
-    },
-    {
-      id: "12345",
-      img: "https://green.web5phut.com/wp-content/uploads/2022/06/1-300x300.jpg",
-      price: "123456",
-      sl: "1",
-      name: "Che ri Quất Lâm",
-    },
-  ];
+  const { products } = useSelector((state) => state.cart);
   const hoverOn = () => {
     setOpenCart(true);
   };
   const hoverOut = () => {
     setOpenCart(false);
+  };
+  const totalItems = (cart) => {
+    let total = 0;
+    cart.map((item) => {
+      total += item.quantity;
+    });
+    return total;
   };
   return (
     <div className="max-w-screen-xl mx-auto text-center flex items-center justify-between">
@@ -154,11 +159,10 @@ const Header = () => {
             <p className="text-primary font-extrabold text-xl">0123456789</p>
           </div>
         </div>
-        <Link
-          className="flex items-center relative bg-green-600 rounded px-4 uppercase text-white font-semibold gap-2  hover:bg-green-700"
+        <div
+          className="flex items-center relative bg-green-600 rounded px-4 text-white font-semibold gap-2  hover:bg-green-700"
           onMouseOver={hoverOn}
           onMouseOut={hoverOut}
-          to="/cart"
         >
           <p>giỏ hàng</p>
           <svg
@@ -177,11 +181,11 @@ const Header = () => {
           </svg>
           {products.length > 0 && (
             <div className="bg-red-500 w-3 h-3 p-3 rounded-full -right-2 absolute flex justify-center items-center -top-2 ">
-              {products.length}
+              {totalItems(products)}
             </div>
           )}
-          {openCart && <Cart data={data} />}
-        </Link>
+          {openCart && <Cart data={products} />}
+        </div>
         <Link
           to="/login"
           tooltip="Tài khoản"

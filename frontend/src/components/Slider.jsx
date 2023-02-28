@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import promo from "../assets/imgs/promo.jpg";
 const Slider = () => {
   const dots = [1, 2, 3];
   const [activeSlide, setActiveSlide] = useState(0);
@@ -14,16 +13,16 @@ const Slider = () => {
       <div className="max-w-screen-xl mx-auto">
         <div className="relative w-full bg-white overflow-hidden">
           <div
-            className="flex w-full duration-300 h-96 bg-red-500"
+            className="w-full duration-300 md:h-96 h-48"
             // style={{ transform: `translateX(-${activeSlide * 100}%)` }}
-            style={{ transform: `translateX(-${activeSlide * 100}%)` }}
+            // style={{ transform: `translateX(-${activeSlide * 100}%)` }}
           >
             {data.map((i) => {
               return (
                 <img
                   src={data[activeSlide]}
                   alt=""
-                  className="max-w-fit object-cover"
+                  className="w-full h-full object-center object-fit"
                 />
               );
             })}

@@ -2,30 +2,45 @@ import React, { useEffect, useState } from "react";
 import { Footer, Header, Navbar, Promotion } from "../components";
 import { vnd } from "../../ultis/ktsFunc";
 import "./Products.css";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import ktsRequest from "../../ultis/ktsrequest";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../redux/cartReducer";
 
 const Product = () => {
+  const { products } = useSelector((state) => state.cart);
   const [weight, setWeight] = useState(1);
   const [activeImg, setActiveImg] = useState(0);
   const [openTab, setOpenTab] = useState(1);
   const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(1);
   const { productId } = useParams();
   const { imgs } = product;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await ktsRequest.get(`/products/${productId}`);
         setProduct(res.data);
       } catch (err) {
-        err.response
-          ? toast.error(err.response.data.message)
-          : toast.error("Network Error!");
+        err.response ? navigate("/notfound") : toast.error("Network Error!");
       }
     };
     fetchData();
   }, []);
+  const handleClick = () => {
+    const data = {
+      id: productId,
+      productName: product.productName,
+      description: product.description,
+      currentPrice: product.currentPrice,
+      img: product.imgs[0],
+      quantity,
+    };
+    dispatch(addToCart(data));
+  };
   return (
     <div className="">
       <Promotion />
@@ -34,7 +49,7 @@ const Product = () => {
       <div className="min-h-screen">
         <div>
           <div className="mb-12 max-w-screen-xl mx-auto py-4 flex gap-3">
-            <div className="flex w-3/4 gap-2">
+            <div className="flex lg:w-3/4 gap-2">
               <div className="w-1/2">
                 <div className="relative overflow-hidden w-full">
                   <button
@@ -101,7 +116,7 @@ const Product = () => {
                   </div>
                 </div>
                 {imgs && (
-                  <div className="w-auto flex overflow-hidden h-24 ">
+                  <div className="w-auto flex overflow-hidden h-24 gap-1 mt-1">
                     {imgs.map((i, k) => {
                       return (
                         <img
@@ -114,7 +129,6 @@ const Product = () => {
                           } cursor-pointer h-auto`}
                           onClick={() => {
                             setActiveImg(k);
-                            console.log(activeImg);
                           }}
                         />
                       );
@@ -156,31 +170,43 @@ const Product = () => {
                   <span className="font-bold text-gray-700">
                     Trọng lượng (KG)
                   </span>
-                  <div className="flex w-1/2 mx-auto">
-                    <button className="bg-gray-300 px-2.5 hover:bg-gray-500">
+                  <div className="flex w-1/2 mx-auto gap-1">
+                    <button
+                      className="bg-gray-300 px-2.5 hover:bg-gray-500 rounded"
+                      onClick={() =>
+                        setQuantity((prev) => (prev > 0 ? prev - 1 : 0))
+                      }
+                    >
                       -
                     </button>
                     <input
-                      type="text"
-                      className="border border-gray-300 w-1/4 text-center"
-                      value={1}
+                      type="number"
+                      className="focus:border-primary focus:outline-none focus:ring-primary w-1/4 border border-green-100 text-center"
+                      value={quantity}
+                      onChange={(e) => setQuantity(parseInt(e.target.value))}
                     />
-                    <button className="bg-gray-300 px-2.5 hover:bg-gray-500">
+                    <button
+                      className="bg-gray-300 px-2.5 hover:bg-gray-500 rounded"
+                      onClick={() => setQuantity((prev) => prev + 1)}
+                    >
                       +
                     </button>
                   </div>
                 </div>
                 <div className="w-full grid grid-cols-2 gap-2">
-                  <button className="p-3 font-semibold text-white bg-primary rounded-md">
+                  <button
+                    className="p-3 font-semibold text-white bg-primary hover:bg-green-700 rounded-md"
+                    onClick={handleClick}
+                  >
                     Thêm vào giỏ hàng
                   </button>
-                  <button className="p-3 font-semibold text-white bg-orange-400 rounded-md">
+                  <Link className="p-3 font-semibold text-white bg-orange-400 rounded-md text-center hover:bg-orange-600">
                     Mua luôn
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
-            <div className="w-1/4">
+            <div className="lg:w-1/4 lg:block hidden">
               <h3 className="p-3 bg-primary w-full text-center text-white rounded-md block uppercase fo">
                 sản phẩm nổi bật
               </h3>
