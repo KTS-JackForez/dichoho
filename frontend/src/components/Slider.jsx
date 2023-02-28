@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import promo from "../assets/imgs/promo.jpg";
 const Slider = () => {
   const dots = [1, 2, 3];
   const [activeSlide, setActiveSlide] = useState(0);

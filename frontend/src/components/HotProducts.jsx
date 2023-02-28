@@ -18,7 +18,7 @@ const HotProducts = (props) => {
     const fetchData = async () => {
       try {
         const res = await ktsRequest.get("/products");
-        setData(res.data.slice(0,10));
+        setData(res.data.slice(0, 5));
       } catch (err) {
         err.response
           ? toast.error(err.response.data.message)
@@ -82,12 +82,12 @@ const HotProducts = (props) => {
             </button>
           </div>
         </div>
-        <div className="w-full overflow-hidden grid grid-cols-5 grid-rows-1">
-        {data.map((p, i) => {
+        <div className="w-full overflow-hidden grid grid-cols-5 grid-rows-1 gap-2 p-2">
+          {data.map((p, i) => {
             return <ItemCard data={p} />;
           })}
         </div>
-        <ToastContainer/>
+        <ToastContainer />
       </div>
     </div>
   );
