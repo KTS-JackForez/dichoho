@@ -1,0 +1,84 @@
+.section-content{
+    padding: 30px 15px;
+}
+.contact-content{
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.contact-content-introduce{
+    flex-basis: 50%;
+    padding: 0 10px;
+}
+.contact-content-introduce h3{
+    font-weight: 700;
+    color: rgb(85, 85, 85);
+    font-size: 20px;
+    font-family: Nunito, sans-serif;
+    margin-bottom: 20px;
+}
+.contact-content-introduce p{
+    margin-bottom: 20px;
+    color: rgb(119, 119, 119);
+    display: block;
+    line-height: 25px;
+    font-size: 16px;
+
+}
+.contact-content-information{
+    width: 100%;
+    border-radius: 5px;
+    flex-basis: 50%;
+    padding: 0 10px;
+}
+
+.contact-content-information > span{
+    display: block;
+}
+.contact-content-information > span > input{
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    font-size: 15px;
+    outline: none;
+    color: rgb(51, 51, 51);
+    padding: 0 12px;
+    margin-bottom: 16px;
+    border: 1px solid #ddd;
+    box-shadow: inset 0 1px 2px rgb(0 0 0 / 10%);
+    
+}
+.contact-content-information > span > input:focus{
+    box-shadow: 0 0 5px #ccc;
+    opacity: 1 !important;
+    outline: 0;
+    color: #333;
+    background-color: #fff;
+   
+}
+.contact-content-information > span > input:hover{
+    box-shadow: inset 0 -1.8em 1em 0 rgb(0 0 0 / 0%);
+}
+.contact-content-information > span > textarea{
+  
+    font-size: 16px;
+    height: 100px;
+    outline: none;
+    color: rgb(51, 51, 51);
+    padding: 10px 12px;
+    margin-bottom: 16px;
+    border: 1px solid #ddd;
+    box-shadow: inset 0 1px 2px rgb(0 0 0 / 10%);
+    font-family: Nunito,sans-serif;
+}
+textarea:focus{
+    box-shadow: 0 0 5px #ccc;
+   
+    outline: 0;
+    color: #333;
+    background-color: #fff;
+   
+}
+textarea:hover{
+    box-shadow: inset 0 -1.8em 1em 0 rgb(0 0 0 / 0%);
+    
+}
