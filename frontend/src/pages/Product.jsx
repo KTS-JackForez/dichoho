@@ -170,9 +170,9 @@ const Product = () => {
                   <span className="font-bold text-gray-700">
                     Trọng lượng (KG)
                   </span>
-                  <div className="flex w-1/2 mx-auto">
+                  <div className="flex w-1/2 mx-auto gap-1">
                     <button
-                      className="bg-gray-300 px-2.5 hover:bg-gray-500"
+                      className="bg-gray-300 px-2.5 hover:bg-gray-500 rounded"
                       onClick={() =>
                         setQuantity((prev) => (prev > 0 ? prev - 1 : 0))
                       }
@@ -180,12 +180,13 @@ const Product = () => {
                       -
                     </button>
                     <input
-                      type="text"
-                      className="border border-gray-300 w-1/4 text-center"
+                      type="number"
+                      className="focus:border-primary focus:outline-none focus:ring-primary w-1/4 border border-green-100 text-center"
                       value={quantity}
+                      onChange={(e) => setQuantity(parseInt(e.target.value))}
                     />
                     <button
-                      className="bg-gray-300 px-2.5 hover:bg-gray-500"
+                      className="bg-gray-300 px-2.5 hover:bg-gray-500 rounded"
                       onClick={() => setQuantity((prev) => prev + 1)}
                     >
                       +
