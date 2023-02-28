@@ -281,7 +281,7 @@ const Product = () => {
                   href="#link1"
                   role="tablist"
                 >
-                  mô tả
+                  {product.description}
                 </a>
               </li>
               <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
