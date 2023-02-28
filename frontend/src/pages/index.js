@@ -8,4 +8,4 @@ export { default as Login } from "./Login";
 export { default as Register } from "./Register";
 export { default as About } from "./About";
 export { default as Cart } from "./Cart";
-// import '@fortawesome/fontawesome-free/css/all.min.css';
+// git OK;
