@@ -185,8 +185,7 @@ const NewProduct = () => {
             <label htmlFor="description" className="w-1/3 hidden md:block">
               Mô tả sản phẩm
             </label>
-            <input
-              type="text"
+            <textarea
               name="description"
               id="description"
               className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
@@ -194,6 +193,15 @@ const NewProduct = () => {
               required="a-z"
               onChange={handleChange}
             />
+            {/* <input
+              type="text"
+              name="description"
+              id="description"
+              className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
+              placeholder="Mô tả sản phẩm"
+              required="a-z"
+              onChange={handleChange}
+            /> */}
           </div>
           <div className="flex w-full items-center">
             <label htmlFor="cats" className="w-1/3 hidden md:block">
