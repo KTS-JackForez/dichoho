@@ -79,76 +79,6 @@ const NewProduct = () => {
       <div className="bg-white p-3 rounded-md text-gray-800 font-semibold shadow-md">
         <div className="space-y-4 md:space-y-6">
           <div className="flex w-full items-center">
-            <label htmlFor="productName" className="w-1/3 hidden md:block">
-              Tên sản phẩm
-            </label>
-            <input
-              type="text"
-              name="productName"
-              id="productName"
-              className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-              placeholder="Tên sản phẩm"
-              required="a-z"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="flex w-full items-center">
-            <label htmlFor="description" className="w-1/3 hidden md:block">
-              Mô tả sản phẩm
-            </label>
-            <input
-              type="text"
-              name="description"
-              id="description"
-              className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-              placeholder="Mô tả sản phẩm"
-              required="a-z"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="flex w-full items-center">
-            <label htmlFor="cats" className="w-1/3 hidden md:block">
-              Danh mục
-            </label>
-            <input
-              type="text"
-              name="cats"
-              id="cats"
-              className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-              placeholder="Phân cách nhau bởi dấu ; "
-              required="a-z"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="flex w-full items-center">
-            <label htmlFor="stockPrice" className="w-1/3 hidden md:block">
-              Giá niêm yết
-            </label>
-            <input
-              type="text"
-              name="stockPrice"
-              id="stockPrice"
-              className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-              placeholder="Giá niêm yết (VNĐ)"
-              required="^[0-9]*$"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="flex w-full items-center">
-            <label htmlFor="currentPrice" className="w-1/3 hidden md:block">
-              Giá bán
-            </label>
-            <input
-              type="text"
-              name="currentPrice"
-              id="currentPrice"
-              className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-              placeholder="Giá bán (VNĐ)"
-              required="^[0-9]*$"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="flex w-full items-center">
             <div className="w-1/4 hidden md:block">
               <label htmlFor="">Hình ảnh sản phẩm </label>
             </div>
@@ -237,6 +167,77 @@ const NewProduct = () => {
               />
             </div>
           </div>
+          <div className="flex w-full items-center">
+            <label htmlFor="productName" className="w-1/3 hidden md:block">
+              Tên sản phẩm
+            </label>
+            <input
+              type="text"
+              name="productName"
+              id="productName"
+              className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
+              placeholder="Tên sản phẩm"
+              required="a-z"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="flex w-full items-center">
+            <label htmlFor="description" className="w-1/3 hidden md:block">
+              Mô tả sản phẩm
+            </label>
+            <input
+              type="text"
+              name="description"
+              id="description"
+              className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
+              placeholder="Mô tả sản phẩm"
+              required="a-z"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="flex w-full items-center">
+            <label htmlFor="cats" className="w-1/3 hidden md:block">
+              Danh mục
+            </label>
+            <input
+              type="text"
+              name="cats"
+              id="cats"
+              className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
+              placeholder="Phân cách nhau bởi dấu ; "
+              required="a-z"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="flex w-full items-center">
+            <label htmlFor="stockPrice" className="w-1/3 hidden md:block">
+              Giá niêm yết
+            </label>
+            <input
+              type="text"
+              name="stockPrice"
+              id="stockPrice"
+              className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
+              placeholder="Giá niêm yết (VNĐ)"
+              required="^[0-9]*$"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="flex w-full items-center">
+            <label htmlFor="currentPrice" className="w-1/3 hidden md:block">
+              Giá bán
+            </label>
+            <input
+              type="text"
+              name="currentPrice"
+              id="currentPrice"
+              className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
+              placeholder="Giá bán (VNĐ)"
+              required="^[0-9]*$"
+              onChange={handleChange}
+            />
+          </div>
+
           <button
             onClick={handleClick}
             className="w-full rounded bg-primary px-5 py-3 text-center text-sm font-medium text-white hover:bg-green-700 focus:outline-none"

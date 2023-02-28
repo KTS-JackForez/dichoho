@@ -8,6 +8,7 @@ import mongoose from "mongoose";
 import authRoute from "./routes/auth.js";
 import userRoute from "./routes/user.js";
 import productRoute from "./routes/product.js";
+import postRoute from "./routes/post.js";
 //
 const app = express();
 dotenv.config();
@@ -35,6 +36,7 @@ app.use(cors());
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
+app.use("/api/posts", postRoute);
 
 //error handler
 app.use((err, req, res, next) => {

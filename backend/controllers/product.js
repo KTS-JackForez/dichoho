@@ -70,7 +70,7 @@ export const updateProduct = async (req, res, next) => {
           { $set: req.body },
           { new: true }
         );
-        res.status(200).json("Xóa sản phẩm thành công");
+        res.status(200).json("Cập nhật sản phẩm thành công");
       } else {
         return next(
           createError(403, "Bạn không được phép thực hiện chức năng này")
@@ -84,7 +84,7 @@ export const updateProduct = async (req, res, next) => {
 //xóa sản phẩm
 export const deleteProduct = async (req, res, next) => {
   try {
-    const product = findById(req.params.id);
+    const product = Product.findById(req.params.id);
     if (!product) {
       return next(createError(404, "Không tìm thấy thông tin sản phẩm"));
     } else {

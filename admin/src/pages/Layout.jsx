@@ -8,6 +8,9 @@ import {
   Orders,
   NewProduct,
   EditProduct,
+  NewPost,
+  EditPost,
+  Post,
 } from "../pages";
 
 const Layout = () => {
@@ -24,6 +27,11 @@ const Layout = () => {
           </Route>
           <Route path="don-hang" element={<Orders />} />
           <Route path="tai-khoan" element={<Account />} />
+          <Route path="bai-viet">
+            <Route index element={<Post />} />
+            <Route path="new" element={<NewPost />} />
+            <Route path="edit" element={<EditPost />} />
+          </Route>
         </Routes>
       </div>
     </div>
