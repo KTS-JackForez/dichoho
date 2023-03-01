@@ -13,9 +13,9 @@ const Slider = () => {
       <div className="max-w-screen-xl mx-auto">
         <div className="relative w-full bg-white overflow-hidden">
           <div
-            className="w-full duration-300 h-[25vh] md:h-[40vh]"
+            className="w-full duration-300 h-[25vh] md:h-[65vh]"
             // style={{ transform: `translateX(-${activeSlide * 100}%)` }}
-            // style={{ transform: `translateX(-${activeSlide * 100}%)` }}
+            style={{ transform: `translateX(-${activeSlide * 100}%)` }}
           >
             {data.map((i) => {
               return (
