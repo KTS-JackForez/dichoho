@@ -13,7 +13,6 @@ const Post = () => {
       try {
         const res = await ktsRequest.get(`/posts/${postId}`);
         setPost(res.data);
-        console.log(post);
       } catch (err) {
         err.response ? navigate("/notfound") : toast.error("Network Error!");
       }
