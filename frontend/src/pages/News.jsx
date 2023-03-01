@@ -4,6 +4,7 @@ import { Footer, Header, Navbar, Promotion } from "../components";
 // import "../assets/css/base.css";
 import ktsRequest from "../../ultis/ktsrequest";
 import { Link } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 const News = () => {
   const [data, setData] = useState([]);
@@ -39,8 +40,8 @@ const News = () => {
                       className="w-full h-full object-cover object-center"
                     />
                   </div>
-                  <div className="text-gray-800 font-semibold hover:text-gray-600 py-2">
-                    <p className="line-clamp-2">{p.title}</p>
+                  <div className="text-gray-800 hover:text-gray-600 py-2">
+                    <p className="line-clamp-2 font-semibold">{p.title}</p>
                     <p className="line-clamp-3">{p.description}</p>
                   </div>
                 </Link>
@@ -81,6 +82,7 @@ const News = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
       <Footer />
     </div>
   );

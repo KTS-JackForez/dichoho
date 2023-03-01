@@ -1,6 +1,6 @@
 import React from "react";
 import { Footer, Header, Navbar, Promotion } from "../components";
-// import './Contact.css';
+// import "./Contact.css";
 // import '../assets/css/base.css';
 
 const Contact = () => {
