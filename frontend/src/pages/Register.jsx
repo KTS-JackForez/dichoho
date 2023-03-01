@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import ktsRequest from "../../ultis/ktsrequest";
+
 const Register = () => {
+  const [check, setCheck] = useState(false);
   const [name, setName] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [password, setPassword] = useState("");
@@ -280,12 +282,26 @@ const Register = () => {
                   onChange={(e) => setAddress(e.target.value)}
                 />
               </div>
+              <div className="flex px-3 gap-2">
+                <input
+                  type="checkbox"
+                  className="accent-green-600 text-white"
+                  onChange={(e) => setCheck(!check)}
+                />
+                <span className="text-xs">
+                  Bằng việc ấn vào nút đăng ký, tôi đồng ý với điều khoản sử
+                  dụng của sale168.com
+                </span>
+              </div>
             </div>
             <div className="px-2.5">
               <button
                 type="submit"
-                className="w-full rounded bg-primary px-5 py-3 text-center text-sm font-medium text-white hover:bg-primary focus:outline-none focus:ring-4 focus:ring-primary "
+                className={`w-full rounded ${
+                  check ? "bg-primary hover:bg-green-700" : "bg-slate-400"
+                } px-5 py-3 text-center text-sm font-medium text-white focus:outline-none focus:ring-4 focus:ring-primary`}
                 onClick={handleClick}
+                disabled={!check}
               >
                 Đăng ký thành viên
               </button>
