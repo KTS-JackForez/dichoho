@@ -32,7 +32,7 @@ const PostSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    //hình đại diện người dùng
+    //hình bìa bài viết
     thumbnail: {
       type: String,
     },

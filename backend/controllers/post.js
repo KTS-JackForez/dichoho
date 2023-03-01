@@ -2,10 +2,14 @@ import { createError } from "../error.js";
 import Post from "../models/Post.js";
 const permission = ["admin", "staff"];
 export const createPost = async (req, res, next) => {
+  console.log("create Post");
   try {
-    const newPost = new Post({ ...req.body });
+    const newPost = new Post({
+      ...req.body,
+      createdBy: req.user.id,
+    });
     await newPost.save();
-    res.status(200).json("Tạo mới sản phẩm thành công");
+    res.status(200).json("Đăng ký bài viết thành công");
   } catch (error) {
     console.log(error);
     next(error);

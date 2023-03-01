@@ -6,8 +6,12 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useSelector } from "react-redux";
 import ktsRequest from "../../ultis/ktsrequest";
+import { ToastContainer, toast } from "react-toastify";
+
 const NewPost = () => {
   const [value, setValue] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [file, setFile] = useState();
   const [url, setUrl] = useState();
   const [type, setType] = useState(true);
@@ -43,7 +47,7 @@ const NewPost = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await ktsRequest.get("/products");
+        const res = await ktsRequest.get("/posts");
         setData(res.data);
       } catch (error) {
         console.log(error);
@@ -57,8 +61,36 @@ const NewPost = () => {
       keys.some((key) => item[key].toLowerCase().includes(query))
     );
   };
-  const handleClick = () => {
-    console.log();
+
+  const handleClick = async () => {
+    const postData = {
+      postType: type,
+      title,
+      description,
+      content: value,
+      thumbnail: url,
+    };
+    console.log(postData);
+    try {
+      const config = {
+        method: "post",
+        url: "/posts",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${currentUser.token}`,
+        },
+        data: postData,
+      };
+      await ktsRequest(config)
+        .then((res) => {
+          toast.success(res.data);
+        })
+        .catch((er) => toast.error(er));
+    } catch (error) {
+      error.response
+        ? toast.error(error.response.data.message)
+        : toast.error("Network Error!");
+    }
   };
   return (
     <div className="bg-white p-3">
@@ -117,25 +149,27 @@ const NewPost = () => {
           id="title"
           className="md:w-5/6 w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
           placeholder="Tiêu đề bài viết"
-          // onChange={handleChange}
+          onChange={(e) => setTitle(e.target.value)}
+          value={title}
         />
       </div>
       <div className="flex w-full items-center mb-2">
-        <label htmlFor="title" className="w-1/6 hidden md:block">
+        <label htmlFor="description" className="w-1/6 hidden md:block">
           Mô tả ngắn gọn
         </label>
         <input
           type="text"
-          name="title"
-          id="title"
+          name="description"
+          id="description"
           className="md:w-5/6 w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
           placeholder="Mô tả ngắn gọn, mục này sẽ được hiển thị kèm tiêu đề bài viết"
-          // onChange={handleChange}
+          onChange={(e) => setDescription(e.target.value)}
+          value={description}
         />
       </div>
 
       <div className="flex w-full items-center mb-2">
-        <label htmlFor="title" className="w-1/6 hidden md:block">
+        <label htmlFor="img" className="w-1/6 hidden md:block">
           Ảnh bìa sản phẩm
         </label>
         <div className="md:w-5/6 w-full">
@@ -163,10 +197,14 @@ const NewPost = () => {
         />
       </div>
       <div className="mt-12 text-end">
-        <button className="bg-primary text-white px-4 py-2 rounded-sm hover:bg-green-700">
+        <button
+          className="bg-primary text-white px-4 py-2 rounded-sm hover:bg-green-700"
+          onClick={handleClick}
+        >
           đăng ký bài viết
         </button>
       </div>
+      <ToastContainer />
     </div>
   );
 };
