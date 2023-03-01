@@ -1,7 +1,7 @@
 import React from "react";
 import { Footer, Header, Navbar, Promotion } from "../components";
-import "./About.css";
-import "../assets/css/base.css";
+// import "./About.css";
+// import "../assets/css/base.css";
 const About = () => {
   return (
     <div className="bg-gray-100">
