@@ -1,14 +1,10 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
 import "./App.css";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { Header, Footer, Navbar } from "./components";
 import "react-toastify/dist/ReactToastify.css";
 
 import {
   Home,
   News,
-  Products,
   Product,
   Login,
   Register,
@@ -16,6 +12,8 @@ import {
   Contact,
   About,
   Cart,
+  Post,
+  Products,
 } from "./pages";
 function App() {
   const ProtectedRoute = ({ children }) => {
@@ -29,15 +27,17 @@ function App() {
       <Routes>
         <Route path="/">
           <Route index element={<Home />} />
-          <Route path="news" element={<News />} />
+          <Route path="news">
+            <Route index element={<News />} />
+            <Route path=":postId" element={<Post />} />
+          </Route>
           <Route path="contact" element={<Contact />} />
           <Route path="about" element={<About />} />
-          {/* <Route path="products" element={<Products />}> */}
           <Route path="products">
             <Route index element={<Products />} />
             <Route path=":productId" element={<Product />} />
           </Route>
-          {/* <Route path="product" element={<Product />} /> */}
+          <Route path="abc" element={<Products />} />
           <Route path="cart" element={<Cart />} />
 
           {/* <Route

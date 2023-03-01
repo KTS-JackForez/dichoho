@@ -20,7 +20,7 @@ const router = express.Router();
 
 router.get("/", getProducts);
 router.get("/my", verifyToken, getMyProducts);
-router.get("/:id", verifyToken, getProduct);
+router.get("/:id", getProduct);
 router.get("/tags", verifyToken, getProductByTag);
 router.get("/addlike", verifyToken, addLike);
 router.get("/sublike", verifyToken, subLike);

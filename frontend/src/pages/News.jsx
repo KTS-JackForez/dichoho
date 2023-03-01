@@ -20,17 +20,18 @@ const News = () => {
     };
     fetchData();
   }, []);
+  const hot = data.length > 5 ? data.slice(0, 5) : data;
   return (
     <div className="bg-gray-100">
       <Promotion />
       <Header />
       <Navbar />
       <div className="max-w-screen-xl bg-white mx-auto">
-        <div class="w-full flex py-3 gap-6">
+        <div className="w-full flex py-3 gap-6">
           <div className="w-3/4 grid grid-cols-2 gap-3 md:grid-cols-3">
             {data.map((p, i) => {
               return (
-                <Link to="#" className="bg-gray-100">
+                <Link to={`/news/${p._id}`} className="bg-gray-100" key={i}>
                   <div className="w-full h-64">
                     <img
                       src={p.thumbnail}
@@ -52,11 +53,14 @@ const News = () => {
                 bài viết nổi bật
               </h3>
               <div className="divide-y divide-dashed divide-primary bg-white flex flex-col">
-                <Link className="px-4 py-1">abc</Link>
-                <Link className="px-4 py-1">abc</Link>
-                <Link className="px-4 py-1">abc</Link>
-                <Link className="px-4 py-1">abc</Link>
-                <Link className="px-4 py-1">abc</Link>
+                {hot.map((p, i) => {
+                  console.log(p._id);
+                  return (
+                    <Link className="px-4 py-1" key={i} to={`/news/${p._id}`}>
+                      {p.title}
+                    </Link>
+                  );
+                })}
               </div>
             </div>
             <div className="bg-white w-full mt-3">
@@ -64,17 +68,20 @@ const News = () => {
                 bài viết nổi bật
               </h3>
               <div className="divide-y divide-dashed divide-primary bg-white flex flex-col">
-                <Link className="px-4 py-1 hover:text-blue-500">abc</Link>
-                <Link className="px-4 py-1 hover:text-blue-500">abc</Link>
-                <Link className="px-4 py-1 hover:text-blue-500">abc</Link>
-                <Link className="px-4 py-1 hover:text-blue-500">abc</Link>
-                <Link className="px-4 py-1 hover:text-blue-500">abc</Link>
+                {hot.map((p, i) => {
+                  console.log(p._id);
+                  return (
+                    <Link className="px-4 py-1" key={i} to={`/news/${p._id}`}>
+                      {p.title}
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </div>
         </div>
-        <Footer />
       </div>
+      <Footer />
     </div>
   );
 };
