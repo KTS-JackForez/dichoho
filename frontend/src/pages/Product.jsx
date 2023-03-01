@@ -99,7 +99,7 @@ const Product = () => {
                     </svg>
                   </button>
                   <div
-                    className="w-full duration-500 flex h-96"
+                    className="w-full bg-red-300 duration-500 h-96 flex"
                     // style={{ transform: `translateX(-${activeSlide * 100}%)` }}
                     style={{ transform: `translateX(-${activeImg * 100}%)` }}
                   >
@@ -109,14 +109,14 @@ const Product = () => {
                           <img
                             src={i}
                             alt=""
-                            className="object-cover w-full h-[40vh]"
+                            className="object-cover w-full h-full"
                           />
                         );
                       })}
                   </div>
                 </div>
                 {imgs && (
-                  <div className="w-full flex overflow-hidden h-32 gap-1 mt-1">
+                  <div className="w-full flex overflow-hidden h-28 gap-1 mt-1">
                     {imgs.map((i, k) => {
                       return (
                         <div

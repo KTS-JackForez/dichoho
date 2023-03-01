@@ -15,7 +15,7 @@ const Slider = () => {
           <div
             className="w-full duration-300 h-[25vh] md:h-[65vh]"
             // style={{ transform: `translateX(-${activeSlide * 100}%)` }}
-            style={{ transform: `translateX(-${activeSlide * 100}%)` }}
+            // style={{ transform: `translateX(-${activeSlide * 100}%)` }}
           >
             {data.map((i) => {
               return (
