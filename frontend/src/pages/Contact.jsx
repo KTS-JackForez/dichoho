@@ -6,10 +6,10 @@ import { Footer, Header, Navbar, Promotion } from "../components";
 const Contact = () => {
   return (
     <div className="bg-gray-100">
+      <Promotion />
+      <Header />
+      <Navbar />
       <div className="max-w-screen-xl bg-white mx-auto">
-        <Promotion />
-        <Header />
-        <Navbar />
         <div class="main">
           <div class="section-content">
             <div class="grid">
@@ -86,8 +86,8 @@ const Contact = () => {
             </div>
           </div>
         </div>
-        <Footer />
       </div>
+      <Footer />
     </div>
   );
 };

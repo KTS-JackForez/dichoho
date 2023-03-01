@@ -5,10 +5,10 @@ import { Footer, Header, Navbar, Promotion } from "../components";
 const About = () => {
   return (
     <div className="bg-gray-100">
-      <div className="max-w-screen-xl bg-white mx-auto">
-        <Promotion />
-        <Header />
-        <Navbar />
+      <Promotion />
+      <Header />
+      <Navbar />
+      <div className="max-w-screen-lg bg-white mx-auto">
         <div class="main">
           <div class="introduce">
             <div class="introduce-main grid">
@@ -158,8 +158,8 @@ const About = () => {
             </div>
           </div>
         </div>
-        <Footer />
       </div>
+      <Footer />
     </div>
   );
 };
