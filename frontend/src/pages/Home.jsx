@@ -15,11 +15,11 @@ import {
 } from "../components";
 const Home = () => {
   return (
-    <div className="bg-gray-100">
+    <div>
       <Promotion />
       <Header />
       <Navbar />
-      <div className="max-w-screen-xl bg-white mx-auto">
+      <div className="max-w-screen-xl bg-gray-100 mx-auto">
         <Slider />
 
         <Category />

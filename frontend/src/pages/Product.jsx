@@ -109,28 +109,34 @@ const Product = () => {
                           <img
                             src={i}
                             alt=""
-                            className="object-fit w-full h-full"
+                            className="object-cover w-full h-[40vh]"
                           />
                         );
                       })}
                   </div>
                 </div>
                 {imgs && (
-                  <div className="w-auto flex overflow-hidden h-24 gap-1 mt-1">
+                  <div className="w-full flex overflow-hidden h-32 gap-1 mt-1">
                     {imgs.map((i, k) => {
                       return (
-                        <img
-                          src={i}
-                          alt=""
-                          className={`w-24 opacity-${
-                            activeImg === k
-                              ? "100 border border-primary rounded"
-                              : "30"
-                          } cursor-pointer h-auto`}
+                        <div
+                          className={`w-1/4 
+                            ${
+                              activeImg === k
+                                ? "opacity-100 border border-primary rounded"
+                                : "opacity-30"
+                            }
+                           cursor-pointer p-1`}
                           onClick={() => {
                             setActiveImg(k);
                           }}
-                        />
+                        >
+                          <img
+                            src={i}
+                            alt=""
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
                       );
                     })}
                   </div>
@@ -281,7 +287,7 @@ const Product = () => {
                   href="#link1"
                   role="tablist"
                 >
-                  {product.description}
+                  Mô tả
                 </a>
               </li>
               <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
@@ -327,7 +333,7 @@ const Product = () => {
               <div className="px-4 py-5 flex-auto">
                 <div className="tab-content tab-space">
                   <div className={openTab === 1 ? "flex" : "hidden"} id="link1">
-                    <p>Mô tả sản phẩm</p>
+                    <p>{product.description}</p>
                   </div>
                   <div className={openTab === 2 ? "flex" : "hidden"} id="link2">
                     <table>

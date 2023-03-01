@@ -9,7 +9,7 @@ const Lastest = () => {
     const fetchData = async () => {
       try {
         const res = await ktsRequest.get("/products");
-        setData(res.data.slice(0,10));
+        setData(res.data.slice(0, 10));
       } catch (err) {
         err.response
           ? toast.error(err.response.data.message)
@@ -47,7 +47,7 @@ const Lastest = () => {
             </svg>
           </div>
         </div>
-        <div className="gap-2 mx-auto grid grid-cols-2 md:grid-cols-5 justify-center grid-rows-2 p-3">
+        <div className="gap-2 mx-auto grid grid-cols-2 md:grid-cols-5 justify-center grid-rows-2 p-3 w-full">
           {data.map((p, i) => {
             return <ItemCard data={p} />;
           })}

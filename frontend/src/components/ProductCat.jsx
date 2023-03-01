@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ItemCard from "./ItemCard";
-import logo from "../assets/imgs/logo.png";
 const ProductCat = (props) => {
+  useEffect(() => {}, []);
   return (
     <div className="w-full bottom-0 mt-1 py-2">
       <div className="max-w-screen-xl mx-auto">
@@ -33,7 +33,7 @@ const ProductCat = (props) => {
             </svg>
           </div>
         </div>
-        <div className="gap-2 mx-auto grid grid-cols-2 md:grid-cols-5 justify-center grid-rows-2 p-3">
+        <div className="gap-2 mx-auto grid grid-cols-2 md:grid-cols-5 justify-center grid-rows-2 py-3 w-full">
           <div className="col-span-2 mx-auto">
             <img
               src={props.picCover}

@@ -13,7 +13,7 @@ const Slider = () => {
       <div className="max-w-screen-xl mx-auto">
         <div className="relative w-full bg-white overflow-hidden">
           <div
-            className="w-full duration-300 md:h-96 h-48"
+            className="w-full duration-300 md:h-[48vh] h-80"
             // style={{ transform: `translateX(-${activeSlide * 100}%)` }}
             // style={{ transform: `translateX(-${activeSlide * 100}%)` }}
           >
