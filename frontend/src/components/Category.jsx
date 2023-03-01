@@ -3,7 +3,7 @@ import { ktsConfig } from "../../ultis/config";
 import { Link } from "react-router-dom";
 const Category = () => {
   return (
-    <div className="max-w-screen-xl mx-auto text-center mt-1 grid grid-flow-col bg-green-200 w-full">
+    <div className="max-w-screen-xl mx-auto text-center mt-1 grid grid-flow-col bg-green-200 w-full overflow-hidden">
       {ktsConfig.categories.map((i, index) => {
         return (
           <Link

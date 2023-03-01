@@ -33,7 +33,7 @@ const ProductCat = (props) => {
             </svg>
           </div>
         </div>
-        <div className="gap-2 mx-auto grid grid-cols-2 md:grid-cols-5 justify-center grid-rows-2 py-3 w-full">
+        <div className="gap-2 mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 justify-center grid-rows-2 py-3 w-full">
           <div className="col-span-2 mx-auto">
             <img
               src={props.picCover}

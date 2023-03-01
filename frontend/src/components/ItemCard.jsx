@@ -8,14 +8,16 @@ const ItemCard = (props) => {
       props.data?.stockPrice
   );
   return (
-    <div class="bg-white rounded-lg relative block justify-between shadow-lg mx-atuto max-w-full overflow-hidden">
+    // <div class="bg-white rounded-lg relative block justify-between shadow-lg mx-atuto max-w-full overflow-hidden">
+    <div class="bg-white rounded-lg relative flex flex-col justify-betwee shadow-lg w-full mx-atuto">
       <div className="z-10 w-12 h-12 border-double border-4 border-white bg-red-600 absolute top-3 right-3 rounded-tl-3xl rounded-tr-3xl rounded-bl rounded-br-3xl flex items-center text-center pl-1.5 text-white">
         <p className="font-semibold">{`${discount}%`}</p>
       </div>
-      <div className="overflow-hidden w-full h-56 bg-white">
+      <div className="overflow-hidden rounded-t-lg w-full md:h-52 h-40">
         <Link to={`/products/${props.data?._id}`}>
           <img
-            className="transition duration-500 hover:scale-125 h-full w-full object-fit object-center"
+            className="transition duration-500 hover:scale-125 object-cover object-center w-full h-full"
+            // className="rounded-t-lg  object-cover transition duration-500 hover:scale-125 rounded-md"
             src={
               props.data?.imgs[0] ||
               "https://via.placeholder.com/300.png/09f/fff"
@@ -24,8 +26,8 @@ const ItemCard = (props) => {
           />
         </Link>
       </div>
-      <div className="pt-5 px-3">
-        <h5 class="mb-1 text-xl font-bold tracking-tight truncate">
+      <div className="py-2 px-3">
+        <h5 class="mb-1 text-xl font-semibold tracking-tight truncate">
           {props.data?.productName}
         </h5>
         <p className="mb-1  text-red-600 font-semibold line-through">
