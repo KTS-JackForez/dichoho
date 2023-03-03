@@ -10,3 +10,4 @@ export { default as ProductCat } from "./ProductCat";
 export { default as HotProducts } from "./HotProducts";
 export { default as Lastest } from "./Lastest";
 export { default as Carousel } from "./Carousel";
+export { default as Sidebar } from "./Sidebar";

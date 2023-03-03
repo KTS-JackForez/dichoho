@@ -4,6 +4,7 @@ import logo from "../assets/imgs/logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { vnd } from "../../ultis/ktsFunc";
 import { removeItem, resetCart } from "../redux/cartReducer";
+import Sidebar from "./Sidebar";
 const Cart = (props) => {
   const show = window.location.pathname === "/cart" ? false : true;
   let subtotal1 = 0;
@@ -94,6 +95,7 @@ const Cart = (props) => {
 const Header = () => {
   const [openCart, setOpenCart] = useState(false);
   const { products } = useSelector((state) => state.cart);
+  const [toggle, setToggle] = useState(false);
   const hoverOn = () => {
     setOpenCart(true);
   };
@@ -109,10 +111,14 @@ const Header = () => {
   };
   return (
     <div className="max-w-screen-xl mx-auto text-center flex items-center justify-between">
+      {toggle && <Sidebar open={toggle} close={setToggle} />}
       <Link to="/" className="hidden md:block">
         <img src={logo} alt="" className="w-36 h-auto" />
       </Link>
-      <button className="border border-primary p-2 rounded-md md:hidden">
+      <button
+        className="border border-primary p-2 rounded-md md:hidden"
+        onClick={() => setToggle(true)}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

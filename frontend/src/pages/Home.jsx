@@ -12,6 +12,7 @@ import {
   Lastest,
   Carousel,
   MySlider,
+  Sidebar,
 } from "../components";
 const Home = () => {
   return (
@@ -21,7 +22,7 @@ const Home = () => {
       <Navbar />
       <div className="max-w-screen-xl bg-gray-100 mx-auto">
         <Slider />
-
+        <Sidebar />
         <Category />
         {/* <MySlider /> */}
         <HotProducts title="nổi bật" />
