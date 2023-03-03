@@ -6,6 +6,7 @@ import ktsRequest from "../../ultis/ktsrequest";
 
 const Register = () => {
   const [check, setCheck] = useState(false);
+  const [isSaler, setIsSaler] = useState(false);
   const [name, setName] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [password, setPassword] = useState("");
@@ -131,6 +132,7 @@ const Register = () => {
       districtFullName,
       wardFullName,
       address,
+      role: isSaler ? "shop" : "user",
     });
 
     const config = {
@@ -166,7 +168,7 @@ const Register = () => {
           <div className="space-y-4 p-6 sm:p-4 md:space-y-3">
             <div className="flex justify-center">
               {/* <img src={logo} className="mr-3 h-12" alt="ktscorp Logo" /> */}
-              <h3 className="uppercase font-bold">đăng nhập hệ thống</h3>
+              <h3 className="uppercase font-bold">đăng ký thành viên</h3>
             </div>
             {/* content */}
             <div className=" flex flex-col gap-2">
@@ -281,6 +283,14 @@ const Register = () => {
                   required="abc"
                   onChange={(e) => setAddress(e.target.value)}
                 />
+              </div>
+              <div className="flex px-3 gap-2">
+                <input
+                  type="checkbox"
+                  className="accent-green-600 text-white"
+                  onChange={(e) => setIsSaler(!isSaler)}
+                />
+                <span className="text-xs">Đăng ký dành cho người bán hàng</span>
               </div>
               <div className="flex px-3 gap-2">
                 <input

@@ -31,7 +31,7 @@ const UserSchema = new mongoose.Schema(
       required: true,
     },
     //loại người dùng
-    // admin - staff - shipper - user
+    // admin - staff - shipper - shop - user
     role: {
       type: String,
       default: "user",
