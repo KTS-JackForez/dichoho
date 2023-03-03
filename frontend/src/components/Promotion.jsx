@@ -4,7 +4,7 @@ const Promotion = () => {
   const [show, setShow] = useState(true);
   return (
     show && (
-      <div className="w-full mx-auto relative">
+      <div className="w-full mx-auto relative md:flex hidden">
         <img
           src="https://firebasestorage.googleapis.com/v0/b/dichoho-4e879.appspot.com/o/images%2Fbanners%2Ftopbanner.jpg?alt=media&token=be3b9ef9-a46c-4b58-a7e0-2e08e7db607d"
           alt=""

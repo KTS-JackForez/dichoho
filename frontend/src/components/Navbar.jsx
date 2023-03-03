@@ -3,7 +3,7 @@ import { ktsConfig } from "../../ultis/config";
 import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
-    <div className="bg-primary">
+    <div className="w-full bg-primary hidden md:block">
       <div className="max-w-screen-xl mx-auto text-center mt-1 ">
         {ktsConfig.navLinks.map((i, index) => {
           return (

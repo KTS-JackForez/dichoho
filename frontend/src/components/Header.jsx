@@ -6,7 +6,6 @@ import { vnd } from "../../ultis/ktsFunc";
 import { removeItem, resetCart } from "../redux/cartReducer";
 const Cart = (props) => {
   const show = window.location.pathname === "/cart" ? false : true;
-  const [subtotal, setSubtotal] = useState(0);
   let subtotal1 = 0;
   const dispatch = useDispatch();
   return (
@@ -110,10 +109,26 @@ const Header = () => {
   };
   return (
     <div className="max-w-screen-xl mx-auto text-center flex items-center justify-between">
-      <Link to="/">
+      <Link to="/" className="hidden md:block">
         <img src={logo} alt="" className="w-36 h-auto" />
       </Link>
-      <div className="flex justify-center flex-1">
+      <button className="border border-primary p-2 rounded-md md:hidden">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-6 h-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+          />
+        </svg>
+      </button>
+      <div className="flex md:flex-1 w-1/2 justify-start md:justify-center">
         <input
           type="text"
           placeholder="Tìm kiếm ..."
@@ -137,7 +152,7 @@ const Header = () => {
         </button>
       </div>
       <div className="flex gap-4">
-        <div className="flex justify-center items-center gap-2">
+        <div className="md:flex justify-center items-center gap-2 hidden">
           <div className="bg-green-600 p-2 mx-auto text-white rounded-full">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -154,17 +169,17 @@ const Header = () => {
               />
             </svg>
           </div>
-          <div>
+          <div className="">
             <p className="text-md">Hỗ trợ khách hàng</p>
             <p className="text-primary font-extrabold text-xl">0123456789</p>
           </div>
         </div>
         <div
-          className="flex items-center relative bg-green-600 rounded px-4 text-white font-semibold gap-2  hover:bg-green-700"
+          className="flex items-center cursor-pointer relative bg-none md:bg-green-600 rounded px-4 py-2 text-black md:text-white font-semibold gap-2  hover:bg-green-700"
           onMouseOver={hoverOn}
           onMouseOut={hoverOut}
         >
-          <p>giỏ hàng</p>
+          <p className="hidden md:block">giỏ hàng</p>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
