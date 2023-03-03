@@ -30,7 +30,9 @@ const Product = () => {
     };
     fetchData();
   }, []);
-  const handleClick = () => {
+  const handleClick = (type) => {
+    // type-true: mua luôn
+    // type-false: thêm vào giỏ hàng
     const data = {
       id: productId,
       productName: product.productName,
@@ -39,7 +41,10 @@ const Product = () => {
       img: product.imgs[0],
       quantity,
     };
+    console.log(type);
     dispatch(addToCart(data));
+
+    type ? "" : navigate("/cart");
   };
   return (
     <div className="">
@@ -48,9 +53,9 @@ const Product = () => {
       <Navbar />
       <div className="min-h-screen">
         <div>
-          <div className="mb-12 max-w-screen-xl mx-auto py-4 flex gap-3">
-            <div className="flex lg:w-3/4 gap-2">
-              <div className="w-1/2">
+          <div className="mb-12 max-w-screen-xl mx-auto py-4 flex gap-3 p-3 md-p-0">
+            <div className="flex flex-col md:flex-row lg:w-3/4 gap-2">
+              <div className="md:w-1/2 w-full">
                 <div className="relative overflow-hidden w-full">
                   <button
                     onClick={() =>
@@ -99,7 +104,7 @@ const Product = () => {
                     </svg>
                   </button>
                   <div
-                    className="w-full bg-red-300 duration-500 h-96 flex"
+                    className="w-full duration-500 h-96 flex"
                     // style={{ transform: `translateX(-${activeSlide * 100}%)` }}
                     style={{ transform: `translateX(-${activeImg * 100}%)` }}
                   >
@@ -116,7 +121,7 @@ const Product = () => {
                   </div>
                 </div>
                 {imgs && (
-                  <div className="w-full flex overflow-hidden h-28 gap-1 mt-1">
+                  <div className="w-full flex overflow-hidden md:h-28 gap-1 mt-1">
                     {imgs.map((i, k) => {
                       return (
                         <div
@@ -134,7 +139,7 @@ const Product = () => {
                           <img
                             src={i}
                             alt=""
-                            className="w-full h-full object-cover"
+                            className="w-full md:h-full h-20 object-cover"
                           />
                         </div>
                       );
@@ -202,13 +207,16 @@ const Product = () => {
                 <div className="w-full grid grid-cols-2 gap-2">
                   <button
                     className="p-3 font-semibold text-white bg-primary hover:bg-green-700 rounded-md"
-                    onClick={handleClick}
+                    onClick={() => handleClick(true)}
                   >
                     Thêm vào giỏ hàng
                   </button>
-                  <Link className="p-3 font-semibold text-white bg-orange-400 rounded-md text-center hover:bg-orange-600">
+                  <button
+                    className="p-3 font-semibold text-white bg-orange-400 rounded-md text-center hover:bg-orange-600"
+                    onClick={() => handleClick(false)}
+                  >
                     Mua luôn
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>

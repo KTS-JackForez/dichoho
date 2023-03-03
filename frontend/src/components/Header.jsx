@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/imgs/logo.png";
+import empty from "../assets/imgs/no-cart.png";
 import { useDispatch, useSelector } from "react-redux";
 import { vnd } from "../../ultis/ktsFunc";
 import { removeItem, resetCart } from "../redux/cartReducer";
@@ -86,7 +87,13 @@ const Cart = (props) => {
             </div>
           </div>
         ) : (
-          "Chưa có sản phẩm nào"
+          <div>
+            <img
+              src={empty}
+              alt=""
+              className="w-full h-full object-cover object-center"
+            />
+          </div>
         )}
       </div>
     )
@@ -110,7 +117,7 @@ const Header = () => {
     return total;
   };
   return (
-    <div className="max-w-screen-xl mx-auto text-center flex items-center justify-between">
+    <div className="max-w-screen-xl mx-auto text-center flex items-center justify-between pt-5 px-3 gap-2">
       {toggle && <Sidebar open={toggle} close={setToggle} />}
       <Link to="/" className="hidden md:block">
         <img src={logo} alt="" className="w-36 h-auto" />
@@ -181,7 +188,7 @@ const Header = () => {
           </div>
         </div>
         <div
-          className="flex items-center cursor-pointer relative bg-none md:bg-green-600 rounded px-4 py-2 text-black md:text-white font-semibold gap-2  hover:bg-green-700"
+          className="flex items-center cursor-pointer relative bg-none md:bg-green-600 rounded px-4 py-2 md:text-white font-semibold gap-2  md:hover:bg-green-700 hover:text-primary"
           onMouseOver={hoverOn}
           onMouseOut={hoverOut}
         >
@@ -192,7 +199,7 @@ const Header = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-5 h-5 text-white"
+            className="w-10 h-10 md:w-5 md:h-5 md:text-white"
           >
             <path
               strokeLinecap="round"
@@ -201,7 +208,7 @@ const Header = () => {
             />
           </svg>
           {products.length > 0 && (
-            <div className="bg-red-500 w-3 h-3 p-3 rounded-full -right-2 absolute flex justify-center items-center -top-2 ">
+            <div className="bg-red-500 w-3 h-3 p-3 rounded-full -right-2 absolute flex justify-center items-center -top-2 text-white">
               {totalItems(products)}
             </div>
           )}
@@ -210,7 +217,7 @@ const Header = () => {
         <Link
           to="/login"
           tooltip="Tài khoản"
-          className="bg-primary p-4 flex items-center rounded-full text-white hover:bg-green-700"
+          className="md:bg-primary p-4 flex items-center rounded-full md:text-white md:hover:bg-green-700 hover:text-primary "
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -218,7 +225,7 @@ const Header = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-5 h-5"
+            className="w-8 h-8 md:w-5 md:h-5"
           >
             <path
               strokeLinecap="round"

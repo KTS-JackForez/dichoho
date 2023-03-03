@@ -28,12 +28,12 @@ const News = () => {
       <Header />
       <Navbar />
       <div className="max-w-screen-xl bg-white mx-auto">
-        <div className="w-full flex py-3 gap-6">
-          <div className="w-3/4 grid grid-cols-2 gap-3 md:grid-cols-3">
+        <div className="w-full flex flex-col md:flex-row py-3 gap-6">
+          <div className="md:w-3/4 w-full grid grid-cols-2 gap-3 md:grid-cols-3">
             {data.map((p, i) => {
               return (
                 <Link to={`/news/${p._id}`} className="bg-gray-100" key={i}>
-                  <div className="w-full h-64">
+                  <div className="w-full md:h-48 h-32">
                     <img
                       src={p.thumbnail}
                       alt=""
@@ -48,14 +48,13 @@ const News = () => {
               );
             })}
           </div>
-          <div className="w-1/4">
+          <div className="md:w-1/4 w-full">
             <div className="bg-white w-full">
               <h3 className="text-white bg-primary px-4 py-2">
                 bài viết nổi bật
               </h3>
               <div className="divide-y divide-dashed divide-primary bg-white flex flex-col">
                 {hot.map((p, i) => {
-                  console.log(p._id);
                   return (
                     <Link className="px-4 py-1" key={i} to={`/news/${p._id}`}>
                       {p.title}
@@ -70,7 +69,6 @@ const News = () => {
               </h3>
               <div className="divide-y divide-dashed divide-primary bg-white flex flex-col">
                 {hot.map((p, i) => {
-                  console.log(p._id);
                   return (
                     <Link className="px-4 py-1" key={i} to={`/news/${p._id}`}>
                       {p.title}

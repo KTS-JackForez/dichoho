@@ -11,7 +11,7 @@ const MyCart = ({
   return (
     show && (
       <div
-        className={`p-3 border border-primary flex w-${size} justify-center items-center gap-2 bg-white rounded-lg `}
+        className={`p-3 border border-primary flex w-full justify-center items-center gap-2 bg-white rounded-lg text-xs md:text-base`}
       >
         <div>
           <img src={img} alt="" />
@@ -27,7 +27,7 @@ const MyCart = ({
 const Footer = () => {
   return (
     <div className="w-full bg-green-100 pt-4">
-      <div className="max-w-screen-xl mx-auto flex flex-wrap justify-around pt-3 mb-8">
+      <div className="max-w-screen-xl mx-auto grid grid-cols-2 md:grid-cols-4 justify-around pt-3 mb-8 gap-2">
         <MyCart
           img="https://green.web5phut.com/wp-content/uploads/2022/07/p1.png"
           text1="sản phẩm"
@@ -53,19 +53,23 @@ const Footer = () => {
           size="56"
         />
       </div>
-      <div className="flex justify-between mt-2 mx-auto max-w-screen-xl p-3 text-gray-700">
-        <div className="flex gap-4 w-1/2">
-          <div className="flex">
-            <div className="px-4">
-              <img src={logo} alt="" className="w-56" />
+      <div className="flex justify-between md:flex-row flex-col mt-2 mx-auto max-w-screen-xl p-3 text-gray-700 gap-8 md:gap-2">
+        <div className="flex gap-4">
+          <div className="flex flex-col lg:flex-row">
+            <div className="px-4 w-full md:w-1/2 flex md:flex-col gap-3">
+              <img
+                src={logo}
+                alt=""
+                className="w-1/2 object-contain md:w-full"
+              />
               <img
                 src="https://green.web5phut.com/wp-content/uploads/2021/10/Untitled-7.png"
                 alt=""
-                className="w-56"
+                className="md:w-full w-1/2 object-contain"
               />
             </div>
 
-            <ul className="pt-8 flex flex-col gap-2">
+            <ul className="md:pt-8 flex flex-col gap-2">
               <li className="flex gap-2 items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -130,8 +134,8 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        <div className="flex w-1/2 justify-between">
-          <div className="w-1/2 px-3 gap-2 flex flex-col">
+        <div className="flex md:w-1/2 w-full justify-between flex-col gap-5 md:flex-row">
+          <div className="md:w-1/2 w-full px-3 gap-2 flex flex-col">
             <h3 className="uppercase font-semibold text-xl">về chúng tôi</h3>
             <ul className="flex flex-col gap-1">
               <li>Hướng dẫn đăng ký</li>
@@ -140,7 +144,7 @@ const Footer = () => {
               <li>Quy trình giải quyết khiếu nại</li>
             </ul>
           </div>
-          <div className="w-1/2 px-3 gap-2 flex flex-col">
+          <div className="md:w-1/2 w-full px-3 gap-2 flex flex-col">
             <h3 className="uppercase font-semibold text-xl">chính sách</h3>
             <ul className="flex flex-col gap-1">
               <li>Hotline: 1900-636-001 (1000đ/phút, 9h-18h từ T2 - T7)</li>
