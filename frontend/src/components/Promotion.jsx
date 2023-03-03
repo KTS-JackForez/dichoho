@@ -4,11 +4,11 @@ const Promotion = () => {
   const [show, setShow] = useState(true);
   return (
     show && (
-      <div className="w-full mx-auto h-24 relative">
+      <div className="w-full mx-auto relative">
         <img
-          src="	https://green.web5phut.com/wp-content/uploads/2022/07/top_banner.jpg"
+          src="https://firebasestorage.googleapis.com/v0/b/dichoho-4e879.appspot.com/o/images%2Fbanners%2Ftopbanner.jpg?alt=media&token=be3b9ef9-a46c-4b58-a7e0-2e08e7db607d"
           alt=""
-          className="h-24 w-full"
+          className="w-full object-cover h-full"
         />
         <button
           className="absolute top-2 right-2 rounded-full bg-white/50 p-1 text-gray-800 hover:bg-white"
