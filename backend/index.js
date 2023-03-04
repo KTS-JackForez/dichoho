@@ -9,6 +9,7 @@ import authRoute from "./routes/auth.js";
 import userRoute from "./routes/user.js";
 import productRoute from "./routes/product.js";
 import postRoute from "./routes/post.js";
+import orderRoure from "./routes/order";
 //
 const app = express();
 dotenv.config();
@@ -37,6 +38,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
 app.use("/api/posts", postRoute);
+app.use("/api/orders", orderRoure);
 
 //error handler
 app.use((err, req, res, next) => {

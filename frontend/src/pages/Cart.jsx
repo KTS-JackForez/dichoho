@@ -1,13 +1,32 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 import { vnd } from "../../ultis/ktsFunc";
+import ktsRequest from "../../ultis/ktsrequest";
 import { Footer, Header, Navbar, Promotion } from "../components";
 import { addToCart, removeItem } from "../redux/cartReducer";
 const Cart = () => {
   const { products } = useSelector((state) => state.cart);
-  const [test, setTest] = useState("");
   const dispatch = useDispatch();
+  const [payment, setPayment] = useState("cod");
+  const total = (products) => {
+    let total = 0;
+    products.map((item) => {
+      total += item.quantity * item.currentPrice;
+    });
+    return total;
+  };
+  const handleClick = async () => {
+    try {
+      const res = await ktsRequest.post("/orders");
+      toast.success(res.data);
+    } catch (err) {
+      err.response
+        ? toast.error(err.response.data.message)
+        : toast.error("Network Error!");
+    }
+  };
   return (
     <div>
       <Promotion />
@@ -140,40 +159,87 @@ const Cart = () => {
                   <span class="font-semibold text-sm uppercase py-3">
                     tiền hàng
                   </span>
-                  <span class="font-semibold text-sm py-3">{vnd(30000)}</span>
+                  <span class="font-semibold text-sm py-3">
+                    {vnd(total(products))}
+                  </span>
                 </div>
                 <div>
                   <label class="font-medium inline-block text-sm uppercase">
                     phương thức vận chuyển
                   </label>
-                  <select class="block p-2 text-gray-600 w-full text-sm">
+                  <select class="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:outline-none focus:border-primary focus:ring-primary">
                     <option>tiêu chuẩn</option>
                     <option>siêu tốc</option>
                   </select>
                 </div>
+                <div>
+                  <label class="font-medium inline-block text-sm uppercase">
+                    phương thức thanh toán
+                  </label>
+                  <select
+                    class="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:outline-none focus:border-primary focus:ring-primary"
+                    onChange={(e) => setPayment(e.target.value)}
+                  >
+                    <option value="cod">COD</option>
+                    <option value="bank">Chuyển khoản</option>
+                  </select>
+                </div>
+                {payment === "bank" && (
+                  <div>
+                    <p>Số TK</p>
+                    <p>Tên NK</p>
+                    <p>Tên chủ TK</p>
+                  </div>
+                )}
+                {payment === "bank" && (
+                  <div class="">
+                    <label
+                      for="payCode"
+                      class="font-semibold inline-block text-sm uppercase"
+                    >
+                      Mã giao dịch (chuyển khoản)
+                    </label>
+                    <input
+                      type="text"
+                      id="payCode"
+                      placeholder="Nhập mã giao dịch"
+                      class="border-grey-light block w-full rounded border p-2 focus:border-primary focus:outline-none"
+                    />
+                  </div>
+                )}
+
+                {/* <button class="bg-orange-500 hover:bg-orange-600 px-5 py-2 text-sm text-white uppercase rounded">
+                  Áp dụng
+                </button> */}
                 <div class="">
                   <label
-                    for="promo"
+                    for="note"
                     class="font-semibold inline-block text-sm uppercase"
                   >
-                    Mã khuyến mại
+                    Ghi chú
                   </label>
-                  <input
+                  {/* <input
                     type="text"
-                    id="promo"
-                    placeholder="Nhập mã khuyến mại"
-                    class="p-2 text-sm w-full"
+                    id="note"
+                    placeholder="Ghi chú của người mua"
+                    class="border-grey-light block w-full rounded border p-2 focus:border-primary focus:outline-none"
+                  /> */}
+                  <textarea
+                    type="text"
+                    id="note"
+                    placeholder="Ghi chú của người mua"
+                    class="border-grey-light block w-full rounded border p-2 focus:border-primary focus:outline-none"
                   />
                 </div>
-                <button class="bg-orange-500 hover:bg-orange-600 px-5 py-2 text-sm text-white uppercase rounded">
-                  Áp dụng
-                </button>
                 <div class="border-t mt-8">
                   <div class="flex font-semibold justify-between py-6 text-sm uppercase">
                     <span>tổng tiền đơn hàng</span>
-                    <span>{vnd(30000)}</span>
+                    <span>{vnd(total(products))}</span>
                   </div>
-                  <button class="bg-primary font-semibold hover:bg-primary rounded py-3 text-sm text-white uppercase w-full">
+                  <button
+                    class="bg-primary font-semibold hover:bg-primary rounded py-3 text-sm text-white uppercase w-full"
+                    onClick={handleClick}
+                  >
                     đặt hàng
                   </button>
                 </div>
@@ -215,6 +281,7 @@ const Cart = () => {
             </Link>
           </div>
         )}
+        <ToastContainer />
       </div>
       <Footer />
     </div>
