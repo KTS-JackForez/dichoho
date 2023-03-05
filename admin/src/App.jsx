@@ -2,11 +2,12 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { Login, NotFound, Register } from "./pages";
 import Layout from "./pages/Layout";
 import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
 
 function App() {
-  const login = true;
+  const { currentUser } = useSelector((state) => state.user);
   const ProtectedRoute = ({ children }) => {
-    if (false) {
+    if (!currentUser) {
       return <Navigate to="/login" />;
     }
     return children;
