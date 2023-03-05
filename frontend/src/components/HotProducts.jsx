@@ -45,7 +45,7 @@ const HotProducts = (props) => {
           </div>
           <div className="flex items-center gap-2">
             <button
-              className="bg-green-600 p-2 rounded text-white hover:bg-white hover:text-green-600 hover:border hover:border-green-600 "
+              className="bg-green-600 p-2 rounded text-white hover:bg-white hover:text-green-600 border border-white hover:border-green-600 "
               onClick={slideLeft}
             >
               <svg
@@ -64,7 +64,7 @@ const HotProducts = (props) => {
               </svg>
             </button>
             <button
-              className="bg-green-600 p-2 rounded text-white hover:bg-white hover:text-green-600 hover:border hover:border-green-600"
+              className="bg-green-600 p-2 rounded text-white hover:bg-white hover:text-green-600 border border-white hover:border-green-600"
               onClick={slideRight}
             >
               <svg
@@ -165,7 +165,7 @@ const HotProducts = (props) => {
         >
           {data.map((p, i) => {
             return (
-              <div className="w-1/5 flex-grow-0 flex-shrink-0">
+              <div className="md:w-1/3 w-1/2 lg:w-1/5 flex-grow-0 flex-shrink-0">
                 <ItemCard data={p} key={i} />
               </div>
             );

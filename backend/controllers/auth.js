@@ -20,7 +20,7 @@ export const signup = async (req, res, next) => {
 
 export const signin = async (req, res, next) => {
   try {
-    const user = await User.findOne({ username: req.body.username });
+    const user = await User.findOne({ username: req.body.name });
     if (!user) return res.status(404).json("Sai tên đăng nhập hoặc mật khẩu");
     const checkPass = await bcrypt.compare(req.body.password, user.password);
     if (!checkPass)

@@ -14,10 +14,13 @@ import {
   Cart,
   Post,
   Products,
+  Dashboard,
 } from "./pages";
+import { useSelector } from "react-redux";
 function App() {
+  const { currentUser } = useSelector((state) => state.user);
   const ProtectedRoute = ({ children }) => {
-    if (true) {
+    if (!currentUser) {
       <Navigate to="/login" />;
     }
     return children;
@@ -39,15 +42,14 @@ function App() {
           </Route>
           <Route path="abc" element={<Products />} />
           <Route path="cart" element={<Cart />} />
-
-          {/* <Route
+          <Route
             path="dashboard/*"
             element={
               <ProtectedRoute>
-                <Layout />
+                <Dashboard />
               </ProtectedRoute>
             }
-          /> */}
+          />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="*" element={<NotFound />} />

@@ -33,13 +33,13 @@ const Login = () => {
         password,
       });
       dispatch(loginSuccess(res.data));
-      navigate("/dashboard");
+      navigate("/");
     } catch (err) {
       dispatch(loginFailure());
+      console.log(err);
       err.response
-        ? toast.error(err.response.data.message)
+        ? toast.error(err.response.data)
         : toast.error("Network Error!");
-      <ToastContainer />;
     }
   };
   return (

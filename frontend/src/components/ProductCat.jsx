@@ -34,11 +34,11 @@ const ProductCat = (props) => {
           </div>
         </div>
         <div className="gap-2 mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 justify-center grid-rows-2 py-3 w-full">
-          <div className="col-span-2 mx-auto">
+          <div className="w-full col-span-2 mx-auto px-1">
             <img
               src={props.picCover}
               alt=""
-              className="h-full object-contain "
+              className="w-full h-full object-cover "
             />
           </div>
           <ItemCard />

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { vnd } from "../../ultis/ktsFunc";
 import ktsRequest from "../../ultis/ktsrequest";
@@ -10,6 +10,8 @@ const Cart = () => {
   const { products } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const [payment, setPayment] = useState("cod");
+  const { currentUser } = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const total = (products) => {
     let total = 0;
     products.map((item) => {
@@ -18,6 +20,9 @@ const Cart = () => {
     return total;
   };
   const handleClick = async () => {
+    if (!currentUser) {
+      return navigate("/login");
+    }
     try {
       const res = await ktsRequest.post("/orders");
       toast.success(res.data);
@@ -37,24 +42,24 @@ const Cart = () => {
           <div className="flex gap-3 flex-wrap md:flex-nowrap border border-primary rounded">
             <div className="md:w-3/4 w-full divide-primary divide-dashed divide-y shadow-lg">
               <div className="flex p-3">
-                <h3 class="font-bold text-gray-700 uppercase w-2/5 pl-10">
+                <h3 className="font-bold text-gray-700 uppercase w-2/5 pl-10">
                   hàng hóa
                 </h3>
-                <h3 class="font-bold text-center text-gray-600 uppercase w-1/5">
+                <h3 className="font-bold text-center text-gray-600 uppercase w-1/5">
                   số lượng
                 </h3>
-                <h3 class="font-bold text-center text-gray-600 uppercase w-1/5">
+                <h3 className="font-bold text-center text-gray-600 uppercase w-1/5">
                   đơn giá
                 </h3>
-                <h3 class="font-bold text-center text-gray-600 uppercase w-1/5">
+                <h3 className="font-bold text-center text-gray-600 uppercase w-1/5">
                   thành tiền
                 </h3>
               </div>
               <div className="gap-3 p-3">
-                {products.map((i) => {
+                {products.map((i, index) => {
                   return (
-                    <div class="flex items-center px-6 py-5 ">
-                      <div class="flex w-2/5 items-center">
+                    <div className="flex items-center px-6 py-5 " key={index}>
+                      <div className="flex w-2/5 items-center">
                         <div className="text-center pr-5">
                           <button
                             className="bg-white p-2 rounded-full hover:bg-primary hover:text-white"
@@ -78,26 +83,26 @@ const Cart = () => {
                             </svg>
                           </button>
                         </div>
-                        <div class="w-20">
+                        <div className="w-20">
                           <img
                             className="h-20 w-20 object-cover object-center rounded-md"
                             src={i.img}
                             alt=""
                           />
                         </div>
-                        <div class="flex flex-col justify-between ml-4 flex-grow">
+                        <div className="flex flex-col justify-between ml-4 flex-grow">
                           <Link
                             to={`/products/${i.id}`}
-                            class="font-bold text-sm"
+                            className="font-bold text-sm"
                           >
                             {i.productName}
                           </Link>
-                          <span class="text-red-500 text-xs">
+                          <span className="text-red-500 text-xs">
                             {i.description}
                           </span>
                         </div>
                       </div>
-                      <div class="flex justify-center w-1/5">
+                      <div className="flex justify-center w-1/5">
                         <button
                           className="bg-gray-200 rounded px-2 hover:bg-primary"
                           onClick={() =>
@@ -110,14 +115,14 @@ const Cart = () => {
                           }
                         >
                           <svg
-                            class="fill-current text-gray-600 w-3"
+                            className="fill-current text-gray-600 w-3"
                             viewBox="0 0 448 512"
                           >
                             <path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
                           </svg>
                         </button>
                         <input
-                          class="mx-2 border text-center w-12 focus:border-primary focus:outline-none focus:ring-primary rounded disable"
+                          className="mx-2 border text-center w-12 focus:border-primary focus:outline-none focus:ring-primary rounded disable"
                           type="text"
                           value={i.quantity}
                           disabled={true}
@@ -134,17 +139,17 @@ const Cart = () => {
                           }}
                         >
                           <svg
-                            class="fill-current text-gray-600 w-3"
+                            className="fill-current text-gray-600 w-3"
                             viewBox="0 0 448 512"
                           >
                             <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
                           </svg>
                         </button>
                       </div>
-                      <span class="text-center w-1/5 font-semibold text-sm">
+                      <span className="text-center w-1/5 font-semibold text-sm">
                         {vnd(i.currentPrice)}
                       </span>
-                      <span class="text-center w-1/5 font-semibold text-sm">
+                      <span className="text-center w-1/5 font-semibold text-sm">
                         {vnd(i.quantity * i.currentPrice)}
                       </span>
                     </div>
@@ -155,29 +160,29 @@ const Cart = () => {
             <div className="md:w-1/4 w-full divide-primary divide-dashed divide-y">
               <h1 className="uppercase p-3 font-bold">đơn hàng</h1>
               <div className="p-3 flex gap-3 flex-col">
-                <div class="flex justify-between">
-                  <span class="font-semibold text-sm uppercase py-3">
+                <div className="flex justify-between">
+                  <span className="font-semibold text-sm uppercase py-3">
                     tiền hàng
                   </span>
-                  <span class="font-semibold text-sm py-3">
+                  <span className="font-semibold text-sm py-3">
                     {vnd(total(products))}
                   </span>
                 </div>
                 <div>
-                  <label class="font-medium inline-block text-sm uppercase">
+                  <label className="font-medium inline-block text-sm uppercase">
                     phương thức vận chuyển
                   </label>
-                  <select class="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:outline-none focus:border-primary focus:ring-primary">
+                  <select className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:outline-none focus:border-primary focus:ring-primary">
                     <option>tiêu chuẩn</option>
                     <option>siêu tốc</option>
                   </select>
                 </div>
                 <div>
-                  <label class="font-medium inline-block text-sm uppercase">
+                  <label className="font-medium inline-block text-sm uppercase">
                     phương thức thanh toán
                   </label>
                   <select
-                    class="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:outline-none focus:border-primary focus:ring-primary"
+                    className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:outline-none focus:border-primary focus:ring-primary"
                     onChange={(e) => setPayment(e.target.value)}
                   >
                     <option value="cod">COD</option>
@@ -192,10 +197,10 @@ const Cart = () => {
                   </div>
                 )}
                 {payment === "bank" && (
-                  <div class="">
+                  <div className="">
                     <label
-                      for="payCode"
-                      class="font-semibold inline-block text-sm uppercase"
+                      htmlFor="payCode"
+                      className="font-semibold inline-block text-sm uppercase"
                     >
                       Mã giao dịch (chuyển khoản)
                     </label>
@@ -203,18 +208,18 @@ const Cart = () => {
                       type="text"
                       id="payCode"
                       placeholder="Nhập mã giao dịch"
-                      class="border-grey-light block w-full rounded border p-2 focus:border-primary focus:outline-none"
+                      className="border-grey-light block w-full rounded border p-2 focus:border-primary focus:outline-none"
                     />
                   </div>
                 )}
 
-                {/* <button class="bg-orange-500 hover:bg-orange-600 px-5 py-2 text-sm text-white uppercase rounded">
+                {/* <button className="bg-orange-500 hover:bg-orange-600 px-5 py-2 text-sm text-white uppercase rounded">
                   Áp dụng
                 </button> */}
-                <div class="">
+                <div className="">
                   <label
-                    for="note"
-                    class="font-semibold inline-block text-sm uppercase"
+                    htmlFor="note"
+                    className="font-semibold inline-block text-sm uppercase"
                   >
                     Ghi chú
                   </label>
@@ -222,22 +227,22 @@ const Cart = () => {
                     type="text"
                     id="note"
                     placeholder="Ghi chú của người mua"
-                    class="border-grey-light block w-full rounded border p-2 focus:border-primary focus:outline-none"
+                    className="border-grey-light block w-full rounded border p-2 focus:border-primary focus:outline-none"
                   /> */}
                   <textarea
                     type="text"
                     id="note"
                     placeholder="Ghi chú của người mua"
-                    class="border-grey-light block w-full rounded border p-2 focus:border-primary focus:outline-none"
+                    className="border-grey-light block w-full rounded border p-2 focus:border-primary focus:outline-none"
                   />
                 </div>
-                <div class="border-t mt-8">
-                  <div class="flex font-semibold justify-between py-6 text-sm uppercase">
+                <div className="border-t mt-8">
+                  <div className="flex font-semibold justify-between py-6 text-sm uppercase">
                     <span>tổng tiền đơn hàng</span>
                     <span>{vnd(total(products))}</span>
                   </div>
                   <button
-                    class="bg-primary font-semibold hover:bg-primary rounded py-3 text-sm text-white uppercase w-full"
+                    className="bg-primary font-semibold hover:bg-primary rounded py-3 text-sm text-white uppercase w-full"
                     onClick={handleClick}
                   >
                     đặt hàng
@@ -269,10 +274,10 @@ const Cart = () => {
           <div>
             <Link
               to="/"
-              class="flex font-semibold text-primary text-sm mt-10 hover:text-green-700"
+              className="flex font-semibold text-primary text-sm mt-10 hover:text-green-700"
             >
               <svg
-                class="fill-current mr-2 text-primary w-4"
+                className="fill-current mr-2 text-primary w-4"
                 viewBox="0 0 448 512"
               >
                 <path d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" />

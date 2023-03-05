@@ -118,7 +118,7 @@ const Register = () => {
       return;
     }
     const data = JSON.stringify({
-      name,
+      username: name,
       password,
       phone,
       displayName,
@@ -183,17 +183,19 @@ const Register = () => {
                   onChange={(e) => setName(e.target.value)}
                 />
               </span>
-              <div className="pr-2.5 pl-2">
-                <input
-                  type="text"
-                  placeholder="Shop name ..."
-                  name="displayname"
-                  value={displayName}
-                  className="border-grey-light block w-full rounded border p-2 focus:border-primary focus:outline-none"
-                  required="abc"
-                  onChange={(e) => setDisplayName(e.target.value)}
-                />
-              </div>
+              {isSaler && (
+                <div className="pr-2.5 pl-2">
+                  <input
+                    type="text"
+                    placeholder="Shop name ..."
+                    name="displayname"
+                    value={displayName}
+                    className="border-grey-light block w-full rounded border p-2 focus:border-primary focus:outline-none"
+                    required="abc"
+                    onChange={(e) => setDisplayName(e.target.value)}
+                  />
+                </div>
+              )}
               <div className="flex pl-2 after:ml-1 after:text-red-500 after:content-['*']">
                 <input
                   type="password"

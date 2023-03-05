@@ -78,6 +78,7 @@ const UserSchema = new mongoose.Schema(
     wardFullName: {
       type: String,
     },
+    liked: [String],
   },
   { timestamps: true }
 );

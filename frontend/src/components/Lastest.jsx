@@ -47,7 +47,7 @@ const Lastest = () => {
             </svg>
           </div>
         </div>
-        <div className="gap-2 mx-auto grid grid-cols-2 md:grid-cols-5 justify-center grid-rows-2 p-3 w-full">
+        <div className="gap-2 mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 justify-center grid-rows-2 p-3 w-full">
           {data.map((p, i) => {
             return <ItemCard data={p} key={i} />;
           })}

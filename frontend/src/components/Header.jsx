@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/imgs/logo.png";
 import empty from "../assets/imgs/no-cart.png";
 import { useDispatch, useSelector } from "react-redux";
 import { vnd } from "../../ultis/ktsFunc";
 import { removeItem, resetCart } from "../redux/cartReducer";
 import Sidebar from "./Sidebar";
+import { logout } from "../redux/userSlice";
+import { setMsg } from "../redux/msgSlice";
 const Cart = (props) => {
   const show = window.location.pathname === "/cart" ? false : true;
   let subtotal1 = 0;
@@ -103,6 +105,10 @@ const Header = () => {
   const [openCart, setOpenCart] = useState(false);
   const { products } = useSelector((state) => state.cart);
   const [toggle, setToggle] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
+  const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const hoverOn = () => {
     setOpenCart(true);
   };
@@ -115,6 +121,17 @@ const Header = () => {
       total += item.quantity;
     });
     return total;
+  };
+  const textAvatar = (text) => {
+    let name = text.split(" ");
+    if (name.length === 1) {
+      return name[0].charAt().toUpperCase();
+    } else {
+      return (
+        name[0].charAt(0).toUpperCase() +
+        name[name.length - 1].charAt(0).toUpperCase()
+      );
+    }
   };
   return (
     <div className="max-w-screen-xl mx-auto text-center flex items-center justify-between pt-5 px-3 gap-2">
@@ -164,9 +181,9 @@ const Header = () => {
           </svg>
         </button>
       </div>
-      <div className="flex gap-4">
+      <div className="flex gap-4 items-center">
         <div className="md:flex justify-center items-center gap-2 hidden">
-          <div className="bg-green-600 p-2 mx-auto text-white rounded-full">
+          <div className="bg-green-600 p-3 mx-auto text-white rounded-full">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -184,11 +201,11 @@ const Header = () => {
           </div>
           <div className="">
             <p className="text-md">Hỗ trợ khách hàng</p>
-            <p className="text-primary font-extrabold text-xl">0123456789</p>
+            <p className="text-primary font-extrabold">0123456789</p>
           </div>
         </div>
         <div
-          className="flex items-center cursor-pointer relative bg-none md:bg-green-600 rounded px-4 py-2 md:text-white font-semibold gap-2  md:hover:bg-green-700 hover:text-primary"
+          className="flex items-center cursor-pointer relative bg-none md:bg-green-600 rounded px-4 py-2 md:text-white font-semibold gap-2  md:hover:bg-green-700 hover:text-primary text-primary"
           onMouseOver={hoverOn}
           onMouseOut={hoverOut}
         >
@@ -214,26 +231,111 @@ const Header = () => {
           )}
           {openCart && <Cart data={products} />}
         </div>
-        <Link
+        {/* <Link
           to="/login"
-          tooltip="Tài khoản"
-          className="md:bg-primary p-4 flex items-center rounded-full md:text-white md:hover:bg-green-700 hover:text-primary "
+          className="flex items-center rounded-full md:text-white hover:text-primary "
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-8 h-8 md:w-5 md:h-5"
+          {currentUser ? (
+            
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-8 h-8 md:w-5 md:h-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+              />
+            </svg>
+          )}
+          {openMenu && (
+            <div className="absolute top-16 z-10 rounded border border-red-500 bg-white p-2">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setOpenMenu(!openMenu);
+                  dispatch(setMsg(`bye! ${currentUser.displayName}`));
+                  dispatch(logout());
+                }}
+              >
+                Trang cá nhân
+              </button>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setOpenMenu(!openMenu);
+                  dispatch(setMsg(`bye! ${currentUser.displayName}`));
+                  dispatch(logout());
+                }}
+              >
+                Đăng xuất
+              </button>
+            </div>
+          )}
+        </Link> */}
+        {currentUser ? (
+          <div className="relative" title="Tài khoản">
+            <div
+              className="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-orange-500 font-bold text-white"
+              onClick={() => {
+                setOpenMenu(!openMenu);
+              }}
+            >
+              {textAvatar(currentUser.username)}
+            </div>
+            {openMenu && (
+              <div className="absolute top-12 right-0 z-10 rounded border border-primary bg-white flex flex-col w-32 divide-y divide-dashed divide-primary">
+                <button
+                  className="hover:bg-primary p-2"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setOpenMenu(!openMenu);
+                    navigate("/dashboard");
+                  }}
+                >
+                  Trang cá nhân
+                </button>
+                <button
+                  className="hover:bg-primary p-2"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setOpenMenu(!openMenu);
+                    dispatch(setMsg(`bye! ${currentUser.displayName}`));
+                    dispatch(logout());
+                  }}
+                >
+                  Đăng xuất
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <Link
+            to="/login"
+            title="Đăng nhập"
+            className="flex items-center rounded-full text-white hover:text-orange-600 bg-primary p-2 hover:bg-white hover:border-primary border border:white"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-            />
-          </svg>
-        </Link>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6 hover:duration-300 hover:scale-125"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+              />
+            </svg>
+          </Link>
+        )}
       </div>
     </div>
   );
