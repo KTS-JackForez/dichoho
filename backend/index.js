@@ -9,7 +9,7 @@ import authRoute from "./routes/auth.js";
 import userRoute from "./routes/user.js";
 import productRoute from "./routes/product.js";
 import postRoute from "./routes/post.js";
-import orderRoure from "./routes/order";
+import orderRoure from "./routes/order.js";
 //
 const app = express();
 dotenv.config();
