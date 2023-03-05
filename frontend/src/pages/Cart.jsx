@@ -12,6 +12,8 @@ const Cart = () => {
   const dispatch = useDispatch();
   const [payment, setPayment] = useState("cod");
   const [payCode, setPayCode] = useState("");
+  const [isCheckout, setIsCheckout] = useState(false);
+  const [orderNumber, setOrderNumber] = useState("");
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const total = (products) => {
@@ -30,7 +32,6 @@ const Cart = () => {
       const res = await ktsRequest.post(
         "/orders",
         {
-          orderNumber: "sale168.com",
           buyerId: currentUser._id,
           total: total(products),
           payCode,
@@ -43,8 +44,10 @@ const Cart = () => {
           },
         }
       );
-      toast.success(res.data);
+      toast.success(res.data.message);
+      setOrderNumber(res.data.data);
       dispatch(resetCart());
+      setIsCheckout(true);
     } catch (err) {
       console.log(err);
       err.response
@@ -274,7 +277,34 @@ const Cart = () => {
           </div>
         ) : (
           <div className="flex justify-center flex-col items-center gap-3">
-            <div>bạn chưa chọn sản phẩm nào !!!</div>
+            {isCheckout ? (
+              <div className="">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={4}
+                  stroke="green"
+                  className="w-16 h-16 mx-auto"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M4.5 12.75l6 6 9-13.5"
+                  />
+                </svg>
+                <p>
+                  Cảm ơn bạn đã đặt hàng! Mã đơn hàng của bạn là:{" "}
+                  <span className="bg-gray-200 px-3 py-1 font-semibold rounded-md">
+                    {orderNumber}
+                  </span>
+                  chúng tôi đang chuẩn bị hàng giao cho bạn
+                </p>
+              </div>
+            ) : (
+              <div>bạn chưa chọn sản phẩm nào !!!</div>
+            )}
+
             <div className="flex gap-2">
               <Link
                 to="/"

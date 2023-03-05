@@ -3,9 +3,16 @@ import Order from "../models/Order.js";
 const permistion = ["admin", "staff"];
 export const createOrder = async (req, res, next) => {
   try {
-    const newOrder = new Order({ ...req.body, buyerId: req.user.id });
+    const orderNumber = new Date().getTime();
+    const newOrder = new Order({
+      ...req.body,
+      buyerId: req.user.id,
+      orderNumber,
+    });
     await newOrder.save();
-    res.status(200).json("Tạo đơn hàng thành công");
+    res
+      .status(200)
+      .json({ message: "Tạo đơn hàng thành công", data: orderNumber });
   } catch (error) {
     next(createError(500, `Lỗi không xác định`));
   }
