@@ -38,10 +38,10 @@ const Product = () => {
       productName: product.productName,
       description: product.description,
       currentPrice: product.currentPrice,
+      shopID: product.shopID,
       img: product.imgs[0],
       quantity,
     };
-    console.log(type);
     dispatch(addToCart(data));
 
     type ? "" : navigate("/cart");

@@ -80,12 +80,12 @@ const Cart = (props) => {
               >
                 Xem giỏ hàng
               </Link>
-              <Link
+              {/* <Link
                 to="/checkout"
                 className="p-2 bg-orange-500 rounded uppercase font-semibold text-white hover:bg-orange-700"
               >
                 thanh toán
-              </Link>
+              </Link> */}
             </div>
           </div>
         ) : (
@@ -295,7 +295,7 @@ const Header = () => {
                   onClick={(e) => {
                     e.preventDefault();
                     setOpenMenu(!openMenu);
-                    navigate("/dashboard");
+                    navigate("/dashboard/home");
                   }}
                 >
                   Trang cá nhân

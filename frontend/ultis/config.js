@@ -51,3 +51,10 @@ export const ktsConfig = {
     copyRight: "Copyright 2022 © Thiết kế bởi Hoa Sen Đỏ",
   },
 };
+export const dashboard = {
+  navLinks: [
+    { title: "home", path: "/dashboard/home" },
+    { title: "đơn hàng", path: "/dashboard/don-hang" },
+    { title: "tài khoản", path: "/dashboard/tai-khoan" },
+  ],
+};
