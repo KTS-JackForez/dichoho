@@ -29,7 +29,7 @@ const Login = () => {
     dispatch(loginStart());
     try {
       const res = await ktsRequest.post("/auth/signin", {
-        name,
+        username: name,
         password,
       });
       dispatch(loginSuccess(res.data));
