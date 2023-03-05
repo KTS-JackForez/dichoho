@@ -12,8 +12,8 @@ const OrderSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    //Id của người bán
-    salerIds: {
+    // Ghi chú của người mua
+    note: {
       type: String,
     },
     // trạng thái đơn hàng: 0 - đơn mới; 1 - đang giao; 2 - giao xong; 3 - hủy
@@ -26,8 +26,18 @@ const OrderSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    // chi tiết đơn hàng
-    items: [{ itemName: String, itemQuantity: Number }],
+    //chi tiết sản phẩm
+    products: [],
+    // phương thức vận chuyển: 0 - tiêu chuẩn; 1 - nhanh
+    shipMode: {
+      type: Number,
+      default: 0,
+    },
+    // phương thức thanh toán : cod/bank
+    payment: {
+      type: String,
+      default: "cod",
+    },
     // mã giao dịch (nếu có)
     payCode: {
       type: String,

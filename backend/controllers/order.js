@@ -19,7 +19,7 @@ export const getOrders = async (req, res, next) => {
     if (!orders) {
       res.status(403).json("Không có dữ liệu đơn hàng nào");
     }
-    res.status(200).json("Tạo đơn hàng thành công");
+    res.status(200).json(orders);
   } catch (error) {
     next(createError(500, `Lỗi không xác định`));
   }

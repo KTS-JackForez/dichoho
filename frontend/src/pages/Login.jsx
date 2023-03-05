@@ -33,7 +33,7 @@ const Login = () => {
         password,
       });
       dispatch(loginSuccess(res.data));
-      navigate("/");
+      navigate(-1);
     } catch (err) {
       dispatch(loginFailure());
       console.log(err);

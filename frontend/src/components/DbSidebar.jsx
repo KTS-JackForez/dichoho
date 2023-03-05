@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { dashboard } from "../../ultis/config";
 import logo from "../assets/imgs/logo.png";
+import { logout } from "../redux/userSlice";
 
 const DbSidebar = () => {
   const dispatch = useDispatch();
@@ -36,7 +37,7 @@ const DbSidebar = () => {
           onClick={(e) => {
             e.preventDefault();
             dispatch(logout());
-            navigate("/login");
+            navigate("/");
           }}
         >
           đăng xuất

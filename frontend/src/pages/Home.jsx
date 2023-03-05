@@ -1,4 +1,7 @@
 import React from "react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
 import {
   Navbar,
   Footer,
@@ -15,6 +18,7 @@ import {
   Sidebar,
 } from "../components";
 const Home = () => {
+  const { currentMsg } = useSelector((state) => state.msg);
   return (
     <div>
       <Promotion />
@@ -40,6 +44,7 @@ const Home = () => {
           picCover="https://green.web5phut.com/wp-content/uploads/2022/08/banner_prduct1.png"
         />
       </div>
+      {/* <ToastContainer /> */}
       <Footer />
     </div>
   );

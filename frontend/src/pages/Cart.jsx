@@ -5,11 +5,13 @@ import { toast, ToastContainer } from "react-toastify";
 import { vnd } from "../../ultis/ktsFunc";
 import ktsRequest from "../../ultis/ktsrequest";
 import { Footer, Header, Navbar, Promotion } from "../components";
-import { addToCart, removeItem } from "../redux/cartReducer";
+import { addToCart, removeItem, resetCart } from "../redux/cartReducer";
+import { setMsg } from "../redux/msgSlice";
 const Cart = () => {
   const { products } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const [payment, setPayment] = useState("cod");
+  const [payCode, setPayCode] = useState("");
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const total = (products) => {
@@ -23,12 +25,30 @@ const Cart = () => {
     if (!currentUser) {
       return navigate("/login");
     }
+    const { token } = currentUser;
     try {
-      const res = await ktsRequest.post("/orders");
+      const res = await ktsRequest.post(
+        "/orders",
+        {
+          orderNumber: "sale168.com",
+          buyerId: currentUser._id,
+          total: total(products),
+          payCode,
+          products,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       toast.success(res.data);
+      dispatch(resetCart());
     } catch (err) {
+      console.log(err);
       err.response
-        ? toast.error(err.response.data.message)
+        ? toast.error(err.response.data)
         : toast.error("Network Error!");
     }
   };
@@ -205,6 +225,7 @@ const Cart = () => {
                       Mã giao dịch (chuyển khoản)
                     </label>
                     <input
+                      onChange={(e) => setPayCode(e.target.value)}
                       type="text"
                       id="payCode"
                       placeholder="Nhập mã giao dịch"
