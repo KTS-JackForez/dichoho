@@ -81,12 +81,6 @@ const DbOrder = () => {
             </svg>
           </button>
         </div>
-        <Link
-          to="new"
-          className="py-2 px-4 hover:bg-primary rounded font-bold border border-primary text-primary bg-white hover:text-white"
-        >
-          Tạo mới sản phẩm
-        </Link>
       </div>
       <div className="w-full mt-4 border border-dashed border-primary rounded divide-y divide-primary divide-dashed bg-white shadow-lg">
         <div className=" flex p-3 font-semibold items-center bg-primary text-white">
@@ -111,8 +105,10 @@ const DbOrder = () => {
                   );
                 })}
               </div>
-              <div className="w-2/12">{vnd(o?.total)}</div>
-              <div className="w-2/12 ">
+              <div className="w-2/12 font-semibold text-end pr-10">
+                {vnd(o?.total)}
+              </div>
+              <div className="w-2/12 text-center">
                 <span
                   className={`${status[st].bgColor} ${status[st].textColor} px-2 py-1 font-semibold rounded`}
                 >
