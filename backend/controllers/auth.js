@@ -19,7 +19,6 @@ export const signup = async (req, res, next) => {
 };
 
 export const signin = async (req, res, next) => {
-  console.log(req.body);
   try {
     const user = await User.findOne({ username: req.body.username });
     if (!user) return res.status(404).json("Sai tên đăng nhập hoặc mật khẩu");
