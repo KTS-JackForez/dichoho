@@ -134,7 +134,7 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        <div className="flex md:w-1/2 w-full justify-between flex-col gap-5 md:flex-row">
+        <div className="hidden md:flex md:w-1/2 w-full justify-between flex-col gap-5 md:flex-row">
           <div className="md:w-1/2 w-full px-3 gap-2 flex flex-col">
             <h3 className="uppercase font-semibold text-xl">về chúng tôi</h3>
             <ul className="flex flex-col gap-1">
