@@ -3,6 +3,7 @@ import React from "react";
 import logo from "../assets/imgs/logo.png";
 
 
+
 const MyCart = ({
   children: cart,
   show = true,
@@ -59,7 +60,7 @@ const Footer = () => {
       <div className="flex justify-between md:flex-row flex-col mt-2 mx-auto max-w-screen-xl p-3 text-gray-700 gap-8 md:gap-2">
         <div className="flex gap-4">
           <div className="flex flex-col lg:flex-row">
-            <div className="px-4 w-full md:w-1/2 flex flex-col">
+            <div className="px-4 md:w-1/2 flex flex-col w-1/2">
               <img
                 src={logo}
                 alt=""
@@ -77,7 +78,7 @@ const Footer = () => {
               />
             </div>
 
-            <ul className="flex flex-col gap-2">
+            <ul className="flex flex-col gap-2 w-1/2">
             <h3 className="uppercase font-semibold text-xl">Về chúng tôi</h3>
               <li className="flex gap-2 items-center">
                 <svg
