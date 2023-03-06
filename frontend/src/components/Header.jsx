@@ -137,7 +137,7 @@ const Header = () => {
     <div className="max-w-screen-xl mx-auto text-center flex items-center justify-between pt-5 px-3 gap-2">
       {toggle && <Sidebar open={toggle} close={setToggle} />}
       <Link to="/" className="hidden md:block">
-        <img src={logo} alt="" className="w-36 h-auto" />
+        <img src={logo} alt="" className="w-56 h-auto" />
       </Link>
       <button
         className="border border-primary p-2 rounded-md md:hidden"
@@ -209,7 +209,7 @@ const Header = () => {
           onMouseOver={hoverOn}
           onMouseOut={hoverOut}
         >
-          <p className="hidden md:block">giỏ hàng</p>
+          <p className="hidden md:block text-xs uppercase">giỏ hàng</p>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

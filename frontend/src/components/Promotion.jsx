@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import img from "../assets/imgs/promo.jpg";
+import img from "../assets/imgs/promo.png";
 const Promotion = () => {
   const [show, setShow] = useState(true);
   return (
     show && (
-      <div className="w-full mx-auto relative md:flex hidden">
+      <div className="w-full mx-auto relative md:flex hidden bg-primary">
         <img
-          src="https://firebasestorage.googleapis.com/v0/b/dichoho-4e879.appspot.com/o/images%2Fbanners%2Ftopbanner.jpg?alt=media&token=be3b9ef9-a46c-4b58-a7e0-2e08e7db607d"
+          src={img}
           alt=""
-          className="w-full object-cover h-full"
+          className="mx-auto object-cover object-center"
         />
         <button
           className="absolute top-2 right-2 rounded-full bg-white/50 p-1 text-gray-800 hover:bg-white"
