@@ -1,5 +1,8 @@
+
 import React from "react";
 import logo from "../assets/imgs/logo.png";
+
+
 const MyCart = ({
   children: cart,
   show = true,
@@ -56,20 +59,26 @@ const Footer = () => {
       <div className="flex justify-between md:flex-row flex-col mt-2 mx-auto max-w-screen-xl p-3 text-gray-700 gap-8 md:gap-2">
         <div className="flex gap-4">
           <div className="flex flex-col lg:flex-row">
-            <div className="px-4 w-full md:w-1/2 flex md:flex-col gap-3">
+            <div className="px-4 w-full md:w-1/2 flex flex-col">
               <img
                 src={logo}
                 alt=""
-                className="w-1/2 object-contain md:w-full"
+                className="w-1/2 md:h-1/3 object-contain md:w-full" style={{marginTop:-40}}
               />
               <img
                 src="https://green.web5phut.com/wp-content/uploads/2021/10/Untitled-7.png"
                 alt=""
-                className="md:w-full w-1/2 object-contain"
+                className="md:w-full w-1/2 md:h-1/5 object-contain"
+              />
+             <img
+                  src="https://green.web5phut.com/wp-content/uploads/2021/10/Untitled-7.png"
+                alt=""
+                className="md:w-full w-1/2 md:h-1/5 object-contain"
               />
             </div>
 
-            <ul className="md:pt-8 flex flex-col gap-2">
+            <ul className="flex flex-col gap-2">
+            <h3 className="uppercase font-semibold text-xl">Về chúng tôi</h3>
               <li className="flex gap-2 items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -90,7 +99,7 @@ const Footer = () => {
                     d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
                   />
                 </svg>
-
+              
                 <span>
                   Địa chỉ: Tầng 2 - KTS Home, Nguyễn Văn Linh, An Dương, Hải
                   Phòng
@@ -136,7 +145,7 @@ const Footer = () => {
         </div>
         <div className="hidden md:flex md:w-1/2 w-full justify-between flex-col gap-5 md:flex-row">
           <div className="md:w-1/2 w-full px-3 gap-2 flex flex-col">
-            <h3 className="uppercase font-semibold text-xl">về chúng tôi</h3>
+            <h3 className="uppercase font-semibold text-xl">Chính sách</h3>
             <ul className="flex flex-col gap-1">
               <li>Hướng dẫn đăng ký</li>
               <li>Bảo mật thông tin cá nhân</li>
@@ -145,7 +154,7 @@ const Footer = () => {
             </ul>
           </div>
           <div className="md:w-1/2 w-full px-3 gap-2 flex flex-col">
-            <h3 className="uppercase font-semibold text-xl">chính sách</h3>
+            <h3 className="uppercase font-semibold text-xl">Hỗ trợ khách hàng</h3>
             <ul className="flex flex-col gap-1">
               <li>Hotline: 1900-636-001 (1000đ/phút, 9h-18h từ T2 - T7)</li>
               <li>Các câu hỏi thường gặp</li>
@@ -164,3 +173,4 @@ const Footer = () => {
 };
 
 export default Footer;
+
