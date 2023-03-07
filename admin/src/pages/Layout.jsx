@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { Sidebar } from "../components";
+import { Header, Sidebar } from "../components";
 import {
   Home,
   Products,
@@ -18,6 +18,7 @@ const Layout = () => {
     <div className="w-screen flex">
       <Sidebar />
       <div className="bg-gray-200 flex-1">
+        <Header />
         <Routes>
           <Route index element={<Home />} />
           <Route path="san-pham">
