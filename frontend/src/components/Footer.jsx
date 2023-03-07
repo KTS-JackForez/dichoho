@@ -1,7 +1,7 @@
 
 import React from "react";
 import logo from "../assets/imgs/logo.png";
-
+import tinnhiemmang from "../assets/imgs/tinnhiemmang.jpg";
 
 
 const MyCart = ({
@@ -64,7 +64,7 @@ const Footer = () => {
               <img
                 src={logo}
                 alt=""
-                className="w-1/2 md:h-1/3 object-contain md:w-full" style={{marginTop:-40}}
+                className="w-1/2 md:h-1/3 object-contain md:w-full"
               />
               <img
                 src="https://green.web5phut.com/wp-content/uploads/2021/10/Untitled-7.png"
@@ -72,7 +72,7 @@ const Footer = () => {
                 className="md:w-full w-1/2 md:h-1/5 object-contain"
               />
              <img
-                  src="https://green.web5phut.com/wp-content/uploads/2021/10/Untitled-7.png"
+                  src={tinnhiemmang}
                 alt=""
                 className="md:w-full w-1/2 md:h-1/5 object-contain"
               />
