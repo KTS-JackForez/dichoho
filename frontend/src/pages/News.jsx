@@ -28,7 +28,7 @@ const News = () => {
       <Header />
       <Navbar />
       <div className="max-w-screen-xl bg-white mx-auto">
-        <div className="w-full flex flex-col md:flex-row py-3 gap-6">
+        <div className="w-full flex flex-col md:flex-row gap-6 px-3.5 py-3.5">
           <div className="md:w-3/4 w-full grid grid-cols-2 gap-3 md:grid-cols-3">
             {data.map((p, i) => {
               return (

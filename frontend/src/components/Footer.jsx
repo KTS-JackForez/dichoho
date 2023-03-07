@@ -57,24 +57,24 @@ const Footer = () => {
           size="56"
         />
       </div>
-      <div className="flex justify-between md:flex-row flex-col mt-2 mx-auto max-w-screen-xl p-3 text-gray-700 gap-8 md:gap-2">
+      <div className="flex justify-between md:flex-row flex-col mt-2 mx-auto max-w-screen-xl p-3 text-gray-700 gap-8 md:gap-2 md:h-96">
         <div className="flex gap-4">
           <div className="flex flex-col lg:flex-row">
-            <div className="px-4 md:w-1/2 flex flex-col w-1/2">
+            <div className="px-4 md:w-1/2 flex flex-col w-1/2 -mt-12">
               <img
                 src={logo}
                 alt=""
-                className="w-1/2 md:h-1/3 object-contain md:w-full"
+                className="w-1/2 md:h-1/3 object-contain md:w-full "
               />
               <img
                 src="https://green.web5phut.com/wp-content/uploads/2021/10/Untitled-7.png"
                 alt=""
-                className="md:w-full w-1/2 md:h-1/5 object-contain"
+                className="md:w-full w-1/2 md:h-1/6 object-contain"
               />
              <img
                   src={tinnhiemmang}
                 alt=""
-                className="md:w-full w-1/2 md:h-1/5 object-contain"
+                className="md:w-full w-1/2 md:h-1/6 object-contain"
               />
             </div>
 

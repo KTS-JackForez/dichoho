@@ -134,7 +134,7 @@ const Header = () => {
     }
   };
   return (
-    <div className="max-w-screen-xl mx-auto text-center flex items-center justify-between pt-5 px-3 gap-2">
+    <div className="max-w-screen-xl mx-auto text-center flex items-center justify-between pt-5 gap-2">
       {toggle && <Sidebar open={toggle} close={setToggle} />}
       <Link to="/" className="hidden md:block">
         <img src={logo} alt="" className="w-56 h-auto" />
@@ -289,7 +289,7 @@ const Header = () => {
               {textAvatar(currentUser.username)}
             </div>
             {openMenu && (
-              <div className="absolute top-12 right-0 z-10 rounded border border-primary bg-white flex flex-col w-32 divide-y divide-dashed divide-primary">
+              <div className="absolute top-12 right-0 z-10 rounded border border-primary bg-white flex flex-col w-48 divide-y divide-dashed divide-primary">
                 <button
                   className="hover:bg-primary p-2"
                   onClick={(e) => {
@@ -300,6 +300,7 @@ const Header = () => {
                 >
                   Trang cá nhân
                 </button>
+                <a href="http://quantri.sale168.com" className="hover:bg-primary p-2">Bạn là người bán</a>
                 <button
                   className="hover:bg-primary p-2"
                   onClick={(e) => {

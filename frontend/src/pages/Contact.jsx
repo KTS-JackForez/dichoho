@@ -9,7 +9,7 @@ const Contact = () => {
       <Header />
       <Navbar />
       <div className="max-w-screen-xl bg-white mx-auto">
-        <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col md:flex-row px-3.5 py-3.5">
           <div className="w-full md:w-1/2">
             <img src={logo} alt="" />
             <ul className="flex flex-col gap-2">

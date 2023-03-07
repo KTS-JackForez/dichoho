@@ -8,7 +8,7 @@ const About = () => {
       <Promotion />
       <Header />
       <Navbar />
-      <div className="max-w-screen-lg bg-white mx-auto">
+      <div className="max-w-screen-lg bg-white mx-auto px-5 py-7">
         <div class="main">
           <div class="introduce">
             <div class="introduce-main grid">
