@@ -1,6 +1,6 @@
 
 import React from "react";
-import logo from "../assets/imgs/logo.png";
+import logo_v3 from "../assets/imgs/logo_v3.png";
 import tinnhiemmang from "../assets/imgs/tinnhiemmang.jpg";
 
 
@@ -57,14 +57,15 @@ const Footer = () => {
           size="56"
         />
       </div>
-      <div className="flex justify-between md:flex-row flex-col mt-2 mx-auto max-w-screen-xl p-3 text-gray-700 gap-8 md:gap-2 md:h-96">
+      <div className="flex justify-between md:flex-row flex-col mt-2 mx-auto max-w-screen-xl p-3 text-gray-700 gap-8 md:gap-2 md:h-72">
         <div className="flex gap-4">
           <div className="flex flex-col lg:flex-row">
-            <div className="px-4 md:w-1/2 flex flex-col w-1/2 -mt-12">
-              <img
-                src={logo}
+            <div className="px-4 md:w-1/2 flex flex-col">
+              <img height={44}
+                src={logo_v3}
                 alt=""
-                className="w-1/2 md:h-1/3 object-contain md:w-full "
+                className="w-1/2 md:h-1/3 object-contain md:w-full"
+                
               />
               <img
                 src="https://green.web5phut.com/wp-content/uploads/2021/10/Untitled-7.png"
@@ -157,11 +158,11 @@ const Footer = () => {
           <div className="md:w-1/2 w-full px-3 gap-2 flex flex-col">
             <h3 className="uppercase font-semibold text-xl">Hỗ trợ khách hàng</h3>
             <ul className="flex flex-col gap-1">
-              <li>Hotline: 1900-636-001 (1000đ/phút, 9h-18h từ T2 - T7)</li>
+             
               <li>Các câu hỏi thường gặp</li>
               <li>Hướng dẫn đặt hàng</li>
               <li>Phương thức vận chuyển</li>
-              <li>Khiếu nại khách hàng</li>
+             
             </ul>
           </div>
         </div>

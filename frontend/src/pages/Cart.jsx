@@ -196,8 +196,8 @@ const Cart = () => {
                     phương thức vận chuyển
                   </label>
                   <select className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:outline-none focus:border-primary focus:ring-primary">
-                    <option>tiêu chuẩn</option>
-                    <option>siêu tốc</option>
+                    <option>Tiêu chuẩn</option>
+                    <option>Siêu tốc</option>
                   </select>
                 </div>
                 <div>
@@ -214,9 +214,9 @@ const Cart = () => {
                 </div>
                 {payment === "bank" && (
                   <div>
-                    <p>Số TK</p>
-                    <p>Tên NK</p>
-                    <p>Tên chủ TK</p>
+                    <p>Số TK: 123456789098</p>
+                    <p>Tên NK: Vietcombank</p>
+                    <p>Tên chủ TK: MrTTS</p>
                   </div>
                 )}
                 {payment === "bank" && (
@@ -293,12 +293,12 @@ const Cart = () => {
                     d="M4.5 12.75l6 6 9-13.5"
                   />
                 </svg>
-                <p>
+                <p className="mt-1">
                   Cảm ơn bạn đã đặt hàng! Mã đơn hàng của bạn là:{" "}
                   <span className="bg-gray-200 px-3 py-1 font-semibold rounded-md">
                     {orderNumber}
                   </span>
-                  chúng tôi đang chuẩn bị hàng giao cho bạn
+                  Chúng tôi đang chuẩn bị hàng giao đến bạn
                 </p>
               </div>
             ) : (
@@ -310,7 +310,7 @@ const Cart = () => {
                 to="/"
                 className="px-4 py-1 bg-primary text-white hover:bg-green-700"
               >
-                Nhiều hàng ngon
+                 Mua thêm
               </Link>
               <Link
                 to="/contact"

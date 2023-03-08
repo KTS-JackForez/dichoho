@@ -1,12 +1,16 @@
 import React from "react";
+import { useState } from "react";
 
 const Header = () => {
+  const [show, setShow] = useState(false)
   return (
     <div className="w-full p-2">
       <div className="bg-white rounded px-2 py-4 flex justify-between items-center">
         <div> tiêu đề</div>
         <div className="flex gap-3 items-center">
-          <div className="flex items-center gap-3 relative">
+          <div className="flex items-center gap-3 relative" onClick={()=>{
+            setShow(!show)
+          }}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -22,10 +26,37 @@ const Header = () => {
               />
             </svg>
             <div className="absolute -top-3 -right-2 rounded-full bg-red-500 w-5 h-5 flex justify-center items-center text-xs text-white">
-              3
+              2
             </div>
+            {/* showNotify */}
+           {show &&  <div className="block w-96 right-0 bg-white absolute top-full border rounded-sm border-gray-400">
+              <div className="h-10 bg-white">
+                <h3 className="ml-3 leading-10 font-semibold text-gray-600">Thông Báo Mới Nhận</h3>
+              </div>
+              <ul className="">
+                <li className="block text-base font-semibold hover:bg-orange-200 border-b rounded-sm border-gray-300 bg-orange-100">
+                  <a href="" className="p-3 block">
+                  <span className="text-base"><i className="text-rose-500">*</i>Bạn có đơn hàng mới</span>
+                  <i className="block mt-1 text-sm text-slate-500">KH MrTTS đã đặt hàng, mã sản phẩm CE32652HG</i>
+                  </a>
+                  </li>
+                  <li className="block text-base font-semibold hover:bg-orange-200 border-b rounded-sm border-gray-300 bg-orange-100">
+                  <a href="" className="p-3 block">
+                  <span className="text-base"><i className="text-rose-500">*</i>Hệ thống có bài viết mới</span>
+                  <i className="block mt-1 text-sm text-slate-500">Cập thật thông tin chương trình mua hàng ngay, quà liền tay</i>
+                  </a>
+                  </li>
+                  <li className="block text-base font-semibold hover:bg-orange-200 border-b rounded-sm border-gray-300 bg-orange-100">
+                  <a href="" className="p-3 block">
+                    <span className="text-base">Đơn hàng đã hoàn thành</span>
+                    <i className="block mt-1 text-sm text-slate-500">Đơn hàng mã CE32652HG đã hoàn thành</i>
+                  </a>
+                  </li>
+              </ul>
+              <div className="flex justify-center"><a href="" className="no-underline py-2.5 px-12 text-current font-semibold">Xem tất cả</a></div>
+            </div>}
           </div>
-          <h3 className="font-bold"> JackForez</h3>
+          <h3 className="font-bold"> JackForez123</h3>
           <div className="rounded-full h-12 w-12 bg-orange-500">
             {/* <img src="" alt="" /> */}
           </div>
