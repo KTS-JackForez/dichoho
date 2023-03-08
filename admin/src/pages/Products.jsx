@@ -63,7 +63,7 @@ const Products = () => {
       </div>
       <div className="w-full mt-4 border border-dashed border-primary rounded divide-y divide-primary divide-dashed bg-white shadow-lg">
         <div className=" flex p-3 font-semibold items-center bg-primary text-white">
-          <div className="w-1/12">Sản phẩm</div>
+          <div className="w-1/12 text-center">Sản phẩm</div>
           <div className="w-6/12">Tên</div>
           <div className="w-2/12">Giá bán</div>
           <div className="w-2/12">Trạng thái</div>
@@ -78,7 +78,7 @@ const Products = () => {
                     p.imgs[0] || "https://via.placeholder.com/300.png/09f/fff"
                   }
                   alt=""
-                  className="w-16 h-16 object-contain rounded-md"
+                  className="w-16 h-16 object-contain rounded-md mx-auto"
                 />
               </div>
               <div className="w-6/12">{p?.productName}</div>

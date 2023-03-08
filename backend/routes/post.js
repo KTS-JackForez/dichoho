@@ -20,6 +20,6 @@ router.post("/", verifyToken, createPost);
 //cập nhật bài viết
 router.put("/:id", verifyToken, editPost);
 //xóa bài viết
-router.get("/:id", verifyToken, deletePost);
+router.delete("/:id", verifyToken, deletePost);
 
 export default router;

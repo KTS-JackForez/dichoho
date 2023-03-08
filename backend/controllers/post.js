@@ -17,7 +17,7 @@ export const createPost = async (req, res, next) => {
 };
 export const getPosts = async (req, res, next) => {
   try {
-    const posts = await Post.find();
+    const posts = await Post.find({status:1});
     res.status(200).json(posts);
   } catch (error) {
     next(error);
@@ -73,7 +73,7 @@ export const deletePost = async (req, res, next) => {
   try {
     const post = Post.findById(req.params.id);
     if (!post) {
-      return next(createError(404, "Không tìm thấy thông tin sản phẩm"));
+      return next(createError(404, "Không tìm thấy bài viết"));
     } else {
       if (
         post.createdBy === req.user.id ||

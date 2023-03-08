@@ -2,10 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ktsRequest from "../../ultis/ktsrequest";
 import { vnd } from "../../ultis/ktsFunc";
+import {useSelector} from "react-redux"
+import axios from "axios";
 const Post = () => {
   const [data, setData] = useState([]);
   const [query, setQuery] = useState("");
+  const [refresh,setRefresh] = useState(false)
   const keys = ["title"];
+  const {currentUser} = useSelector(state=>state.user)
+  const {token} = currentUser
   const status = [
     {
       id: 0,
@@ -17,11 +22,12 @@ const Post = () => {
       id: 1,
       bgColor: "bg-green-300",
       name: "đã xuất bản",
-      textColor: "text-gree-700",
+      textColor: "text-green-700",
     },
-    { id: 2, bgColor: "bg-red-300", name: "đã hủy", textColor: "text-red-700" },
+    { id: 2, bgColor: "bg-red-300", name: "Đã xóa", textColor: "text-red-700" },
   ];
   useEffect(() => {
+    setRefresh(false)
     const fetchData = async () => {
       try {
         const res = await ktsRequest.get("/posts");
@@ -32,13 +38,25 @@ const Post = () => {
     };
 
     fetchData();
-    console.log(data);
-  }, []);
+  }, [refresh]);
   const search = (data) => {
     return data.filter((item) =>
       keys.some((key) => item[key].toLowerCase().includes(query))
     );
   };
+  const handleDelete = async (postid)=>{
+    try {
+      const res =await axios.delete(`http://localhost:9000/api/posts/${postid}`,{
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      setRefresh(true)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <div className="p-3 text-xs md:text-base">
       <div className="flex justify-between">
@@ -129,7 +147,7 @@ const Post = () => {
                       />
                     </svg>
                   </button>
-                  <button className="p-1.5 bg-white rounded border border-red-600 text-red-600 hover:border-red-600 hover:bg-red-600 hover:text-white">
+                  <button className={`p-1.5 ${st.id===2?"bg-gray-400 border-gray-400":"bg-white border-red-600 text-red-600 hover:border-red-600 hover:bg-red-600 hover:text-white"} rounded border `} disabled ={st.id===2} onClick={()=>handleDelete(p._id)}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -137,6 +155,7 @@ const Post = () => {
                       strokeWidth={1.5}
                       stroke="currentColor"
                       className="w-4 h-4"
+                      
                     >
                       <path
                         strokeLinecap="round"
