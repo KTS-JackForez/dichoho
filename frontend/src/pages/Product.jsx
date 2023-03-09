@@ -215,7 +215,7 @@ const Product = () => {
                     className="p-3 font-semibold text-white bg-orange-400 rounded-md text-center hover:bg-orange-600"
                     onClick={() => handleClick(false)}
                   >
-                    Mua luôn
+                    Mua ngay
                   </button>
                 </div>
               </div>

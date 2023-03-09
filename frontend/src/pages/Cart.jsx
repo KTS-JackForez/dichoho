@@ -7,6 +7,7 @@ import ktsRequest from "../../ultis/ktsrequest";
 import { Footer, Header, Navbar, Promotion } from "../components";
 import { addToCart, removeItem, resetCart } from "../redux/cartReducer";
 import { setMsg } from "../redux/msgSlice";
+import QR_Code from "../assets/imgs/QR_CodeFull.jpg";
 const Cart = () => {
   const { products } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
@@ -209,14 +210,19 @@ const Cart = () => {
                     onChange={(e) => setPayment(e.target.value)}
                   >
                     <option value="cod">COD</option>
-                    <option value="bank">Chuyển khoản</option>
+                    <option value="bank">Trực tuyến</option>
                   </select>
                 </div>
                 {payment === "bank" && (
                   <div>
-                    <p>Số TK: 123456789098</p>
+                    {/* <p>Số TK: 123456789098</p>
                     <p>Tên NK: Vietcombank</p>
-                    <p>Tên chủ TK: MrTTS</p>
+                    <p>Tên chủ TK: MrTTS</p> */}
+                       <img
+                  src={QR_Code}
+                alt=""
+                className="md:w-full w-1/2 md:h-1/6 object-contain"
+              />
                   </div>
                 )}
                 {payment === "bank" && (

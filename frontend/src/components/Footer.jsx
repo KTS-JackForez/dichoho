@@ -60,12 +60,12 @@ const Footer = () => {
       <div className="flex justify-between md:flex-row flex-col mt-2 mx-auto max-w-screen-xl p-3 text-gray-700 gap-8 md:gap-2 md:h-72">
         <div className="flex gap-4">
           <div className="flex flex-col lg:flex-row">
-            <div className="px-4 md:w-1/2 flex flex-col">
-              <img height={44}
+            <div className="px-4 md:w-1/2 flex flex-col hidden">
+              <img 
                 src={logo_v3}
                 alt=""
                 className="w-1/2 md:h-1/3 object-contain md:w-full"
-                
+                style={{height:44}}
               />
               <img
                 src="https://green.web5phut.com/wp-content/uploads/2021/10/Untitled-7.png"
@@ -79,7 +79,7 @@ const Footer = () => {
               />
             </div>
 
-            <ul className="flex flex-col gap-2 w-1/2">
+            <ul className="flex flex-col gap-2 w-full">
             <h3 className="uppercase font-semibold text-xl">Về chúng tôi</h3>
               <li className="flex gap-2 items-center">
                 <svg
@@ -162,6 +162,18 @@ const Footer = () => {
               <li>Các câu hỏi thường gặp</li>
               <li>Hướng dẫn đặt hàng</li>
               <li>Phương thức vận chuyển</li>
+              <div className="flex justify-center">
+              <img
+                src="https://green.web5phut.com/wp-content/uploads/2021/10/Untitled-7.png"
+                alt=""
+                className="md:w-full w-1/2 md:h-1/2 object-contain"
+              />
+             <img
+                  src={tinnhiemmang}
+                alt=""
+                className="md:w-full w-1/2 md:h-1/2 object-contain"
+              />
+              </div>
              
             </ul>
           </div>
