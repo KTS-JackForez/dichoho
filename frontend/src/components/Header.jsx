@@ -8,6 +8,8 @@ import { removeItem, resetCart } from "../redux/cartReducer";
 import Sidebar from "./Sidebar";
 import { logout } from "../redux/userSlice";
 import { setMsg } from "../redux/msgSlice";
+import { useEffect } from "react";
+import ktsRequest from "../../ultis/ktsrequest";
 const Cart = (props) => {
   const show = window.location.pathname === "/cart" ? false : true;
   let subtotal1 = 0;
@@ -106,6 +108,8 @@ const Header = () => {
   const { products } = useSelector((state) => state.cart);
   const [toggle, setToggle] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
+  const [query, setQuery] = useState("");
+  const [data, setData] = useState([]);
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -133,6 +137,13 @@ const Header = () => {
       );
     }
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await ktsRequest.post(`/products/search?q=${query}`);
+      setData(res.data);
+    };
+    if (query.length > 2) fetchData();
+  }, [query]);
   return (
     <div className="max-w-screen-xl mx-auto text-center flex items-center justify-between pt-5 gap-2">
       {toggle && <Sidebar open={toggle} close={setToggle} />}
@@ -158,12 +169,33 @@ const Header = () => {
           />
         </svg>
       </button>
-      <div className="flex md:flex-1 w-1/2 justify-start md:justify-center">
+      <div className="flex md:flex-1 w-1/2 justify-start md:justify-center relative">
         <input
           type="text"
           placeholder="Tìm kiếm ..."
           className="p-2 border border-gray-300 rounded-l-md focus:outline-none w-3/5"
+          onChange={(e) => setQuery(e.target.value)}
         />
+        {data && (
+          <div className="absolute top-12 z-10 bg-gray-100 w-1/2 text-start border border-primary divide-y divide-dashed divide-primary rounded">
+            {data.map((p, i) => {
+              return (
+                <Link
+                  to={`/products/${p._id}`}
+                  key={i}
+                  className="flex p-1 items-center"
+                >
+                  <img
+                    src={p.imgs[0]}
+                    alt=""
+                    className="w-12 h-12 object-cover rounded-md"
+                  />
+                  <span>{p.productName}</span>
+                </Link>
+              );
+            })}
+          </div>
+        )}
         <button className="bg-primary px-3 rounded-r-md text-white hover:bg-green-700">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -300,7 +332,12 @@ const Header = () => {
                 >
                   Trang cá nhân
                 </button>
-                <a href="http://quantri.sale168.com" className="hover:bg-primary p-2">Bạn là người bán</a>
+                <a
+                  href="http://quantri.sale168.com"
+                  className="hover:bg-primary p-2"
+                >
+                  Bạn là người bán
+                </a>
                 <button
                   className="hover:bg-primary p-2"
                   onClick={(e) => {

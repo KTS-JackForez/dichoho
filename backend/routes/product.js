@@ -31,7 +31,7 @@ router.get("/addlike", verifyToken, addLike);
 //bớt một like cho sản phẩm
 router.get("/sublike", verifyToken, subLike);
 //tìm kiếm sản phẩm theo từ khóa
-router.get("/search", verifyToken, search);
+router.post("/search", search);
 //cập nhật thông tin sản phẩm
 router.put("/:id", verifyToken, updateProduct);
 //cập nhật giá cho sản phẩm
