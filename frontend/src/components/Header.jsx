@@ -139,6 +139,7 @@ const Header = () => {
   };
   useEffect(() => {
     const fetchData = async () => {
+      setData([]);
       const res = await ktsRequest.post(`/products/search?q=${query}`);
       setData(res.data);
     };
@@ -176,7 +177,7 @@ const Header = () => {
           className="p-2 border border-gray-300 rounded-l-md focus:outline-none w-3/5"
           onChange={(e) => setQuery(e.target.value)}
         />
-        {data && (
+        {query.length > 0 && data && (
           <div className="absolute top-12 z-10 bg-gray-100 w-1/2 text-start border border-primary divide-y divide-dashed divide-primary rounded">
             {data.map((p, i) => {
               return (
