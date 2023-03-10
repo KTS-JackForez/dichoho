@@ -8,6 +8,9 @@ import { Footer, Header, Navbar, Promotion } from "../components";
 import { addToCart, removeItem, resetCart } from "../redux/cartReducer";
 import { setMsg } from "../redux/msgSlice";
 import QR_Code from "../assets/imgs/QR_CodeFull.jpg";
+import io from "socket.io-client"
+
+
 const Cart = () => {
   const { products } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
@@ -17,6 +20,8 @@ const Cart = () => {
   const [orderNumber, setOrderNumber] = useState("");
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const socket=io.connect('http://localhost:9100');
+
   const total = (products) => {
     let total = 0;
     products.map((item) => {
@@ -47,8 +52,9 @@ const Cart = () => {
       );
       toast.success(res.data.message);
       setOrderNumber(res.data.data);
-      dispatch(resetCart());
-      setIsCheckout(true);
+      socket.emit("dathang",{buyerId:currentUser._id,products})
+      // dispatch(resetCart());
+      // setIsCheckout(true);
     } catch (err) {
       console.log(err);
       err.response

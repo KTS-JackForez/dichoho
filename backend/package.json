@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"nodemon index.js"
+    "start": "nodemon index.js"
   },
   "author": "JackForez",
   "license": "ISC",
@@ -18,7 +18,9 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^6.8.3"
+    "mongoose": "^6.8.3",
+    "socket.io": "^4.6.1",
+    "socketio": "^1.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
