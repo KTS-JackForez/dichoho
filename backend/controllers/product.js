@@ -203,7 +203,6 @@ export const subLike = async (req, res, next) => {
 //tìm kiếm sản phẩm
 export const search = async (req, res, next) => {
   const query = req.query.q;
-  console.log(query);
   try {
     const products = await Product.find({
       productName: { $regex: query, $options: "i" },

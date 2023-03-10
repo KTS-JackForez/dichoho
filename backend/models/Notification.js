@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const NotificationSchema = new mongoose.Schema(
   {
-    //id người gửi 
+    //id người gửi
     buyerId: {
       type: String,
       required: true,
@@ -15,9 +15,13 @@ const NotificationSchema = new mongoose.Schema(
     // tiêu đề
     title: {
       type: String,
-      required:true,
+      required: true,
     },
-    // nội dung tin nhắn
+    short: {
+      type: String,
+      required: true,
+    },
+    // nội dung đầy đủ của tin nhắn
     desc: {
       type: String,
       required: true,

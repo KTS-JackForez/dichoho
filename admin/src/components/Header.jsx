@@ -1,30 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import io from "socket.io-client";
+import ktsRequest from "../../../frontend/ultis/ktsrequest";
 const Header = () => {
   const { currentUser } = useSelector((state) => state.user);
+  const { token } = currentUser;
+  const socket = io.connect("http://localhost:9100");
   const [show, setShow] = useState(false);
-  const [data, setData] = useState([
-    {
-      id: 1,
-      title: "Bạn có đơn hàng mới",
-      desc: "KH MrTTS đã đặt hàng, mã sản phẩm CE32652HG",
-      read: false,
-      date: "",
-    },
-    {
-      id: 1,
-      title: "Hệ thống có bài viết mới",
-      desc: "Cập thật thông tin chương trình mua hàng ngay, quà liền tay",
-      read: false,
-    },
-    {
-      id: 1,
-      title: "Đơn hàng đã hoàn thành",
-      desc: "Đơn hàng mã CE32652HG đã hoàn thành",
-      read: true,
-    },
-  ]);
+  const [refresh, setRefresh] = useState(false);
+  const [data, setData] = useState([]);
+  socket.on("newNoti", () => {
+    setRefresh(true);
+  });
+  useEffect(() => {
+    socket.emit("newUser", { uid: currentUser._id });
+    console.log(socket);
+  }, []);
+  useEffect(() => {
+    setRefresh(false);
+    const fetchData = async () => {
+      const res = await ktsRequest.get("/notifications", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setData(res.data);
+    };
+    fetchData();
+  }, [refresh]);
   return (
     <div className="w-full p-2">
       <div className="bg-white rounded px-2 py-4 flex justify-between items-center">
@@ -51,7 +56,7 @@ const Header = () => {
               />
             </svg>
             <div className="absolute -top-3 -right-2 rounded-full bg-red-500 w-5 h-5 flex justify-center items-center text-xs text-white">
-              {data.filter((i) => i.read === false).length}
+              {data?.length}
             </div>
             {/* showNotify */}
             {show && (
@@ -62,7 +67,7 @@ const Header = () => {
                   </h3>
                 </div>
                 <ul className="">
-                  {data.map((n, i) => {
+                  {data?.map((n, i) => {
                     return (
                       <li
                         key={i}
@@ -70,11 +75,11 @@ const Header = () => {
                       >
                         <a href="" className="p-3 block">
                           <span className="text-base">
-                            {n.read && <i className="text-rose-500">*</i>}
+                            {!n.read && <i className="text-rose-500">*</i>}
                             {n.title}
                           </span>
-                          <i className="block mt-1 text-sm text-slate-500">
-                            {n.desc}
+                          <i className="block mt-1 text-sm text-slate-500 truncate">
+                            {n.short}
                           </i>
                         </a>
                       </li>
