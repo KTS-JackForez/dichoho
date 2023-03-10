@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import io from "socket.io-client";
 import ktsRequest from "../../../frontend/ultis/ktsrequest";
 import { dashboard } from "../../ultis/config";
@@ -18,7 +18,10 @@ const Header = () => {
     setRefresh(true);
   });
   useEffect(() => {
-    socket.emit("newUser", { uid: currentUser._id });
+    socket.emit("newUser", {
+      uid: currentUser._id,
+      uname: currentUser.username,
+    });
   }, []);
   useEffect(() => {
     setHeader(dashboard.navLinks.find((i) => i.path === pathname)?.title);
@@ -36,6 +39,11 @@ const Header = () => {
     };
     fetchData();
   }, [refresh]);
+  const unSeen = (listOfNotifications) => {
+    return listOfNotifications?.filter(
+      (notification) => notification.status === 0
+    );
+  };
   return (
     <div className="w-full p-2">
       <div className="bg-white rounded px-2 py-4 flex justify-between items-center">
@@ -61,9 +69,11 @@ const Header = () => {
                 d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
               />
             </svg>
-            <div className="absolute -top-3 -right-2 rounded-full bg-red-500 w-6 h-6 p-0.5 flex justify-center items-center text-xs text-white">
-              {data?.length > 5 ? "5+" : data.length}
-            </div>
+            {unSeen(data).length > 0 && (
+              <div className="absolute -top-3 -right-2 rounded-full bg-red-500 w-6 h-6 p-0.5 flex justify-center items-center text-xs text-white">
+                {unSeen(data).length > 5 ? "5+" : unSeen(data).length}
+              </div>
+            )}
             {/* showNotify */}
             {show && (
               <div className="block w-96 right-0 bg-white absolute top-full border rounded-sm border-gray-400">
@@ -99,12 +109,12 @@ const Header = () => {
                   })}
                 </ul>
                 <div className="flex justify-center">
-                  <a
-                    href=""
+                  <Link
+                    to="/admin/thong-bao"
                     className="no-underline py-2.5 px-12 text-current font-semibold"
                   >
                     Xem tất cả
-                  </a>
+                  </Link>
                 </div>
               </div>
             )}

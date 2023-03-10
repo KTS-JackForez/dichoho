@@ -8,8 +8,8 @@ import { Footer, Header, Navbar, Promotion } from "../components";
 import { addToCart, removeItem, resetCart } from "../redux/cartReducer";
 import { setMsg } from "../redux/msgSlice";
 import QR_Code from "../assets/imgs/QR_CodeFull.jpg";
-import io from "socket.io-client"
-
+import io from "socket.io-client";
+import { useEffect } from "react";
 
 const Cart = () => {
   const { products } = useSelector((state) => state.cart);
@@ -20,8 +20,7 @@ const Cart = () => {
   const [orderNumber, setOrderNumber] = useState("");
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
-  const socket=io.connect('http://localhost:9100');
-
+  const socket = io.connect("http://localhost:9100");
   const total = (products) => {
     let total = 0;
     products.map((item) => {
@@ -52,7 +51,11 @@ const Cart = () => {
       );
       toast.success(res.data.message);
       setOrderNumber(res.data.data);
-      socket.emit("dathang",{buyerId:currentUser._id,products})
+      socket.emit("dathang", {
+        buyerId: currentUser._id,
+        products,
+        buyerName: currentUser.username,
+      });
       // dispatch(resetCart());
       // setIsCheckout(true);
     } catch (err) {
@@ -224,11 +227,11 @@ const Cart = () => {
                     {/* <p>Số TK: 123456789098</p>
                     <p>Tên NK: Vietcombank</p>
                     <p>Tên chủ TK: MrTTS</p> */}
-                       <img
-                  src={QR_Code}
-                alt=""
-                className="md:w-full w-1/2 md:h-1/6 object-contain"
-              />
+                    <img
+                      src={QR_Code}
+                      alt=""
+                      className="md:w-full w-1/2 md:h-1/6 object-contain"
+                    />
                   </div>
                 )}
                 {payment === "bank" && (
@@ -322,7 +325,7 @@ const Cart = () => {
                 to="/"
                 className="px-4 py-1 bg-primary text-white hover:bg-green-700"
               >
-                 Mua thêm
+                Mua thêm
               </Link>
               <Link
                 to="/contact"

@@ -15,6 +15,8 @@ import notiRoute from "./routes/notification.js";
 import http from "http";
 import { Server } from "socket.io";
 import Notification from "./models/Notification.js";
+import User from "./models/User.js";
+import Product from "./models/Product.js";
 
 //app
 const app = express();
@@ -41,25 +43,29 @@ const connect = () => {
 let sockets = [];
 io.on("connection", (socket) => {
   socket.on("newUser", (data) => {
-    sockets.push({ sid: socket.id, uid: data.uid });
+    sockets.push({ sid: socket.id, uid: data.uid, uname: data.uname });
   });
   socket.on("dathang", (data) => {
     const { buyerId } = data;
+    const { buyerName } = data;
     Promise.all(
       data.products.map(async (i) => {
-        // console.log(i)
         const newNoti = new Notification({
           buyerId,
           salerId: i.shopID,
           title: "Bạn có đơn hàng mới",
-          short: "Khách hàng Anh Văn vừa đặt mua sản phẩm",
-          desc: "Chào shop, hệ thống ghi nhận khách hàng Anh Văn vừa đặt mua sản phẩm Rau siêu sạch, bạn hãy mau chuẩn bị giao hàng cho khách.",
+          short: `Khách hàng ${buyerName} vừa đặt mua sản phẩm`,
+          desc: `Chào shop, hệ thống ghi nhận khách hàng ${buyerName} vừa đặt mua sản phẩm ${i.productName}, bạn hãy mau chuẩn bị giao hàng cho khách.`,
         });
         await newNoti.save();
         const sk = sockets.find((s) => s.uid === i.shopID);
         io.to(sk.sid).emit("newNoti");
       })
     );
+  });
+  socket.on("refresh", (data) => {
+    const sk = sockets.find((s) => s.uid === data.uid);
+    io.to(sk.sid).emit("newNoti");
   });
   socket.on("disconnect", () => {
     const index = sockets.indexOf((e) => e.sid === socket.id);
