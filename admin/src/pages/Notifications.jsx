@@ -1,0 +1,49 @@
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import ktsRequest from "../../ultis/ktsrequest";
+
+const Notifications = () => {
+  const [data, setData] = useState([]);
+  const { currentUser } = useSelector((state) => state.user);
+  const { token } = currentUser;
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await ktsRequest.get("/notifications", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setData(res.data);
+    };
+    fetchData();
+  }, []);
+  return (
+    <div className="px-2">
+      <div className="bg-white p-2 rounded-md">
+        <ul>
+          {data?.map((n, i) => {
+            const notiDate = new Date(n.createdAt);
+            return (
+              <li key={i}>
+                <Link
+                  to={`/admin/thong-bao/${n._id}`}
+                  className={`hover:text-red-500 hover:italic ${
+                    n.status === 0 ? "font-semibold" : "text-gray-600"
+                  }`}
+                >
+                  <span className="mr-2">{notiDate.toLocaleDateString()}</span>
+                  <span className="mr-2">{notiDate.toLocaleTimeString()}</span>
+                  <span>{n.title}</span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+export default Notifications;

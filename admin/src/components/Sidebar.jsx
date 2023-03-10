@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { dashboard } from "../../ultis/config";
 import { logout } from "../redux/userSlice";
@@ -7,9 +7,8 @@ import { logout } from "../redux/userSlice";
 const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {currentUser} = useSelector(state=>state.user)
-  const {role} = currentUser
-  console.log(role)
+  const { currentUser } = useSelector((state) => state.user);
+  const { role } = currentUser;
   const activeLink =
     "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded  text-white  text-md m-2 font-semibold border hover:border-primary border-white";
   const normalLink =

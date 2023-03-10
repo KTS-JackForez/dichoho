@@ -16,12 +16,11 @@ export const ktsConfig = {
 };
 export const dashboard = {
   navLinks: [
-    { title: "sản phẩm", path: "/admin/san-pham",role:["admin","user"] },
-    { title: "đơn hàng", path: "/admin/don-hang",role:["admin","user"] },
-    { title: "tài khoản", path: "/admin/tai-khoan",role:["admin","user"] },
-    { title: "bài viết", path: "/admin/bai-viet",role:["admin","user"] },
-    { title: "database", path: "/admin/database",role:["admin"]},
-  
+    { title: "sản phẩm", path: "/admin/san-pham", role: ["admin", "user"] },
+    { title: "đơn hàng", path: "/admin/don-hang", role: ["admin", "user"] },
+    { title: "tài khoản", path: "/admin/tai-khoan", role: ["admin", "user"] },
+    { title: "bài viết", path: "/admin/bai-viet", role: ["admin", "user"] },
+    { title: "thông báo", path: "/admin/thong-bao", role: ["admin", "user"] },
+    { title: "database", path: "/admin/database", role: ["admin"] },
   ],
-
 };

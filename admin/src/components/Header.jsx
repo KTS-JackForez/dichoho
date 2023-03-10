@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import io from "socket.io-client";
 import ktsRequest from "../../../frontend/ultis/ktsrequest";
+import { dashboard } from "../../ultis/config";
 const Header = () => {
   const { currentUser } = useSelector((state) => state.user);
   const { token } = currentUser;
@@ -10,13 +12,17 @@ const Header = () => {
   const [show, setShow] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const [data, setData] = useState([]);
+  const [header, setHeader] = useState("");
+  const { pathname } = useLocation();
   socket.on("newNoti", () => {
     setRefresh(true);
   });
   useEffect(() => {
     socket.emit("newUser", { uid: currentUser._id });
-    console.log(socket);
   }, []);
+  useEffect(() => {
+    setHeader(dashboard.navLinks.find((i) => i.path === pathname)?.title);
+  }, [window.location.pathname]);
   useEffect(() => {
     setRefresh(false);
     const fetchData = async () => {
@@ -33,7 +39,7 @@ const Header = () => {
   return (
     <div className="w-full p-2">
       <div className="bg-white rounded px-2 py-4 flex justify-between items-center">
-        <div> tiêu đề</div>
+        <h3 className="uppercase font-bold">{header}</h3>
         <div className="flex gap-3 items-center">
           <div
             className="flex items-center gap-3 relative"
@@ -55,8 +61,8 @@ const Header = () => {
                 d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
               />
             </svg>
-            <div className="absolute -top-3 -right-2 rounded-full bg-red-500 w-5 h-5 flex justify-center items-center text-xs text-white">
-              {data?.length}
+            <div className="absolute -top-3 -right-2 rounded-full bg-red-500 w-6 h-6 p-0.5 flex justify-center items-center text-xs text-white">
+              {data?.length > 5 ? "5+" : data.length}
             </div>
             {/* showNotify */}
             {show && (
@@ -66,19 +72,25 @@ const Header = () => {
                     Thông Báo Mới Nhận
                   </h3>
                 </div>
-                <ul className="">
+                <ul className="h-64 overflow-scroll">
                   {data?.map((n, i) => {
                     return (
                       <li
                         key={i}
-                        className="block text-base font-semibold hover:bg-orange-200 border-b rounded-sm border-gray-300 bg-orange-100"
+                        className={`block text-base font-semibold ${
+                          n.status === 0 ? "text-black" : "text-slate-500"
+                        }  hover:bg-orange-200 border-b rounded-sm border-gray-300 bg-orange-100`}
                       >
                         <a href="" className="p-3 block">
                           <span className="text-base">
-                            {!n.read && <i className="text-rose-500">*</i>}
+                            {/* {!n.read && <i className="text-rose-500">*</i>} */}
                             {n.title}
                           </span>
-                          <i className="block mt-1 text-sm text-slate-500 truncate">
+                          <i
+                            className={`block mt-1 text-xs ${
+                              n.status === 0 ? "text-black" : "text-slate-500"
+                            } truncate`}
+                          >
                             {n.short}
                           </i>
                         </a>

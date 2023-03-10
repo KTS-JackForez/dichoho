@@ -11,6 +11,8 @@ import {
   NewPost,
   EditPost,
   Post,
+  Notifications,
+  Notification,
 } from "../pages";
 
 const Layout = () => {
@@ -28,6 +30,10 @@ const Layout = () => {
           </Route>
           <Route path="don-hang" element={<Orders />} />
           <Route path="tai-khoan" element={<Account />} />
+          <Route path="thong-bao">
+            <Route index element={<Notifications />} />
+            <Route path=":notificationId" element={<Notification />} />
+          </Route>
           <Route path="bai-viet">
             <Route index element={<Post />} />
             <Route path="new" element={<NewPost />} />
