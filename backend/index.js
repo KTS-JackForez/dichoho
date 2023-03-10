@@ -64,8 +64,12 @@ io.on("connection", (socket) => {
     );
   });
   socket.on("refresh", (data) => {
-    const sk = sockets.find((s) => s.uid === data.uid);
-    io.to(sk.sid).emit("newNoti");
+    // const sk = sockets.find((s) => s.uid === data.uid);
+    // io.to(sk.sid).emit("newNoti");
+    const sks = sockets.filter((s) => s.uid === data.uid);
+    sks.map((i) => {
+      io.to(i.sid).emit("newNoti");
+    });
   });
   socket.on("disconnect", () => {
     const index = sockets.indexOf((e) => e.sid === socket.id);
