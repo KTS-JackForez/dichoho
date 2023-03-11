@@ -24,9 +24,13 @@ export const getProducts = async (req, res, next) => {
 };
 //get sản phẩm của user
 export const getMyProducts = async (req, res, next) => {
-  console.log("get my products");
   try {
-    const products = await Product.findById(req.user.id);
+    const products = permission.includes(req.user.role)
+      ? await Product.find()
+      : await Product.find({ shopID: req.user.id });
+    if (!products) {
+      return res.status(403).json("Chưa có thông tin sản phẩm");
+    }
     res.status(200).json(products);
   } catch (error) {
     next(error);

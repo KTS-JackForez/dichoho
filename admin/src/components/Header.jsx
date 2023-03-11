@@ -3,12 +3,12 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import io from "socket.io-client";
-import ktsRequest from "../../../frontend/ultis/ktsrequest";
+import ktsRequest from "../../ultis/ktsrequest";
 import { dashboard } from "../../ultis/config";
 const Header = () => {
+  const socket = io.connect("http://localhost:9100");
   const { currentUser } = useSelector((state) => state.user);
   const { token } = currentUser;
-  const socket = io.connect("http://localhost:9100");
   const [show, setShow] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const [data, setData] = useState([]);

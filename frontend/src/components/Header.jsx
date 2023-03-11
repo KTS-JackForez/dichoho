@@ -176,15 +176,24 @@ const Header = () => {
           placeholder="Tìm kiếm ..."
           className="p-2 border border-gray-300 rounded-l-md focus:outline-none w-3/5"
           onChange={(e) => setQuery(e.target.value)}
+          value={query}
         />
         {query.length > 0 && data && (
-          <div className="absolute top-12 z-10 bg-gray-100 w-1/2 text-start border border-primary divide-y divide-dashed divide-primary rounded">
+          <div
+            className={`absolute top-12 z-10 bg-gray-100 w-1/2 text-start ${
+              data?.length > 0 ? "border" : ""
+            } border-primary divide-y divide-dashed divide-primary rounded`}
+          >
             {data.map((p, i) => {
               return (
                 <Link
                   to={`/products/${p._id}`}
                   key={i}
                   className="flex p-1 items-center"
+                  onClick={() => {
+                    setData([]);
+                    setQuery("");
+                  }}
                 >
                   <img
                     src={p.imgs[0]}

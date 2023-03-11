@@ -12,6 +12,14 @@ const OrderSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    buyerName: {
+      type: String,
+      required: true,
+    },
+    buyerPhone: {
+      type: String,
+      required: true,
+    },
     // Ghi chú của người mua
     note: {
       type: String,

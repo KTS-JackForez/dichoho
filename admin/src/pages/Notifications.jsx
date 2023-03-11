@@ -2,13 +2,29 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ktsRequest from "../../ultis/ktsrequest";
+import io from "socket.io-client";
 
 const Notifications = () => {
   const [data, setData] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+
   const { currentUser } = useSelector((state) => state.user);
   const { token } = currentUser;
+  const socket = io.connect("http://localhost:9100");
+
+  socket.on("newNoti", () => {
+    setRefresh(true);
+  });
   useEffect(() => {
+    socket.emit("newUser", {
+      uid: currentUser._id,
+      uname: currentUser.username,
+    });
+  }, []);
+  useEffect(() => {
+    setRefresh(false);
     const fetchData = async () => {
+      console.log("fetch data");
       const res = await ktsRequest.get("/notifications", {
         headers: {
           "Content-Type": "application/json",
@@ -18,7 +34,8 @@ const Notifications = () => {
       setData(res.data);
     };
     fetchData();
-  }, []);
+  }, [refresh]);
+  console.log(refresh);
   return (
     <div className="px-2">
       <div className="bg-white p-2 rounded-md">

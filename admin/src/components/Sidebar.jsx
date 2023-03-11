@@ -23,16 +23,20 @@ const Sidebar = () => {
       <div className="flex flex-col gap-3 uppercase">
         {dashboard.navLinks.map((i, index) => {
           return (
-            <NavLink
-              key={index}
-              to={i.path}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? "green" : "",
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              {i.role.includes(role) && i.title}
-            </NavLink>
+            i.role.includes(role) && (
+              <NavLink
+                key={index}
+                to={i.path}
+                style={({ isActive }) => ({
+                  backgroundColor: isActive ? "green" : "",
+                })}
+                className={({ isActive }) =>
+                  isActive ? activeLink : normalLink
+                }
+              >
+                {i.title}
+              </NavLink>
+            )
           );
         })}
         <button

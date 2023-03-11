@@ -38,6 +38,8 @@ const Cart = () => {
         "/orders",
         {
           buyerId: currentUser._id,
+          buyerName: currentUser.username,
+          buyerPhone: currentUser.phone,
           total: total(products),
           payCode,
           products,

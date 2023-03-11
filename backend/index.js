@@ -58,8 +58,12 @@ io.on("connection", (socket) => {
           desc: `Chào shop, hệ thống ghi nhận khách hàng ${buyerName} vừa đặt mua sản phẩm ${i.productName}, bạn hãy mau chuẩn bị giao hàng cho khách.`,
         });
         await newNoti.save();
-        const sk = sockets.find((s) => s.uid === i.shopID);
-        io.to(sk.sid).emit("newNoti");
+        const sks = sockets.filter((s) => s.uid === i.shopID);
+        if (sks) {
+          sks.map((j) => {
+            io.to(j.sid).emit("newNoti");
+          });
+        }
       })
     );
   });
@@ -72,10 +76,11 @@ io.on("connection", (socket) => {
     });
   });
   socket.on("disconnect", () => {
-    const index = sockets.indexOf((e) => e.sid === socket.id);
-    if (index > -1) {
-      sockets.splice(index, 1);
-    }
+    // const index = sockets.indexOf((e) => e.sid === socket.id);
+    // if (index > -1) {
+    //   sockets.splice(index, 1);
+    // }
+    sockets = sockets.filter((s) => s.uid !== socket.uid);
   });
 });
 

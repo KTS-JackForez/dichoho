@@ -4,6 +4,7 @@ export { default as NotFound } from "./NotFound";
 export { default as Login } from "./Login";
 export { default as Register } from "./Register";
 export { default as Account } from "./Account";
+export { default as MyAccount } from "./MyAccount";
 export { default as Orders } from "./Orders";
 export { default as NewProduct } from "./NewProduct";
 export { default as EditProduct } from "./EditProduct";

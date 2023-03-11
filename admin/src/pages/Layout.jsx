@@ -13,11 +13,12 @@ import {
   Post,
   Notifications,
   Notification,
+  MyAccount,
 } from "../pages";
 
 const Layout = () => {
   return (
-    <div className="w-screen flex">
+    <div className="flex">
       <Sidebar />
       <div className="bg-gray-200 flex-1">
         <Header />
@@ -30,6 +31,7 @@ const Layout = () => {
           </Route>
           <Route path="don-hang" element={<Orders />} />
           <Route path="tai-khoan" element={<Account />} />
+          <Route path="thong-tin-tai-khoan" element={<MyAccount />} />
           <Route path="thong-bao">
             <Route index element={<Notifications />} />
             <Route path=":notificationId" element={<Notification />} />
