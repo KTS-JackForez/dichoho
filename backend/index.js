@@ -109,6 +109,6 @@ app.listen(PORT || 8000, () => {
   //log
   console.log(`Kết nối Server thành công tại cổng ${PORT}`);
   server.listen(9100, () => {
-    console.log("listening on *:9100");
+    console.log("socket: 9100");
   });
 });

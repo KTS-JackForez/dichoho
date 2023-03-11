@@ -29,7 +29,7 @@ const Product = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [window.location.pathname]);
   const handleClick = (type) => {
     // type-true: mua luôn
     // type-false: thêm vào giỏ hàng

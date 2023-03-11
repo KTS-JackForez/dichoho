@@ -85,7 +85,8 @@ const Header = () => {
                 <ul className="h-64 overflow-scroll">
                   {data?.map((n, i) => {
                     return (
-                      <li
+                      <Link
+                        to={`/admin/thong-bao/${n._id}`}
                         key={i}
                         className={`block text-base font-semibold ${
                           n.status === 0 ? "text-black" : "text-slate-500"
@@ -104,7 +105,7 @@ const Header = () => {
                             {n.short}
                           </i>
                         </a>
-                      </li>
+                      </Link>
                     );
                   })}
                 </ul>
