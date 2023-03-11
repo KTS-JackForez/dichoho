@@ -20,8 +20,8 @@ const Modal = (props) => {
     props.close(false);
   };
   return (
-    <div className="w-screen h-screen bg-black/40 z-30 absolute flex justify-center items-center top-0 left-0">
-      <div className="w-1/3 bg-white rounded-md overflow-hidden">
+    <div className="w-screen h-full bg-black/10 z-30 absolute flex justify-center items-center top-0 left-0">
+      <div className="w-1/3 bg-white rounded-md overflow-hidden border-2 border-white">
         <div className="bg-red-500 p-2 uppercase font-bold text-white">
           {props.title || "cảnh báo!"}
         </div>
