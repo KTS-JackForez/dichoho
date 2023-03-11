@@ -36,6 +36,15 @@ const ProductSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    available: {
+      type: Boolean,
+      default: true,
+    },
+    //Trạng thái sản phẩm:
+    active: {
+      type: Boolean,
+      default: true,
+    },
     like: {
       type: Number,
     },

@@ -44,6 +44,17 @@ const Header = () => {
       (notification) => notification.status === 0
     );
   };
+  const textAvatar = (text) => {
+    let name = text.split(" ");
+    if (name.length === 1) {
+      return name[0].charAt().toUpperCase();
+    } else {
+      return (
+        name[0].charAt(0).toUpperCase() +
+        name[name.length - 1].charAt(0).toUpperCase()
+      );
+    }
+  };
   return (
     <div className="w-full p-2">
       <div className="bg-white rounded px-2 py-4 flex justify-between items-center">
@@ -121,8 +132,17 @@ const Header = () => {
             )}
           </div>
           <h3 className="font-bold"> {currentUser.username}</h3>
-          <div className="rounded-full h-12 w-12 bg-orange-500">
-            {/* <img src="" alt="" /> */}
+          <img src="" alt="" />
+          <div className="rounded-full h-12 w-12 bg-orange-500 flex justify-center items-center text-white font-bold overflow-hidden border-2 border-primary">
+            {currentUser.img ? (
+              <img
+                src={currentUser.img}
+                alt=""
+                className="w-full h-full object-cover object-center"
+              />
+            ) : (
+              textAvatar(currentUser.username)
+            )}
           </div>
         </div>
       </div>

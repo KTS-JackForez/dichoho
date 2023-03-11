@@ -10,6 +10,7 @@ import {
   getProducts,
   removeTag,
   search,
+  setStatus,
   subLike,
   updatePrice,
   updateProduct,
@@ -38,6 +39,8 @@ router.put("/:id", verifyToken, updateProduct);
 router.put("/:id", verifyToken, updatePrice);
 //thêm tag/category cho sản phẩm
 router.post("/addtag", verifyToken, addTag);
+//
+router.post("/setavailable", verifyToken, setStatus);
 //xóa tag/category cho sản phẩm
 router.post("/remove", verifyToken, removeTag);
 //tạo mới sản phẩm

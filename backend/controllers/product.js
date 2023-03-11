@@ -27,7 +27,7 @@ export const getMyProducts = async (req, res, next) => {
   try {
     const products = permission.includes(req.user.role)
       ? await Product.find()
-      : await Product.find({ shopID: req.user.id });
+      : await Product.find({ shopID: req.user.id, active: true });
     if (!products) {
       return res.status(403).json("Chưa có thông tin sản phẩm");
     }
@@ -60,7 +60,7 @@ export const getProductByTag = async (req, res, next) => {
 //update thông tin sản phẩm
 export const updateProduct = async (req, res, next) => {
   try {
-    const product = Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id);
     if (!product) {
       return next(createError(404, "Không tìm thấy thông tin sản phẩm"));
     } else {
@@ -87,7 +87,7 @@ export const updateProduct = async (req, res, next) => {
 //xóa sản phẩm
 export const deleteProduct = async (req, res, next) => {
   try {
-    const product = Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id);
     if (!product) {
       return next(createError(404, "Không tìm thấy thông tin sản phẩm"));
     } else {
@@ -110,7 +110,7 @@ export const deleteProduct = async (req, res, next) => {
 //thêm tag vào sản phẩm
 export const addTag = async (req, res, next) => {
   try {
-    const product = Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id);
     if (!product) {
       return next(createError(404, "Không tìm thấy thông tin sản phẩm"));
     } else {
@@ -135,7 +135,7 @@ export const addTag = async (req, res, next) => {
 //xóa tag sản phẩm
 export const removeTag = async (req, res, next) => {
   try {
-    const product = Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id);
     if (!product) {
       return next(createError(404, "Không tìm thấy thông tin sản phẩm"));
     } else {
@@ -160,7 +160,7 @@ export const removeTag = async (req, res, next) => {
 //update giá bán hiện tại của sản phẩm
 export const updatePrice = async (req, res, next) => {
   try {
-    const product = Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id);
     if (!product) {
       return next(createError(404, "Không tìm thấy thông tin sản phẩm"));
     } else {
@@ -172,6 +172,31 @@ export const updatePrice = async (req, res, next) => {
           $set: { currentPrice: req.body.price },
         });
         res.status(200).json("Cập nhật mức giá thành công");
+      } else {
+        return next(
+          createError(403, "Bạn không được phép thực hiện chức năng này")
+        );
+      }
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+// chuyển đổi trạng thái sản phẩm
+export const setStatus = async (req, res, next) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      return next(createError(404, "Không tìm thấy thông tin sản phẩm"));
+    } else {
+      if (
+        product.shopID === req.user.id ||
+        permission.includes(req.user.role)
+      ) {
+        await Product.findByIdAndUpdate(req.params.id, {
+          $set: { status: req.body.status },
+        });
+        res.status(200).json("Cập nhật trạng thái sản phẩm thành công");
       } else {
         return next(
           createError(403, "Bạn không được phép thực hiện chức năng này")

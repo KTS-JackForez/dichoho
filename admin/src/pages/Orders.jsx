@@ -73,7 +73,6 @@ const Orders = () => {
       total
     );
   };
-  console.log(data);
   return (
     <div className="w-full p-2">
       <div className="w-full mt-4 bg-white shadow-lg rounded-md overflow-hidden">
@@ -112,7 +111,7 @@ const Orders = () => {
                                 <span className="font-semibold">
                                   {p.productName}
                                 </span>
-                                <div>
+                                <div className="">
                                   <span>{vnd(p.currentPrice) + " * "}</span>
                                   <span>{p.quantity + " = "}</span>
                                   <span>

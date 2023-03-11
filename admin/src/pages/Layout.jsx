@@ -18,7 +18,7 @@ import {
 
 const Layout = () => {
   return (
-    <div className="flex">
+    <div className="flex relative">
       <Sidebar />
       <div className="bg-gray-200 flex-1">
         <Header />

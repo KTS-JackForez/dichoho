@@ -24,7 +24,6 @@ const Notifications = () => {
   useEffect(() => {
     setRefresh(false);
     const fetchData = async () => {
-      console.log("fetch data");
       const res = await ktsRequest.get("/notifications", {
         headers: {
           "Content-Type": "application/json",
@@ -35,7 +34,6 @@ const Notifications = () => {
     };
     fetchData();
   }, [refresh]);
-  console.log(refresh);
   return (
     <div className="px-2">
       <div className="bg-white p-2 rounded-md">
