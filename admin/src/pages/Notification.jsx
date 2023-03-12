@@ -4,9 +4,9 @@ import ktsRequest from "../../ultis/ktsrequest";
 import { toast, ToastContainer } from "react-toastify";
 import { useSelector } from "react-redux";
 import io from "socket.io-client";
-
+import { ktsSocket } from "../../ultis/config";
 const Notification = () => {
-  const socket = io.connect("http://localhost:9100");
+  const socket = io.connect(ktsSocket);
   const [data, setData] = useState({});
   const { notificationId } = useParams();
   const navigate = useNavigate();

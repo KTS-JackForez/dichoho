@@ -6,13 +6,14 @@ import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import { vnd } from "../../ultis/ktsFunc";
 import io from "socket.io-client";
+import { ktsSocket } from "../../ultis/config";
 
 const Orders = () => {
   const [data, setData] = useState([]);
   const { currentUser } = useSelector((state) => state.user);
   const { token } = currentUser;
   const [refresh, setRefresh] = useState(false);
-  const socket = io.connect("http://localhost:9100");
+  const socket = io.connect(ktsSocket);
   const status = [
     {
       id: 0,

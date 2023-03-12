@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ktsRequest from "../../ultis/ktsrequest";
 import io from "socket.io-client";
+import { ktsSocket } from "../../ultis/config";
 
 const Notifications = () => {
   const [data, setData] = useState([]);
@@ -10,7 +11,7 @@ const Notifications = () => {
 
   const { currentUser } = useSelector((state) => state.user);
   const { token } = currentUser;
-  const socket = io.connect("http://localhost:9100");
+  const socket = io.connect(ktsSocket);
 
   socket.on("newNoti", () => {
     setRefresh(true);

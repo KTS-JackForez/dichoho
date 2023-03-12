@@ -58,3 +58,7 @@ export const dashboard = {
     { title: "tài khoản", path: "/dashboard/tai-khoan" },
   ],
 };
+//online
+export const ktsSocket = "http://api.sale168.com:9100";
+//local
+// export const ktsSocket = "http://localhost:9100";

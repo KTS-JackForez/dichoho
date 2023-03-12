@@ -29,3 +29,7 @@ export const dashboard = {
     { title: "database", path: "/admin/database", role: ["admin"] },
   ],
 };
+//online
+export const ktsSocket = "http://api.sale168.com:9100";
+//offline
+// export const ktsSocket = "http://localhost:9100";

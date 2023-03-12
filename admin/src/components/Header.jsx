@@ -5,8 +5,9 @@ import { Link, useLocation } from "react-router-dom";
 import io from "socket.io-client";
 import ktsRequest from "../../ultis/ktsrequest";
 import { dashboard } from "../../ultis/config";
+import { ktsSocket } from "../../ultis/config";
 const Header = () => {
-  const socket = io.connect("http://localhost:9100");
+  const socket = io.connect(ktsSocket);
   const { currentUser } = useSelector((state) => state.user);
   const { token } = currentUser;
   const [show, setShow] = useState(false);
@@ -82,7 +83,7 @@ const Header = () => {
             </svg>
             {unSeen(data).length > 0 && (
               <div className="absolute -top-3 -right-2 rounded-full bg-red-500 w-6 h-6 p-0.5 flex justify-center items-center text-xs text-white">
-                {unSeen(data).length > 5 ? "5+" : unSeen(data).length}
+                {unSeen(data).length > 99 ? "99+" : unSeen(data).length}
               </div>
             )}
             {/* showNotify */}
