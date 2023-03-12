@@ -12,8 +12,13 @@ const PostSchema = new mongoose.Schema(
     productId: {
       type: String,
     },
-    // tác giả
+    // id tác giả
     createdBy: {
+      type: String,
+      required: true,
+    },
+    // tên tác giả
+    author: {
       type: String,
       required: true,
     },

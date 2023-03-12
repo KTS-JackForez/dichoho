@@ -155,6 +155,7 @@ const Products = () => {
                         close={setOpenModal}
                         token={token}
                         data={delProd}
+                        editedData={{ active: false }}
                       />
                     )}
                   </div>

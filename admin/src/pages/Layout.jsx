@@ -14,6 +14,7 @@ import {
   Notifications,
   Notification,
   MyAccount,
+  SinglePost,
 } from "../pages";
 
 const Layout = () => {
@@ -40,6 +41,7 @@ const Layout = () => {
             <Route index element={<Post />} />
             <Route path="new" element={<NewPost />} />
             <Route path="edit" element={<EditPost />} />
+            <Route path=":postid" element={<SinglePost />} />
           </Route>
         </Routes>
       </div>

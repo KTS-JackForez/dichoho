@@ -2,11 +2,12 @@ import React from "react";
 import ktsRequest from "../../ultis/ktsrequest";
 
 const Modal = (props) => {
+  console.log(props);
   const handleAction = async () => {
     try {
       await ktsRequest.put(
         `${props.to}/${props.data._id}`,
-        { ...props.data, active: false },
+        { ...props.data, ...props.editedData },
         {
           headers: {
             "Content-Type": "application/json",

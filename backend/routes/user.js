@@ -4,6 +4,7 @@ import {
   getByPhone,
   getUser,
   getUsers,
+  setUserStatus,
   updateUser,
   updateUserRole,
 } from "../controllers/user.js";
@@ -19,8 +20,11 @@ router.get("/", verifyToken, getUsers);
 router.get("/find/:phone", verifyToken, getByPhone);
 //update thông tin user
 router.put("/:id", verifyToken, updateUser);
+router.put("/:id/status/:newstatus", verifyToken, setUserStatus);
 //update quyền của user
 router.post("/updaterole", verifyToken, updateUserRole);
+router.post("/updaterole", verifyToken, updateUserRole);
+
 //delete một user
 router.delete("/:id", verifyToken, deleteUser);
 

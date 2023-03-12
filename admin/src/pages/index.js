@@ -13,3 +13,4 @@ export { default as NewPost } from "./NewPost";
 export { default as EditPost } from "./EditPost";
 export { default as Notifications } from "./Notifications";
 export { default as Notification } from "./Notification";
+export { default as SinglePost } from "./SinglePost";

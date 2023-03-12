@@ -54,11 +54,16 @@ export const updateUser = async (req, res, next) => {
     );
   }
   try {
-    await User.findByIdAndUpdate(
-      req.params.id,
-      { $set: req.body },
-      { new: true }
-    );
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(403).json("Không tìm thấy thông tin user");
+    } else {
+      await User.findByIdAndUpdate(
+        req.params.id,
+        { $set: req.body },
+        { new: true }
+      );
+    }
     res.status(200).json("Cập nhật thông tin tài khoản thành công");
   } catch (error) {
     next(error);
@@ -78,6 +83,22 @@ export const updateUserRole = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+export const setUserStatus = async (req, res, next) => {
+  console.log(req.params);
+  const role = process.env.ROLE;
+  const newStatus = req.params.newstatus;
+  // if (!role.includes(req.user.role) && req.body.new_role !== "admin") {
+  //   return next(createError(403, "Tham số truyền lên không đúng"));
+  // }
+  // try {
+  //   await User.findByIdAndUpdate(req.params.id, {
+  //     $set: { status: newStatus },
+  //   });
+  //   res.status(200).json("Cập nhật quyền user thành công");
+  // } catch (error) {
+  //   next(error);
+  // }
 };
 // delete một user
 export const deleteUser = async (req, res, next) => {

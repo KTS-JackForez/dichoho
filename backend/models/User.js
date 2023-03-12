@@ -36,6 +36,11 @@ const UserSchema = new mongoose.Schema(
       type: String,
       default: "user",
     },
+    //trạng thái của user: -1: xóa; 0-:bị khóa; 1: đang hoạt động
+    status: {
+      type: String,
+      default: true,
+    },
     //id của người tạo tài khoản (dùng cho staff/admin)
     parentUser: {
       type: String,
