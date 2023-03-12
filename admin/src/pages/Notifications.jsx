@@ -38,11 +38,11 @@ const Notifications = () => {
   return (
     <div className="px-2">
       <div className="bg-white p-2 rounded-md">
-        <ul>
+        <ul className="divide-y divide-primary divide-dashed">
           {data?.map((n, i) => {
             const notiDate = new Date(n.createdAt);
             return (
-              <li key={i}>
+              <li key={i} className="p-2">
                 <Link
                   to={`/admin/thong-bao/${n._id}`}
                   className={`hover:text-red-500 hover:italic ${
