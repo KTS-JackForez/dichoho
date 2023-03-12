@@ -2,7 +2,6 @@ import React from "react";
 import ktsRequest from "../../ultis/ktsrequest";
 
 const Modal = (props) => {
-  console.log(props);
   const handleAction = async () => {
     try {
       await ktsRequest.put(
