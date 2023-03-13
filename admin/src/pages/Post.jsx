@@ -46,7 +46,7 @@ const Post = () => {
   };
   const handleDelete = async (postid) => {
     try {
-      const res = await axios.delete(
+      const res = await ktsRequest.delete(
         `http://localhost:9000/api/posts/${postid}`,
         {
           headers: {

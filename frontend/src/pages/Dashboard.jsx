@@ -5,6 +5,7 @@ import DbSidebar from "../components/DbSidebar";
 import DbAccount from "./DbAccount";
 import DbHome from "./DbHome";
 import DbOrder from "./DbOrder";
+import MyAccount from "./MyAccount";
 
 const Dashboard = () => {
   return (
@@ -17,7 +18,7 @@ const Dashboard = () => {
             <Route index element={<DbOrder />} />
           </Route>
           <Route path="tai-khoan">
-            <Route index element={<DbAccount />} />
+            <Route index element={<MyAccount />} />
           </Route>
         </Routes>
       </div>
