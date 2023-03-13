@@ -1,5 +1,6 @@
 import { createError } from "../error.js";
 import User from "../models/User.js";
+import Product from "../models/Product.js";
 const permission = ["admin", "staff"];
 //get một user
 export const getUser = async (req, res, next) => {
@@ -112,5 +113,32 @@ export const deleteUser = async (req, res, next) => {
     res.status(200).json("User đã bị xóa");
   } catch (error) {
     next(error);
+  }
+};
+export const like = async (req, res, next) => {
+  const id = req.user.id;
+  const productid = req.params.productid;
+  try {
+    await Product.findByIdAndUpdate(productid, {
+      $addToSet: { likedBy: id },
+      // $pull: { dislikedBy: id },
+    });
+    res.status(200).json("Thêm vào danh sách yêu thích thành công");
+  } catch (err) {
+    next(err);
+  }
+};
+export const dislike = async (req, res, next) => {
+  const id = req.user.id;
+  const productid = req.params.productid;
+  console.log(productid);
+  try {
+    await User.findByIdAndUpdate(productid, {
+      // $addToSet: { dislikedBy: id },
+      $pull: { likedBy: id },
+    });
+    res.status(200).json("Xóa khỏi danh sách yêu thích thành công");
+  } catch (err) {
+    next(err);
   }
 };

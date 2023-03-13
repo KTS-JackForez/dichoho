@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Footer, Header, Navbar, Promotion } from "../components";
-// import "./News.css";
-// import "../assets/css/base.css";
 import ktsRequest from "../../ultis/ktsrequest";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
@@ -32,7 +30,11 @@ const News = () => {
           <div className="md:w-3/4 w-full grid grid-cols-2 gap-3 md:grid-cols-3">
             {data.map((p, i) => {
               return (
-                <Link to={`/news/${p._id}`} className="bg-gray-100" key={i}>
+                <Link
+                  to={`/news/${p._id}`}
+                  className="bg-gray-100 hover:shadow-lg hover:-translate-y-1 hover:scale-105 duration-300"
+                  key={i}
+                >
                   <div className="w-full md:h-48 h-32">
                     <img
                       src={p.thumbnail}

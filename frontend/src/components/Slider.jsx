@@ -72,15 +72,15 @@ const Slider = () => {
           <div className="flex justify-center gap-3 items-center">
             {dots.map((i, index) => {
               return (
-                <button
+                <div
                   className={`${
                     activeImg === index
                       ? "bg-green-600 text-white w-4 h-4"
                       : "hover:bg-white bg-white/20 w-3 h-3"
-                  } rounded-full border border-double border-green-500`}
+                  } rounded-full border border-double border-green-500 cursor-pointer`}
                   onClick={() => setActiveImg(i - 1)}
                   key={index}
-                ></button>
+                ></div>
               );
             })}
           </div>
