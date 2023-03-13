@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import ktsRequest from "../../ultis/ktsrequest";
 import { vnd } from "../../ultis/ktsFunc";
 import { useSelector } from "react-redux";
-import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+
 const Post = () => {
   const [data, setData] = useState([]);
   const [query, setQuery] = useState("");
@@ -46,18 +47,18 @@ const Post = () => {
   };
   const handleDelete = async (postid) => {
     try {
-      const res = await ktsRequest.delete(
-        `http://localhost:9000/api/posts/${postid}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await ktsRequest.delete(`/posts/${postid}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      toast.success(res.data);
       setRefresh(true);
     } catch (error) {
-      console.log(error);
+      error.response
+        ? toast.error(error.response.data.message)
+        : toast.error("Network Error!");
     }
   };
   return (
@@ -112,24 +113,24 @@ const Post = () => {
               return (
                 <div className="w-full flex p-1 gap-1 items-center" key={i}>
                   <div className="w-6/12 flex items-center gap-3">
-                    <div className="w-28 h-20 rounded-md min-w-1/4 overflow-hidden">
+                    <div className="w-28 h-20 rounded-md overflow-hidden">
                       <img
                         src={
                           p.thumbnail ||
                           "https://via.placeholder.com/300.png/09f/fff"
                         }
                         alt=""
-                        className="w-full h-full object-cover "
+                        className="w-full h-full object-cover"
                       />
                     </div>
-                    <div className="overflow-hidden w-3/4">
+                    <div className="overflow-hidden w-96">
                       <Link
                         to={`/admin/bai-viet/${p._id}`}
                         className="font-semibold text-lg hover:text-primary"
                       >
                         {p.title}
                       </Link>
-                      <p className="truncate ">{p.description}</p>
+                      <p className="truncate">{p.description}</p>
                       <span className="text-red-500 font-semibold italic">
                         {p?.author || "sale168.com" + ", "}
                       </span>
@@ -165,7 +166,7 @@ const Post = () => {
                       className={`p-1.5 ${
                         st.id === 2
                           ? "bg-gray-400 border-gray-400"
-                          : "bg-white border-red-600 text-red-600 hover:border-red-600 hover:bg-red-600 hover:text-white"
+                          : "bg-white border-red-600 text-red-600 hover:border-red-600 hover:bg-red-600 hover:text-white active:scale-95 transition-transform"
                       } rounded border `}
                       disabled={st.id === 2}
                       onClick={() => handleDelete(p._id)}
@@ -194,6 +195,7 @@ const Post = () => {
           <div className="p-2 text-center text-gray-700">Không có dữ liệu</div>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 };
