@@ -78,11 +78,14 @@ const Orders = () => {
     <div className="w-full p-2">
       <div className="w-full mt-4 bg-white shadow-lg rounded-md overflow-hidden">
         <div className=" flex p-3 font-semibold items-center bg-primary text-white">
-          <div className="w-2/12">Ngày</div>
-          <div className="w-2/12">Mã đơn hàng</div>
-          <div className="w-4/12">Chi tiết đơn hàng</div>
+          <div className="w-1/4 flex">
+          <div className="w-1/2">Ngày</div>
+          <div className="w-1/2">Mã đơn hàng</div>
+          </div>
+          <div className="w-3/12">Chi tiết đơn hàng</div>
           <div className="w-1/12">Thành tiền</div>
           <div className="w-2/12 text-center">Khách hàng</div>
+          <div className="w-2/12 text-center">Ghi chú</div>
           <div className="w-1/12">Trạng thái</div>
         </div>
         {data?.length > 0 ? (
@@ -91,11 +94,13 @@ const Orders = () => {
               const st = o.status;
               return (
                 <div className="w-full flex p-1 gap-1 items-center" key={i}>
-                  <div className="w-2/12">
+                 <div className="w-1/4 flex">
+                 <div className="w-1/2">
                     {new Date(o.createdAt).toLocaleString()}
                   </div>
-                  <div className="w-2/12">{o.orderNumber}</div>
-                  <div className="w-4/12">
+                  <div className="w-1/2">{o.orderNumber}</div>
+                 </div>
+                  <div className="w-3/12">
                     <ul className="space-y-1">
                       {o.products.map((p, j) => {
                         return (
@@ -133,7 +138,9 @@ const Orders = () => {
                     <div>{o?.buyerName}</div>
                     <div>{o?.buyerPhone}</div>
                   </div>
-
+                  <div className="w-2/12">
+                    {o?.note}
+                  </div>
                   <div className="w-1/12">
                     {" "}
                     <span

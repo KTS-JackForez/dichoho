@@ -17,6 +17,17 @@ export const createPost = async (req, res, next) => {
 };
 export const getPosts = async (req, res, next) => {
   try {
+    const posts = await Post.find({status:1});
+    res.status(200).json(posts);
+  } catch (error) {
+    next(error);
+  }
+};
+export const adminGetPosts = async (req, res, next) => {
+  try {
+    if(!permission.includes(req.user.role)){
+      return res.status(403).json("Bạn không được cấp quyền truy cập")
+    }
     const posts = await Post.find();
     res.status(200).json(posts);
   } catch (error) {
