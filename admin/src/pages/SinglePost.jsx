@@ -52,7 +52,7 @@ const SinglePost = () => {
             </div>
             <div className="flex w-1/4 justify-between text-white">
               <button
-                className="bg-primary px-3 py-2 rounded hover:bg-green-700 w-1/2"
+                className="bg-primary px-3 py-2 rounded hover:bg-green-700 w-1/2 active:scale-90 duration-300 hover:scale-105"
                 title="duyệt bài viết"
               >
                 <svg
@@ -71,7 +71,7 @@ const SinglePost = () => {
                 </svg>
               </button>
               <button
-                className="bg-orange-500 px-3 py-2 rounded hover:bg-orange-600 w-1/2 ml-2"
+                className="bg-orange-500 px-3 py-2 rounded hover:bg-orange-600 w-1/2 ml-2 active:scale-90 duration-300 hover:scale-105"
                 title="yêu cầu chỉnh sửa"
               >
                 <svg
