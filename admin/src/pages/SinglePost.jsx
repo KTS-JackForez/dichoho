@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import ktsRequest from "../../ultis/ktsrequest";
@@ -7,6 +8,8 @@ const SinglePost = () => {
   const navigate = useNavigate();
   const { postid } = useParams();
   const [post, setPost] = useState();
+  const {currentUser} = useSelector(state=>state.user)
+  const {token} = currentUser
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -17,7 +20,26 @@ const SinglePost = () => {
       }
     };
     fetchData();
-  }, []);
+}, []);
+const handleOk = async()=>{
+  try {
+    const res = await ktsRequest.put(`/posts/${postid}`,{
+      ...post,status:1
+    },{ headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },})
+    console.log(res)
+    toast.success(res.data)
+  } catch (error) {
+    error.response
+    ? toast.error(error.response.data.message)
+    : toast.error("Network Error!");
+  }
+}
+const handleEdit = async()=>{
+  return navigate(-1)
+}
   return (
     <div className="w-full px-2">
       <div className=" bg-white rounded-md">
@@ -54,6 +76,7 @@ const SinglePost = () => {
               <button
                 className="bg-primary px-3 py-2 rounded hover:bg-green-700 w-1/2 active:scale-90 duration-300 hover:scale-105"
                 title="duyệt bài viết"
+                onClick={handleOk}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -73,6 +96,7 @@ const SinglePost = () => {
               <button
                 className="bg-orange-500 px-3 py-2 rounded hover:bg-orange-600 w-1/2 ml-2 active:scale-90 duration-300 hover:scale-105"
                 title="yêu cầu chỉnh sửa"
+                onClick={handleEdit}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
