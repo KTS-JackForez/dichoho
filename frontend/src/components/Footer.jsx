@@ -2,7 +2,7 @@
 import React from "react";
 import logo_v3 from "../assets/imgs/logo_v3.png";
 import tinnhiemmang from "../assets/imgs/tinnhiemmang.jpg";
-
+import {Link} from "react-router-dom"
 
 const MyCart = ({
   children: cart,
@@ -149,10 +149,17 @@ const Footer = () => {
           <div className="md:w-1/2 w-full px-3 gap-2 flex flex-col">
             <h3 className="uppercase font-semibold text-xl">Chính sách</h3>
             <ul className="flex flex-col gap-1">
-              <li>Hướng dẫn đăng ký</li>
-              <li>Bảo mật thông tin cá nhân</li>
-              <li>Quy chế hoạt động</li>
-              <li>Quy trình giải quyết khiếu nại</li>
+              <li>
+               <a href="http://sale168.com/news/640ffb8df73dc135c1d7d1e5">Hướng dẫn đăng ký</a>
+              </li>
+              <li>
+                <a href="http://sale168.com/news/640ff760f73dc135c1d7d1d6"> Bảo mật thông tin cá nhân</a>
+               </li>
+              <li><a href="#">Quy chế hoạt động</a>
+                </li>
+              <li>
+                <a href="http://sale168.com/news/640ff9e3f73dc135c1d7d1df"> Quy trình giải quyết khiếu nại</a>
+               </li>
             </ul>
           </div>
           <div className="md:w-1/2 w-full px-3 gap-2 flex flex-col">
@@ -160,7 +167,9 @@ const Footer = () => {
             <ul className="flex flex-col gap-1">
              
               <li>Các câu hỏi thường gặp</li>
-              <li>Hướng dẫn đặt hàng</li>
+              <li>
+            <a href="http://sale168.com/news/640ffc63f73dc135c1d7d1ed"> Hướng dẫn đặt hàng</a>
+              </li>
               <li>Phương thức vận chuyển</li>
               <div className="flex justify-center">
               <img

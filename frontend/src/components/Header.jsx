@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/imgs/logo.png";
+import logo from "../assets/imgs/logo_v3.png";
 import empty from "../assets/imgs/no-cart.png";
 import { useDispatch, useSelector } from "react-redux";
 import { vnd } from "../../ultis/ktsFunc";
@@ -146,7 +146,7 @@ const Header = () => {
     if (query.length > 2) fetchData();
   }, [query]);
   return (
-    <div className="max-w-screen-xl mx-auto text-center flex items-center justify-between pt-5 gap-2">
+    <div className="max-w-screen-xl mx-auto text-center flex items-center justify-between p-7 gap-2">
       {toggle && <Sidebar open={toggle} close={setToggle} />}
       <Link to="/" className="hidden md:block">
         <img src={logo} alt="" className="w-56 h-auto" />
@@ -182,14 +182,14 @@ const Header = () => {
           <div
             className={`absolute top-12 z-10 bg-gray-100 w-1/2 text-start ${
               data?.length > 0 ? "border" : ""
-            } border-primary divide-y divide-dashed divide-primary rounded`}
+            } border-primary divide-y divide-dashed divide-primary rounded z-20`}
           >
             {data.map((p, i) => {
               return (
                 <Link
                   to={`/products/${p._id}`}
                   key={i}
-                  className="flex p-1 items-center"
+                  className="flex p-1.5 items-center "
                   onClick={() => {
                     setData([]);
                     setQuery("");
@@ -198,9 +198,9 @@ const Header = () => {
                   <img
                     src={p.imgs[0]}
                     alt=""
-                    className="w-12 h-12 object-cover rounded-md"
+                    className="w-12 h-12 object-cover rounded-full"
                   />
-                  <span>{p.productName}</span>
+                  <span className="pl-1 normal-case">{p.productName}</span>
                 </Link>
               );
             })}
