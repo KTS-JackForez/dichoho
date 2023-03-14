@@ -31,7 +31,12 @@ const Post = () => {
     setRefresh(false);
     const fetchData = async () => {
       try {
-        const res = await ktsRequest.get("/posts");
+        const res = await ktsRequest.get("/posts/admin",{
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${currentUser.token}`,
+          },
+        });
         setData(res.data);
       } catch (error) {
         console.log(error);
