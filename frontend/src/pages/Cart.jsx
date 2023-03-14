@@ -17,6 +17,7 @@ const Cart = () => {
   const dispatch = useDispatch();
   const [payment, setPayment] = useState("cod");
   const [payCode, setPayCode] = useState("");
+  const [note, setNote] = useState("");
   const [isCheckout, setIsCheckout] = useState(false);
   const [orderNumber, setOrderNumber] = useState("");
   const { currentUser } = useSelector((state) => state.user);
@@ -44,6 +45,7 @@ const Cart = () => {
           total: total(products),
           payCode,
           products,
+          note,
         },
         {
           headers: {
@@ -276,6 +278,7 @@ const Cart = () => {
                     id="note"
                     placeholder="Ghi chú của người mua"
                     className="border-grey-light block w-full rounded border p-2 focus:border-primary focus:outline-none"
+                    onChange={(e) => setNote(e.target.value)}
                   />
                 </div>
                 <div className="border-t mt-8">
