@@ -1,27 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { vnd } from "../../../admin/ultis/ktsFunc";
 import { useSelector } from "react-redux";
 import ktsRequest from "../../ultis/ktsrequest";
+import { ToastContainer, toast } from "react-toastify";
+
 const ItemCard = (props) => {
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const [liked, setLiked] = useState(
+    props.data?.likedBy.includes(currentUser?._id)
+  );
   const discount = Math.round(
     ((props.data?.stockPrice - props.data?.currentPrice) * 100) /
       props.data?.stockPrice
   );
+  let { likedBy } = props?.data;
 
-  const check = props.data?.likedBy.includes(currentUser?._id);
-  console.log(check + "-" + props.data?.productName);
   const handleLike = async () => {
     if (!currentUser) {
       return navigate("/login");
     }
     const { token } = currentUser;
-    console.log(check);
+    if (liked && likedBy.includes(currentUser?._id)) {
+      likedBy = likedBy.filter((u) => u !== currentUser?._id);
+      setLiked(false);
+    } else {
+      likedBy.push(currentUser?._id);
+      setLiked(true);
+    }
     try {
       const res = await ktsRequest.put(
-        `/users/${check ? "dislike" : "like"}/${props.data._id}`,
+        `/users/${liked ? "dislike" : "like"}/${props.data._id}`,
         {},
         {
           headers: {
@@ -30,9 +40,10 @@ const ItemCard = (props) => {
           },
         }
       );
-      console.log(res.data);
     } catch (error) {
-      console.log(error);
+      error.response
+        ? toast.error(error.response.data.message)
+        : toast.error("Network Error!");
     }
   };
   return (
@@ -59,7 +70,7 @@ const ItemCard = (props) => {
         <p
           className={`mb-1  ${
             discount > 0
-              ? "text-red-600 line-through text-xs "
+              ? "text-red-600 line-through text-xs"
               : " text-primary "
           }  font-semibold `}
         >
@@ -79,10 +90,10 @@ const ItemCard = (props) => {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              fill={check ? "red" : "none"}
+              fill={liked ? "red" : "none"}
               viewBox="0 0 24 24"
               strokeWidth={1}
-              stroke={check ? "red" : "currentColor"}
+              stroke={liked ? "red" : "currentColor"}
               className="w-6 h-6"
             >
               <path
