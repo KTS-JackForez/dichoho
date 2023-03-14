@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import ItemCard from "./ItemCard";
+import icon_ns from "../assets/imgs/icon_ns.webp";
+
 const ProductCat = (props) => {
+  console.log(props);
   useEffect(() => {}, []);
   return (
     <div className="w-full bottom-0 mt-1 py-2">
@@ -8,7 +11,7 @@ const ProductCat = (props) => {
         <div className="flex justify-between bg-green-200">
           <div className="flex justify-start items-center gap-3">
             <img
-              src="https://green.web5phut.com/wp-content/themes/flatsome-child/images/icon_ns.png"
+              src={icon_ns}
               alt=""
             />
             <h3 className="uppercase font-semibold ">
