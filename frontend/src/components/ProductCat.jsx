@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import ItemCard from "./ItemCard";
 // import icon_ns from "../assets/imgs/icon_ns.webp";
-
+import icon_ns from "../assets/imgs/icon_ns.webp";
 const ProductCat = (props) => {
   console.log(props);
   useEffect(() => {}, []);
@@ -10,7 +10,7 @@ const ProductCat = (props) => {
       <div className="max-w-screen-xl mx-auto">
         <div className="flex justify-between bg-green-200">
           <div className="flex justify-start items-center gap-3">
-            <img src={props.picCover} alt="" />
+            <img src={icon_ns} alt="" />
             <h3 className="uppercase font-semibold ">
               {props.catTitle ? props.catTitle : "tiêu đề"}
             </h3>

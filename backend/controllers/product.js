@@ -22,6 +22,32 @@ export const getProducts = async (req, res, next) => {
     next(error);
   }
 };
+export const getLastest = async (req, res, next) => {
+  const limit = req.params.limit || 0;
+  try {
+    const products = await Product.find();
+    const list =
+      limit > 0
+        ? products.sort((a, b) => b.createdAt - a.createdAt).slice(0, limit)
+        : products.sort((a, b) => b.createdAt - a.createdAt);
+    res.status(200).json(list);
+  } catch (error) {
+    next(error);
+  }
+};
+export const getHostest = async (req, res, next) => {
+  const limit = req.params.limit || 0;
+  try {
+    const products = await Product.find();
+    const list =
+      limit > 0
+        ? products.sort((a, b) => b.outStock - a.outStock).slice(0, limit)
+        : products.sort((a, b) => b.outStock - a.outStock);
+    res.status(200).json(list);
+  } catch (error) {
+    next(error);
+  }
+};
 //get sản phẩm của user
 export const getMyProducts = async (req, res, next) => {
   try {

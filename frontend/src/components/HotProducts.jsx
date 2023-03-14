@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ItemCard from "./ItemCard";
-
+import icon_hotsale from "../assets/imgs/icon_hotsale.webp";
 import { ToastContainer, toast } from "react-toastify";
 import ktsRequest from "../../ultis/ktsrequest";
 const HotProducts = (props) => {
@@ -17,8 +17,9 @@ const HotProducts = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await ktsRequest.get("/products");
-        setData(res.data.slice(0, 10));
+        const res = await ktsRequest.get("/products/hotest/10");
+        setData(res.data);
+        console.log(res.data);
       } catch (err) {
         err.response
           ? toast.error(err.response.data.message)
@@ -32,11 +33,7 @@ const HotProducts = (props) => {
       <div className="max-w-screen-xl mx-auto border-4 border-green-500 rounded-md overflow-hidden">
         <div className="flex justify-between bg-white p-3">
           <div className="flex justify-start items-center gap-3">
-            <img
-              src="https://green.web5phut.com/wp-content/themes/flatsome-child/images/icon_hotsale.png"
-              alt=""
-              className="mb-3"
-            />
+            <img src={icon_hotsale} alt="" className="mb-3" />
             <h3 className="uppercase font-bold text-green-600">
               {props.title ? props.title : " sản phẩm "}
             </h3>
@@ -83,7 +80,7 @@ const HotProducts = (props) => {
           </div>
         </div>
         <ul
-          className="flex flex-nowrap overflow-hidden scroll whitespace-nowrap scroll-smooth scrollbar-hide"
+          className="flex flex-nowrap overflow-hidden scroll whitespace-nowrap scroll-smooth scrollbar-hide py-2"
           id="wrraper"
         >
           {data.map((p, i) => {

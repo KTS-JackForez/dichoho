@@ -1,5 +1,6 @@
 import { createError } from "../error.js";
 import Order from "../models/Order.js";
+import Product from "../models/Product.js";
 const permistion = ["admin", "staff"];
 export const createOrder = async (req, res, next) => {
   try {
@@ -10,6 +11,13 @@ export const createOrder = async (req, res, next) => {
       orderNumber,
     });
     await newOrder.save();
+    Promise.all(
+      req.body.products.map(async (i) => {
+        const p = await Product.findByIdAndUpdate(i.id, {
+          $inc: { outStock: i.quantity },
+        });
+      })
+    );
     res
       .status(200)
       .json({ message: "Tạo đơn hàng thành công", data: orderNumber });
