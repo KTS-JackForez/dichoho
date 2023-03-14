@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import ktsRequest from "../../ultis/ktsrequest";
-
+import "./singlepost.css"
 const SinglePost = () => {
   const navigate = useNavigate();
   const { postid } = useParams();
@@ -100,7 +100,7 @@ const SinglePost = () => {
           </div>
           <div
             dangerouslySetInnerHTML={{ __html: post?.content }}
-            className="text-justify"
+            className="text-justify baiviet"
           ></div>
         </div>
         <ToastContainer />
