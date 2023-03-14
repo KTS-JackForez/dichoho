@@ -17,7 +17,7 @@ export const createPost = async (req, res, next) => {
 };
 export const getPosts = async (req, res, next) => {
   try {
-    const posts = await Post.find({status:1});
+    const posts = await Post.find({ status: 1 });
     res.status(200).json(posts);
   } catch (error) {
     next(error);
@@ -25,11 +25,12 @@ export const getPosts = async (req, res, next) => {
 };
 export const adminGetPosts = async (req, res, next) => {
   try {
-    if(!permission.includes(req.user.role)){
-      return res.status(403).json("Bạn không được cấp quyền truy cập")
+    if (!permission.includes(req.user.role)) {
+      return res.status(403).json("Bạn không được cấp quyền truy cập");
     }
     const posts = await Post.find();
-    res.status(200).json(posts);
+    const list = posts.sort((a, b) => b.createdAt - a.createdAt);
+    res.status(200).json(list);
   } catch (error) {
     next(error);
   }
@@ -69,7 +70,7 @@ export const editPost = async (req, res, next) => {
           { $set: req.body },
           { new: true }
         );
-        res.status(200).json("Cập nhật bài viết thành công thành công");
+        res.status(200).json("Cập nhật bài viết thành công");
       } else {
         return next(
           createError(403, "Bạn không được phép thực hiện chức năng này")

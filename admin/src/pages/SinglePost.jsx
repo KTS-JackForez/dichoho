@@ -3,13 +3,13 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import ktsRequest from "../../ultis/ktsrequest";
-import "./singlepost.css"
+import "./singlepost.css";
 const SinglePost = () => {
   const navigate = useNavigate();
   const { postid } = useParams();
   const [post, setPost] = useState();
-  const {currentUser} = useSelector(state=>state.user)
-  const {token} = currentUser
+  const { currentUser } = useSelector((state) => state.user);
+  const { token } = currentUser;
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -20,26 +20,55 @@ const SinglePost = () => {
       }
     };
     fetchData();
-}, []);
-const handleOk = async()=>{
-  try {
-    const res = await ktsRequest.put(`/posts/${postid}`,{
-      ...post,status:1
-    },{ headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },})
-    console.log(res)
-    toast.success(res.data)
-  } catch (error) {
-    error.response
-    ? toast.error(error.response.data.message)
-    : toast.error("Network Error!");
-  }
-}
-const handleEdit = async()=>{
-  return navigate(-1)
-}
+  }, []);
+  const handleOk = async () => {
+    try {
+      const res = await ktsRequest.put(
+        `/posts/${postid}`,
+        {
+          ...post,
+          status: 1,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success(res.data, {
+        onClose: () => navigate(-1),
+      });
+    } catch (error) {
+      error.response
+        ? toast.error(error.response.data.message)
+        : toast.error("Network Error!");
+    }
+  };
+  const handleEdit = async () => {
+    try {
+      const res = await ktsRequest.put(
+        `/posts/${postid}`,
+        {
+          ...post,
+          status: 0,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success(res.data, {
+        onClose: () => navigate(-1),
+      });
+    } catch (error) {
+      error.response
+        ? toast.error(error.response.data.message)
+        : toast.error("Network Error!");
+    }
+  };
   return (
     <div className="w-full px-2">
       <div className=" bg-white rounded-md">

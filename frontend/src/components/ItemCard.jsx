@@ -19,7 +19,9 @@ const ItemCard = (props) => {
 
   const handleLike = async () => {
     if (!currentUser) {
-      return navigate("/login");
+      return toast.warn("Vui lòng đăng nhập", {
+        onClose: () => navigate("/login"),
+      });
     }
     const { token } = currentUser;
     if (liked && likedBy.includes(currentUser?._id)) {

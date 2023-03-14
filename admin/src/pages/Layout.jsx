@@ -40,7 +40,7 @@ const Layout = () => {
           <Route path="bai-viet">
             <Route index element={<Post />} />
             <Route path="new" element={<NewPost />} />
-            <Route path="edit" element={<EditPost />} />
+            <Route path="edit/:postid" element={<EditPost />} />
             <Route path=":postid" element={<SinglePost />} />
           </Route>
         </Routes>
