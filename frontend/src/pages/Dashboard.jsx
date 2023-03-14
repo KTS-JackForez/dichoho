@@ -2,7 +2,6 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import DbHeader from "../components/DbHeader";
 import DbSidebar from "../components/DbSidebar";
-import DbAccount from "./DbAccount";
 import DbHome from "./DbHome";
 import DbOrder from "./DbOrder";
 import MyAccount from "./MyAccount";
@@ -12,6 +11,7 @@ const Dashboard = () => {
     <div className="w-screen flex">
       <DbSidebar />
       <div className="bg-gray-200 flex-1">
+        <DbHeader/>
         <Routes>
           <Route path="home" element={<DbHome />} />
           <Route path="don-hang">
