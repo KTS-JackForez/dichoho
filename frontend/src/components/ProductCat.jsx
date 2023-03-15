@@ -1,21 +1,36 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ItemCard from "./ItemCard";
 // import icon_ns from "../assets/imgs/icon_ns.webp";
 import icon_ns from "../assets/imgs/icon_ns.webp";
+import ktsRequest from "../../ultis/ktsrequest";
+import { Link } from "react-router-dom";
 const ProductCat = (props) => {
-  console.log(props);
-  useEffect(() => {}, []);
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await ktsRequest.get("/products/lastest/10");
+        setData(res.data.slice(0, 8));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <div className="w-full bottom-0 mt-1 py-2">
       <div className="max-w-screen-xl mx-auto">
         <div className="flex justify-between bg-green-200">
           <div className="flex justify-start items-center gap-3">
             <img src={icon_ns} alt="" />
-            <h3 className="uppercase font-semibold ">
+            <h3 className="uppercase font-bold ">
               {props.catTitle ? props.catTitle : "tiêu đề"}
             </h3>
           </div>
-          <div className="flex items-center pr-4">
+          <Link
+            to="/products"
+            className="flex items-center pr-4 hover:text-primary"
+          >
             Xem tất cả
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -23,7 +38,7 @@ const ProductCat = (props) => {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="w-4 h-4"
+              className="w-4 h-4 ml-2"
             >
               <path
                 strokeLinecap="round"
@@ -31,24 +46,19 @@ const ProductCat = (props) => {
                 d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
               />
             </svg>
-          </div>
+          </Link>
         </div>
-        <div className="gap-2 mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 justify-center grid-rows-2 py-3 w-full">
-          <div className="w-full col-span-2 mx-auto px-1">
+        <div className="gap-2 mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 justify-center grid-rows-2 py-2 w-full">
+          <div className="w-full md:col-span-2 rounded-tl-xl rounded-tr-[6rem] rounded-br-xl rounded-bl-[6rem] overflow-hidden">
             <img
               src={props.picCover}
               alt=""
-              className="w-full h-full object-cover "
+              className="w-full h-full object-contain"
             />
           </div>
-          {/* <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard /> */}
+          {data.map((p, i) => {
+            return <ItemCard data={p} key={i} />;
+          })}
         </div>
       </div>
     </div>

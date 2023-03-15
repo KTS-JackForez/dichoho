@@ -19,7 +19,6 @@ const HotProducts = (props) => {
       try {
         const res = await ktsRequest.get("/products/hotest/10");
         setData(res.data);
-        console.log(res.data);
       } catch (err) {
         err.response
           ? toast.error(err.response.data.message)
