@@ -65,7 +65,7 @@ const Post = () => {
         </div>
         <div
           dangerouslySetInnerHTML={{ __html: post?.content }}
-          className="text-justify"
+          className="text-justify baiviet"
         ></div>
       </div>
       <Footer />
