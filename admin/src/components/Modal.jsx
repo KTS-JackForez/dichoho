@@ -1,10 +1,10 @@
 import React from "react";
 import ktsRequest from "../../ultis/ktsrequest";
-
+import { toast } from "react-toastify";
 const Modal = (props) => {
   const handleAction = async () => {
     try {
-      await ktsRequest.put(
+      const res = await ktsRequest.put(
         `${props.to}/${props.data._id}`,
         { ...props.data, ...props.editedData },
         {
@@ -14,8 +14,14 @@ const Modal = (props) => {
           },
         }
       );
+      toast.success(res.data, {
+        onClose: () => props.refreshData(true),
+      });
     } catch (error) {
       console.log(error);
+      toast.error(error.response ? error.response.data : "Network Error!", {
+        onClose: () => props.refreshData(true),
+      });
     }
     props.close(false);
   };
@@ -31,7 +37,7 @@ const Modal = (props) => {
             className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700"
             onClick={handleAction}
           >
-            Xác nhận xóa
+            Xác nhận
           </button>
           <button
             className="px-4 py-2 text-white bg-primary rounded hover:bg-green-700"

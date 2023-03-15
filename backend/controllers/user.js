@@ -59,6 +59,8 @@ export const updateUser = async (req, res, next) => {
     if (!user) {
       return res.status(403).json("Không tìm thấy thông tin user");
     } else {
+      if (user.role === "admin")
+        return res.status(403).json("Tài khoản admin không được phép truy cập");
       await User.findByIdAndUpdate(
         req.params.id,
         { $set: req.body },

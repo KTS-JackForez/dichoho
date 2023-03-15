@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ktsRequest from "../../ultis/ktsrequest";
-import { vnd } from "../../ultis/ktsFunc";
 import { useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
 import Modal from "../components/Modal";
 
 const Account = () => {
@@ -11,10 +11,13 @@ const Account = () => {
   const [openModal, setOpenModal] = useState(false);
   const [delUser, setDelUser] = useState({});
   const [editData, setEditData] = useState({});
+  const [refresh, setRefresh] = useState(false);
+  const [text, setText] = useState("");
   const keys = ["username"];
   const { currentUser } = useSelector((state) => state.user);
   const { token } = currentUser;
   useEffect(() => {
+    setRefresh(false);
     const fetchData = async () => {
       try {
         const res = await ktsRequest.get("/users", {
@@ -30,7 +33,7 @@ const Account = () => {
     };
 
     fetchData();
-  }, []);
+  }, [refresh]);
   const search = (data) => {
     return data.filter((item) =>
       keys.some((key) => item[key].toLowerCase().includes(query))
@@ -67,12 +70,6 @@ const Account = () => {
             </svg>
           </button>
         </div>
-        {/* <Link
-          to="new"
-          className="py-2 px-4 hover:bg-primary rounded font-bold border border-primary text-primary bg-white hover:text-white"
-        >
-          
-        </Link> */}
       </div>
       <div className="w-full mt-4 rounded bg-white shadow-lg overflow-hidden">
         <div className=" flex p-3 font-semibold items-center bg-primary text-white">
@@ -85,7 +82,6 @@ const Account = () => {
         {search(data).length > 0 ? (
           <div className="divide-y divide-primary divide-dashed">
             {search(data).map((u, i) => {
-              console.log(u);
               return (
                 <div className="w-full flex p-1 gap-1 items-center" key={i}>
                   <div className="w-3/12 flex items-center gap-2">
@@ -103,7 +99,7 @@ const Account = () => {
                   </div>
                   <div className="w-2/12">{u?.phone}</div>
                   <div className="w-3/12">{u?._id}</div>
-                  <div className="w-2/12">{u.role}</div>
+                  <div className="w-2/12">{u.role + "--" + u.status}</div>
                   <div className="w-2/12 flex gap-2">
                     <button className="p-1.5 bg-white rounded border border-blue-400 text-blue-400 hover:border-blue-400 hover:bg-blue-400 hover:text-white">
                       <svg
@@ -122,56 +118,58 @@ const Account = () => {
                       </svg>
                     </button>
                     <button
-                      className="p-1.5 bg-white rounded border border-orange-400 text-orange-400 hover:border-orange-400 hover:bg-orange-400 hover:text-white"
+                      className={`p-1.5 bg-white rounded border ${
+                        u.role === "admin" || u.status === -1
+                          ? "bg-gray-400 border-gray-400 "
+                          : "border-orange-400 text-orange-400 hover:border-orange-400 hover:bg-orange-400 hover:text-white"
+                      } `}
+                      disabled={u.status === -1}
                       onClick={() => {
                         setDelUser(u);
-                        setEditData({ status: u.status === "0" ? "1" : "0" });
+                        setEditData({ status: u.status === 0 ? 1 : 0 });
                         setOpenModal(true);
+                        setText(
+                          `${u.status === 0 ? "Mở khóa" : "Khóa"} tài khoản ${
+                            u.username
+                          }`
+                        );
                       }}
                     >
-                      {u.status === "1" ? (
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.5}
-                          stroke="currentColor"
-                          className="w-4 h-4"
-                        >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-4 h-4"
+                      >
+                        {u.status === 1 ? (
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
                             d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
                           />
-                        </svg>
-                      ) : (
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.5}
-                          stroke="currentColor"
-                          className="w-4 h-4"
-                        >
+                        ) : (
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
                             d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
                           />
-                        </svg>
-                      )}
+                        )}
+                      </svg>
                     </button>
                     <button
                       className={`p-1.5 ${
-                        u.role === "admin"
+                        u.role === "admin" || u.status === -1
                           ? "bg-gray-400 border-gray-400"
                           : "bg-white border-red-600 text-red-600 hover:border-red-600 hover:bg-red-600 hover:text-white"
                       } rounded border `}
-                      disabled={u.role === "admin"}
+                      disabled={u.role === "admin" || u.status === -1}
                       onClick={() => {
                         setDelUser(u);
-                        setEditData({ status: "-1" });
+                        setEditData({ status: -1 });
                         setOpenModal(true);
+                        setText(`Xóa tài khoản ${u.username}?`);
                       }}
                     >
                       <svg
@@ -192,12 +190,13 @@ const Account = () => {
                     {openModal && (
                       <Modal
                         title="cảnh báo"
-                        message={`Khóa tài khoản "${delUser?.username}"?`}
+                        message={text}
                         to={`/users/`}
                         close={setOpenModal}
                         token={token}
                         data={delUser}
                         editedData={editData}
+                        refreshData={setRefresh}
                       />
                     )}
                   </div>
@@ -209,6 +208,7 @@ const Account = () => {
           <div className="p-2 text-center text-gray-700">Không có dữ liệu</div>
         )}
       </div>
+      <ToastContainer autoClose={1000} />
     </div>
   );
 };

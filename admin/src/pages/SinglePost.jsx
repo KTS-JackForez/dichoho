@@ -148,7 +148,7 @@ const SinglePost = () => {
             <img
               src={post?.thumbnail}
               alt=""
-              className="w-full h-full object-cover object-center"
+              className="w-full h-full object-contain object-center"
             />
           </div>
           <div
