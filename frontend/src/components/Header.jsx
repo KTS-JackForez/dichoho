@@ -140,7 +140,7 @@ const Header = () => {
     if (query.length > 2) fetchData();
   }, [query]);
   return (
-    <div className="max-w-screen-xl mx-auto text-center flex items-center justify-between p-7 gap-2">
+    <div className="max-w-screen-xl mx-auto text-center flex items-center justify-between py-7 gap-2">
       {toggle && <Sidebar open={toggle} close={setToggle} />}
       <Link to="/" className="hidden md:block">
         <img src={logo} alt="" className="w-56 h-auto" />
@@ -165,7 +165,7 @@ const Header = () => {
         </svg>
       </button>
      
-      <div className="w-1/3">
+      <div className="w-1/2">
       <div className="flex md:flex-1 w-full justify-start md:justify-center relative mx-auto">
         <input
           type="text"

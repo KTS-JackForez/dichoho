@@ -49,11 +49,11 @@ const ProductCat = (props) => {
           </Link>
         </div>
         <div className="gap-2 mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 justify-center grid-rows-2 py-2 w-full">
-          <div className="w-full md:col-span-2 rounded-tl-xl rounded-tr-[6rem] rounded-br-xl rounded-bl-[6rem] overflow-hidden">
+          <div className="w-full md:col-span-2 rounded-tl-xl rounded-tr-[6rem] rounded-br-xl rounded-bl-[6rem] overflow-hidden hidden md:block">
             <img
               src={props.picCover}
               alt=""
-              className="w-full h-full object-contain"
+              className="w-full h-full object-cover"
             />
           </div>
           {data.map((p, i) => {
