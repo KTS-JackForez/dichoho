@@ -67,7 +67,7 @@ export const getProduct = async (req, res, next) => {
   try {
     const product = await Product.findById(req.params.id);
     if (!product)
-      return next(createError(403, "Không tìm thấy thông tin sản phẩm"));
+      return res.status(403).json("Không tìm thấy thông tin sản phẩm");
     res.status(200).json(product);
   } catch (error) {
     next(error);

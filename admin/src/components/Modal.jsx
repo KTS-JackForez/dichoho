@@ -18,7 +18,6 @@ const Modal = (props) => {
         onClose: () => props.refreshData(true),
       });
     } catch (error) {
-      console.log(error);
       toast.error(error.response ? error.response.data : "Network Error!", {
         onClose: () => props.refreshData(true),
       });

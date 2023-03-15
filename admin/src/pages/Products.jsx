@@ -93,7 +93,7 @@ const Products = () => {
                         "https://via.placeholder.com/300.png/09f/fff"
                       }
                       alt=""
-                      className="w-16 h-16 object-contain rounded-md mx-auto"
+                      className="w-16 h-16 object-cover rounded-md mx-auto"
                     />
                   </div>
                   <div className="w-6/12">{p?.productName}</div>
@@ -111,7 +111,10 @@ const Products = () => {
                     </label>
                   </div>
                   <div className="w-1/12 flex gap-2">
-                    <button className="p-1.5 bg-white rounded border border-orange-400 text-orange-400 hover:border-orange-400 hover:bg-orange-400 hover:text-white">
+                    <Link
+                      to={`/admin/san-pham/${p._id}`}
+                      className="p-1.5 bg-white rounded border border-orange-400 text-orange-400 hover:border-orange-400 hover:bg-orange-400 hover:text-white"
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -126,7 +129,7 @@ const Products = () => {
                           d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
                         />
                       </svg>
-                    </button>
+                    </Link>
                     <button className="p-1.5 bg-white rounded border border-red-600 text-red-600 hover:border-red-600 hover:bg-red-600 hover:text-white">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

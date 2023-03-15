@@ -28,7 +28,7 @@ const Layout = () => {
           <Route path="san-pham">
             <Route index element={<Products />} />
             <Route path="new" element={<NewProduct />} />
-            <Route path="edit" element={<EditProduct />} />
+            <Route path=":productid" element={<EditProduct />} />
           </Route>
           <Route path="don-hang" element={<Orders />} />
           <Route path="tai-khoan" element={<Account />} />

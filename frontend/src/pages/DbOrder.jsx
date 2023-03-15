@@ -87,8 +87,8 @@ const DbOrder = () => {
           <div className="w-2/12">Đơn hàng</div>
           <div className="w-2/12">Ngày</div>
           <div className="w-3/12">Chi tiết</div>
-          <div className="w-2/12">Thành tiền</div>
-          <div className="w-2/12">Trạng thái</div>
+          <div className="w-2/12 text-center">Thành tiền</div>
+          <div className="w-2/12 text-center">Trạng thái</div>
           <div className="w-1/12">Thao tác</div>
         </div>
         {data.map((o, i) => {
@@ -107,27 +107,44 @@ const DbOrder = () => {
                     orderDate.toLocaleTimeString()}
                 </div>
                 <div className="w-3/12">
-                  {o.products.map((p, j) => {
-                    return (
-                      <div key={j}>
-                        <span>{p.productName + "*" + p.quantity}</span>
-                      </div>
-                    );
-                  })}
+                  <ul className="space-y-1">
+                    {o.products.map((p, j) => {
+                      return (
+                        <li key={j} className="">
+                          <div className="flex gap-2">
+                            <div>
+                              <img
+                                src={p.img}
+                                alt=""
+                                className="w-12 h-12 rounded object-cover object-center"
+                              />
+                            </div>
+                            <div className="text-xs">
+                              <span className="font-semibold">
+                                {p.productName}
+                              </span>
+                              <div className="">
+                                <span>{vnd(p.currentPrice) + " * "}</span>
+                                <span>{p.quantity + " = "}</span>
+                                <span>{vnd(p.quantity * p.currentPrice)}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
                 </div>
                 <div className="w-2/12 font-semibold text-end pr-10">
                   {vnd(o?.total)}
                 </div>
-                <div className="w-2/12 text-center">
+                <div className="w-2/12 text-center text-xs">
                   <span
                     className={`${status[st].bgColor} ${status[st].textColor} px-1.5 py-0.5 font-semibold rounded`}
                   >
                     {status[st].name}
                   </span>
                 </div>
-                <span
-                  className={`${st.bgColor} ${st.textColor} px-2 py-1 font-semibold rounded`}
-                ></span>
                 <div className="w-1/12 flex gap-2">
                   <button
                     className={`p-1.5  rounded border ${
