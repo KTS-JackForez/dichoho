@@ -15,6 +15,7 @@ const Product = () => {
   const [openTab, setOpenTab] = useState(1);
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
+  const [hotProducts,setHotProducts] = useState([])
   const { productId } = useParams();
   const { imgs } = product;
   const dispatch = useDispatch();
@@ -30,6 +31,17 @@ const Product = () => {
     };
     fetchData();
   }, [window.location.pathname]);
+  useEffect(()=>{
+    const fetchData = async () => {
+      try {
+        const res = await ktsRequest.get(`/products/hotest/5`);
+        setHotProducts(res.data);
+      } catch (err) {
+        err.response ? navigate("/notfound") : toast.error("Network Error!");
+      }
+    };
+    fetchData(); 
+  },[])
   const handleClick = (type) => {
     // type-true: mua luôn
     // type-false: thêm vào giỏ hàng
@@ -225,50 +237,21 @@ const Product = () => {
                 sản phẩm nổi bật
               </h3>
               <div className="divide-y divide-dashed divide-primary">
-                <div className="py-1 flex gap-3">
-                  <img
-                    src="https://green.web5phut.com/wp-content/uploads/2022/06/5-600x600.jpg"
-                    alt=""
-                    className="w-1/3"
-                  />
-                  <div className="flex flex-col justify-center items-start flex-1">
-                    <p className="font-semibold">sản phẩm hữu cơ sạch</p>
-                    <p className="text-green-400">{vnd(20000)}</p>
-                  </div>
-                </div>
-                <div className="py-1 flex gap-3">
-                  <img
-                    src="https://green.web5phut.com/wp-content/uploads/2022/06/5-600x600.jpg"
-                    alt=""
-                    className="w-1/3"
-                  />
-                  <div className="flex flex-col justify-center items-start flex-1">
-                    <p className="font-semibold">sản phẩm hữu cơ sạch</p>
-                    <p className="text-green-400">{vnd(20000)}</p>
-                  </div>
-                </div>
-                <div className="py-1 flex gap-3">
-                  <img
-                    src="https://green.web5phut.com/wp-content/uploads/2022/06/5-600x600.jpg"
-                    alt=""
-                    className="w-1/3"
-                  />
-                  <div className="flex flex-col justify-center items-start flex-1">
-                    <p className="font-semibold">sản phẩm hữu cơ sạch</p>
-                    <p className="text-green-400">{vnd(20000)}</p>
-                  </div>
-                </div>
-                <div className="py-1 flex gap-3">
-                  <img
-                    src="https://green.web5phut.com/wp-content/uploads/2022/06/5-600x600.jpg"
-                    alt=""
-                    className="w-1/3"
-                  />
-                  <div className="flex flex-col justify-center items-start flex-1">
-                    <p className="font-semibold">sản phẩm hữu cơ sạch</p>
-                    <p className="text-green-400">{vnd(20000)}</p>
-                  </div>
-                </div>
+                {
+                  hotProducts.map((p,i)=>{
+                    return  <Link to={`/products/${p._id}`} className="py-1 flex gap-3" key={i}>
+                    <img
+                      src={p.imgs[0] ||  "https://via.placeholder.com/300.png/09f/fff"}
+                      alt=""
+                      className="w-1/3 h-24 object-cover object-center rounded-md"
+                    />
+                    <div className="flex flex-col justify-center items-start flex-1">
+                      <p to={`/products/${p._id}`} className="font-semibold">{p?.productName}</p>
+                      <p className="text-green-400">{vnd(20000)}</p>
+                    </div>
+                  </Link>
+                  })
+                }
               </div>
             </div>
           </div>

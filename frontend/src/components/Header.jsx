@@ -16,7 +16,7 @@ const Cart = (props) => {
   const dispatch = useDispatch();
   return (
     show && (
-      <div className="text-gray-800 bg-white rounded shadow absolute top-12 right-0 z-50 p-3 flex flex-col w-96 gap-2 ">
+      <div className="text-gray-800 bg-white rounded shadow absolute top-8 right-0 z-50 p-3 flex flex-col w-96 gap-2 ">
         {props.data.length > 0 ? (
           <div>
             <div>
@@ -82,16 +82,10 @@ const Cart = (props) => {
               >
                 Xem giỏ hàng
               </Link>
-              {/* <Link
-                to="/checkout"
-                className="p-2 bg-orange-500 rounded uppercase font-semibold text-white hover:bg-orange-700"
-              >
-                thanh toán
-              </Link> */}
             </div>
           </div>
         ) : (
-          <div>
+          <div className="">
             <img
               src={empty}
               alt=""
@@ -170,26 +164,46 @@ const Header = () => {
           />
         </svg>
       </button>
-      <div className="flex md:flex-1 w-1/2 justify-start md:justify-center relative">
+     
+      <div className="w-1/3">
+      <div className="flex md:flex-1 w-full justify-start md:justify-center relative mx-auto">
         <input
           type="text"
           placeholder="Tìm kiếm ..."
-          className="p-2 border border-gray-300 rounded-l-md focus:outline-none w-3/5"
+          className="p-2 border border-gray-300 rounded-md focus:outline-none w-full"
           onChange={(e) => setQuery(e.target.value)}
           value={query}
         />
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6 absolute right-3 top-2 text-gray-500"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+            />
+          </svg>
         {query.length > 0 && data && (
           <div
-            className={`absolute top-12 z-10 bg-gray-100 w-1/2 text-start ${
+            className={`absolute top-12 z-10 bg-gray-100 w-full text-start ${
               data?.length > 0 ? "border" : ""
-            } border-primary divide-y divide-dashed divide-primary rounded z-20`}
+            } border-primary rounded z-20 `}
           >
+            <div className="text-end px-1.5 py-3 bg-primary">
+              <Link to="/products" className="italic hover:text-white">Xem tất cả</Link>
+            </div>
+            <div className="max-w-60 overflow-y-auto divide-y divide-dashed divide-primary">
             {data.map((p, i) => {
               return (
                 <Link
                   to={`/products/${p._id}`}
                   key={i}
-                  className="flex p-1.5 items-center "
+                  className="flex p-1.5 items-center hover:bg-green-100"
                   onClick={() => {
                     setData([]);
                     setQuery("");
@@ -198,31 +212,19 @@ const Header = () => {
                   <img
                     src={p.imgs[0]}
                     alt=""
-                    className="w-12 h-12 object-cover rounded-full"
+                    className="w-12 h-12 object-cover object-center rounded-full"
                   />
                   <span className="pl-1 normal-case">{p.productName}</span>
                 </Link>
               );
             })}
+            </div>
+           
           </div>
         )}
-        <button className="bg-primary px-3 rounded-r-md text-white hover:bg-green-700">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-            />
-          </svg>
-        </button>
       </div>
+      </div>
+    
       <div className="flex gap-4 items-center">
         <div className="md:flex justify-center items-center gap-2 hidden">
           <div className="bg-green-600 p-3 mx-auto text-white rounded-full">
@@ -273,53 +275,6 @@ const Header = () => {
           )}
           {openCart && <Cart data={products} />}
         </div>
-        {/* <Link
-          to="/login"
-          className="flex items-center rounded-full md:text-white hover:text-primary "
-        >
-          {currentUser ? (
-            
-          ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-8 h-8 md:w-5 md:h-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-              />
-            </svg>
-          )}
-          {openMenu && (
-            <div className="absolute top-16 z-10 rounded border border-red-500 bg-white p-2">
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setOpenMenu(!openMenu);
-                  dispatch(setMsg(`bye! ${currentUser.displayName}`));
-                  dispatch(logout());
-                }}
-              >
-                Trang cá nhân
-              </button>
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setOpenMenu(!openMenu);
-                  dispatch(setMsg(`bye! ${currentUser.displayName}`));
-                  dispatch(logout());
-                }}
-              >
-                Đăng xuất
-              </button>
-            </div>
-          )}
-        </Link> */}
         {currentUser ? (
           <div className="relative" title="Tài khoản">
             <div

@@ -52,8 +52,8 @@ const News = () => {
           </div>
           <div className="md:w-1/4 w-full">
             <div className="bg-white w-full">
-              <h3 className="text-white bg-primary px-4 py-2">
-                bài viết nổi bật
+              <h3 className="text-white bg-primary px-4 py-2 uppercase font-semibold">
+                Thông tin hữu ích
               </h3>
               <div className="divide-y divide-dashed divide-primary bg-white flex flex-col">
                 {hot.map((p, i) => {
@@ -66,7 +66,7 @@ const News = () => {
               </div>
             </div>
             <div className="bg-white w-full mt-3">
-              <h3 className="text-white bg-primary px-4 py-2">
+              <h3 className="text-white bg-primary px-4 py-2 uppercase font-semibold">
                 bài viết nổi bật
               </h3>
               <div className="divide-y divide-dashed divide-primary bg-white flex flex-col">
