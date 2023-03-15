@@ -53,7 +53,7 @@ const ProductCat = (props) => {
             <img
               src={props.picCover}
               alt=""
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
             />
           </div>
           {data.map((p, i) => {
