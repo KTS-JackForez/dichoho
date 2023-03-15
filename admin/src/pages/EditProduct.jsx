@@ -34,6 +34,13 @@ const EditProduct = () => {
         ) {
           setProduct(res.data);
           setPurls(res.data.imgs);
+          setInputs({
+            productName: res.data.productName,
+            description: res.data.description,
+            tags: res.data.tags,
+            stockPrice: res.data.stockPrice,
+            currentPrice: res.data.currentPrice,
+          });
         } else {
           return navigate("/admin/san-pham");
         }
@@ -78,21 +85,35 @@ const EditProduct = () => {
     });
   };
   const handleClick = async () => {
+    if (!inputs.productName) {
+      toast.error("Tên sản phẩm không được để trống");
+      return;
+    }
+    if ([...purls, ...urls].length < 1) {
+      toast.error("Hình ảnh không được để trống");
+      return;
+    }
     try {
       const config = {
-        method: "post",
-        url: "/products",
+        method: "put",
+        url: `/products/${productid}`,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${currentUser.token}`,
         },
-        data: { ...inputs, imgs: [...purls, ...urls], shopID: currentUser._id },
+        data: {
+          ...inputs,
+          imgs: [...purls, ...urls],
+          updatedBy: currentUser.username,
+        },
       };
       ktsRequest(config)
         .then((res) => {
-          toast.success(res.data);
           setFile([]);
           setUrls([]);
+          toast.success(res.data, {
+            onClose: () => navigate("/admin/san-pham"),
+          });
         })
         .catch((er) => toast.error(er));
     } catch (error) {
@@ -101,10 +122,9 @@ const EditProduct = () => {
         : toast.error("Network Error!");
     }
   };
-  console.log([...purls, ...urls]);
   return (
     <div className="p-3">
-      <h3 className="py-3 uppercase font-bold">thêm mới sản phẩm</h3>
+      <h3 className="py-3 uppercase font-bold">Cập nhật thông tin sản phẩm</h3>
       <div className="bg-white p-3 rounded-md text-gray-800 font-semibold shadow-md">
         <div className="space-y-4 md:space-y-6">
           <div className="flex w-full items-center">
@@ -246,7 +266,7 @@ const EditProduct = () => {
               name="productName"
               id="productName"
               className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-              placeholder={product?.productName || "Tên sản phẩm"}
+              placeholder={inputs?.productName || "Tên sản phẩm"}
               required="a-z"
               onChange={handleChange}
             />
@@ -259,21 +279,21 @@ const EditProduct = () => {
               name="description"
               id="description"
               className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-              placeholder={product?.description || "Mô tả sản phẩm"}
+              placeholder={inputs?.description || "Mô tả sản phẩm"}
               required="a-z"
               onChange={handleChange}
             />
           </div>
           <div className="flex w-full items-center">
-            <label htmlFor="cats" className="w-1/3 hidden md:block">
+            <label htmlFor="tags" className="w-1/3 hidden md:block">
               Danh mục
             </label>
             <input
               type="text"
-              name="cats"
-              id="cats"
+              name="tags"
+              id="tags"
               className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-              placeholder={product?.cats || "Phân cách nhau bởi dấu ; "}
+              placeholder={inputs?.tags || "Phân cách nhau bởi dấu ; "}
               required="a-z"
               onChange={handleChange}
             />
@@ -287,7 +307,7 @@ const EditProduct = () => {
               name="stockPrice"
               id="stockPrice"
               className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-              placeholder={product?.stockPrice || "Giá niêm yết (VNĐ)"}
+              placeholder={inputs?.stockPrice || "Giá niêm yết (VNĐ)"}
               required="^[0-9]*$"
               onChange={handleChange}
             />
@@ -301,7 +321,7 @@ const EditProduct = () => {
               name="currentPrice"
               id="currentPrice"
               className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-              placeholder={product?.currentPrice || "Giá bán (VNĐ)"}
+              placeholder={inputs?.currentPrice || "Giá bán (VNĐ)"}
               required="^[0-9]*$"
               onChange={handleChange}
             />

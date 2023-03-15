@@ -47,10 +47,14 @@ const ProductSchema = new mongoose.Schema(
     },
     like: {
       type: Number,
+      default: 0,
     },
     likedBy: [String],
     dislikeBy: [String],
     tags: [String],
+    updatedBy: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

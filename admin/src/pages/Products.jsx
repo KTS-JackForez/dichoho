@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import ktsRequest from "../../ultis/ktsrequest";
 import { vnd } from "../../ultis/ktsFunc";
 import { useSelector } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
+
 import Modal from "../components/Modal";
 const Products = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -12,8 +14,10 @@ const Products = () => {
   const [openModal, setOpenModal] = useState(false);
   const [delProd, setDelProd] = useState({});
   const keys = ["productName"];
-  const [status, setStatus] = useState(false);
+  const [status, setStatus] = useState([]);
+  const [refresh, setRefresh] = useState(false);
   useEffect(() => {
+    setRefresh(false);
     const fetchData = async () => {
       try {
         const res = await ktsRequest.get("/products/my", {
@@ -29,7 +33,24 @@ const Products = () => {
     };
 
     fetchData();
-  }, []);
+  }, [refresh]);
+  const handleClick = async (product) => {
+    setRefresh(true);
+    try {
+      await ktsRequest.put(
+        `/products/${product._id}`,
+        { ...product, active: !product.active },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (error) {
+      toast.error(error.response ? error.response.data : "Network Error!");
+    }
+  };
   const search = (data) => {
     return data.filter((item) =>
       keys.some((key) => item[key].toLowerCase().includes(query))
@@ -99,16 +120,35 @@ const Products = () => {
                   <div className="w-6/12">{p?.productName}</div>
                   <div className="w-2/12">{vnd(p?.currentPrice)}</div>
                   <div className="w-2/12">
-                    <label className="relative inline-flex items-center cursor-pointer">
+                    {/* <label className="relative inline-flex items-center cursor-pointer">
                       <input
                         type="checkbox"
-                        value={status}
                         className="sr-only peer"
-                        checked={status}
-                        onChange={() => setStatus(!status)}
+                        checked={status[i]}
+                        value={status[i]}
+                        onChange={() => {
+                          console.log(p.active);
+                          console.log(status[i]);
+                          !status[i];
+                          console.log(status[i]);
+                        }}
                       />
+
                       <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
-                    </label>
+                    </label> */}
+                    <div
+                      className={`w-12 h-6 bg-${
+                        p.active ? "primary" : "slate-400"
+                      } rounded-full relative`}
+                    >
+                      <button
+                        onClick={() => handleClick(p)}
+                        className={`w-5 h-5 bg-white  rounded-full ${
+                          p.active ? "right-1" : "left-1"
+                        }
+                        } duration-400 transition-transform top-0.5 absolute`}
+                      ></button>
+                    </div>
                   </div>
                   <div className="w-1/12 flex gap-2">
                     <Link
@@ -159,6 +199,7 @@ const Products = () => {
                         token={token}
                         data={delProd}
                         editedData={{ active: false }}
+                        refreshData={setRefresh}
                       />
                     )}
                   </div>
@@ -170,6 +211,7 @@ const Products = () => {
           <div className="p-2 text-center text-gray-700">Không có dữ liệu</div>
         )}
       </div>
+      <ToastContainer autoClose={1000} />
     </div>
   );
 };
