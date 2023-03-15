@@ -1,9 +1,12 @@
-
 import React from "react";
 import logo_v3 from "../assets/imgs/logo_v3.png";
-import tinnhiemmang from "../assets/imgs/tinnhiemmang.jpg";
-
-
+import tinnhiemmang from "../assets/imgs/tinnhiemmang.webp";
+import bocongthuong from "../assets/imgs/bocongthuong.webp";
+import { Link } from "react-router-dom";
+import p1 from "../assets/imgs/p1.webp";
+import p2 from "../assets/imgs/p2.webp";
+import p3 from "../assets/imgs/p3.webp";
+import p4 from "../assets/imgs/p4.webp";
 const MyCart = ({
   children: cart,
   show = true,
@@ -15,7 +18,7 @@ const MyCart = ({
   return (
     show && (
       <div
-        className={`p-3 border border-primary flex w-full justify-center items-center gap-2 bg-white rounded-lg text-xs md:text-base`}
+        className={`p-3 border border-primary flex w-full justify-around items-center gap-2 bg-white rounded-lg text-xs md:text-base`}
       >
         <div>
           <img src={img} alt="" />
@@ -32,55 +35,35 @@ const Footer = () => {
   return (
     <div className="w-full bg-green-100 pt-4">
       <div className="max-w-screen-xl mx-auto grid grid-cols-2 md:grid-cols-4 justify-around pt-3 mb-8 gap-2">
-        <MyCart
-          img="https://green.web5phut.com/wp-content/uploads/2022/07/p1.png"
-          text1="sản phẩm"
-          text2="chất lượng"
-          size="56"
-        />
-        <MyCart
-          img="https://green.web5phut.com/wp-content/uploads/2022/07/p2.png"
-          text1="chủng loại"
-          text2="phong phú"
-          size="56"
-        />
-        <MyCart
-          img="https://green.web5phut.com/wp-content/uploads/2022/07/p3.png"
-          text1="giá cả"
-          text2="cạnh tranh"
-          size="56"
-        />
-        <MyCart
-          img="https://green.web5phut.com/wp-content/uploads/2022/07/p4.png"
-          text1="giao hàng"
-          text2="nhanh chóng"
-          size="56"
-        />
+        <MyCart img={p1} text1="sản phẩm" text2="chất lượng" size="56" />
+        <MyCart img={p2} text1="chủng loại" text2="phong phú" size="56" />
+        <MyCart img={p3} text1="giá cả" text2="cạnh tranh" size="56" />
+        <MyCart img={p4} text1="giao hàng" text2="nhanh chóng" size="56" />
       </div>
       <div className="flex justify-between md:flex-row flex-col mt-2 mx-auto max-w-screen-xl p-3 text-gray-700 gap-8 md:gap-2 md:h-72">
         <div className="flex gap-4">
           <div className="flex flex-col lg:flex-row">
-            <div className="px-4 md:w-1/2 flex flex-col hidden">
-              <img 
+            {/* <div className="px-4 md:w-1/2 md:flex flex-col hidden">
+              <img
                 src={logo_v3}
                 alt=""
                 className="w-1/2 md:h-1/3 object-contain md:w-full"
-                style={{height:44}}
+                style={{ height: 44 }}
               />
               <img
                 src="https://green.web5phut.com/wp-content/uploads/2021/10/Untitled-7.png"
                 alt=""
                 className="md:w-full w-1/2 md:h-1/6 object-contain"
               />
-             <img
-                  src={tinnhiemmang}
+              <img
+                src={tinnhiemmang}
                 alt=""
                 className="md:w-full w-1/2 md:h-1/6 object-contain"
               />
-            </div>
+            </div> */}
 
             <ul className="flex flex-col gap-2 w-full">
-            <h3 className="uppercase font-semibold text-xl">Về chúng tôi</h3>
+              <h3 className="uppercase font-semibold text-xl">Về chúng tôi</h3>
               <li className="flex gap-2 items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -101,7 +84,7 @@ const Footer = () => {
                     d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
                   />
                 </svg>
-              
+
                 <span>
                   Địa chỉ: Tầng 2 - KTS Home, Nguyễn Văn Linh, An Dương, Hải
                   Phòng
@@ -149,32 +132,50 @@ const Footer = () => {
           <div className="md:w-1/2 w-full px-3 gap-2 flex flex-col">
             <h3 className="uppercase font-semibold text-xl">Chính sách</h3>
             <ul className="flex flex-col gap-1">
-              <li>Hướng dẫn đăng ký</li>
-              <li>Bảo mật thông tin cá nhân</li>
-              <li>Quy chế hoạt động</li>
-              <li>Quy trình giải quyết khiếu nại</li>
+              <li>
+                <Link to="/news/640ffb8df73dc135c1d7d1e5">
+                  Hướng dẫn đăng ký
+                </Link>
+              </li>
+              <li>
+                <Link to="/news/640ff760f73dc135c1d7d1d6">
+                  {" "}
+                  Bảo mật thông tin cá nhân
+                </Link>
+              </li>
+              <li>
+                <Link href="#">Quy chế hoạt động</Link>
+              </li>
+              <li>
+                <Link to="/news/640ff9e3f73dc135c1d7d1df">
+                  {" "}
+                  Quy trình giải quyết khiếu nại
+                </Link>
+              </li>
             </ul>
           </div>
           <div className="md:w-1/2 w-full px-3 gap-2 flex flex-col">
-            <h3 className="uppercase font-semibold text-xl">Hỗ trợ khách hàng</h3>
+            <h3 className="uppercase font-semibold text-xl">
+              Hỗ trợ khách hàng
+            </h3>
             <ul className="flex flex-col gap-1">
-             
               <li>Các câu hỏi thường gặp</li>
-              <li>Hướng dẫn đặt hàng</li>
+              <li>
+                <a href="/news/640ffc63f73dc135c1d7d1ed"> Hướng dẫn đặt hàng</a>
+              </li>
               <li>Phương thức vận chuyển</li>
               <div className="flex justify-center">
-              <img
-                src="https://green.web5phut.com/wp-content/uploads/2021/10/Untitled-7.png"
-                alt=""
-                className="md:w-full w-1/2 md:h-1/2 object-contain"
-              />
-             <img
+                <img
+                  src={bocongthuong}
+                  alt=""
+                  className="md:w-full w-1/2 md:h-1/2 object-contain"
+                />
+                <img
                   src={tinnhiemmang}
-                alt=""
-                className="md:w-full w-1/2 md:h-1/2 object-contain"
-              />
+                  alt=""
+                  className="md:w-full w-1/2 md:h-1/2 object-contain"
+                />
               </div>
-             
             </ul>
           </div>
         </div>
@@ -187,4 +188,3 @@ const Footer = () => {
 };
 
 export default Footer;
-

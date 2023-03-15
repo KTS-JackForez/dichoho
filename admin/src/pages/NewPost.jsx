@@ -171,7 +171,7 @@ const NewPost = () => {
 
       <div className="flex w-full items-center mb-2">
         <label htmlFor="img" className="w-1/6 hidden md:block">
-          Ảnh bìa sản phẩm
+          Ảnh bìa bài viết
         </label>
         <div className="md:w-5/6 w-full">
           <input

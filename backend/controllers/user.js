@@ -119,11 +119,11 @@ export const like = async (req, res, next) => {
   const id = req.user.id;
   const productid = req.params.productid;
   try {
-    await Product.findByIdAndUpdate(productid, {
+    const p = await Product.findByIdAndUpdate(productid, {
       $addToSet: { likedBy: id },
       // $pull: { dislikedBy: id },
     });
-    res.status(200).json("Thêm vào danh sách yêu thích thành công");
+    res.status(200).json("Liked");
   } catch (err) {
     next(err);
   }
@@ -131,13 +131,16 @@ export const like = async (req, res, next) => {
 export const dislike = async (req, res, next) => {
   const id = req.user.id;
   const productid = req.params.productid;
-  console.log(productid);
   try {
-    await User.findByIdAndUpdate(productid, {
-      // $addToSet: { dislikedBy: id },
-      $pull: { likedBy: id },
-    });
-    res.status(200).json("Xóa khỏi danh sách yêu thích thành công");
+    const p = await Product.findByIdAndUpdate(
+      productid,
+      {
+        // $addToSet: { dislikedBy: id },
+        $pull: { likedBy: id },
+      },
+      { new: true }
+    );
+    res.status(200).json("Disliked");
   } catch (err) {
     next(err);
   }

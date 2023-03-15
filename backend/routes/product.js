@@ -4,6 +4,8 @@ import {
   addTag,
   createProduct,
   deleteProduct,
+  getHostest,
+  getLastest,
   getMyProducts,
   getProduct,
   getProductByTag,
@@ -21,6 +23,9 @@ const router = express.Router();
 
 //lấy toàn bộ sản phẩm
 router.get("/", getProducts);
+//
+router.get("/lastest/:limit", getLastest);
+router.get("/hotest/:limit", getHostest);
 //lấy sản phẩm được tạo bởi user
 router.get("/my", verifyToken, getMyProducts);
 //lấy ra sản phẩm cụ thể theo id

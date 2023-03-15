@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import ktsRequest from "../../ultis/ktsrequest";
-
+import "./singlepost.css";
 const SinglePost = () => {
   const navigate = useNavigate();
   const { postid } = useParams();
   const [post, setPost] = useState();
+  const { currentUser } = useSelector((state) => state.user);
+  const { token } = currentUser;
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -18,6 +21,54 @@ const SinglePost = () => {
     };
     fetchData();
   }, []);
+  const handleOk = async () => {
+    try {
+      const res = await ktsRequest.put(
+        `/posts/${postid}`,
+        {
+          ...post,
+          status: 1,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success(res.data, {
+        onClose: () => navigate(-1),
+      });
+    } catch (error) {
+      error.response
+        ? toast.error(error.response.data.message)
+        : toast.error("Network Error!");
+    }
+  };
+  const handleEdit = async () => {
+    try {
+      const res = await ktsRequest.put(
+        `/posts/${postid}`,
+        {
+          ...post,
+          status: 0,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success(res.data, {
+        onClose: () => navigate(-1),
+      });
+    } catch (error) {
+      error.response
+        ? toast.error(error.response.data.message)
+        : toast.error("Network Error!");
+    }
+  };
   return (
     <div className="w-full px-2">
       <div className=" bg-white rounded-md">
@@ -52,8 +103,9 @@ const SinglePost = () => {
             </div>
             <div className="flex w-1/4 justify-between text-white">
               <button
-                className="bg-primary px-3 py-2 rounded hover:bg-green-700 w-1/2"
+                className="bg-primary px-3 py-2 rounded hover:bg-green-700 w-1/2 active:scale-90 duration-300 hover:scale-105"
                 title="duyệt bài viết"
+                onClick={handleOk}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -71,8 +123,9 @@ const SinglePost = () => {
                 </svg>
               </button>
               <button
-                className="bg-orange-500 px-3 py-2 rounded hover:bg-orange-600 w-1/2 ml-2"
+                className="bg-orange-500 px-3 py-2 rounded hover:bg-orange-600 w-1/2 ml-2 active:scale-90 duration-300 hover:scale-105"
                 title="yêu cầu chỉnh sửa"
+                onClick={handleEdit}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -100,7 +153,7 @@ const SinglePost = () => {
           </div>
           <div
             dangerouslySetInnerHTML={{ __html: post?.content }}
-            className="text-justify"
+            className="text-justify baiviet"
           ></div>
         </div>
         <ToastContainer />
