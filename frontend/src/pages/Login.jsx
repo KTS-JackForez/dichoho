@@ -28,7 +28,7 @@ const Login = () => {
     e.preventDefault();
     dispatch(loginStart());
     try {
-      const res = await ktsRequest.post("/auth/signin", {
+      const res = await ktsRequest.post("/auth/login", {
         username: name,
         password,
       });

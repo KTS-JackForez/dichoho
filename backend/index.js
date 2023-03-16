@@ -11,12 +11,12 @@ import productRoute from "./routes/product.js";
 import postRoute from "./routes/post.js";
 import orderRoure from "./routes/order.js";
 import notiRoute from "./routes/notification.js";
+import reportRoute from "./routes/Report.js";
 //socket
 import http from "http";
 import { Server } from "socket.io";
 import Notification from "./models/Notification.js";
-import User from "./models/User.js";
-import Product from "./models/Product.js";
+import { updateConfig } from "./controllers/config.js";
 
 //app
 const app = express();
@@ -83,7 +83,8 @@ io.on("connection", (socket) => {
     sockets = sockets.filter((s) => s.uid !== socket.uid);
   });
 });
-
+//
+app.get("/api/count", updateConfig);
 //middlewares
 app.use(cookieParser());
 app.use(express.json());
@@ -96,6 +97,7 @@ app.use("/api/products", productRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/orders", orderRoure);
 app.use("/api/notifications", notiRoute);
+app.use("/api/reports", reportRoute);
 //error handler
 app.use((err, req, res, next) => {
   const status = err.status || 500;

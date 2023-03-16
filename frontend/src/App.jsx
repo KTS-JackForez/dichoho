@@ -17,6 +17,8 @@ import {
   Dashboard,
 } from "./pages";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import ktsRequest from "../ultis/ktsrequest";
 function App() {
   const { currentUser } = useSelector((state) => state.user);
   const ProtectedRoute = ({ children }) => {
@@ -25,6 +27,13 @@ function App() {
     }
     return children;
   };
+  useEffect(() => {
+    const countVisitor = async () => {
+      await ktsRequest.get("/count");
+    };
+    countVisitor();
+    console.log("+1 visitor");
+  }, []);
   return (
     <BrowserRouter>
       <Routes>

@@ -120,22 +120,6 @@ const Products = () => {
                   <div className="w-6/12">{p?.productName}</div>
                   <div className="w-2/12">{vnd(p?.currentPrice)}</div>
                   <div className="w-2/12">
-                    {/* <label className="relative inline-flex items-center cursor-pointer">
-                      <input
-                        type="checkbox"
-                        className="sr-only peer"
-                        checked={status[i]}
-                        value={status[i]}
-                        onChange={() => {
-                          console.log(p.active);
-                          console.log(status[i]);
-                          !status[i];
-                          console.log(status[i]);
-                        }}
-                      />
-
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
-                    </label> */}
                     <div
                       className={`w-12 h-6 bg-${
                         p.active ? "primary" : "slate-400"
