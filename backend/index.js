@@ -11,7 +11,7 @@ import productRoute from "./routes/product.js";
 import postRoute from "./routes/post.js";
 import orderRoure from "./routes/order.js";
 import notiRoute from "./routes/notification.js";
-import reportRoute from "./routes/Report.js";
+import reportRoute from "./routes/report.js";
 //socket
 import http from "http";
 import { Server } from "socket.io";
