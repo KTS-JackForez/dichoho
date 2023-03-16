@@ -99,7 +99,7 @@ const Account = () => {
                   </div>
                   <div className="w-2/12">{u?.phone}</div>
                   <div className="w-3/12">{u?._id}</div>
-                  <div className="w-2/12">{u.role + "--" + u.status}</div>
+                  <div className="w-2/12">{u.role}</div>
                   <div className="w-2/12 flex gap-2">
                     <Link
                       to={`/admin/thong-tin-tai-khoan/`}

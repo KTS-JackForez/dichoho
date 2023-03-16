@@ -17,7 +17,6 @@ import {
   Dashboard,
 } from "./pages";
 import { useSelector } from "react-redux";
-import io from "socket.io-client";
 function App() {
   const { currentUser } = useSelector((state) => state.user);
   const ProtectedRoute = ({ children }) => {

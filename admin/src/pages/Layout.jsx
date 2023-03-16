@@ -15,6 +15,7 @@ import {
   Notification,
   MyAccount,
   SinglePost,
+  Report,
 } from "../pages";
 
 const Layout = () => {
@@ -43,6 +44,7 @@ const Layout = () => {
             <Route path="edit/:postid" element={<EditPost />} />
             <Route path=":postid" element={<SinglePost />} />
           </Route>
+          <Route path="bao-cao" element={<Report/>}/>
         </Routes>
       </div>
     </div>

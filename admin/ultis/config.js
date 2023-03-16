@@ -26,6 +26,7 @@ export const dashboard = {
     { title: "thông báo", path: "/admin/thong-bao", role: ["admin", "user"] },
     { title: "tài khoản", path: "/admin/tai-khoan", role: ["admin"] },
     { title: "bài viết", path: "/admin/bai-viet", role: ["admin"] },
+    { title: "báo cáo", path: "/admin/bao-cao", role: ["admin","special"] },
     { title: "database", path: "/admin/database", role: ["admin"] },
   ],
 };
