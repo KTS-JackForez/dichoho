@@ -207,7 +207,20 @@ const NewProduct = () => {
             <label htmlFor="cats" className="w-1/3 hidden md:block">
               Danh mục
             </label>
-            <input
+            <select
+              id="cats"
+              name="cats"
+              class="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
+              onChange={(e) => setCityCode(e.target.value)}
+            >
+              <option selected disabled hidden>
+                Chọn danh mục
+              </option>
+              <option>Thịt cá trứng</option>
+              <option>Rau củ quả</option>
+              <option>Mì cháo phở</option>
+            </select>
+            {/* <input
               type="text"
               name="cats"
               id="cats"
@@ -215,7 +228,7 @@ const NewProduct = () => {
               placeholder="Phân cách nhau bởi dấu ; "
               required="a-z"
               onChange={handleChange}
-            />
+            /> */}
           </div>
           <div className="flex w-full items-center">
             <label htmlFor="stockPrice" className="w-1/3 hidden md:block">
