@@ -10,25 +10,25 @@ const Sidebar = () => {
   const [open, setOpen] = useState(true);
   const { currentUser } = useSelector((state) => state.user);
   const { role } = currentUser;
-  const activeLink = `flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded  text-white  text-md m-2 font-semibold border hover:border-primary border-white`;
-  const normalLink = `flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded text-xs text-gray-500 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2 font-semibold border border-white hover:border-primar`;
+  const activeLink = `flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded  text-white  text-md m-2 font-semibold`;
+  const normalLink = `flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded text-xs text-gray-500 hover:bg-light-gray m-2 font-semibold border border-white hover:border-primary`;
   return (
     <div
-      className={`border border-r-gray-300 h-screen ${
+      className={`h-screen ${
         open ? "w-80" : "w-24"
-      } px-3 hidden md:block relative bg-white/50 duration-300`}
+      } px-3 hidden md:block relative duration-300`}
     >
       <button
-        className={`p-3 rounded-full border border-primary active:scale-105 bg-white ${
+        className={`p-3 rounded-full border border-primary bg-white ${
           open && "rotate-180"
-        } duration-300 absolute top-7 -right-5`}
+        } duration-500 absolute top-7 -right-5`}
         onClick={() => setOpen(!open)}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
-          strokeWidth={1.5}
+          strokeWidth={2}
           stroke="green"
           className="w-4 h-4"
         >
@@ -69,7 +69,11 @@ const Sidebar = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" d={i.d} />
                 </svg>
 
-                {open && <span className={`whitespace-pre`}>{i.title}</span>}
+                {open && (
+                  <span className={`whitespace-pre absolute left-20`}>
+                    {i.title}
+                  </span>
+                )}
               </NavLink>
             )
           );

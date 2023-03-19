@@ -59,7 +59,7 @@ const Header = () => {
   return (
     <div className="w-full p-2">
       <div className="bg-white rounded px-2 py-4 flex justify-between items-center">
-        <h3 className="uppercase font-bold">{header}</h3>
+        <h3 className="uppercase font-bold pl-4">{header}</h3>
         <div className="flex gap-3 items-center">
           <div
             className="flex items-center gap-3 relative"
