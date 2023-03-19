@@ -14,14 +14,14 @@ const Sidebar = () => {
   const normalLink = `flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded text-xs text-gray-500 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2 font-semibold border border-white hover:border-primar`;
   return (
     <div
-      className={`border border-r-gray-300 h-screen w-${
-        open ? 72 : 24
+      className={`border border-r-gray-300 h-screen ${
+        open ? "w-80" : "w-24"
       } px-3 hidden md:block relative bg-white/50 duration-300`}
     >
       <button
-        className={`p-3 rounded-full bg-red-400 active:scale-105 ${
+        className={`p-3 rounded-full border border-primary active:scale-105 bg-white ${
           open && "rotate-180"
-        } duration-500 hover:bg-red-400 absolute top-7 -right-5`}
+        } duration-300 absolute top-7 -right-5`}
         onClick={() => setOpen(!open)}
       >
         <svg
@@ -29,20 +29,17 @@ const Sidebar = () => {
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
-          stroke="currentColor"
+          stroke="green"
           className="w-4 h-4"
         >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
-            // d={
-            //   open ? "M8.25 4.5l7.5 7.5-7.5 7.5" : "M15.75 19.5L8.25 12l7.5-7.5"
-            // }
             d={"M8.25 4.5l7.5 7.5-7.5 7.5"}
           />
         </svg>
       </button>
-      <div className="py-6 h-20">
+      <div className="py-6 h-20 text-center">
         <Link className="uppercase font-bold text-2xl" to="/admin">
           {open && <span>dashboard</span>}
         </Link>
@@ -69,14 +66,10 @@ const Sidebar = () => {
                   stroke="currentColor"
                   className="w-6 h-6"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
-                  />
+                  <path strokeLinecap="round" strokeLinejoin="round" d={i.d} />
                 </svg>
 
-                {open && <span>{i.title}</span>}
+                {open && <span className={`whitespace-pre`}>{i.title}</span>}
               </NavLink>
             )
           );
@@ -95,7 +88,7 @@ const Sidebar = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6"
+            className="w-6 h-6 rotate-180"
           >
             <path
               strokeLinecap="round"
