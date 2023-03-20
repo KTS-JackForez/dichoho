@@ -18,6 +18,7 @@ import {
   Report,
   Categories,
 } from "../pages";
+import NewCategories from "./NewCategories";
 
 const Layout = () => {
   return (
@@ -46,7 +47,12 @@ const Layout = () => {
             <Route path=":postid" element={<SinglePost />} />
           </Route>
           <Route path="bao-cao" element={<Report/>}/>
-          <Route path="danh-muc" element={<Categories/>}/>
+          {/* <Route path="danh-muc" element={<Categories/>}/> */}
+          <Route path="danh-muc">
+            <Route index element={<Categories />} />
+            <Route path="new" element={<NewCategories />} />
+           
+          </Route>
         </Routes>
       </div>
     </div>
