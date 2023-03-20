@@ -15,8 +15,7 @@ const NewCategories = () => {
   const [isLoadingFiles, setIsLoadingFiles] = useState(false);
   const [percs, setPercs] = useState(0);
   const { currentUser } = useSelector((state) => state.user);
- 
- 
+
   const handleChange = (e) => {
     setInputs((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
@@ -26,7 +25,7 @@ const NewCategories = () => {
     try {
       const config = {
         method: "post",
-        url: "/products",
+        url: "/categories",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${currentUser.token}`,
@@ -57,23 +56,23 @@ const NewCategories = () => {
             </label>
             <input
               type="text"
-            //   name="productName"
-            //   id="productName"
+              //   name="productName"
+              //   id="productName"
               className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
               placeholder="Mã danh mục"
               required="a-z"
               onChange={handleChange}
             />
           </div>
-         
+
           <div className="flex w-full items-center">
             <label htmlFor="productName" className="w-1/3 hidden md:block">
               Tên danh mục
             </label>
             <input
               type="text"
-            //   name="productName"
-            //   id="productName"
+              //   name="productName"
+              //   id="productName"
               className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
               placeholder="Tên danh mục"
               required="a-z"
