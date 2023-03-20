@@ -52,6 +52,9 @@ const ProductSchema = new mongoose.Schema(
     likedBy: [String],
     dislikeBy: [String],
     tags: [String],
+    cat:{
+      type:String,
+    },
     updatedBy: {
       type: String,
     },

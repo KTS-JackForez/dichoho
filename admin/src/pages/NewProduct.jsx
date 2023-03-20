@@ -10,6 +10,7 @@ const NewProduct = () => {
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState([]);
   const [urls, setUrls] = useState([]);
+  const [cats, setCats] = useState([]);
   const [inputs, setInputs] = useState({});
   const [isLoadingFiles, setIsLoadingFiles] = useState(false);
   const [percs, setPercs] = useState(0);
@@ -44,6 +45,17 @@ const NewProduct = () => {
     };
     file && uploadFile();
   }, [file]);
+  useEffect(()=>{
+    const fetchData = async ()=>{
+      try {
+        const res = await ktsRequest.get("/categories")
+        setCats(res.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchData()
+  },[])
   const handleChange = (e) => {
     setInputs((prev) => {
       return { ...prev, [e.target.name]: e.target.value };

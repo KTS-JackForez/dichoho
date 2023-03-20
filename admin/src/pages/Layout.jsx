@@ -16,6 +16,7 @@ import {
   MyAccount,
   SinglePost,
   Report,
+  Categories,
 } from "../pages";
 
 const Layout = () => {
@@ -45,6 +46,7 @@ const Layout = () => {
             <Route path=":postid" element={<SinglePost />} />
           </Route>
           <Route path="bao-cao" element={<Report/>}/>
+          <Route path="danh-muc" element={<Categories/>}/>
         </Routes>
       </div>
     </div>

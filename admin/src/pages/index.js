@@ -15,3 +15,4 @@ export { default as Notifications } from "./Notifications";
 export { default as Notification } from "./Notification";
 export { default as SinglePost } from "./SinglePost";
 export { default as Report } from "./Report";
+export { default as Categories } from "./Categories";
