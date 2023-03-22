@@ -54,6 +54,8 @@ export const login = async (req, res, next) => {
         .json(
           "Tài khoản đã bị khóa do vi phạm chính sách cộng đồng, hãy liên hệ CSKH để được hỗ trợ"
         );
+        if (user.role !== "user")
+      return res.status(403).json("Bạn chưa được cấp phép truy cập trang này");
     const checkPass = await bcrypt.compare(req.body.password, user.password);
     if (!checkPass)
       return res.status(404).json("Sai tên đăng nhập hoặc mật khẩu");
