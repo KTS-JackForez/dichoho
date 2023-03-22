@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Footer, Header, Navbar, Promotion } from "../components";
+import { Chat, Footer, Header, Navbar, Promotion } from "../components";
 import { vnd } from "../../ultis/ktsFunc";
 import "./Products.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -481,7 +481,7 @@ const Product = () => {
       <button
         className="fixed bottom-14 right-14 px-4 py-2 bg-primary rounded-full text-white w-14 h-14"
         onClick={() => {
-          setShowChat(!showChat);
+          setShowChat(true);
         }}
       >
         <svg
@@ -528,64 +528,7 @@ const Product = () => {
           </div>
         )}
       </button>
-      {showChat && (
-        <div className="bg-white max-w-md w-full shadow-md rounded fixed bottom-0 right-0">
-          <section className="">
-            <div className="flex justify-between">
-              <span className="px-3 py-3">Sale168.com</span>
-              <button
-                className="p-3 border-l bg-red-600"
-                onClick={() => {
-                  setShowChat(!showChat);
-                }}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-6 h-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-          </section>
-          <div className="h-96 px-8 pt-2.5 pb-5 bg-zinc-100 my-auto">
-            <div className="bg-gray-200 h-96 p-2">
-              Không có tin nhắn. Khi bạn nhắn tin, tin nhắn sẽ hiển thị tại đây.
-            </div>
-          </div>
-          <div className="flex justify-between px-8 py-5 gap-2">
-            <input
-              type="text"
-              placeholder="Nhập nội dung tại đây..."
-              className="block w-full rounded border border-gray-300 bg-gray-50 p-3 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary sm:text-sm"
-            />
-            <button className="w-14 outline-0 text-base bg-primary text-white rounded">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6 mx-auto"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-      )}
+      {showChat && <Chat onClose={setShowChat} />}
     </div>
   );
 };
