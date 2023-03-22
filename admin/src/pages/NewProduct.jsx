@@ -15,6 +15,7 @@ const NewProduct = () => {
   const [isLoadingFiles, setIsLoadingFiles] = useState(false);
   const [percs, setPercs] = useState(0);
   const { currentUser } = useSelector((state) => state.user);
+  const {token}=currentUser
   useEffect(() => {
     // https://stackoverflow.com/questions/75570241/cant-get-urls-after-upload-fire-to-firebase
     const uploadFile = async () => {
@@ -54,6 +55,25 @@ const NewProduct = () => {
         console.log(error)
       }
     }
+    fetchData()
+  },[])
+  useEffect(()=>{
+    const fetchData = async () => {
+      const checkRole = currentUser.role ==="admin"
+      try {
+        const res =checkRole? await ktsRequest.get("/categories/all",{
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }):await ktsRequest.get("/categories") ;
+        setCats(res.data);
+      } catch (error) { 
+        toast.error(
+          `${error.response ? error.response.data : "Network error!"}`
+        );
+      }
+    };
     fetchData()
   },[])
   const handleChange = (e) => {
@@ -228,9 +248,9 @@ const NewProduct = () => {
               <option selected disabled hidden>
                 Chọn danh mục
               </option>
-              <option>Thịt cá trứng</option>
-              <option>Rau củ quả</option>
-              <option>Mì cháo phở</option>
+              {cats.map((c,i)=>{
+                return <option value={c._id} key={i}>{c.name}</option>
+              })}
             </select>
             {/* <input
               type="text"

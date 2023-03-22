@@ -18,8 +18,18 @@ export const create = async (req, res, next) => {
   }
 };
 export const getAll = async (req, res, next) => {
+  if(req.user.role !=="admin") return res.status(403).json("Bạn không được phép thực hiện chức năng này")
   try {
     const cats = await Category.find();
+    if (!cats) return res.status(403).json("Không có dữ liệu danh mục");
+    res.status(200).json(cats);
+  } catch (error) {
+    next(error);
+  }
+};
+export const get = async (req, res, next) => {
+  try {
+    const cats = await Category.find({status:1});
     if (!cats) return res.status(403).json("Không có dữ liệu danh mục");
     res.status(200).json(cats);
   } catch (error) {
@@ -47,7 +57,7 @@ export const updateById = async (req, res, next) => {
       { new: true }
     );
     if (!cat) return res.status(403).json("Không tìm được danh mục chỉ định");
-    res.status(200).json(cat);
+    res.status(200).json("Cập nhật trạng thái thành công");
   } catch (error) {
     next(error);
   }

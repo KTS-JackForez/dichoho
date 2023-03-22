@@ -10,35 +10,54 @@ const Categories = () => {
   const [data, setData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [openNew, setOpenNew] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const [loading, setLoading] = useState(false);
   const [inputs, setInputs] = useState({});
+  const [delCat, setDelCat] = useState({});
   const { currentUser } = useSelector((state) => state.user);
   const { token } = currentUser;
   useEffect(() => {
+    setRefresh(false)
     const fetchData = async () => {
       try {
         const res = await ktsRequest.get("/categories");
         setData(res.data);
       } catch (error) {
+        console.log(error.response)
         toast.error(
-          `${error.respronse ? error.respronse.data : "Network error!"}`
+          `${error.response ? error.response.data : "Network error!"}`
         );
       }
     };
     fetchData();
-  }, []);
+  }, [refresh]);
   const handleChange = (e) => {
     setInputs((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
   };
-  const handleClick = (e) => {
-    setOpenNew(!openNew);
+  const handleClick = async (cat) => {
+    setRefresh(true);
+    try {
+      const res=await ktsRequest.put(
+        `/categories/${cat._id}`,
+        { ...cat, status: cat.status===0?1:0 },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (error) {
+      toast.error(error.response ? error.response.data : "Network Error!");
+    }
   };
   const handleNew = async () => {
-    console.log("click");
+    setRefresh(true)
+    setLoading(true)
     try {
-      const res = await ktsRequest.post(
+      await ktsRequest.post(
         "/categories",
         {
           ...inputs,
@@ -50,10 +69,10 @@ const Categories = () => {
           },
         }
       );
-      setData(res.data);
+      setLoading(false)
     } catch (error) {
       toast.error(
-        `${error.respronse ? error.respronse.data : "Network error!"}`
+        `${error.response ? error.response.data : "Network error!"}`
       );
     }
   };
@@ -132,7 +151,29 @@ const Categories = () => {
                   className="px-3 rounded bg-primary hover:bg-green-700"
                   onClick={handleNew}
                 >
-                  <svg
+                  {loading ? (
+              <svg
+                className="h-5  w-5 animate-spin text-white mx-auto"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+            ) : (
+              <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 64 64"
@@ -146,10 +187,12 @@ const Categories = () => {
                       <path d="M49.381.041L49.361 0H7a4 4 0 00-4 4v56a4 4 0 004 4h50a4 4 0 004-4V11.696L49.381.041zm-9.42 2.04V20H14.038V2.082H39.96zM59 60c0 1.103-.897 2-2 2H7c-1.103 0-2-.897-2-2V4c0-1.103.897-2 2-2h5v20.041h30V2h6.51L59 12.523V60z"></path>
                     </g>
                   </svg>
+            )}
+                  
                 </button>
                 <button
                   className="px-3 rounded bg-red-500 hover:bg-red-700"
-                  onClick={handleClick}
+                  onClick={()=>setOpenNew(!openNew)}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -183,7 +226,7 @@ const Categories = () => {
           <div className="divide-y divide-primary divide-dashed">
             {data.map((c, i) => {
               return (
-                <div className="w-full flex p-1 gap-1 items-center " key={i}>
+                <div className={`w-full flex p-1 gap-1 items-center ${c.status<0?"bg-gray-300 text-gray-800":""}`} key={i}>
                   <div className="w-2/12">{c?.code}</div>
                   <div className="w-5/12">{c?.name}</div>
                   <div className="w-2/12">
@@ -192,23 +235,29 @@ const Categories = () => {
                   <div className="w-2/12">
                     <div
                       className={`w-12 h-6 bg-${
-                        c?.active ? "primary" : "slate-400"
+                        c?.status===1 ? "primary" : "slate-400"
                       } rounded-full relative`}
                     >
                       <button
-                        onClick={() => handleClick(p)}
-                        className={`w-5 h-5 bg-white  rounded-full ${
-                          c?.active ? "right-1" : "left-1"
+                      disabled={c.status<0}
+                        onClick={() => handleClick(c)}
+                        className={`w-5 h-5 bg-white rounded-full ${
+                          c?.status===1 ? "right-1" : "left-1"
                         }
-                        } duration-400 transition-transform top-0.5 absolute`}
-                      ></button>
+                        } top-0.5 absolute text-xs`}
+                      >
+                        {c.status===0?"off":"on"}</button>
                     </div>
                   </div>
-                  <div className="w-1/12 flex gap-2">
-                    <Link
-                      to={`#`}
+                  <div className="w-1/12 flex justify-around">
+                    <button
+                     disabled={c.status<0}
+                      onClick={()=>{
+                        setOpenNew(true)
+                      }}
                       className="p-1.5 bg-white rounded border border-orange-400 text-orange-400 hover:border-orange-400 hover:bg-orange-400 hover:text-white"
                     >
+                      
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -223,8 +272,11 @@ const Categories = () => {
                           d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
                         />
                       </svg>
-                    </Link>
-                    <button className="p-1.5 bg-white rounded border border-red-600 text-red-600 hover:border-red-600 hover:bg-red-600 hover:text-white">
+                    </button>
+                    <button disabled={c.status<0} onClick={() => {
+                          setDelCat(c);
+                          setOpenModal(true);
+                        }} className="p-1.5 bg-white rounded border border-red-600 text-red-600 hover:border-red-600 hover:bg-red-600 hover:text-white">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -232,10 +284,7 @@ const Categories = () => {
                         strokeWidth={1.5}
                         stroke="currentColor"
                         className="w-4 h-4"
-                        onClick={() => {
-                          setDelProd(c);
-                          setOpenModal(true);
-                        }}
+                        
                       >
                         <path
                           strokeLinecap="round"
@@ -247,12 +296,12 @@ const Categories = () => {
                     {openModal && (
                       <Modal
                         title="cảnh báo"
-                        message={`Bạn chắc chắn muốn xóa sản phẩm "${delProd?.productName}"?`}
-                        to={`/products/`}
+                        message={`Bạn chắc chắn muốn xóa sản phẩm "${delCat?.name}"?`}
+                        to={`/categories/`}
                         close={setOpenModal}
                         token={token}
-                        data={delProd}
-                        editedData={{ active: false }}
+                        data={delCat}
+                        editedData={{ status: -1 }}
                         refreshData={setRefresh}
                       />
                     )}
