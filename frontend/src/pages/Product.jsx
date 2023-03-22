@@ -17,7 +17,7 @@ const Product = () => {
   const [quantity, setQuantity] = useState(1);
   const [hotProducts, setHotProducts] = useState([]);
   const [showChat, setShowChat] = useState(false);
-  const [showNotification,setShowNotification] = useState(true)
+  const [showNotification, setShowNotification] = useState(true);
   const { productId } = useParams();
   const { imgs } = product;
   const dispatch = useDispatch();
@@ -478,8 +478,12 @@ const Product = () => {
       <ToastContainer />
       <Footer />
       {/* Chat với shop */}
-      <div
-        className="fixed bottom-14 right-14 px-4 py-2 bg-primary rounded-full text-white w-14 h-14" onClick={() => {setShowChat(!showChat)}}>
+      <button
+        className="fixed bottom-14 right-14 px-4 py-2 bg-primary rounded-full text-white w-14 h-14"
+        onClick={() => {
+          setShowChat(!showChat);
+        }}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -494,40 +498,43 @@ const Product = () => {
             d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"
           />
         </svg>
-      {showNotification &&   <div className="absolute bottom-full right-1">
-          <div className="bg-white rounded-full border border-solid border-t-sky-400 text-sky-400 text-sm absolute -top-2.5 -right-2.5" onClick={(e)=>{setShowNotification(!showNotification)
-          e.stopPropagation()}}>
-          <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-6 h-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M6 18L18 6M6 6l12 12" 
-                  />
-                </svg>
+        {showNotification && (
+          <div className="absolute bottom-full right-1">
+            <div
+              className="bg-white rounded-full border border-solid border-t-sky-400 text-sky-400 text-sm absolute -top-2.5 -right-2.5"
+              onClick={(e) => {
+                setShowNotification(!showNotification);
+                e.stopPropagation();
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </div>
+            <div className="text-black px-3.5 py-2.5 w-64 bg-slate-200 rounded-lg shadow-lg mb-2">
+              <span>👋 Click ngay để chat với Shop</span>
+            </div>
           </div>
-          <div className="text-black px-3.5 py-2.5 w-64 bg-slate-200 rounded-lg shadow-lg mb-2">
-            <span>
-              👋 Click ngay để chat với Shop
-            
-            </span>
-          </div>
-        </div>}
-    
-      </div>
+        )}
+      </button>
       {showChat && (
         <div className="bg-white max-w-md w-full shadow-md rounded fixed bottom-0 right-0">
           <section className="">
             <div className="flex justify-between">
-              <span className="px-8 py-5">Sale168.com</span>
-              <div
-                className="p-5 border-l"
+              <span className="px-3 py-3">Sale168.com</span>
+              <button
+                className="p-3 border-l bg-red-600"
                 onClick={() => {
                   setShowChat(!showChat);
                 }}
@@ -546,37 +553,37 @@ const Product = () => {
                     d="M6 18L18 6M6 6l12 12"
                   />
                 </svg>
-              </div>
+              </button>
             </div>
           </section>
           <div className="h-96 px-8 pt-2.5 pb-5 bg-zinc-100 my-auto">
-            <div>
+            <div className="bg-gray-200 h-96 p-2">
               Không có tin nhắn. Khi bạn nhắn tin, tin nhắn sẽ hiển thị tại đây.
             </div>
           </div>
-          <form action="" className="flex justify-between px-8 py-5">
+          <div className="flex justify-between px-8 py-5 gap-2">
             <input
               type="text"
               placeholder="Nhập nội dung tại đây..."
-              className="h-11 w-80 text-base px-3 border border-solid outline-0 border-neutral-500 rounded-l"
+              className="block w-full rounded border border-gray-300 bg-gray-50 p-3 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary sm:text-sm"
             />
-            <button className="w-14 outline-0 text-base bg-zinc-400 text-white">
+            <button className="w-14 outline-0 text-base bg-primary text-white rounded">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth={1.5}
                 stroke="currentColor"
-                class="w-6 h-6"
+                className="w-6 h-6 mx-auto"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
                 />
               </svg>
             </button>
-          </form>
+          </div>
         </div>
       )}
     </div>

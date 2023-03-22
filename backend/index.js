@@ -13,6 +13,8 @@ import orderRoure from "./routes/order.js";
 import notiRoute from "./routes/notification.js";
 import reportRoute from "./routes/report.js";
 import categoryRoute from "./routes/category.js";
+import chatRoute from "./routes/chat.js";
+import messagesRoute from "./routes/message.js";
 //socket
 import http from "http";
 import { Server } from "socket.io";
@@ -100,6 +102,8 @@ app.use("/api/orders", orderRoure);
 app.use("/api/notifications", notiRoute);
 app.use("/api/reports", reportRoute);
 app.use("/api/categories", categoryRoute);
+app.use("/api/chat", chatRoute);
+app.use("/api/messages", messagesRoute);
 //error handler
 app.use((err, req, res, next) => {
   const status = err.status || 500;
