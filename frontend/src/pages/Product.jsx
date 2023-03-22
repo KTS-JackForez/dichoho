@@ -15,7 +15,9 @@ const Product = () => {
   const [openTab, setOpenTab] = useState(1);
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
-  const [hotProducts,setHotProducts] = useState([])
+  const [hotProducts, setHotProducts] = useState([]);
+  const [showChat, setShowChat] = useState(false);
+  const [showNotification,setShowNotification] = useState(true)
   const { productId } = useParams();
   const { imgs } = product;
   const dispatch = useDispatch();
@@ -31,7 +33,7 @@ const Product = () => {
     };
     fetchData();
   }, [window.location.pathname]);
-  useEffect(()=>{
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await ktsRequest.get(`/products/hotest/5`);
@@ -40,8 +42,8 @@ const Product = () => {
         err.response ? navigate("/notfound") : toast.error("Network Error!");
       }
     };
-    fetchData(); 
-  },[])
+    fetchData();
+  }, []);
   const handleClick = (type) => {
     // type-true: mua luôn
     // type-false: thêm vào giỏ hàng
@@ -58,6 +60,7 @@ const Product = () => {
 
     type ? "" : navigate("/cart");
   };
+
   return (
     <div className="">
       <Promotion />
@@ -163,13 +166,20 @@ const Product = () => {
                 <h3 className="text-gray-700 text-xl font-bold">
                   {product?.productName}
                 </h3>
+
                 <h3 className="text-green-600 font-bold text-xl">
                   {vnd(product.currentPrice) + "- " + vnd(product.stockPrice)}
                 </h3>
-                <ul className="list-disc ml-5">
-                  <li>Đạt chuẩn an toàn VietGap</li>
-                  <li>Hàng tươi mới mỗi ngày</li>
-                </ul>
+                <div className="flex justify-between">
+                  <ul className="list-disc ml-5">
+                    <li>Đạt chuẩn an toàn VietGap</li>
+                    <li>Hàng tươi mới mỗi ngày</li>
+                  </ul>
+                  {/* <button className="px-4 py-2 bg-primary rounded text-white w-4/6" onClick={()=>{setShowChat(!showChat)}}>
+                  Nhắn tin cho người bán
+                </button> */}
+                </div>
+
                 <div className="bg-orange-100 rounded border border-dashed border-red-500 divide-y divide-dashed divide-red-500">
                   <div className="flex gap-3 p-3 items-center">
                     <img
@@ -237,21 +247,30 @@ const Product = () => {
                 sản phẩm nổi bật
               </h3>
               <div className="divide-y divide-dashed divide-primary">
-                {
-                  hotProducts.map((p,i)=>{
-                    return  <Link to={`/products/${p._id}`} className="py-1 flex gap-3" key={i}>
-                    <img
-                      src={p.imgs[0] ||  "https://via.placeholder.com/300.png/09f/fff"}
-                      alt=""
-                      className="w-1/3 h-24 object-cover object-center rounded-md"
-                    />
-                    <div className="flex flex-col justify-center items-start flex-1">
-                      <p to={`/products/${p._id}`} className="font-semibold">{p?.productName}</p>
-                      <p className="text-green-400">{vnd(20000)}</p>
-                    </div>
-                  </Link>
-                  })
-                }
+                {hotProducts.map((p, i) => {
+                  return (
+                    <Link
+                      to={`/products/${p._id}`}
+                      className="py-1 flex gap-3"
+                      key={i}
+                    >
+                      <img
+                        src={
+                          p.imgs[0] ||
+                          "https://via.placeholder.com/300.png/09f/fff"
+                        }
+                        alt=""
+                        className="w-1/3 h-24 object-cover object-center rounded-md"
+                      />
+                      <div className="flex flex-col justify-center items-start flex-1">
+                        <p to={`/products/${p._id}`} className="font-semibold">
+                          {p?.productName}
+                        </p>
+                        <p className="text-green-400">{vnd(20000)}</p>
+                      </div>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -458,6 +477,108 @@ const Product = () => {
       </div>
       <ToastContainer />
       <Footer />
+      {/* Chat với shop */}
+      <div
+        className="fixed bottom-14 right-14 px-4 py-2 bg-primary rounded-full text-white w-14 h-14" onClick={() => {setShowChat(!showChat)}}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-10"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"
+          />
+        </svg>
+      {showNotification &&   <div className="absolute bottom-full right-1">
+          <div className="bg-white rounded-full border border-solid border-t-sky-400 text-sky-400 text-sm absolute -top-2.5 -right-2.5" onClick={(e)=>{setShowNotification(!showNotification)
+          e.stopPropagation()}}>
+          <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 18L18 6M6 6l12 12" 
+                  />
+                </svg>
+          </div>
+          <div className="text-black px-3.5 py-2.5 w-64 bg-slate-200 rounded-lg shadow-lg mb-2">
+            <span>
+              👋 Click ngay để chat với Shop
+            
+            </span>
+          </div>
+        </div>}
+    
+      </div>
+      {showChat && (
+        <div className="bg-white max-w-md w-full shadow-md rounded fixed bottom-0 right-0">
+          <section className="">
+            <div className="flex justify-between">
+              <span className="px-8 py-5">Sale168.com</span>
+              <div
+                className="p-5 border-l"
+                onClick={() => {
+                  setShowChat(!showChat);
+                }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </div>
+            </div>
+          </section>
+          <div className="h-96 px-8 pt-2.5 pb-5 bg-zinc-100 my-auto">
+            <div>
+              Không có tin nhắn. Khi bạn nhắn tin, tin nhắn sẽ hiển thị tại đây.
+            </div>
+          </div>
+          <form action="" className="flex justify-between px-8 py-5">
+            <input
+              type="text"
+              placeholder="Nhập nội dung tại đây..."
+              className="h-11 w-80 text-base px-3 border border-solid outline-0 border-neutral-500 rounded-l"
+            />
+            <button className="w-14 outline-0 text-base bg-zinc-400 text-white">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"
+                />
+              </svg>
+            </button>
+          </form>
+        </div>
+      )}
     </div>
   );
 };
