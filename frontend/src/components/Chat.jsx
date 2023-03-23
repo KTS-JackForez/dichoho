@@ -12,7 +12,7 @@ const Chat = (props) => {
     <div className="bg-white max-w-md w-full shadow-md rounded fixed bottom-0 right-0 overflow-hidden z-30">
       <section className="">
         <div className="flex justify-between">
-          <span className="px-3 py-3 text-primary">Sale168.com</span>
+          <span className="px-3 py-3 text-primary font-semibold">Sale168.com</span>
           <button
             className="p-3 border-l bg-primary text-white"
             onClick={() => {
