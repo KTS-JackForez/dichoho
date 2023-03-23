@@ -9,12 +9,12 @@ const Chat = (props) => {
     console.log(text);
   };
   return (
-    <div className="bg-gray-200 p-2 max-w-md w-full shadow-md rounded fixed bottom-0 right-0 overflow-hidden z-30">
+    <div className="bg-white max-w-md w-full shadow-md rounded fixed bottom-0 right-0 overflow-hidden z-30">
       <section className="">
         <div className="flex justify-between">
           <span className="px-3 py-3">Sale168.com</span>
           <button
-            className="p-3 border-l bg-red-600"
+            className="p-3 border-l bg-primary text-white"
             onClick={() => {
               props.onClose(false);
             }}
@@ -36,10 +36,10 @@ const Chat = (props) => {
           </button>
         </div>
       </section>
-      <div className="h-96 py-2 bg-white my-auto">
+      <div className="h-96 py-2 px-2.5 bg-gray-100 my-auto">
         Không có tin nhắn. Khi bạn nhắn tin, tin nhắn sẽ hiển thị tại đây.
       </div>
-      <div className="flex justify-between px-2 gap-2">
+      <div className="flex justify-between px-4 gap-2 py-4">
         <input
           onChange={(e) => {
             setMessage(e.target.value);
