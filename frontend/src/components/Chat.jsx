@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import ktsRequest from "../../ultis/ktsrequest";
 const Chat = (props) => {
-  console.log(props.product.shopID);
   const [chat, setChat] = useState({});
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
@@ -32,7 +31,7 @@ const Chat = (props) => {
     try {
       const res = await ktsRequest.post(`/messages`, {
         chatId: chat.chatId,
-        sender: props.members.me,
+        sender: props.me,
         text: text,
       });
       setRefresh(true);
