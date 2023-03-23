@@ -537,7 +537,7 @@ const Product = () => {
         )}
       </button>
       {showChat && (
-        <Chat onClose={setShowChat} product={product} me={currentUser._id} />
+        <Chat onClose={setShowChat} product={product} me={currentUser} />
       )}
     </div>
   );

@@ -32,6 +32,7 @@ export const getAll = async (req, res, next) => {
                 id: c._id,
                 senderName: user.displayName || user.username,
                 senderImg: user.img,
+                senderId: user._id,
                 text: lastMess.text,
                 time: lastMess.createdAt,
                 status: lastMess.status,

@@ -2,12 +2,25 @@ import React, { useEffect, useState } from "react";
 import ktsRequest from "../../ultis/ktsrequest";
 import { useSelector } from "react-redux";
 import Message from "./Message";
+import io from "socket.io-client";
+import { ktsSocket } from "../../ultis/config";
 const Messages = () => {
   const [data, setData] = useState([]);
-  const [chatId, setChatId] = useState("");
+  const [msg, setMsg] = useState({});
   const [showChat, setShowChat] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
   const { token } = currentUser;
+  const socket = io.connect(ktsSocket);
+  socket.on("newNoti", () => {
+    setRefresh(true);
+  });
+  useEffect(() => {
+    socket.emit("newUser", {
+      uid: currentUser._id,
+      uname: currentUser.username,
+    });
+  }, []);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -26,7 +39,7 @@ const Messages = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [refresh]);
   const textAvatar = (text) => {
     let name = text.split(" ");
     if (name.length === 1) {
@@ -39,8 +52,8 @@ const Messages = () => {
     }
   };
   return (
-    <div className="w-full p-2">
-      <div className="rounded space-y-3">
+    <div className="w-full p-2 md:grid md:auto-cols-fr md:grid-flow-col gap-2">
+      <div className="rounded space-y-3 w-full">
         {data?.map((c, i) => {
           return (
             <div key={i} className="flex bg-white p-2 rounded gap-2">
@@ -59,7 +72,7 @@ const Messages = () => {
               <button
                 className={`space-y-1 text-start`}
                 onClick={() => {
-                  chatId;
+                  setMsg(c);
                   setShowChat(true);
                 }}
               >
@@ -78,13 +91,8 @@ const Messages = () => {
           );
         })}
       </div>
-      {showChat && (
-        <Message
-          onClose={setShowChat}
-          sender={"123123123"}
-          me={currentUser._id}
-        />
-      )}
+
+      {showChat && <Message onClose={setShowChat} msg={msg} me={currentUser} />}
     </div>
   );
 };

@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import ktsRequest from "../../ultis/ktsrequest";
+import TimeAgo from "timeago-react";
+import vi from "timeago.js/lib/lang/vi";
+import * as timeago from "timeago.js";
+import io from "socket.io-client";
+import { ktsSocket } from "../../ultis/config";
 const Chat = (props) => {
   const [chat, setChat] = useState({});
   const [message, setMessage] = useState("");
@@ -8,12 +13,24 @@ const Chat = (props) => {
   const [shop, setShop] = useState({});
   const [resfresh, setRefresh] = useState(false);
   const scrollRef = useRef();
+  timeago.register("vi", vi);
+  const socket = io.connect(ktsSocket);
+
+  socket.on("newNoti", () => {
+    setRefresh(true);
+  });
+  useEffect(() => {
+    socket.emit("newUser", {
+      uid: props.me._id,
+      uname: props.me.username,
+    });
+  }, []);
   useEffect(() => {
     setRefresh(false);
     const fetchData = async () => {
       try {
         const res = await ktsRequest.get(
-          `/chat/find/${props.me}/${props.product.shopID}`
+          `/chat/find/${props.me._id}/${props.product.shopID}`
         );
         setChat(res.data);
         setShop(res.data.shop);
@@ -28,22 +45,30 @@ const Chat = (props) => {
   }, [resfresh, window.location.pathname]);
 
   const handleClick = async (text) => {
-    try {
-      const res = await ktsRequest.post(`/messages`, {
-        chatId: chat.chatId,
-        sender: props.me,
-        text: text,
-      });
-      setRefresh(true);
-      setMessage("");
-    } catch (error) {
-      toast.error(`${error.response ? error.response.data : "Network Error!"}`);
+    if (text) {
+      try {
+        const res = await ktsRequest.post(`/messages`, {
+          chatId: chat.chatId,
+          sender: props.me,
+          text: text,
+        });
+        setRefresh(true);
+        setMessage("");
+        socket.emit("refresh", {
+          uid: props.product.shopID,
+        });
+      } catch (error) {
+        toast.error(
+          `${error.response ? error.response.data : "Network Error!"}`
+        );
+      }
+    } else {
+      return;
     }
   };
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
-
   return (
     <div className="bg-white max-w-md w-full shadow-md rounded fixed bottom-0 right-0 overflow-hidden z-30">
       <section className="">
@@ -79,11 +104,19 @@ const Chat = (props) => {
           <ul className="space-y-2">
             {messages?.map((m, i) => {
               return (
-                <li className="px-3 text-end">
-                  <div className="bg-green-500 inline-block text-start px-3 py-1 rounded-md">
+                <li
+                  className={`px-3 ${m.sender === props.me._id && "text-end"}`}
+                  key={i}
+                >
+                  <div
+                    ref={scrollRef}
+                    className={`${
+                      m.sender === props.me._id ? "bg-green-500" : "bg-blue-500"
+                    } inline-block text-start px-3 py-1 rounded-md`}
+                  >
                     <div className="text-white">{m.text}</div>
                     <div className="text-xs text-gray-800">
-                      {new Date(m.createdAt).toLocaleString()}
+                      <TimeAgo datetime={m.createdAt} locale="vi" />
                     </div>
                   </div>
                 </li>
@@ -99,6 +132,12 @@ const Chat = (props) => {
           onChange={(e) => {
             setMessage(e.target.value);
           }}
+          onKeyPress={(e) => {
+            if (e.key === "Enter") {
+              document.getElementById("myBtn").click();
+            }
+          }}
+          id="myInput"
           value={message}
           type="text"
           placeholder="Nhập nội dung tại đây..."
@@ -107,6 +146,7 @@ const Chat = (props) => {
         <button
           className="w-14 outline-0 text-base bg-primary text-white rounded"
           onClick={() => handleClick(message)}
+          id="myBtn"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
