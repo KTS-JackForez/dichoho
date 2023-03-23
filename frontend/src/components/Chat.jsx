@@ -46,19 +46,14 @@ const Chat = (props) => {
   }, [messages]);
 
   return (
-    <div className="bg-gray-200 p-2 max-w-md w-full shadow-md rounded fixed bottom-0 right-0 overflow-hidden z-30">
+    <div className="bg-white max-w-md w-full shadow-md rounded fixed bottom-0 right-0 overflow-hidden z-30">
       <section className="">
         <div className="flex justify-between">
-          <div>
-            <img
-              src={shop.img}
-              alt=""
-              className="w-12 h-12 inline rounded-full"
-            />
-            <span className="p-3 font-semibold">{shop.displayName}</span>
-          </div>
+          <span className="px-3 py-3 text-primary font-semibold">
+            Sale168.com
+          </span>
           <button
-            className="p-3 border-l bg-red-600"
+            className="p-3 border-l bg-primary text-white"
             onClick={() => {
               props.onClose(false);
             }}
@@ -80,31 +75,10 @@ const Chat = (props) => {
           </button>
         </div>
       </section>
-      <div className="h-96 py-2 bg-white overflow-auto ">
-        {messages?.length > 0 ? (
-          <ul className="space-y-2">
-            {messages.map((m, i) => {
-              return (
-                <li key={i} className={`text-end`}>
-                  <div
-                    className="bg-green-500 rounded-lg px-4 py-1 inline-block text-start"
-                    ref={scrollRef}
-                  >
-                    <img src="" alt="" />
-                    <span className="text-white">{m.text}</span>
-                    <div className="text-xs text-gray-800">
-                      {new Date(m.createdAt).toLocaleString()}
-                    </div>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        ) : (
-          "Không có tin nhắn. Khi bạn nhắn tin, tin nhắn sẽ hiển thị tại đây."
-        )}
+      <div className="h-96 py-2 px-2.5 bg-gray-100 my-auto shadow-inner">
+        Không có tin nhắn. Khi bạn nhắn tin, tin nhắn sẽ hiển thị tại đây.
       </div>
-      <div className="flex justify-between px-2 gap-2">
+      <div className="flex justify-between px-4 gap-2 py-4">
         <input
           onChange={(e) => {
             setMessage(e.target.value);

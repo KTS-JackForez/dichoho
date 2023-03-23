@@ -515,7 +515,7 @@ const Product = () => {
         {showNotification && (
           <div className="absolute bottom-full right-1">
             <div
-              className="bg-white rounded-full border border-solid border-t-sky-400 text-sky-400 text-sm absolute -top-2.5 -right-2.5"
+              className="bg-white rounded-full border border-solid text-primary text-sm absolute -top-2.5 -right-2.5"
               onClick={(e) => {
                 setShowNotification(!showNotification);
                 e.stopPropagation();
@@ -523,17 +523,11 @@ const Product = () => {
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                class="w-5 h-5"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
+                <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
               </svg>
             </div>
             <div className="text-black px-3.5 py-2.5 w-64 bg-slate-200 rounded-lg shadow-lg mb-2">
@@ -543,7 +537,7 @@ const Product = () => {
         )}
       </button>
       {showChat && (
-        <Chat onClose={setShowChat} product={product} ne={currentUser._id} />
+        <Chat onClose={setShowChat} product={product} me={currentUser._id} />
       )}
     </div>
   );
