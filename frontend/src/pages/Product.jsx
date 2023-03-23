@@ -501,7 +501,7 @@ const Product = () => {
         {showNotification && (
           <div className="absolute bottom-full right-1">
             <div
-              className="bg-white rounded-full border border-solid border-t-sky-400 text-sky-400 text-sm absolute -top-2.5 -right-2.5"
+              className="bg-white rounded-full border border-solid text-primary text-sm absolute -top-2.5 -right-2.5"
               onClick={(e) => {
                 setShowNotification(!showNotification);
                 e.stopPropagation();
