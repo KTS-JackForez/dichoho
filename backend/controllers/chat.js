@@ -19,16 +19,31 @@ export const getAll = async (req, res, next) => {
     const chat = await Chat.find({
       members: { $in: [req.user.id] },
     });
-    console.log(chat);
     if (!chat) return res.status(403).json("Bạn chưa có tin nhắn nào");
-    Promise.all(
+    await Promise.all(
       chat.map(async (c) => {
         const messages = await Message.find({ chatId: c._id });
-        console.log(messages);
+        if (messages) {
+          const lastMess = messages[messages.length - 1];
+          if (lastMess) {
+            const user = await User.findById(lastMess.sender);
+            if (user) {
+              chats.push({
+                id: c._id,
+                senderName: user.displayName || user.username,
+                senderImg: user.img,
+                text: lastMess.text,
+                time: lastMess.createdAt,
+                status: lastMess.status,
+              });
+            }
+          }
+        }
       })
     );
-    res.status(200).json(chats);
+    res.status(200).json(chats.sort((a, b) => b.time - a.time));
   } catch (err) {
+    console.log(err);
     next(err);
   }
 };
