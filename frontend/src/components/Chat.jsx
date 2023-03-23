@@ -50,7 +50,7 @@ const Chat = (props) => {
       <section className="">
         <div className="flex justify-between">
           <span className="px-3 py-3 text-primary font-semibold">
-            Sale168.com
+            {shop.displayName}
           </span>
           <button
             className="p-3 border-l bg-primary text-white"
@@ -75,8 +75,25 @@ const Chat = (props) => {
           </button>
         </div>
       </section>
-      <div className="h-96 py-2 px-2.5 bg-gray-100 my-auto shadow-inner">
-        Không có tin nhắn. Khi bạn nhắn tin, tin nhắn sẽ hiển thị tại đây.
+      <div className="h-96 py-2 px-2.5 bg-gray-100 my-auto shadow-inner overflow-y-auto">
+        {messages?.length > 0 ? (
+          <ul className="space-y-2">
+            {messages?.map((m, i) => {
+              return (
+                <li className="px-3 text-end">
+                  <div className="bg-green-500 inline-block text-start px-3 py-1 rounded-md">
+                    <div className="text-white">{m.text}</div>
+                    <div className="text-xs text-gray-800">
+                      {new Date(m.createdAt).toLocaleString()}
+                    </div>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        ) : (
+          "Bạn chưa có tin nhắn nào."
+        )}
       </div>
       <div className="flex justify-between px-4 gap-2 py-4">
         <input
