@@ -19,7 +19,6 @@ const Message = (props) => {
 
   socket.on("newNoti", () => {
     setRefresh(true);
-    console.log(resfresh);
   });
   useEffect(() => {
     socket.emit("newUser", {
