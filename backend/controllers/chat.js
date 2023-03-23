@@ -19,13 +19,12 @@ export const getAll = async (req, res, next) => {
     const chat = await Chat.find({
       members: { $in: [req.user.id] },
     });
+    console.log(chat);
     if (!chat) return res.status(403).json("Bạn chưa có tin nhắn nào");
-    await Promise.all(
+    Promise.all(
       chat.map(async (c) => {
-        const m = await Message.find({ chatId: c._id });
-        if (m) {
-          chats.push(m);
-        }
+        const messages = await Message.find({ chatId: c._id });
+        console.log(messages);
       })
     );
     res.status(200).json(chats);
@@ -38,11 +37,11 @@ export const getChat = async (req, res, next) => {
   const { shopId } = req.params;
   try {
     let chat = await Chat.findOne({
-      members: { $all: [req.params.firstUserId, req.params.secondUserId] },
+      members: { $all: [req.params.userId, req.params.shopId] },
     });
     if (!chat) {
       chat = new Chat({
-        members: [req.params.firstUserId, req.params.secondUserId],
+        members: [req.params.userId, req.params.shopId],
       });
       await chat.save();
     }
