@@ -7,9 +7,9 @@ import { ToastContainer, toast } from "react-toastify";
 import ktsRequest from "../../ultis/ktsrequest";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/cartReducer";
-
 const Product = () => {
   const { products } = useSelector((state) => state.cart);
+  const { currentUser } = useSelector((state) => state.user);
   const [weight, setWeight] = useState(1);
   const [activeImg, setActiveImg] = useState(0);
   const [openTab, setOpenTab] = useState(1);
@@ -124,9 +124,10 @@ const Product = () => {
                     style={{ transform: `translateX(-${activeImg * 100}%)` }}
                   >
                     {imgs &&
-                      imgs.map((i) => {
+                      imgs.map((i, index) => {
                         return (
                           <img
+                            key={index}
                             src={i}
                             alt=""
                             className="object-cover w-full h-full"
@@ -140,6 +141,7 @@ const Product = () => {
                     {imgs.map((i, k) => {
                       return (
                         <div
+                          key={k}
                           className={`w-1/4 
                             ${
                               activeImg === k
@@ -363,55 +365,55 @@ const Product = () => {
                     className={openTab === 3 ? "block" : "hidden"}
                     id="link3"
                   >
-                    <div class="product-main grid">
-                      <div class="product-footer">
-                        <div class="product-footer-content">
-                          <div class="product-footer-content-pane product-footer-content-comment active">
-                            <div class="comments">
+                    <div className="product-main grid">
+                      <div className="product-footer">
+                        <div className="product-footer-content">
+                          <div className="product-footer-content-pane product-footer-content-comment active">
+                            <div className="comments">
                               <h3>Đánh giá</h3>
                               <p>Chưa có đánh giá nào.</p>
                             </div>
-                            <div class="comment-form-wrapper">
-                              <div class="comment-respond">
-                                <h3 class="comment-respond-title">
+                            <div className="comment-form-wrapper">
+                              <div className="comment-respond">
+                                <h3 className="comment-respond-title">
                                   Hãy là người đầu tiên nhận xét “Thực phẩm hữu
                                   cơ sạch”{" "}
                                 </h3>
-                                <form action="" class="comment-form">
-                                  <label for="rating">
+                                <form action="" className="comment-form">
+                                  <label htmlFor="rating">
                                     Đánh giá của bạn&nbsp;
-                                    <span class="required">*</span>
+                                    <span className="required">*</span>
                                   </label>
-                                  <div class="product-item-rating-selected">
-                                    <div class="product-item__rating active">
-                                      <i class="product-item__star-gold fas fa-star"></i>
+                                  <div className="product-item-rating-selected">
+                                    <div className="product-item__rating active">
+                                      <i className="product-item__star-gold fas fa-star"></i>
                                     </div>
-                                    <div class="product-item__rating">
-                                      <i class="product-item__star-gold fas fa-star"></i>
-                                      <i class="product-item__star-gold fas fa-star"></i>
+                                    <div className="product-item__rating">
+                                      <i className="product-item__star-gold fas fa-star"></i>
+                                      <i className="product-item__star-gold fas fa-star"></i>
                                     </div>
-                                    <div class="product-item__rating">
-                                      <i class="product-item__star-gold fas fa-star"></i>
-                                      <i class="product-item__star-gold fas fa-star"></i>
-                                      <i class="product-item__star-gold fas fa-star"></i>
+                                    <div className="product-item__rating">
+                                      <i className="product-item__star-gold fas fa-star"></i>
+                                      <i className="product-item__star-gold fas fa-star"></i>
+                                      <i className="product-item__star-gold fas fa-star"></i>
                                     </div>
-                                    <div class="product-item__rating">
-                                      <i class="product-item__star-gold fas fa-star"></i>
-                                      <i class="product-item__star-gold fas fa-star"></i>
-                                      <i class="product-item__star-gold fas fa-star"></i>
-                                      <i class="product-item__star-gold fas fa-star"></i>
+                                    <div className="product-item__rating">
+                                      <i className="product-item__star-gold fas fa-star"></i>
+                                      <i className="product-item__star-gold fas fa-star"></i>
+                                      <i className="product-item__star-gold fas fa-star"></i>
+                                      <i className="product-item__star-gold fas fa-star"></i>
                                     </div>
-                                    <div class="product-item__rating">
-                                      <i class="product-item__star-gold fas fa-star"></i>
-                                      <i class="product-item__star-gold fas fa-star"></i>
-                                      <i class="product-item__star-gold fas fa-star"></i>
-                                      <i class="product-item__star-gold fas fa-star"></i>
-                                      <i class="product-item__star-gold fas fa-star"></i>
+                                    <div className="product-item__rating">
+                                      <i className="product-item__star-gold fas fa-star"></i>
+                                      <i className="product-item__star-gold fas fa-star"></i>
+                                      <i className="product-item__star-gold fas fa-star"></i>
+                                      <i className="product-item__star-gold fas fa-star"></i>
+                                      <i className="product-item__star-gold fas fa-star"></i>
                                     </div>
                                   </div>
-                                  <label for="comment">
+                                  <label htmlFor="comment">
                                     Nhận xét của bạn&nbsp;
-                                    <span class="required">*</span>
+                                    <span className="required">*</span>
                                   </label>
                                   <textarea
                                     id="comment"
@@ -420,34 +422,43 @@ const Product = () => {
                                     rows="8"
                                     required=""
                                   ></textarea>
-                                  <div class="modal-comment">
-                                    <div class="modal-comment-author">
+                                  <div className="modal-comment">
+                                    <div className="modal-comment-author">
                                       <div>
-                                        <label for="name" class="modal-label">
+                                        <label
+                                          htmlFor="name"
+                                          className="modal-label"
+                                        >
                                           Tên&nbsp;
                                         </label>
                                         <input
                                           id="name"
                                           type="text"
-                                          class="modal-input"
+                                          className="modal-input"
                                           placeholder="Nhập tên của bạn"
                                         />
                                       </div>
 
                                       <div>
-                                        <label for="email" class="modal-label">
+                                        <label
+                                          htmlFor="email"
+                                          className="modal-label"
+                                        >
                                           Email&nbsp;
                                         </label>
                                         <input
                                           id="email"
                                           type="text"
-                                          class="modal-input"
+                                          className="modal-input"
                                           placeholder="Nhập email của bạn"
                                         />
                                       </div>
                                     </div>
 
-                                    <label for="send" class="modal-label">
+                                    <label
+                                      htmlFor="send"
+                                      className="modal-label"
+                                    >
                                       <input id="send" type="checkbox" />
                                       <span>
                                         {" "}
@@ -457,7 +468,7 @@ const Product = () => {
                                       </span>
                                     </label>
 
-                                    <button class="submit btn--primary">
+                                    <button className="submit btn--primary">
                                       GỬI ĐI
                                     </button>
                                   </div>
@@ -481,6 +492,9 @@ const Product = () => {
       <button
         className="fixed bottom-14 right-14 px-4 py-2 bg-primary rounded-full text-white w-14 h-14"
         onClick={() => {
+          if (!currentUser) {
+            return navigate("/login");
+          }
           setShowChat(true);
         }}
       >
@@ -488,13 +502,13 @@ const Product = () => {
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
-          stroke-width="1.5"
+          strokeWidth={1.5}
           stroke="currentColor"
-          class="w-6 h-10"
+          className="w-6 h-10"
         >
           <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"
           />
         </svg>
@@ -511,13 +525,13 @@ const Product = () => {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth={1.5}
                 stroke="currentColor"
-                class="w-6 h-6"
+                className="w-6 h-6"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M6 18L18 6M6 6l12 12"
                 />
               </svg>
@@ -528,7 +542,9 @@ const Product = () => {
           </div>
         )}
       </button>
-      {showChat && <Chat onClose={setShowChat} />}
+      {showChat && (
+        <Chat onClose={setShowChat} product={product} ne={currentUser._id} />
+      )}
     </div>
   );
 };

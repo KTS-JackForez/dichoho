@@ -17,6 +17,8 @@ import {
   SinglePost,
   Report,
   Categories,
+  Messages,
+  Message,
 } from "../pages";
 import NewCategories from "./NewCategories";
 
@@ -40,18 +42,21 @@ const Layout = () => {
             <Route index element={<Notifications />} />
             <Route path=":notificationId" element={<Notification />} />
           </Route>
+          <Route path="tin-nhan">
+            <Route index element={<Messages />} />
+            <Route path=":chatId" element={<Message />} />
+          </Route>
           <Route path="bai-viet">
             <Route index element={<Post />} />
             <Route path="new" element={<NewPost />} />
             <Route path="edit/:postid" element={<EditPost />} />
             <Route path=":postid" element={<SinglePost />} />
           </Route>
-          <Route path="bao-cao" element={<Report/>}/>
+          <Route path="bao-cao" element={<Report />} />
           {/* <Route path="danh-muc" element={<Categories/>}/> */}
           <Route path="danh-muc">
             <Route index element={<Categories />} />
             <Route path="new" element={<NewCategories />} />
-           
           </Route>
         </Routes>
       </div>
