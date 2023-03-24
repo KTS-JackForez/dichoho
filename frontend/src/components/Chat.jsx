@@ -30,7 +30,7 @@ const Chat = (props) => {
     const fetchData = async () => {
       try {
         const res = await ktsRequest.get(
-          `/chat/find/${props.me._id}/${props.product.shopID}`
+          `/chat/find/${props.me._id}/${props.shop}`
         );
         setChat(res.data);
         setShop(res.data.shop);
@@ -42,20 +42,20 @@ const Chat = (props) => {
       }
     };
     fetchData();
-  }, [resfresh, window.location.pathname]);
+  }, [resfresh, props]);
 
   const handleClick = async (text) => {
     if (text) {
       try {
         const res = await ktsRequest.post(`/messages`, {
           chatId: chat.chatId,
-          sender: props.me,
+          sender: props.me._id,
           text: text,
         });
         setRefresh(true);
         setMessage("");
         socket.emit("refresh", {
-          uid: props.product.shopID,
+          uid: props.shop,
         });
       } catch (error) {
         toast.error(

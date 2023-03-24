@@ -14,6 +14,7 @@ const Product = () => {
   const [activeImg, setActiveImg] = useState(0);
   const [openTab, setOpenTab] = useState(1);
   const [product, setProduct] = useState({});
+  const [shopId, setShopId] = useState();
   const [quantity, setQuantity] = useState(1);
   const [hotProducts, setHotProducts] = useState([]);
   const [showChat, setShowChat] = useState(false);
@@ -23,10 +24,12 @@ const Product = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
+    // setShowChat(false)
     const fetchData = async () => {
       try {
         const res = await ktsRequest.get(`/products/${productId}`);
         setProduct(res.data);
+        setShopId(res.data.shopID)
       } catch (err) {
         err.response ? navigate("/notfound") : toast.error("Network Error!");
       }
@@ -537,7 +540,7 @@ const Product = () => {
         )}
       </button>
       {showChat && (
-        <Chat onClose={setShowChat} product={product} me={currentUser} />
+        <Chat onClose={setShowChat} shop={shopId} me={currentUser} />
       )}
     </div>
   );
