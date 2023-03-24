@@ -10,8 +10,8 @@ const Sidebar = () => {
   const [open, setOpen] = useState(true);
   const { currentUser } = useSelector((state) => state.user);
   const { role } = currentUser;
-  const activeLink = `flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded  text-white  text-md m-2 font-semibold`;
-  const normalLink = `flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded text-xs text-gray-500 hover:bg-light-gray m-2 font-semibold border border-white hover:border-primary`;
+  const activeLink = `flex items-center gap-5 pl-4 py-2 mx-2 rounded  text-white font-semibold`;
+  const normalLink = `flex items-center gap-5 pl-4 py-2 mx-2 rounded text-xs text-gray-500 hover:bg-light-gray font-semibold border border-white hover:border-primary`;
   return (
     <div
       className={`h-screen ${
@@ -44,7 +44,7 @@ const Sidebar = () => {
           {open && <span>dashboard</span>}
         </Link>
       </div>
-      <div className="flex flex-col gap-3 uppercase">
+      <div className="flex flex-col gap-1.5 uppercase">
         {dashboard.navLinks.map((i, index) => {
           return (
             i.role.includes(role) && (
@@ -79,7 +79,7 @@ const Sidebar = () => {
           );
         })}
         <button
-          className="flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded  border-primary border text-md m-2 font-semibold mt-12 hover:bg-primary hover:text-white uppercase "
+          className="flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded  border-primary border text-md m-2 font-semibold hover:bg-primary hover:text-white uppercase "
           onClick={(e) => {
             e.preventDefault();
             dispatch(logout());

@@ -59,8 +59,8 @@ const Messages = () => {
     }
   };
   return (
-    <div className="w-full p-2 md:grid md:auto-cols-fr md:grid-flow-col gap-2">
-      <div className="rounded space-y-3 w-full">
+    <div className="w-full h-[85vh] p-2 md:grid md:auto-cols-fr md:grid-flow-col gap-2">
+      <div className="rounded space-y-3 w-full h-full overflow-auto">
         {data?.map((c, i) => {
           return (
             <div
@@ -89,7 +89,10 @@ const Messages = () => {
                   } text-start`}
                 >
                   <div>{c.title}</div>
-                  <div className="text-xs">{c.text}</div>
+                  <div className="text-xs">
+                    {currentUser._id === c.senderId && <span>Bạn: </span>}{" "}
+                    <span>{c.text}</span>
+                  </div>
                 </div>
               </div>
               <div className="text-xs text-gray-800">

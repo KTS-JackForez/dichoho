@@ -84,7 +84,6 @@ const Message = (props) => {
                   key={i}
                 >
                   <div
-                    ref={scrollRef}
                     className={`${
                       m.sender === props.me._id ? "bg-green-500" : "bg-blue-500"
                     } inline-block text-start px-3 py-1 rounded-md`}
@@ -97,6 +96,7 @@ const Message = (props) => {
                 </li>
               );
             })}
+            <li ref={scrollRef}></li>
           </ul>
         ) : (
           "Bạn chưa có tin nhắn nào."
