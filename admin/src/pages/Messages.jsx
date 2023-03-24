@@ -4,6 +4,12 @@ import { useSelector } from "react-redux";
 import Message from "./Message";
 import io from "socket.io-client";
 import { ktsSocket } from "../../ultis/config";
+import TimeAgo from "timeago-react";
+
+import vi from "timeago.js/lib/lang/vi";
+import * as timeago from "timeago.js";
+timeago.register("vi", vi);
+
 const Messages = () => {
   const [data, setData] = useState([]);
   const [msg, setMsg] = useState({});
@@ -22,6 +28,7 @@ const Messages = () => {
     });
   }, []);
   useEffect(() => {
+    setRefresh(false);
     const fetchData = async () => {
       try {
         const res = await ktsRequest.get("/chat", {
@@ -56,43 +63,51 @@ const Messages = () => {
       <div className="rounded space-y-3 w-full">
         {data?.map((c, i) => {
           return (
-            <div key={i} className="flex bg-white p-2 rounded gap-2">
-              <div className="rounded-full h-12 w-12 bg-orange-500 flex justify-center items-center text-white font-bold overflow-hidden">
-                {c.senderImg ? (
-                  <img
-                    src={c.senderImg}
-                    alt=""
-                    className="w-full h-full object-cover object-center"
-                  />
-                ) : (
-                  textAvatar(c.senderName)
-                )}
-              </div>
-
-              <button
-                className={`space-y-1 text-start`}
-                onClick={() => {
-                  setMsg(c);
-                  setShowChat(true);
-                }}
-              >
+            <div
+              key={i}
+              className="flex w-full bg-white p-2 rounded gap-2 justify-between cursor-pointer"
+              onClick={() => {
+                setMsg(c);
+                setShowChat(true);
+              }}
+            >
+              <div className="flex gap-3">
+                <div className="rounded-full h-12 w-12 bg-orange-500 flex justify-center items-center text-white font-bold overflow-hidden">
+                  {c.otherImg ? (
+                    <img
+                      src={c.otherImg}
+                      alt=""
+                      className="w-full h-full object-cover object-center"
+                    />
+                  ) : (
+                    textAvatar(c.title)
+                  )}
+                </div>
                 <div
                   className={`${
                     c.status === 0 ? "font-semibold" : "text-gray-700"
-                  }`}
+                  } text-start`}
                 >
-                  {c.text}
+                  <div>{c.title}</div>
+                  <div className="text-xs">{c.text}</div>
                 </div>
-                <div className="text-xs">
-                  {new Date(c.time).toLocaleString()}
-                </div>
-              </button>
+              </div>
+              <div className="text-xs text-gray-800">
+                <TimeAgo datetime={c.time} locale="vi" />
+              </div>
             </div>
           );
         })}
       </div>
 
-      {showChat && <Message onClose={setShowChat} msg={msg} me={currentUser} />}
+      {showChat && (
+        <Message
+          onClose={setShowChat}
+          msg={msg}
+          me={currentUser}
+          onRefresh={setRefresh}
+        />
+      )}
     </div>
   );
 };

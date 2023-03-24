@@ -31,7 +31,7 @@ const Message = (props) => {
     const fetchData = async () => {
       try {
         const res = await ktsRequest.get(
-          `/chat/find/${props.me._id}/${props.msg.senderId}`
+          `/chat/find/${props.me._id}/${props.msg.other}`
         );
         setChat(res.data);
         setShop(res.data.shop);
@@ -55,8 +55,9 @@ const Message = (props) => {
         });
         setRefresh(true);
         setMessage("");
+        props.onRefresh(true);
         socket.emit("refresh", {
-          uid: props.msg.senderId,
+          uid: props.msg.other,
         });
       } catch (error) {
         toast.error(
@@ -72,7 +73,7 @@ const Message = (props) => {
   }, [messages]);
   return (
     <div className="bg-white w-full h-full">
-      <div className="font-semibold p-3">{props.msg.senderName}</div>
+      <div className="font-semibold p-3">{props.msg.title}</div>
       <div className="h-96 py-2 px-2.5 bg-gray-100 my-auto shadow-inner overflow-y-auto">
         {messages?.length > 0 ? (
           <ul className="space-y-2">

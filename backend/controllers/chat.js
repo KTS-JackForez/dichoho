@@ -22,6 +22,8 @@ export const getAll = async (req, res, next) => {
     if (!chat) return res.status(403).json("Bạn chưa có tin nhắn nào");
     await Promise.all(
       chat.map(async (c) => {
+        const otherId = c.members.find((e) => e !== req.user.id);
+        const chatTo = await User.findById(otherId);
         const messages = await Message.find({ chatId: c._id });
         if (messages) {
           const lastMess = messages[messages.length - 1];
@@ -30,6 +32,9 @@ export const getAll = async (req, res, next) => {
             if (user) {
               chats.push({
                 id: c._id,
+                title: chatTo.displayName || chatTo.username,
+                other: chatTo._id,
+                otherImg: chatTo.img,
                 senderName: user.displayName || user.username,
                 senderImg: user.img,
                 senderId: user._id,
