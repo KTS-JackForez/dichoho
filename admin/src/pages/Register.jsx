@@ -4,7 +4,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import ktsRequest from "../../ultis/ktsrequest";
 const Register = () => {
-  const [name, setName] = useState("");
+  const [username, setUserName] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
@@ -82,7 +82,7 @@ const Register = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    if (!name) {
+    if (!username) {
       toast.warn("Vui lòng chọn Tên đăng nhập!");
       return;
     }
@@ -116,7 +116,7 @@ const Register = () => {
       return;
     }
     const data = JSON.stringify({
-      name,
+      username,
       password,
       phone,
       displayName,
@@ -143,7 +143,7 @@ const Register = () => {
     ktsRequest(config)
       .then(function (response) {
         toast.success("Đăng ký thành công!");
-        setName("");
+        setUserName("");
         setDisplayName("");
         setPassword("");
         setRepassword("");
@@ -174,10 +174,10 @@ const Register = () => {
                   type="text"
                   placeholder="User name ..."
                   name="name"
-                  value={name}
+                  value={username}
                   className="border-grey-light w-full rounded border p-2  focus:border-primary focus:outline-none"
                   required="abc"
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => setUserName(e.target.value)}
                 />
               </span>
               <div className="pr-2.5 pl-2">
