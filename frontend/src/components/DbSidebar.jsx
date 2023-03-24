@@ -15,7 +15,7 @@ const DbSidebar = () => {
   return (
     <div className="border border-r-gray-300 h-screen w-72 px-3 hidden md:block">
       <Link className="w-full h-28 block" to="/">
-        <img src={logo} alt="" className="w-full h-full object-cover" />
+        <img src={logo} alt="" className="w-full h-full object-none" />
       </Link>
       <div className="flex flex-col gap-3 uppercase">
         {dashboard.navLinks.map((i, index) => {
