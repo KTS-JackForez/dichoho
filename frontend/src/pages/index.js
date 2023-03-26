@@ -15,3 +15,4 @@ export { default as DbOrder } from "./DbOrder";
 export { default as DbHome } from "./DbHome";
 export { default as MyAccount } from "./MyAccount";
 export { default as Messages } from "./Messages";
+export { default as Shop } from "./Shop";

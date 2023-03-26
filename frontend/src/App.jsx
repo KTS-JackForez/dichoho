@@ -15,6 +15,7 @@ import {
   Post,
   Products,
   Dashboard,
+  Shop,
 } from "./pages";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -51,6 +52,7 @@ function App() {
           </Route>
           <Route path="abc" element={<Products />} />
           <Route path="cart" element={<Cart />} />
+          <Route path="shop/:shopId" element={<Shop />} />
           <Route
             path="dashboard/*"
             element={
