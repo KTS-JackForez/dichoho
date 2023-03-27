@@ -67,7 +67,6 @@ export const getShopProducts = async (req, res, next) => {
   try {
     const {shopId} = req.params
     const shop = await User.findById(shopId)
-    console.log(shop)
     if(!shop) return res.status(404).json("Shop không khả dụng")
     if(shop.status <1) return res.status(403).json("Shop không khả dụng") 
     const products = await Product.find({shopID:shopId}) 
