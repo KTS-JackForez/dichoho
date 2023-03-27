@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import banner1 from "../assets/imgs/banner3.webp";
-import banner2 from "../assets/imgs/banner2.webp";
+import banner1 from "../assets/imgs/1.webp";
+import banner2 from "../assets/imgs/2.webp";
+import banner3 from "../assets/imgs/3.webp";
 const Slider = () => {
-  const dots = [1, 2];
+  const dots = [1, 2,3];
   const [activeImg, setActiveImg] = useState(0);
   const imgs = [
     // "https://firebasestorage.googleapis.com/v0/b/dichoho-4e879.appspot.com/o/images%2Fbanners%2Fbanner1.jpg?alt=media&token=ab56333f-e2b4-4bcd-80f5-1defaf4adc9f",
@@ -10,6 +11,7 @@ const Slider = () => {
     // "https://firebasestorage.googleapis.com/v0/b/dichoho-4e879.appspot.com/o/images%2Fbanners%2Fbanner3.jpg?alt=media&token=4a3aceec-f665-4862-bdba-62b8803cdec6",
     banner1,
     banner2,
+    banner3
   ];
   return (
     <div className="w-full">

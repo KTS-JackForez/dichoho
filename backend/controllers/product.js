@@ -1,5 +1,6 @@
 import { createError } from "../error.js";
 import Product from "../models/Product.js";
+import User from "../models/User.js";
 const permission = ["admin", "staff"];
 //get tất cả products
 
@@ -58,6 +59,19 @@ export const getMyProducts = async (req, res, next) => {
       return res.status(403).json("Chưa có thông tin sản phẩm");
     }
     res.status(200).json(products);
+  } catch (error) {
+    next(error);
+  }
+};
+export const getShopProducts = async (req, res, next) => {
+  try {
+    const {shopId} = req.params
+    const shop = await User.findById(shopId)
+    if(!shop) return res.status(404).json("Shop không khả dụng")
+    if(shop.status <1) return res.status(403).json("Shop không khả dụng") 
+    const products = await Product.find({shopID:shopId}) 
+    const address = shop.address+", "+shop.wardFullName+", "+shop.districtFullName+", "+shop.cityFullName 
+    res.status(200).json({shop:{displayName:shop?.displayName||"Sale168.vn",createdAt:shop.createdAt,numberFolower:shop?.likedBy.length || 0,address},products})
   } catch (error) {
     next(error);
   }

@@ -164,17 +164,17 @@ const Header = () => {
           />
         </svg>
       </button>
-     
+
       <div className="w-1/2">
-      <div className="flex md:flex-1 w-full justify-start md:justify-center relative mx-auto">
-        <input
-          type="text"
-          placeholder="Tìm kiếm ..."
-          className="p-2 border border-gray-300 rounded-md focus:outline-none w-full"
-          onChange={(e) => setQuery(e.target.value)}
-          value={query}
-        />
-        <svg
+        <div className="flex md:flex-1 w-full justify-start md:justify-center relative mx-auto">
+          <input
+            type="text"
+            placeholder="Tìm kiếm ..."
+            className="p-2 border border-gray-300 rounded-md focus:outline-none w-full"
+            onChange={(e) => setQuery(e.target.value)}
+            value={query}
+          />
+          <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -188,43 +188,44 @@ const Header = () => {
               d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
             />
           </svg>
-        {query.length > 0 && data && (
-          <div
-            className={`absolute top-12 z-10 bg-gray-100 w-full text-start ${
-              data?.length > 0 ? "border" : ""
-            } border-primary rounded z-20 `}
-          >
-            <div className="text-end px-1.5 py-3 bg-primary">
-              <Link to="/products" className="italic hover:text-white">Xem tất cả</Link>
-            </div>
-            <div className="max-w-60 overflow-y-auto divide-y divide-dashed divide-primary">
-            {data.map((p, i) => {
-              return (
-                <Link
-                  to={`/products/${p._id}`}
-                  key={i}
-                  className="flex p-1.5 items-center hover:bg-green-100"
-                  onClick={() => {
-                    setData([]);
-                    setQuery("");
-                  }}
-                >
-                  <img
-                    src={p.imgs[0]}
-                    alt=""
-                    className="w-12 h-12 object-cover object-center rounded-full"
-                  />
-                  <span className="pl-1 normal-case">{p.productName}</span>
+          {query.length > 0 && data && (
+            <div
+              className={`absolute top-12 z-10 bg-gray-100 w-full text-start ${
+                data?.length > 0 ? "border" : ""
+              } border-primary rounded z-20 `}
+            >
+              <div className="text-end px-1.5 py-3 bg-primary">
+                <Link to="/products" className="italic hover:text-white">
+                  Xem tất cả
                 </Link>
-              );
-            })}
+              </div>
+              <div className="max-w-60 overflow-y-auto divide-y divide-dashed divide-primary">
+                {data.map((p, i) => {
+                  return (
+                    <Link
+                      to={`/products/${p._id}`}
+                      key={i}
+                      className="flex p-1.5 items-center hover:bg-green-100"
+                      onClick={() => {
+                        setData([]);
+                        setQuery("");
+                      }}
+                    >
+                      <img
+                        src={p.imgs[0]}
+                        alt=""
+                        className="w-12 h-12 object-cover object-center rounded-full"
+                      />
+                      <span className="pl-1 normal-case">{p.productName}</span>
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
-           
-          </div>
-        )}
+          )}
+        </div>
       </div>
-      </div>
-    
+
       <div className="flex gap-4 items-center">
         <div className="md:flex justify-center items-center gap-2 hidden">
           <div className="bg-green-600 p-3 mx-auto text-white rounded-full">
@@ -245,7 +246,7 @@ const Header = () => {
           </div>
           <div className="">
             <p className="text-md">Hỗ trợ khách hàng</p>
-            <p className="text-primary font-extrabold">0123456789</p>
+            <p className="text-primary font-extrabold">0788300894</p>
           </div>
         </div>
         <div

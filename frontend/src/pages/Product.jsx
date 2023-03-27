@@ -171,25 +171,68 @@ const Product = () => {
                 <h3 className="text-gray-700 text-xl font-bold">
                   {product?.productName}
                 </h3>
-                <div className="flex gap-3">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6"
+                <div className="flex">
+                  {/* Xem shop */}
+                  <div
+                    className="flex text-sm justify-evenly w-28 px-1.5 py-1.5 bg-white text-black rounded align-center leading-5 border border-current cursor-pointer"
+                    onClick={() => {
+                      if (!currentUser) {
+                        return navigate("/login");
+                      }
+                      setShowChat(true);
+                    }}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.016a3.001 3.001 0 003.75.614m-16.5 0a3.004 3.004 0 01-.621-4.72L4.318 3.44A1.5 1.5 0 015.378 3h13.243a1.5 1.5 0 011.06.44l1.19 1.189a3 3 0 01-.621 4.72m-13.5 8.65h3.75a.75.75 0 00.75-.75V13.5a.75.75 0 00-.75-.75H6.75a.75.75 0 00-.75.75v3.75c0 .415.336.75.75.75z"
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-5 h-5"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"
+                      />
+                    </svg>
+                    <span className="no-underline font-semibold">
+                      Chat ngay
+                    </span>
+                  </div>
+                  {showChat && (
+                    <Chat
+                      onClose={setShowChat}
+                      shop={shopId}
+                      me={currentUser}
                     />
-                  </svg>
-                  <Link className="underline" to={`/shop/${product.shopID}`}>
-                    Ghé thăm shop
-                  </Link>
+                  )}
+
+                  {/* chat ngay */}
+                  <div className="flex text-sm justify-evenly w-28 px-1.5 py-1.5 bg-primary text-white rounded align-center leading-5 ml-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-5 h-5"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.016a3.001 3.001 0 003.75.614m-16.5 0a3.004 3.004 0 01-.621-4.72L4.318 3.44A1.5 1.5 0 015.378 3h13.243a1.5 1.5 0 011.06.44l1.19 1.189a3 3 0 01-.621 4.72m-13.5 8.65h3.75a.75.75 0 00.75-.75V13.5a.75.75 0 00-.75-.75H6.75a.75.75 0 00-.75.75v3.75c0 .415.336.75.75.75z"
+                      />
+                    </svg>
+                    <Link
+                      className="no-underline font-semibold"
+                      to={`/shop/${product.shopID}`}
+                    >
+                      Xem shop
+                    </Link>
+                  </div>
                 </div>
+
                 <h3 className="text-green-600 font-bold text-xl">
                   {vnd(product.currentPrice) + "- " + vnd(product.stockPrice)}
                 </h3>
@@ -510,7 +553,7 @@ const Product = () => {
       <ToastContainer />
       <Footer />
       {/* Chat với shop */}
-      <button
+      {/* <button
         className="fixed bottom-14 right-14 px-4 py-2 bg-primary rounded-full text-white w-14 h-14"
         onClick={() => {
           if (!currentUser) {
@@ -559,7 +602,7 @@ const Product = () => {
       </button>
       {showChat && (
         <Chat onClose={setShowChat} shop={shopId} me={currentUser} />
-      )}
+      )} */}
     </div>
   );
 };
