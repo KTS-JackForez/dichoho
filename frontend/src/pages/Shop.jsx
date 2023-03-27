@@ -1,26 +1,40 @@
 import React, { useEffect, useState } from "react";
-import { Footer, Header, ItemCard, Navbar, Promotion } from "../components";
+import {
+  Chat,
+  Footer,
+  Header,
+  ItemCard,
+  Navbar,
+  Promotion,
+} from "../components";
 import { ToastContainer, toast } from "react-toastify";
 import ktsRequest from "../../ultis/ktsrequest";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Shop = () => {
+  const [shopInfo, setShopInfo] = useState({});
   const [data, setData] = useState([]);
   const [query, setQuery] = useState("");
-  const keys = ["productName"];
+  const [showChat, setShowChat] = useState(false);
 
+  const { currentUser } = useSelector((state) => state.user);
+  const keys = ["productName"];
+  const { shopId } = useParams();
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await ktsRequest.get("/products/lastest/10");
-        setData(res.data);
+        const res = await ktsRequest.get(`/products/shop/${shopId}`);
+        setData(res.data.products);
+        setShopInfo(res.data.shop);
       } catch (err) {
-        err.response
-          ? toast.error(err.response.data.message)
-          : toast.error("Network Error!");
+        console.log(err);
+        toast.error("Network Error!");
       }
     };
     fetchData();
-  }, []);
+  }, [window.location.pathname]);
   const search = (data) => {
     return data.filter((item) =>
       keys.some((key) => item[key].toLowerCase().includes(query))
@@ -31,8 +45,8 @@ const Shop = () => {
       <Promotion />
       <Header />
       <Navbar />
-      <div className="max-w-screen-xl mx-auto bg-gray-100">
-        <div className="bg-cover py-12 flex bg-center bg-no-repeat text-white h-[50vh] bg-[url('https://cdn.tuoitrethudo.com.vn/stores/news_dataimages/2022/112022/24/15/nhung-dau-an-hp-320221124153448.jpg?rt=20221124153642')]">
+      <div className="max-w-screen-xl mx-auto">
+        <div className="bg-cover py-12 flex rounded-md mt-2 bg-center bg-no-repeat text-white h-[50vh] bg-[url('https://cdn.tuoitrethudo.com.vn/stores/news_dataimages/2022/112022/24/15/nhung-dau-an-hp-320221124153448.jpg?rt=20221124153642')]">
           <div className="w-1/4">
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTSHHIp_HJ8NpKbzLv_CRPR1uIjXlRVGKLhQ&usqp=CAU
@@ -41,10 +55,61 @@ const Shop = () => {
               className="w-40 h-40 mx-auto rounded-full"
             />
           </div>
-          <div className="w-1/3 px-4">
-            <h3 className="uppercase font-semibold text-center">
-              Shop nông sản sạch của anh Văn
+          <div className="w-1/3 px-4 text-start space-y-4">
+            <h3 className="uppercase font-semibold text-xl">
+              {shopInfo.displayName}
             </h3>
+            <button
+              className="flex items-center gap-2 px-4 py-2 bg-primary rounded hover:bg-green-700"
+              onClick={() => {
+                if (!currentUser) {
+                  return navigate("/login");
+                }
+                setShowChat(true);
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6 inline"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z"
+                />
+              </svg>
+              <span>Nhắn tin cho Shop </span>
+            </button>
+            <div className="space-x-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6 inline"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
+                />
+              </svg>
+
+              <span>Địa chỉ:</span>
+              <span className="text-orange-300 font-semibold">
+                {shopInfo.address}
+              </span>
+            </div>
           </div>
           <div className="w-1/3 px-4">
             <ul className="space-y-4">
@@ -121,8 +186,10 @@ const Shop = () => {
                   />
                 </svg>
 
-                <span>Ngày tham gia:</span>
-                <span className="text-orange-300 font-semibold">99%</span>
+                <span>Ngày tham gia: </span>
+                <span className="text-orange-300 font-semibold">
+                  {new Date(shopInfo.createdAt).toLocaleDateString()}
+                </span>
               </li>
             </ul>
           </div>
@@ -160,6 +227,9 @@ const Shop = () => {
           <div className="p-2 text-center text-gray-700">
             Không có dữ liệu phù hợp
           </div>
+        )}
+        {showChat && (
+          <Chat onClose={setShowChat} shop={shopId} me={currentUser} />
         )}
         <ToastContainer />
       </div>
