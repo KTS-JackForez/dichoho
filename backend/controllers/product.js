@@ -17,7 +17,7 @@ export const createProduct = async (req, res, next) => {
 
 export const getProducts = async (req, res, next) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find({ active: true });
     res.status(200).json(products);
   } catch (error) {
     next(error);
@@ -26,7 +26,7 @@ export const getProducts = async (req, res, next) => {
 export const getLastest = async (req, res, next) => {
   const limit = req.params.limit || 0;
   try {
-    const products = await Product.find();
+    const products = await Product.find({ active: true });
     const list =
       limit > 0
         ? products.sort((a, b) => b.createdAt - a.createdAt).slice(0, limit)
@@ -39,7 +39,7 @@ export const getLastest = async (req, res, next) => {
 export const getHostest = async (req, res, next) => {
   const limit = req.params.limit || 0;
   try {
-    const products = await Product.find();
+    const products = await Product.find({ active: true });
     const list =
       limit > 0
         ? products.sort((a, b) => b.outStock - a.outStock).slice(0, limit)
@@ -65,13 +65,28 @@ export const getMyProducts = async (req, res, next) => {
 };
 export const getShopProducts = async (req, res, next) => {
   try {
-    const {shopId} = req.params
-    const shop = await User.findById(shopId)
-    if(!shop) return res.status(404).json("Shop không khả dụng")
-    if(shop.status <1) return res.status(403).json("Shop không khả dụng") 
-    const products = await Product.find({shopID:shopId}) 
-    const address = shop.address+", "+shop.wardFullName+", "+shop.districtFullName+", "+shop.cityFullName 
-    res.status(200).json({shop:{displayName:shop?.displayName||"Sale168.vn",createdAt:shop.createdAt,numberFolower:shop?.likedBy.length || 0,address},products})
+    const { shopId } = req.params;
+    const shop = await User.findById(shopId);
+    if (!shop) return res.status(404).json("Shop không khả dụng");
+    if (shop.status < 1) return res.status(403).json("Shop không khả dụng");
+    const products = await Product.find({ shopID: shopId });
+    const address =
+      shop.address +
+      ", " +
+      shop.wardFullName +
+      ", " +
+      shop.districtFullName +
+      ", " +
+      shop.cityFullName;
+    res.status(200).json({
+      shop: {
+        displayName: shop?.displayName || "Sale168.vn",
+        createdAt: shop.createdAt,
+        numberFolower: shop?.likedBy.length || 0,
+        address,
+      },
+      products,
+    });
   } catch (error) {
     next(error);
   }
