@@ -10,7 +10,6 @@ const Header = () => {
   const socket = io.connect(ktsSocket);
   const { currentUser } = useSelector((state) => state.user);
   const { token } = currentUser;
-  const [show, setShow] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const [data, setData] = useState([]);
   const [header, setHeader] = useState("");
@@ -61,12 +60,7 @@ const Header = () => {
       <div className="bg-white rounded px-2 py-4 flex justify-between items-center">
         <h3 className="uppercase font-bold pl-4">{header}</h3>
         <div className="flex gap-3 items-center">
-          <div
-            className="flex items-center gap-3 relative"
-            onClick={() => {
-              setShow(!show);
-            }}
-          >
+          <div className="flex items-center gap-3 relative group">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -87,50 +81,48 @@ const Header = () => {
               </div>
             )}
             {/* showNotify */}
-            {show && (
-              <div className="block w-96 right-0 bg-white absolute top-full border rounded-sm border-gray-400">
-                <div className="h-10 bg-white">
-                  <h3 className="ml-3 leading-10 font-semibold text-gray-600">
-                    Thông Báo Mới Nhận
-                  </h3>
-                </div>
-                <ul className="h-64 overflow-scroll">
-                  {data?.map((n, i) => {
-                    return (
-                      <Link
-                        to={`/admin/thong-bao/${n._id}`}
-                        key={i}
-                        className={`block text-base font-semibold ${
-                          n.status === 0 ? "text-black" : "text-slate-500"
-                        }  hover:bg-orange-200 border-b rounded-sm border-gray-300 bg-orange-100`}
-                      >
-                        <a href="" className="p-3 block">
-                          <span className="text-base">
-                            {/* {!n.read && <i className="text-rose-500">*</i>} */}
-                            {n.title}
-                          </span>
-                          <i
-                            className={`block mt-1 text-xs ${
-                              n.status === 0 ? "text-black" : "text-slate-500"
-                            } truncate`}
-                          >
-                            {n.short}
-                          </i>
-                        </a>
-                      </Link>
-                    );
-                  })}
-                </ul>
-                <div className="flex justify-center">
-                  <Link
-                    to="/admin/thong-bao"
-                    className="no-underline py-2.5 px-12 text-current font-semibold"
-                  >
-                    Xem tất cả
-                  </Link>
-                </div>
+            <div className="group-hover:block w-96 right-0 bg-white absolute top-full border rounded-sm border-gray-400 hidden">
+              <div className="h-10 bg-white">
+                <h3 className="ml-3 leading-10 font-semibold text-gray-600">
+                  Thông Báo Mới Nhận
+                </h3>
               </div>
-            )}
+              <ul className="h-64 overflow-scroll">
+                {data?.map((n, i) => {
+                  return (
+                    <Link
+                      to={`/admin/thong-bao/${n._id}`}
+                      key={i}
+                      className={`block text-base font-semibold ${
+                        n.status === 0 ? "text-black" : "text-slate-500"
+                      }  hover:bg-orange-200 border-b rounded-sm border-gray-300 bg-orange-100`}
+                    >
+                      <a href="" className="p-3 block">
+                        <span className="text-base">
+                          {/* {!n.read && <i className="text-rose-500">*</i>} */}
+                          {n.title}
+                        </span>
+                        <i
+                          className={`block mt-1 text-xs ${
+                            n.status === 0 ? "text-black" : "text-slate-500"
+                          } truncate`}
+                        >
+                          {n.short}
+                        </i>
+                      </a>
+                    </Link>
+                  );
+                })}
+              </ul>
+              <div className="flex justify-center">
+                <Link
+                  to="/admin/thong-bao"
+                  className="no-underline py-2.5 px-12 text-current font-semibold"
+                >
+                  Xem tất cả
+                </Link>
+              </div>
+            </div>
           </div>
           <h3 className="font-bold"> {currentUser.displayName}</h3>
           <img src="" alt="" />
