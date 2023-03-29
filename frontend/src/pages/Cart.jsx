@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
@@ -6,23 +6,22 @@ import { vnd } from "../../ultis/ktsFunc";
 import ktsRequest from "../../ultis/ktsrequest";
 import { Footer, Header, Navbar, Promotion } from "../components";
 import { addToCart, removeItem, resetCart } from "../redux/cartReducer";
-import { setMsg } from "../redux/msgSlice";
 import QR_Code from "../assets/imgs/QR_CodeFull.jpg";
 import io from "socket.io-client";
-import { useEffect } from "react";
 import { ktsSocket } from "../../ultis/config";
 
 const Cart = () => {
-  const { products } = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
   const [payment, setPayment] = useState("cod");
   const [payCode, setPayCode] = useState("");
   const [note, setNote] = useState("");
   const [isCheckout, setIsCheckout] = useState(false);
   const [orderNumber, setOrderNumber] = useState("");
   const { currentUser } = useSelector((state) => state.user);
+  const { products } = useSelector((state) => state.cart);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const socket = io.connect(ktsSocket);
+  console.log(products);
   const total = (products) => {
     let total = 0;
     products.map((item) => {
@@ -229,9 +228,6 @@ const Cart = () => {
                 </div>
                 {payment === "bank" && (
                   <div>
-                    {/* <p>Số TK: 123456789098</p>
-                    <p>Tên NK: Vietcombank</p>
-                    <p>Tên chủ TK: MrTTS</p> */}
                     <img
                       src={QR_Code}
                       alt=""
@@ -257,9 +253,6 @@ const Cart = () => {
                   </div>
                 )}
 
-                {/* <button className="bg-orange-500 hover:bg-orange-600 px-5 py-2 text-sm text-white uppercase rounded">
-                  Áp dụng
-                </button> */}
                 <div className="">
                   <label
                     htmlFor="note"
@@ -267,12 +260,6 @@ const Cart = () => {
                   >
                     Ghi chú
                   </label>
-                  {/* <input
-                    type="text"
-                    id="note"
-                    placeholder="Ghi chú của người mua"
-                    className="border-grey-light block w-full rounded border p-2 focus:border-primary focus:outline-none"
-                  /> */}
                   <textarea
                     type="text"
                     id="note"
