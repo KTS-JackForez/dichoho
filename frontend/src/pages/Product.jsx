@@ -331,7 +331,9 @@ const Product = () => {
                         <p to={`/products/${p._id}`} className="font-semibold">
                           {p?.productName}
                         </p>
-                        <p className="text-green-400">{vnd(20000)}</p>
+                        <p className="text-green-500 font-semibold">
+                          {vnd(p.currentPrice)}
+                        </p>
                       </div>
                     </Link>
                   );
