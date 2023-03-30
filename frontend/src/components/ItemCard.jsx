@@ -66,7 +66,7 @@ const ItemCard = (props) => {
         </Link>
       </div>
       <div className="py-2 px-3">
-        <h5 className="mb-1 text-xl font-semibold tracking-tight truncate">
+        <h5 className="mb-1 font-semibold tracking-tight truncate">
           {props.data?.productName}
         </h5>
         <p

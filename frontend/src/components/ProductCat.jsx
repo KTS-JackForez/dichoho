@@ -10,7 +10,7 @@ const ProductCat = (props) => {
     const fetchData = async () => {
       try {
         const res = await ktsRequest.get(`/products?q=${props.catTitle}`);
-        setData(res.data.length > 8 ? res.data : res.data.slice(0, 8));
+        setData(res.data.length > 8 ? res.data.slice(0, 8) : res.data);
       } catch (error) {
         console.log(error);
       }

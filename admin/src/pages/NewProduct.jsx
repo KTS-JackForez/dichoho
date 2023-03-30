@@ -237,7 +237,7 @@ const NewProduct = () => {
               </option>
               {cats.map((c, i) => {
                 return (
-                  <option value={c._id} key={i}>
+                  <option value={c.name} key={i}>
                     {c.name}
                   </option>
                 );
@@ -258,12 +258,12 @@ const NewProduct = () => {
               Giá niêm yết
             </label>
             <input
-              type="text"
+              type="number"
               name="stockPrice"
               id="stockPrice"
               className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
               placeholder="Giá niêm yết (VNĐ)"
-              required="^[0-9]*$"
+              pattern="[0-9]*"
               onChange={handleChange}
             />
           </div>
@@ -272,12 +272,12 @@ const NewProduct = () => {
               Giá bán
             </label>
             <input
-              type="text"
+              type="number"
               name="currentPrice"
               id="currentPrice"
               className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
               placeholder="Giá bán (VNĐ)"
-              required="^[0-9]*$"
+              pattern="[0-9]*"
               onChange={handleChange}
             />
           </div>
