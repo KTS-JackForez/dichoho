@@ -32,7 +32,7 @@ const EditProduct = () => {
           },
         });
         if (
-          res.data.shopID === currentUser.id ||
+          res.data.shopID === currentUser._id ||
           currentUser.role === "admin"
         ) {
           setProduct(res.data);
