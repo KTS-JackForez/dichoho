@@ -33,7 +33,6 @@ function App() {
       await ktsRequest.get("/count");
     };
     countVisitor();
-    console.log("+1 visitor");
   }, []);
   return (
     <BrowserRouter>

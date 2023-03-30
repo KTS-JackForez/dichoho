@@ -9,8 +9,8 @@ const ProductCat = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await ktsRequest.get("/products/lastest/10");
-        setData(res.data.slice(0, 8));
+        const res = await ktsRequest.get(`/products?q=${props.catTitle}`);
+        setData(res.data.length > 8 ? res.data : res.data.slice(0, 8));
       } catch (error) {
         console.log(error);
       }

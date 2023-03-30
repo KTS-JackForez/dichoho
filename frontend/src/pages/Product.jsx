@@ -63,7 +63,6 @@ const Product = () => {
 
     type ? "" : navigate("/cart");
   };
-
   return (
     <div className="">
       <Promotion />
@@ -332,7 +331,9 @@ const Product = () => {
                         <p to={`/products/${p._id}`} className="font-semibold">
                           {p?.productName}
                         </p>
-                        <p className="text-green-400">{vnd(20000)}</p>
+                        <p className="text-green-500 font-semibold">
+                          {vnd(p.currentPrice)}
+                        </p>
                       </div>
                     </Link>
                   );
@@ -405,11 +406,14 @@ const Product = () => {
                 </a>
               </li>
             </ul>
+
             <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
               <div className="px-4 py-5 flex-auto">
                 <div className="tab-content tab-space">
                   <div className={openTab === 1 ? "flex" : "hidden"} id="link1">
-                    <p>{product.description}</p>
+                    <p
+                      dangerouslySetInnerHTML={{ __html: product.description }}
+                    ></p>
                   </div>
                   <div className={openTab === 2 ? "flex" : "hidden"} id="link2">
                     <table>
