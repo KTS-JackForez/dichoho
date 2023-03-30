@@ -5,6 +5,7 @@ import { storage } from "../../ultis/firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useSelector } from "react-redux";
 import ktsRequest from "../../ultis/ktsrequest";
+import ReactQuill from "react-quill";
 
 const NewProduct = () => {
   const [loading, setLoading] = useState(false);
@@ -13,9 +14,10 @@ const NewProduct = () => {
   const [cats, setCats] = useState([]);
   const [inputs, setInputs] = useState({});
   const [isLoadingFiles, setIsLoadingFiles] = useState(false);
+  const [value, setValue] = useState("");
   const [percs, setPercs] = useState(0);
   const { currentUser } = useSelector((state) => state.user);
-  const {token}=currentUser
+  const { token } = currentUser;
   useEffect(() => {
     // https://stackoverflow.com/questions/75570241/cant-get-urls-after-upload-fire-to-firebase
     const uploadFile = async () => {
@@ -46,36 +48,38 @@ const NewProduct = () => {
     };
     file && uploadFile();
   }, [file]);
-  useEffect(()=>{
-    const fetchData = async ()=>{
-      try {
-        const res = await ktsRequest.get("/categories")
-        setCats(res.data)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    fetchData()
-  },[])
-  useEffect(()=>{
+  useEffect(() => {
     const fetchData = async () => {
-      const checkRole = currentUser.role ==="admin"
       try {
-        const res =checkRole? await ktsRequest.get("/categories/all",{
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }):await ktsRequest.get("/categories") ;
+        const res = await ktsRequest.get("/categories");
         setCats(res.data);
-      } catch (error) { 
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      const checkRole = currentUser.role === "admin";
+      try {
+        const res = checkRole
+          ? await ktsRequest.get("/categories/all", {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            })
+          : await ktsRequest.get("/categories");
+        setCats(res.data);
+      } catch (error) {
         toast.error(
           `${error.response ? error.response.data : "Network error!"}`
         );
       }
     };
-    fetchData()
-  },[])
+    fetchData();
+  }, []);
   const handleChange = (e) => {
     setInputs((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
@@ -90,7 +94,12 @@ const NewProduct = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${currentUser.token}`,
         },
-        data: { ...inputs, imgs: urls, shopID: currentUser._id },
+        data: {
+          ...inputs,
+          imgs: urls,
+          shopID: currentUser._id,
+          description: value,
+        },
       };
       ktsRequest(config)
         .then((res) => {
@@ -214,42 +223,24 @@ const NewProduct = () => {
             />
           </div>
           <div className="flex w-full items-center">
-            <label htmlFor="description" className="w-1/3 hidden md:block">
-              Mô tả sản phẩm
-            </label>
-            <textarea
-              name="description"
-              id="description"
-              className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-              placeholder="Mô tả sản phẩm"
-              required="a-z"
-              onChange={handleChange}
-            />
-            {/* <input
-              type="text"
-              name="description"
-              id="description"
-              className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-              placeholder="Mô tả sản phẩm"
-              required="a-z"
-              onChange={handleChange}
-            /> */}
-          </div>
-          <div className="flex w-full items-center">
             <label htmlFor="cats" className="w-1/3 hidden md:block">
               Danh mục
             </label>
             <select
-              id="cats"
-              name="cats"
+              id="cat"
+              name="cat"
               class="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
-              onChange={(e) => setCityCode(e.target.value)}
+              onChange={handleChange}
             >
               <option selected disabled hidden>
-                Chọn danh mục
+                Chọn danh mục sản phẩm
               </option>
-              {cats.map((c,i)=>{
-                return <option value={c._id} key={i}>{c.name}</option>
+              {cats.map((c, i) => {
+                return (
+                  <option value={c._id} key={i}>
+                    {c.name}
+                  </option>
+                );
               })}
             </select>
             {/* <input
@@ -290,7 +281,20 @@ const NewProduct = () => {
               onChange={handleChange}
             />
           </div>
-
+          <div className="flex w-full items-center">
+            <label htmlFor="description" className="w-1/3 hidden md:block">
+              Mô tả sản phẩm
+            </label>
+            <ReactQuill
+              theme="snow"
+              value={value}
+              onChange={setValue}
+              name="description"
+              id="description"
+              className="block w-full"
+              placeholder="Mô tả sản phẩm"
+            />
+          </div>
           <button
             onClick={handleClick}
             className="w-full rounded bg-primary px-5 py-3 text-center text-sm font-medium text-white hover:bg-green-700 focus:outline-none"

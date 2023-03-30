@@ -63,7 +63,6 @@ const Product = () => {
 
     type ? "" : navigate("/cart");
   };
-
   return (
     <div className="">
       <Promotion />
@@ -405,11 +404,14 @@ const Product = () => {
                 </a>
               </li>
             </ul>
+
             <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
               <div className="px-4 py-5 flex-auto">
                 <div className="tab-content tab-space">
                   <div className={openTab === 1 ? "flex" : "hidden"} id="link1">
-                    <p>{product.description}</p>
+                    <p
+                      dangerouslySetInnerHTML={{ __html: product.description }}
+                    ></p>
                   </div>
                   <div className={openTab === 2 ? "flex" : "hidden"} id="link2">
                     <table>

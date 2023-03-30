@@ -97,9 +97,10 @@ const Products = () => {
       <div className="w-full mt-4 rounded-md overflow-hidden bg-white shadow-lg">
         <div className=" flex p-3 font-semibold items-center bg-primary text-white">
           <div className="w-1/12 text-center">Sản phẩm</div>
-          <div className="w-6/12">Tên</div>
+          <div className="w-4/12">Tên</div>
+          <div className="w-2/12">Danh mục</div>
           <div className="w-2/12">Giá bán</div>
-          <div className="w-2/12">Trạng thái</div>
+          <div className="w-2/12">Trạng thái bày bán</div>
           <div className="w-1/12">Thao tác</div>
         </div>
         {search(data).length > 0 ? (
@@ -117,7 +118,11 @@ const Products = () => {
                       className="w-16 h-16 object-cover rounded-md mx-auto"
                     />
                   </div>
-                  <div className="w-6/12">{p?.productName}</div>
+                  <div className="w-4/12">
+                    <div>{p?.productName}</div>
+                    {currentUser.role === "admin" && <div>{p?.shopID}</div>}
+                  </div>
+                  <div className="w-2/12">{p.cat}</div>
                   <div className="w-2/12">{vnd(p?.currentPrice)}</div>
                   <div className="w-2/12">
                     <div
@@ -128,10 +133,16 @@ const Products = () => {
                       <button
                         onClick={() => handleClick(p)}
                         className={`w-5 h-5 bg-white  rounded-full ${
-                          p.active ? "right-1" : "left-1"
+                          p.active
+                            ? "right-1 text-green-500"
+                            : "left-1 text-red-500"
                         }
-                        } duration-400 transition-transform top-0.5 absolute`}
-                      ></button>
+                        } duration-400 transition-transform top-0.5 absolute flex items-center justify-center`}
+                      >
+                        <span className="text-xs font-semibold mb-1 mr-0.5">
+                          {p.active ? "on" : "off"}
+                        </span>
+                      </button>
                     </div>
                   </div>
                   <div className="w-1/12 flex gap-2">

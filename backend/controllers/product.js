@@ -16,8 +16,16 @@ export const createProduct = async (req, res, next) => {
 };
 
 export const getProducts = async (req, res, next) => {
+  const { q } = req.query;
+  const query = q.replaceAll(" - ", " ");
   try {
-    const products = await Product.find({ active: true });
+    const products = q
+      ? await Product.find({
+          active: true,
+          cat: { $regex: query, $options: "i" },
+        })
+      : await Product.find({ active: true });
+    if (!products) return res.status(404).json("chưa có dữ liệu");
     res.status(200).json(products);
   } catch (error) {
     next(error);
