@@ -16,7 +16,6 @@ export const createProduct = async (req, res, next) => {
     await newProduct.save();
     res.status(200).json("Tạo mới sản phẩm thành công");
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
@@ -128,7 +127,6 @@ export const getProductByTag = async (req, res, next) => {
 //update thông tin sản phẩm
 export const updateProduct = async (req, res, next) => {
   try {
-    console.log(req.body);
     if (!req.body.stockPrice)
       return res.status(403).json("Giá niêm yết không hợp lệ");
     if (!req.body.currentPrice)
