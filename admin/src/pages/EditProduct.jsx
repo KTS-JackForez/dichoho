@@ -35,6 +35,7 @@ const EditProduct = () => {
           res.data.shopID === currentUser._id ||
           currentUser.role === "admin"
         ) {
+          console.log(res.data);
           setProduct(res.data);
           setPurls(res.data.imgs);
           setValue(res.data.description);
@@ -151,7 +152,7 @@ const EditProduct = () => {
             onClose: () => navigate("/admin/san-pham"),
           });
         })
-        .catch((er) => toast.error(er));
+        .catch((er) => toast.error(er.response.data));
     } catch (error) {
       error.response
         ? toast.error(error.response.data)
@@ -343,7 +344,7 @@ const EditProduct = () => {
               name="stockPrice"
               id="stockPrice"
               className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-              placeholder="Giá niêm yết (VNĐ)"
+              placeholder={inputs.stockPrice || "Giá niêm yết (VNĐ)"}
               pattern="[0-9]*"
               onChange={handleChange}
             />
@@ -357,7 +358,7 @@ const EditProduct = () => {
               name="currentPrice"
               id="currentPrice"
               className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-              placeholder="Giá bán (VNĐ)"
+              placeholder={inputs.currentPrice || "Giá bán (VNĐ)"}
               pattern="[0-9]*"
               onChange={handleChange}
             />

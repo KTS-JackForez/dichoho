@@ -86,6 +86,10 @@ const NewProduct = () => {
     });
   };
   const handleClick = async () => {
+    if (urls.length < 1) {
+      toast.error("Hình ảnh không được để trống");
+      return;
+    }
     try {
       const config = {
         method: "post",
@@ -107,11 +111,10 @@ const NewProduct = () => {
           setFile([]);
           setUrls([]);
         })
-        .catch((er) => toast.error(er));
+        .catch((er) => toast.error(er.response.data));
     } catch (error) {
-      error.response
-        ? toast.error(error.response.data.message)
-        : toast.error("Network Error!");
+      console.log(error.response.data);
+      toast.error(`${error.response ? error.response.data : "Network error!"}`);
     }
   };
   return (

@@ -6,6 +6,12 @@ const permission = ["admin", "staff"];
 
 export const createProduct = async (req, res, next) => {
   try {
+    if (!req.body.stockPrice)
+      return res.status(403).json("Giá niêm yết không hợp lệ");
+    if (!req.body.currentPrice)
+      return res.status(403).json("Giá bán không hợp lệ");
+    if (req.body?.imgs.length < 1)
+      return res.status(403).json("Hình ảnh sản phẩm không hợp lệ");
     const newProduct = new Product({ shopID: req.user.id, ...req.body });
     await newProduct.save();
     res.status(200).json("Tạo mới sản phẩm thành công");
@@ -122,6 +128,13 @@ export const getProductByTag = async (req, res, next) => {
 //update thông tin sản phẩm
 export const updateProduct = async (req, res, next) => {
   try {
+    console.log(req.body);
+    if (!req.body.stockPrice)
+      return res.status(403).json("Giá niêm yết không hợp lệ");
+    if (!req.body.currentPrice)
+      return res.status(403).json("Giá bán không hợp lệ");
+    if (req.body?.imgs.length < 1)
+      return res.status(403).json("Hình ảnh sản phẩm không hợp lệ");
     const product = await Product.findById(req.params.id);
     if (!product) {
       return next(createError(404, "Không tìm thấy thông tin sản phẩm"));
