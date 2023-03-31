@@ -18,6 +18,7 @@ const Product = () => {
   const [quantity, setQuantity] = useState(1);
   const [hotProducts, setHotProducts] = useState([]);
   const [showChat, setShowChat] = useState(false);
+  const [checkPrice, setCheckPrice] = useState(false);
   const [showNotification, setShowNotification] = useState(true);
   const { productId } = useParams();
   const { imgs } = product;
@@ -30,6 +31,7 @@ const Product = () => {
         const res = await ktsRequest.get(`/products/${productId}`);
         setProduct(res.data);
         setShopId(res.data.shopID);
+        setCheckPrice(res.data?.currentPrice - res.data?.stockPrice === 0);
       } catch (err) {
         err.response ? navigate("/notfound") : toast.error("Network Error!");
       }
@@ -73,7 +75,7 @@ const Product = () => {
           <div className="mb-12 max-w-screen-xl mx-auto py-4 flex gap-3 p-3 md-p-0">
             <div className="flex flex-col md:flex-row lg:w-3/4 gap-2">
               <div className="md:w-1/2 w-full">
-                <div className="relative overflow-hidden w-full">
+                <div className="relative overflow-hidden md:w-[29rem] w-full">
                   <button
                     onClick={() =>
                       setActiveImg((prev) =>
@@ -121,7 +123,7 @@ const Product = () => {
                     </svg>
                   </button>
                   <div
-                    className="w-full duration-500 h-96 flex"
+                    className="w-full duration-500 h-full flex"
                     // style={{ transform: `translateX(-${activeSlide * 100}%)` }}
                     style={{ transform: `translateX(-${activeImg * 100}%)` }}
                   >
@@ -132,7 +134,7 @@ const Product = () => {
                             key={index}
                             src={i}
                             alt=""
-                            className="object-cover w-full h-full"
+                            className="object-cover w-[29rem] h-[29rem] object-center"
                           />
                         );
                       })}
@@ -232,9 +234,20 @@ const Product = () => {
                   </div>
                 </div>
 
-                <h3 className="text-green-600 font-bold text-xl">
-                  {vnd(product.currentPrice) + "- " + vnd(product.stockPrice)}
-                </h3>
+                <div className="flex text-xl">
+                  <span className="font-semibold text-primary">
+                    {vnd(product.currentPrice)}
+                  </span>
+
+                  {!checkPrice && (
+                    <span>
+                      <span className="mx-2">-</span>
+                      <span className="font-semibold text-red-500 line-through">
+                        {vnd(product.stockPrice)}{" "}
+                      </span>
+                    </span>
+                  )}
+                </div>
                 <div className="flex justify-between">
                   <ul className="list-disc ml-5">
                     <li>Đạt chuẩn an toàn VietGap</li>
