@@ -78,25 +78,25 @@ const Cart = () => {
           <div className="flex gap-3 flex-wrap md:flex-nowrap border border-primary rounded">
             <div className="md:w-3/4 w-full divide-primary divide-dashed divide-y shadow-lg">
               <div className="flex p-3">
-                <h3 className="font-bold text-gray-700 uppercase w-2/5 pl-10">
+                <h3 className="font-bold text-gray-700 uppercase w-4/5 md:w-2/5 pl-10 md:text-base text-xs">
                   hàng hóa
                 </h3>
-                <h3 className="font-bold text-center text-gray-600 uppercase w-1/5">
+                <h3 className="font-bold text-center text-gray-600 uppercase w-1/5 md:text-base text-xs">
                   số lượng
                 </h3>
-                <h3 className="font-bold text-center text-gray-600 uppercase w-1/5">
+                <h3 className="font-bold text-center text-gray-600 uppercase hidden md:block md:w-1/5">
                   đơn giá
                 </h3>
-                <h3 className="font-bold text-center text-gray-600 uppercase w-1/5">
+                <h3 className="font-bold text-center text-gray-600 uppercase hidden md:block md:w-1/5">
                   thành tiền
                 </h3>
               </div>
-              <div className="gap-3 p-3">
+              <div className="gap-3 py-3">
                 {products.map((i, index) => {
                   return (
-                    <div className="flex items-center px-6 py-5 " key={index}>
-                      <div className="flex w-2/5 items-center">
-                        <div className="text-center pr-5">
+                    <div className="flex items-center px-3 py-5 " key={index}>
+                      <div className="flex w-4/5 md:w-2/5 text-xs items-center">
+                        <div className="text-center pr-2">
                           <button
                             className="bg-white p-2 rounded-full hover:bg-primary hover:text-white"
                             onClick={() => {
@@ -119,9 +119,9 @@ const Cart = () => {
                             </svg>
                           </button>
                         </div>
-                        <div className="w-20">
+                        <div className="md:w-20 w-16">
                           <img
-                            className="h-20 w-20 object-cover object-center rounded-md"
+                            className="h-full w-full aspect-square object-cover object-center rounded-md"
                             src={i.img}
                             alt=""
                           />
@@ -133,11 +133,17 @@ const Cart = () => {
                           >
                             {i.productName}
                           </Link>
+                          <span className="text-start text-sm mt-3 md:hidden">
+                            Đơn giá: {vnd(i.currentPrice)}
+                          </span>
+                          <span className="text-start text-sm md:hidden">
+                            Thành tiền {vnd(i.quantity * i.currentPrice)}
+                          </span>
                         </div>
                       </div>
-                      <div className="flex justify-center w-1/5">
+                      <div className="flex flex-col md:flex-row gap-2 items-end md:justify-center w-1/5 text-xs">
                         <button
-                          className="bg-gray-200 rounded px-2 hover:bg-primary"
+                          className="bg-gray-200 rounded md:px-2 p-2 hover:bg-primary"
                           onClick={() =>
                             dispatch(
                               addToCart({
@@ -155,13 +161,13 @@ const Cart = () => {
                           </svg>
                         </button>
                         <input
-                          className="mx-2 border text-center w-12 focus:border-primary focus:outline-none focus:ring-primary rounded disable"
+                          className="md:mx-2 border text-center w-7 py-1 border-primary focus:border-primary focus:outline-none focus:ring-primary rounded disable"
                           type="text"
                           value={i.quantity}
                           disabled={true}
                         />
                         <button
-                          className="bg-gray-200 rounded px-2 hover:bg-primary"
+                          className="bg-gray-200 rounded px-2 p-2 hover:bg-primary"
                           onClick={() => {
                             dispatch(
                               addToCart({
@@ -179,10 +185,10 @@ const Cart = () => {
                           </svg>
                         </button>
                       </div>
-                      <span className="text-center w-1/5 font-semibold text-sm">
+                      <span className="text-center w-1/5 font-semibold text-sm hidden md:block">
                         {vnd(i.currentPrice)}
                       </span>
-                      <span className="text-center w-1/5 font-semibold text-sm">
+                      <span className="text-center w-1/5 font-semibold text-sm hidden md:block">
                         {vnd(i.quantity * i.currentPrice)}
                       </span>
                     </div>
