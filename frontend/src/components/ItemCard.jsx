@@ -50,9 +50,11 @@ const ItemCard = (props) => {
   };
   return (
     <div className="bg-white rounded-lg relative flex flex-col justify-betwee shadow-lg w-full mx-atuto">
-      <div className="z-10 w-10 h-10 md:w-12 md:h-12 border-double border-4 border-white bg-red-600 absolute top-3 right-3 rounded-tl-3xl rounded-tr-3xl rounded-bl rounded-br-3xl flex items-center text-center md:pl-1.5 pl-0.5 text-white">
-        <p className="font-semibold">{`${discount}%`}</p>
-      </div>
+      {discount > 0 && (
+        <div className="z-10 w-10 h-10 md:w-12 md:h-12 border-double border-4 border-white bg-red-600 absolute top-3 right-3 rounded-tl-3xl rounded-tr-3xl rounded-bl rounded-br-3xl flex items-center text-center md:pl-1.5 pl-0.5 text-white">
+          <p className="font-semibold">{`${discount}%`}</p>
+        </div>
+      )}
       <div className="overflow-hidden rounded-t-lg w-full md:h-52 h-40">
         <Link to={`/products/${props.data?._id}`}>
           <img
