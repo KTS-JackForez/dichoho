@@ -28,7 +28,7 @@ const ProductCat = (props) => {
             </h3>
           </div>
           <Link
-            to="/products"
+            to={`/products?q=${props.catTitle}`}
             className="flex items-center pr-4 hover:text-primary"
           >
             Xem tất cả

@@ -30,7 +30,7 @@ export const getProducts = async (req, res, next) => {
     });
 
     if (!products) return res.status(404).json("chưa có dữ liệu");
-    res.status(200).json(products);
+    res.status(200).json(products.sort((a, b) => b.createdAt - a.createdAt));
   } catch (error) {
     next(error);
   }

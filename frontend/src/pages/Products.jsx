@@ -3,13 +3,16 @@ import ktsRequest from "../../ultis/ktsrequest";
 import { ToastContainer, toast } from "react-toastify";
 
 import { Footer, Header, ItemCard, Navbar, Promotion } from "../components";
+import { useSearchParams } from "react-router-dom";
 
 const products = () => {
   const [data, setData] = useState([]);
+  const [searchParams] = useSearchParams();
   useEffect(() => {
+    const query = searchParams.get("q") || "";
     const fetchData = async () => {
       try {
-        const res = await ktsRequest.get("/products");
+        const res = await ktsRequest.get(`/products?q=${query}`);
         setData(res.data);
       } catch (err) {
         err.response
@@ -18,7 +21,7 @@ const products = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [searchParams]);
   return (
     <div>
       <Promotion />
