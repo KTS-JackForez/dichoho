@@ -21,7 +21,6 @@ const Cart = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const socket = io.connect(ktsSocket);
-  console.log(products);
   const total = (products) => {
     let total = 0;
     products.map((item) => {
@@ -134,9 +133,6 @@ const Cart = () => {
                           >
                             {i.productName}
                           </Link>
-                          <span className="text-red-500 text-xs">
-                            {i.description}
-                          </span>
                         </div>
                       </div>
                       <div className="flex justify-center w-1/5">

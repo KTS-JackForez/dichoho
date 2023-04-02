@@ -74,9 +74,9 @@ const Product = () => {
         <div>
           <div className="mb-12 max-w-screen-xl mx-auto py-4 flex gap-3 p-3 md-p-0">
             <div className="flex flex-col md:flex-row lg:w-3/4 gap-2">
-              <div className="md:w-1/2 w-full">
-                <div className="relative overflow-hidden md:w-[29rem] w-full">
-                  <button
+              <div className="md:w-1/2 w-full overflow-hidden">
+                <div className="relative overflow-hidden w-full mx-center">
+                  {/* <button
                     onClick={() =>
                       setActiveImg((prev) =>
                         prev === 0 ? imgs.length - 1 : prev - 1
@@ -121,9 +121,9 @@ const Product = () => {
                         d="M8.25 4.5l7.5 7.5-7.5 7.5"
                       />
                     </svg>
-                  </button>
-                  <div
-                    className="w-full duration-500 h-full flex"
+                  </button> */}
+                  {/* <div
+                    className="w-full duration-500 flex"
                     // style={{ transform: `translateX(-${activeSlide * 100}%)` }}
                     style={{ transform: `translateX(-${activeImg * 100}%)` }}
                   >
@@ -134,19 +134,130 @@ const Product = () => {
                             key={index}
                             src={i}
                             alt=""
-                            className="object-cover w-[29rem] h-[29rem] object-center"
+                            className="object-cover w-full aspect-square object-fit"
                           />
                         );
                       })}
-                  </div>
+                  </div> */}
+                  <ul className="flex flex-nowrap overflow-hidden scroll whitespace-nowrap scroll-smooth scrollbar-hide py-2">
+                    {imgs &&
+                      imgs.map((i, k) => {
+                        return (
+                          <li
+                            className={`w-full flex-grow-0 flex-shrink-0 p-1 duration-500
+                             
+                          `}
+                            style={{
+                              transform: `translateX(-${activeImg * 100}%)`,
+                            }}
+                            key={k}
+                            onClick={() => {
+                              setActiveImg(k);
+                            }}
+                          >
+                            <img
+                              src={i}
+                              alt=""
+                              className="w-full object-cover rounded aspect-square "
+                            />
+                          </li>
+                        );
+                      })}
+                  </ul>
                 </div>
-                {imgs && (
+
+                <ul
+                  className="flex flex-nowrap relative overflow-hidden scroll whitespace-nowrap scroll-smooth scrollbar-hide py-2"
+                  id="wrraper"
+                >
+                  {imgs && imgs.length > 4 && (
+                    <div>
+                      <button
+                        onClick={() => {
+                          setActiveImg((prev) =>
+                            prev === imgs.length - 1 ? 0 : prev + 1
+                          );
+                        }}
+                        className="p-1 z-10 bg-green-500/30 rounded-full hover:bg-green-500 absolute top-[40%] right-0"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="w-4 h-4"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                          />
+                        </svg>
+                      </button>
+                      <button
+                        onClick={() => {
+                          setActiveImg((prev) =>
+                            prev === 0 ? imgs.length - 1 : prev - 1
+                          );
+                        }}
+                        className="p-1 z-10  bg-green-500/30 rounded-full hover:bg-green-300 absolute top-[40%]"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="w-4 h-4 "
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M15.75 19.5L8.25 12l7.5-7.5"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  )}
+
+                  {imgs &&
+                    imgs.map((i, k) => {
+                      return (
+                        <li
+                          className={`w-1/4 flex-grow-0 flex-shrink-0 p-1 cursor-pointer ${
+                            activeImg === k
+                              ? "opacity-100 border border-primary rounded"
+                              : "opacity-30"
+                          }`}
+                          key={k}
+                          onClick={() => {
+                            setActiveImg(k);
+                          }}
+                          style={{
+                            transform: `translateX(-${
+                              activeImg > 3
+                                ? (activeImg - (activeImg % 4)) * 100
+                                : 0
+                            }%)`,
+                          }}
+                        >
+                          <img
+                            src={i}
+                            alt=""
+                            className="w-full h-full object-cover rounded aspect-square "
+                          />
+                        </li>
+                      );
+                    })}
+                </ul>
+                {/* {imgs && (
                   <div className="w-full flex overflow-hidden md:h-28 gap-1 mt-1">
                     {imgs.map((i, k) => {
                       return (
                         <div
                           key={k}
-                          className={`w-1/4 
+                          className={`w-1/4 aspect-square overflow-hidden
                             ${
                               activeImg === k
                                 ? "opacity-100 border border-primary rounded"
@@ -160,15 +271,15 @@ const Product = () => {
                           <img
                             src={i}
                             alt=""
-                            className="w-full md:h-full h-20 object-cover"
+                            className="w-full h-full object-cover "
                           />
                         </div>
                       );
                     })}
                   </div>
-                )}
+                )} */}
               </div>
-              <div className="flex flex-col gap-3">
+              <div className="flex md:w-1/2 w-full flex-col gap-3">
                 <h3 className="text-gray-700 text-xl font-bold">
                   {product?.productName}
                 </h3>
