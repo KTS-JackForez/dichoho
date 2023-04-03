@@ -186,19 +186,23 @@ const DbHome = () => {
                   </div>
                   <div className="md:hidden p-2">
                     <div className="space-x-2">
-                      <span>{o.orderNumber}</span>
-                      <span>
-                        {" "}
-                        {orderDate.toLocaleDateString() +
-                          "-" +
-                          orderDate.toLocaleTimeString()}
-                      </span>
-                      <span className="font-semibold">{vnd(o.total)}</span>
-                      <span
-                        className={`${status[st].bgColor} ${status[st].textColor} px-1.5 py-0.5 font-semibold rounded`}
-                      >
-                        {status[st].name}
-                      </span>
+                      <div className="flex justify-between">
+                        <span className="space-x-2">
+                          <span>{o.orderNumber}</span>
+                          <span>
+                            {" "}
+                            {orderDate.toLocaleDateString() +
+                              "-" +
+                              orderDate.toLocaleTimeString()}
+                          </span>
+                          <span className="font-semibold">{vnd(o.total)}</span>
+                        </span>
+                        <span
+                          className={`${status[st].bgColor} ${status[st].textColor} px-1.5 py-0.5 font-semibold rounded`}
+                        >
+                          {status[st].name}
+                        </span>
+                      </div>
                     </div>
                     <div className="mt-3">
                       <div className="font-semibold">Chi tiết</div>

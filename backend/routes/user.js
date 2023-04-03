@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  changePwd,
   deleteUser,
   dislike,
   getByPhone,
@@ -25,6 +26,7 @@ router.put("/:id", verifyToken, updateUser);
 router.put("/:id/status/:newstatus", verifyToken, setUserStatus);
 router.put("/like/:productid", verifyToken, like);
 router.put("/dislike/:productid", verifyToken, dislike);
+router.put("/changepwd/:id", verifyToken, changePwd);
 //update quyền của user
 router.post("/updaterole", verifyToken, updateUserRole);
 

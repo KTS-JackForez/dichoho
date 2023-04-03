@@ -2,6 +2,8 @@ import { createError } from "../error.js";
 import User from "../models/User.js";
 import Product from "../models/Product.js";
 const permission = ["admin", "staff"];
+import bcrypt from "bcryptjs";
+
 //get một user
 export const getUser = async (req, res, next) => {
   try {
@@ -46,6 +48,7 @@ export const getByPhone = async (req, res, next) => {
 };
 //update thông tin user
 export const updateUser = async (req, res, next) => {
+  console.log(req.body);
   if (!req.params.id === req.user.id && permission.includes(req.user.role)) {
     return next(
       createError(
@@ -67,7 +70,11 @@ export const updateUser = async (req, res, next) => {
         { new: true }
       );
     }
-    res.status(200).json("Cập nhật thông tin tài khoản thành công");
+    res
+      .status(200)
+      .json(
+        "Cập nhật thông tin tài khoản thành công, bạn cần đăng nhập lại để áp dụng (các) thay đổi"
+      );
   } catch (error) {
     next(error);
   }
@@ -83,6 +90,36 @@ export const updateUserRole = async (req, res, next) => {
       $set: { role: req.body.new_role },
     });
     res.status(200).json("Cập nhật quyền user thành công");
+  } catch (error) {
+    next(error);
+  }
+};
+export const changePwd = async (req, res, next) => {
+  console.log(req.body);
+  try {
+    if (!(req.user.id === req.params.id || permission.includes(req.user.role)))
+      return res
+        .status(403)
+        .json("Bạn không được cấp quyền thực hiện chức năng này");
+    const user = await User.findById(req.user.id);
+    if (!user && user.status > 0)
+      return res.status(404).json("User không khả dụng");
+    const checkPass = await bcrypt.compare(req.body.password, user.password);
+    if (!checkPass) return res.status(403).json("Mật khẩu hiện tại không đúng");
+    if (!req.body.newpwd)
+      return res.status(403).json("Mật khẩu mới không được để trống");
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(req.body.newpwd, salt);
+    await User.findByIdAndUpdate(
+      req.params.id,
+      { $set: { password: hash } },
+      { new: true }
+    );
+    res
+      .status(200)
+      .json(
+        "Thay đổi mật khẩu thành công, bạn cần đăng nhập lại để áp dụng (các) thay đổi"
+      );
   } catch (error) {
     next(error);
   }

@@ -166,7 +166,7 @@ const Header = () => {
       </button>
 
       <div className="w-1/2">
-        <div className="flex md:flex-1 w-full justify-start md:justify-center relative mx-auto">
+        <div className="flex md:flex-1 w-3/4 justify-start md:justify-center relative mx-auto">
           <input
             type="text"
             placeholder="Tìm kiếm ..."
@@ -279,12 +279,16 @@ const Header = () => {
         {currentUser ? (
           <div className="relative" title="Tài khoản">
             <div
-              className="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-orange-500 font-bold text-white"
+              className="flex h-10 w-10 cursor-pointer border border-primary items-center justify-center overflow-hidden rounded-full bg-orange-500 font-bold text-white"
               onClick={() => {
                 setOpenMenu(!openMenu);
               }}
             >
-              {textAvatar(currentUser.username)}
+              {currentUser?.img ? (
+                <img src={currentUser.img} alt="" />
+              ) : (
+                textAvatar(currentUser.username)
+              )}
             </div>
             {openMenu && (
               <div className="absolute top-12 right-0 z-10 rounded border border-primary bg-white flex flex-col w-48 divide-y divide-dashed divide-primary">

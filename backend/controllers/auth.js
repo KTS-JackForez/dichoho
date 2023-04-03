@@ -8,6 +8,8 @@ export const signup = async (req, res, next) => {
     if (user) {
       return res.status(403).json("Tên đăng nhập đã có người sử dụng");
     }
+    if (["admin", "special", "staff"].includes(req.body?.role))
+      return res.status(403).json("Tham số truyền lên không hợp lệ");
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
     const newUser = new User({ ...req.body, password: hash });
@@ -54,7 +56,7 @@ export const login = async (req, res, next) => {
         .json(
           "Tài khoản đã bị khóa do vi phạm chính sách cộng đồng, hãy liên hệ CSKH để được hỗ trợ"
         );
-        if (user.role !== "user")
+    if (user.role !== "user")
       return res.status(403).json("Bạn chưa được cấp phép truy cập trang này");
     const checkPass = await bcrypt.compare(req.body.password, user.password);
     if (!checkPass)
