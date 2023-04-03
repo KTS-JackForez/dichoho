@@ -114,12 +114,12 @@ const Login = () => {
               </button>
               <ToastContainer />
               <div className="flex items-center justify-between">
-                <Link
-                  to="/"
+                <a
+                  to="https://sale168.vn"
                   className="text-sm font-medium text-primary hover:underline"
                 >
                   Trang chủ
-                </Link>
+                </a>
                 <p className="text-sm font-light text-gray-500">
                   Chưa có tài khoản?
                   <Link

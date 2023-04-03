@@ -83,22 +83,34 @@ const Login = () => {
                 Đăng nhập
               </button>
               <ToastContainer />
-              <div className="flex items-center justify-between">
+              <div className="flex items-start justify-between">
                 <Link
                   to="/"
                   className="text-sm font-medium text-primary hover:underline"
                 >
                   Trang chủ
                 </Link>
-                <p className="text-sm font-light text-gray-500">
-                  Chưa có tài khoản?
-                  <Link
-                    to="/register"
-                    className="ml-2 font-medium text-primary hover:underline"
-                  >
-                    Đăng ký
-                  </Link>
-                </p>
+                <div className="text-start space-y-2">
+                  <p className="text-sm font-light text-gray-500">
+                    Chưa có tài khoản?
+                    <Link
+                      to="/register"
+                      className="ml-2 font-medium text-primary hover:underline"
+                    >
+                      Đăng ký
+                    </Link>
+                  </p>
+                  <p className="text-sm font-light text-gray-500">
+                    Bạn là người bán?
+                    <a
+                      href="http://quantri.sale168.com"
+                      target="_blank"
+                      className="ml-2 font-medium text-primary hover:underline"
+                    >
+                      Đăng nhập
+                    </a>
+                  </p>
+                </div>
               </div>
             </form>
           </div>

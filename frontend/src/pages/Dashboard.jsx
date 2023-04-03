@@ -6,13 +6,14 @@ import DbHome from "./DbHome";
 import DbOrder from "./DbOrder";
 import Messages from "./Messages";
 import MyAccount from "./MyAccount";
+import BottomMenu from "../components/BottomMenu";
 
 const Dashboard = () => {
   return (
     <div className="w-screen flex">
       <DbSidebar />
       <div className="bg-gray-200 flex-1">
-        <DbHeader/>
+        <DbHeader />
         <Routes>
           <Route path="home" element={<DbHome />} />
           <Route path="don-hang">
@@ -26,6 +27,7 @@ const Dashboard = () => {
           </Route>
         </Routes>
       </div>
+      <BottomMenu />
     </div>
   );
 };

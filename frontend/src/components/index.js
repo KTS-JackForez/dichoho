@@ -12,3 +12,4 @@ export { default as Lastest } from "./Lastest";
 export { default as Carousel } from "./Carousel";
 export { default as Sidebar } from "./Sidebar";
 export { default as Chat } from "./Chat";
+export { default as BottomMenu } from "./BottomMenu";
