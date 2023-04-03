@@ -26,8 +26,8 @@ const Dashboard = () => {
             <Route index element={<Messages />} />
           </Route>
         </Routes>
+        <BottomMenu />
       </div>
-      <BottomMenu />
     </div>
   );
 };

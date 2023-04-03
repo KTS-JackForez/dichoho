@@ -48,9 +48,9 @@ const MyAccount = () => {
   }, [file]);
   return (
     <div className="w-full px-2">
-      <div className="w-full bg-white rounded flex overflow-hidden h-[calc(100vh-100px)]">
-        <div className="w-1/4 py-12 px-2 flex flex-col items-center">
-          <div className="w-32 h-32 rounded-full relative border-2 border-primary">
+      <div className="w-full bg-white rounded flex flex-col md:flex-row md:h-[calc(100vh-100px)] h-full mb-[4.75rem] overflow-auto">
+        <div className="md:w-1/4 w-full md:py-12 py-3 px-2 flex flex-col items-center">
+          <div className="w-32 h-32 aspect-square rounded-full relative border-2 border-primary">
             <img
               src={file ? URL.createObjectURL(file) : currentUser?.img}
               alt=""
@@ -96,15 +96,15 @@ const MyAccount = () => {
             accept="image/*"
           />
         </div>
-        <div className="w-3/4 gap-2 p-2 flex">
-          <div className="w-1/2 space-y-3">
+        <div className="md:w-3/4 w-full flex-col gap-2 p-2 flex md:flex-row">
+          <div className="md:w-1/2 w-full space-y-3">
             <h3 className="uppercase font-bold w-full">Thông tin cơ bản</h3>
             <div className="w-full">
               <label htmlFor="displayName" className="">
                 Tên hiển thị
               </label>
               <div className="flex gap-2">
-                <div className="w-3/4 relative">
+                <div className="md:w-3/4 w-full relative">
                   <input
                     type="text"
                     name="displayName"
@@ -163,7 +163,7 @@ const MyAccount = () => {
                 Số điện thoại
               </label>
               <div className="flex gap-2">
-                <div className="relative w-3/4">
+                <div className="relative md:w-3/4 w-full">
                   <input
                     type="text"
                     name="phone"
@@ -223,7 +223,7 @@ const MyAccount = () => {
                 Email{" "}
               </label>
               <div className="flex gap-2">
-                <div className="w-3/4 relative">
+                <div className="md:w-3/4 w-full relative">
                   <input
                     type="text"
                     name="email"
@@ -280,7 +280,7 @@ const MyAccount = () => {
                 Địa chỉ
               </label>
               <div className="flex gap-2">
-                <div className="w-3/4 relative">
+                <div className="md:w-3/4 w-full relative">
                   <input
                     type="text"
                     name="address"
@@ -338,8 +338,10 @@ const MyAccount = () => {
             </div>
             {editAddress && (
               <div className="w-full justify-start flex">
-                <div className="w-1/4 flex flex-col pr-1">
-                  <label htmlFor="">Tỉnh/Thành</label>
+                <div className="md:w-1/4 w-1/3flex flex-col pr-1">
+                  <label htmlFor="" className="hidden md:block">
+                    Tỉnh/Thành
+                  </label>
                   <select
                     id="districts"
                     class="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
@@ -355,8 +357,10 @@ const MyAccount = () => {
                 })} */}
                   </select>
                 </div>
-                <div className="w-1/4 flex flex-col pr-1">
-                  <label htmlFor="">Quận/Huyện</label>
+                <div className="md:w-1/4 w-1/3 flex flex-col pr-1">
+                  <label htmlFor="" className="hidden md:block">
+                    Quận/Huyện
+                  </label>
                   <select
                     id="districts"
                     class="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
@@ -372,8 +376,10 @@ const MyAccount = () => {
                 })} */}
                   </select>
                 </div>
-                <div className="w-1/4 flex flex-col">
-                  <label htmlFor="">Phường/Xã</label>
+                <div className="md:w-1/4 w-1/3 flex flex-col">
+                  <label htmlFor="" className="hidden md:block">
+                    Phường/Xã
+                  </label>
                   <select
                     id="districts"
                     class="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
@@ -394,11 +400,11 @@ const MyAccount = () => {
             <div className="w-full">
               <button
                 type="submit"
-                className={`w-3/4 rounded ${
+                className={`md:w-3/4 w-full rounded ${
                   check
                     ? "bg-primary hover:bg-green-700 active:scale-95 transition-transform"
                     : "bg-slate-400"
-                } px-5 py-3 text-center text-sm font-medium text-white mt-12`}
+                } px-5 py-3 text-center text-sm font-medium text-white md:mt-12 mt-3`}
                 onClick={() => console.log(inputs)}
                 disabled={!check}
               >
@@ -406,14 +412,14 @@ const MyAccount = () => {
               </button>
             </div>
           </div>
-          <div className="w-1/2 space-y-3">
+          <div className="md:w-1/2 w-full space-y-3">
             <h3 className="uppercase font-bold w-full">Bảo mật</h3>
             <div className="w-full">
               <label htmlFor="password" className="">
                 {editPassword ? "Mật khẩu cũ" : "Mật khẩu"}
               </label>
               <div className="flex gap-2">
-                <div className="w-3/4 relative">
+                <div className="md:w-3/4 w-full relative">
                   <input
                     type="text"
                     name="password"
@@ -475,7 +481,7 @@ const MyAccount = () => {
                     <input
                       type="text"
                       name="name"
-                      className="w-3/4 rounded border border-gray-300 px-3 py-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
+                      className="md:w-3/4 w-full rounded border border-gray-300 px-3 py-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
                       placeholder="*********"
                       required="a-z"
                     />
@@ -489,7 +495,7 @@ const MyAccount = () => {
                     <input
                       type="text"
                       name="name"
-                      className="w-3/4 rounded border border-gray-300 px-3 py-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
+                      className="md:w-3/4 w-full rounded border border-gray-300 px-3 py-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
                       placeholder="*********"
                       required="a-z"
                     />
@@ -498,7 +504,7 @@ const MyAccount = () => {
                 <div className="w-full">
                   <button
                     type="submit"
-                    className={`w-3/4 rounded ${
+                    className={`md:w-3/4 w-full rounded ${
                       check
                         ? "bg-primary hover:bg-green-700 active:scale-95 transition-transform"
                         : "bg-slate-400"
