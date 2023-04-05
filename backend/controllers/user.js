@@ -95,7 +95,6 @@ export const updateUserRole = async (req, res, next) => {
   }
 };
 export const changePwd = async (req, res, next) => {
-  console.log(req.body);
   try {
     if (!(req.user.id === req.params.id || permission.includes(req.user.role)))
       return res

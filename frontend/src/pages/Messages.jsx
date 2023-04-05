@@ -1,67 +1,118 @@
 import React, { useEffect, useState } from "react";
+import ktsRequest from "../../ultis/ktsrequest";
+import { useSelector } from "react-redux";
+import Message from "../components/Message";
+import io from "socket.io-client";
+import { ktsSocket } from "../../ultis/config";
+import TimeAgo from "timeago-react";
 
-function Messages() {
+import vi from "timeago.js/lib/lang/vi";
+import * as timeago from "timeago.js";
+timeago.register("vi", vi);
+
+const Messages = () => {
+  const [data, setData] = useState([]);
+  const [msg, setMsg] = useState({});
   const [showChat, setShowChat] = useState(false);
+  const [refresh, setRefresh] = useState(false);
+  const { currentUser } = useSelector((state) => state.user);
+  const { token } = currentUser;
+  const socket = io.connect(ktsSocket);
+  socket.on("newNoti", () => {
+    setRefresh(true);
+  });
+  useEffect(() => {
+    socket.emit("newUser", {
+      uid: currentUser._id,
+      uname: currentUser.username,
+    });
+  }, []);
+  useEffect(() => {
+    setRefresh(false);
+    const fetchData = async () => {
+      try {
+        const res = await ktsRequest.get("/chat", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setData(res.data);
+      } catch (error) {
+        console.log(error);
+        // toast.error(
+        //   `${error.response ? error.response.data : "Network Error!"}`
+        // );
+      }
+    };
+    fetchData();
+  }, [refresh]);
+  const textAvatar = (text) => {
+    let name = text.split(" ");
+    if (name.length === 1) {
+      return name[0].charAt().toUpperCase();
+    } else {
+      return (
+        name[0].charAt(0).toUpperCase() +
+        name[name.length - 1].charAt(0).toUpperCase()
+      );
+    }
+  };
   return (
-    <div className="w-full p-2 md:grid md:auto-cols-fr md:grid-flow-col gap-2 h-full mb-[4.75rem]">
-      <div class="rounded space-y-3 w-full">
-        <div class="flex bg-white p-2 rounded gap-2">
-          <div class="rounded-full h-12 w-12 bg-orange-500 flex justify-center items-center text-white font-bold overflow-hidden">
-            <img
-              src="https://firebasestorage.googleapis.com/v0/b/dichoho-4e879.appspot.com/o/images%2Fproducts%2F63be4d1b244204a0cd899658%2F167739519587663be4d1b244204a0cd899658_2.jpg?alt=media&amp;token=8edb8ff5-26c6-4d86-9f88-fb4481be2056"
-              alt=""
-              class="w-full h-full object-cover object-center"
-            />
-          </div>
-          <button class="space-y-1 text-start">
+    <div className="w-full h-[85vh] p-2 md:grid md:auto-cols-fr md:grid-flow-col gap-2">
+      <div className="rounded space-y-3 w-full h-full overflow-auto">
+        {data?.map((c, i) => {
+          return (
             <div
-              class="font-semibold"
+              key={i}
+              className="flex w-full bg-white p-2 rounded gap-2 justify-between cursor-pointer"
               onClick={() => {
+                setMsg(c);
                 setShowChat(true);
               }}
             >
-              ádasd
+              <div className="flex gap-3">
+                <div className="rounded-full h-12 w-12 bg-orange-500 flex justify-center items-center text-white font-bold overflow-hidden">
+                  {c.otherImg ? (
+                    <img
+                      src={c.otherImg}
+                      alt=""
+                      className="w-full h-full object-cover object-center"
+                    />
+                  ) : (
+                    textAvatar(c.title)
+                  )}
+                </div>
+                <div
+                  className={`${
+                    c.status === 0 ? "font-semibold" : "text-gray-700"
+                  } text-start`}
+                >
+                  <div>{c.title}</div>
+                  <div className="text-xs">
+                    {currentUser._id === c.senderId && <span>Bạn: </span>}{" "}
+                    <span>{c.text}</span>
+                  </div>
+                </div>
+              </div>
+              <div className="text-xs text-gray-800">
+                <TimeAgo datetime={c.time} locale="vi" />
+              </div>
             </div>
-            <div class="text-xs">11:43:44 24/3/2023</div>
-          </button>
-        </div>
+          );
+        })}
       </div>
+
       {showChat && (
-        <div class="bg-white w-full h-full">
-          <div class="font-semibold p-3">Admin hệ thống</div>
-          <div class="h-96 py-2 px-2.5 bg-gray-100 my-auto shadow-inner overflow-y-auto"></div>
-          <div class="flex justify-between px-4 gap-2 py-4">
-            <input
-              id="myInput"
-              type="text"
-              placeholder="Nhập nội dung tại đây..."
-              class="block w-full rounded border border-gray-300 bg-gray-50 p-3 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary sm:text-sm"
-              value=""
-            />
-            <button
-              id="myBtn"
-              class="w-14 outline-0 text-base bg-primary text-white rounded"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6 mx-auto"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
-                ></path>
-              </svg>
-            </button>
-          </div>
-        </div>
+        <Message
+          onClose={setShowChat}
+          msg={msg}
+          me={currentUser}
+          onRefresh={setRefresh}
+        />
       )}
     </div>
   );
-}
+};
 
 export default Messages;
