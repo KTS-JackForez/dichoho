@@ -14,17 +14,24 @@ const Chat = (props) => {
   const [resfresh, setRefresh] = useState(false);
   const scrollRef = useRef();
   timeago.register("vi", vi);
+  useEffect(() => {
+    if (!props.me) {
+      props.onClose(false);
+      return;
+    }
+  }, [props]);
   const socket = io.connect(ktsSocket);
 
   socket.on("newNoti", () => {
     setRefresh(true);
   });
   useEffect(() => {
-    socket.emit("newUser", {
-      uid: props.me._id,
-      uname: props.me.username,
-    });
-  }, []);
+    props.me &&
+      socket.emit("newUser", {
+        uid: props.me._id,
+        uname: props.me.username,
+      });
+  }, [props]);
   useEffect(() => {
     setRefresh(false);
     const fetchData = async () => {
@@ -41,7 +48,7 @@ const Chat = (props) => {
         );
       }
     };
-    fetchData();
+    props.me && fetchData();
   }, [resfresh, props]);
 
   const handleClick = async (text) => {
@@ -102,26 +109,31 @@ const Chat = (props) => {
       <div className="h-96 py-2 px-2.5 bg-gray-100 my-auto shadow-inner overflow-y-auto">
         {messages?.length > 0 ? (
           <ul className="space-y-2">
-            {messages?.map((m, i) => {
-              return (
-                <li
-                  className={`px-3 ${m.sender === props.me._id && "text-end"}`}
-                  key={i}
-                >
-                  <div
-                    ref={scrollRef}
-                    className={`${
-                      m.sender === props.me._id ? "bg-green-500" : "bg-blue-500"
-                    } inline-block text-start px-3 py-1 rounded-md`}
+            {props.me &&
+              messages?.map((m, i) => {
+                return (
+                  <li
+                    className={`px-3 ${
+                      m.sender === props.me._id && "text-end"
+                    }`}
+                    key={i}
                   >
-                    <div className="text-white">{m.text}</div>
-                    <div className="text-xs text-gray-800">
-                      <TimeAgo datetime={m.createdAt} locale="vi" />
+                    <div
+                      ref={scrollRef}
+                      className={`${
+                        m.sender === props.me._id
+                          ? "bg-green-500"
+                          : "bg-blue-500"
+                      } inline-block text-start px-3 py-1 rounded-md`}
+                    >
+                      <div className="text-white">{m.text}</div>
+                      <div className="text-xs text-gray-800">
+                        <TimeAgo datetime={m.createdAt} locale="vi" />
+                      </div>
                     </div>
-                  </div>
-                </li>
-              );
-            })}
+                  </li>
+                );
+              })}
           </ul>
         ) : (
           "Bạn chưa có tin nhắn nào."
