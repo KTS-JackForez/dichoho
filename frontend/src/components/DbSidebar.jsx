@@ -1,4 +1,3 @@
-import React from "react";
 import { useDispatch } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { dashboard } from "../../ultis/config";
@@ -29,21 +28,21 @@ const DbSidebar = () => {
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d={i.d} />
-                </svg>
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d={i.d} />
+              </svg>
 
-                {open && (
-                  <span className={`whitespace-pre absolute left-20`}>
-                    {i.title}
-                  </span>
-                )}
+              {open && (
+                <span className={`whitespace-pre absolute left-20`}>
+                  {i.title}
+                </span>
+              )}
             </NavLink>
           );
         })}

@@ -3,12 +3,12 @@ import { dashboard } from "../../ultis/config";
 
 const BottomMenu = () => {
   const activeLink =
-    "w-full flex flex-col  gap-3 py-2 justify-center  items-center text-white  text-xs";
+    "w-full flex flex-col  gap-3 py-2 justify-center  items-center text-white  text-[10px]";
   const normalLink =
-    "w-full  flex flex-col gap-3 py-2 justify-center items-center text-xs text-gray-500 dark:text-gray-200 text-xs dark:hover:text-black hover:bg-light-gray";
+    "w-full  flex flex-col gap-3 py-2 justify-center items-center text-[10px] text-gray-500 dark:text-gray-200 text-xs dark:hover:text-black hover:bg-light-gray";
   return (
     <div className="md:hidden w-full fixed bottom-0 z-40">
-      <div className="bg-white rounded-t-lg overflow-hidden">
+      <div className="bg-white overflow-hidden">
         <div className="grid auto-cols-fr grid-flow-col">
           {dashboard.navLinks.map((i, index) => {
             return (
@@ -28,7 +28,7 @@ const BottomMenu = () => {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-6 h-6"
+                  className="w-4 h-4"
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" d={i.d} />
                 </svg>
