@@ -135,7 +135,9 @@ const Messages = () => {
                       <p className="line-clamp-1">{c.title}</p>
                       <div
                         className={`text-xs ${
-                          c.senderId === currentUser._id && "text-gray-400"
+                          c.senderId === currentUser._id
+                            ? "text-slate-500"
+                            : "font-semibold"
                         }`}
                       >
                         {currentUser._id === c.senderId && <span>Bạn: </span>}{" "}
