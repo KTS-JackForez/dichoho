@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { dashboard } from "../../ultis/config";
-import logo from "../assets/imgs/logo.png";
+import logo from "../assets/imgs/logo_v4.png";
 import { logout } from "../redux/userSlice";
 
 const DbSidebar = () => {
