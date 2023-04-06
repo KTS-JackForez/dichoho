@@ -34,19 +34,19 @@ const DbHeader = () => {
   useEffect(() => {
     setHeader(dashboard.navLinks.find((i) => i.path === pathname)?.title);
   }, [window.location.pathname]);
-  useEffect(() => {
-    setRefresh(false);
-    const fetchData = async () => {
-      const res = await ktsRequest.get("/notifications", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setData(res.data);
-    };
-    fetchData();
-  }, [refresh]);
+  // useEffect(() => {
+  //   setRefresh(false);
+  //   const fetchData = async () => {
+  //     const res = await ktsRequest.get("/notifications", {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //     setData(res.data);
+  //   };
+  //   fetchData();
+  // }, [refresh]);
   const unSeen = (listOfNotifications) => {
     return listOfNotifications?.filter(
       (notification) => notification.status === 0
@@ -130,7 +130,7 @@ const DbHeader = () => {
                 </ul>
                 <div className="flex justify-center">
                   <Link
-                    to="/admin/thong-bao"
+                    to="#"
                     className="no-underline py-2.5 px-12 text-current font-semibold"
                   >
                     Xem tất cả
@@ -139,7 +139,7 @@ const DbHeader = () => {
               </div>
             )}
           </div>
-          <h3 className="font-bold"> {currentUser.username}</h3>
+          <h3 className="font-bold"> {currentUser.displayName}</h3>
           <img src="" alt="" />
           <div className="rounded-full h-12 w-12 bg-orange-500 flex justify-center items-center text-white font-bold overflow-hidden border-2 border-primary">
             {currentUser.img ? (

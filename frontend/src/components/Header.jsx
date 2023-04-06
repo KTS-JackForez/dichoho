@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/imgs/logo_v3.png";
+import logo from "../assets/imgs/logo_v4.png";
 import empty from "../assets/imgs/no-cart.png";
 import { useDispatch, useSelector } from "react-redux";
 import { vnd } from "../../ultis/ktsFunc";
