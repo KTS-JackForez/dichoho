@@ -68,8 +68,12 @@ const Messages = () => {
     }
   };
   return (
-    <div className="w-full h-full bg-red-500 p-2 md:grid md:auto-cols-fr md:grid-flow-col gap-2">
-      <div className="rounded w-full max-h-full overflow-auto divide-y divide-primary divide-dashed">
+    <div className="w-full h-full p-2 md:grid md:auto-cols-fr md:grid-flow-col gap-2">
+      <div
+        className={`rounded ${
+          showChat && "hidden"
+        } md:block w-full max-h-full overflow-auto divide-y divide-primary divide-dashed`}
+      >
         {data?.map((c, i) => {
           return (
             <div
@@ -111,7 +115,6 @@ const Messages = () => {
           );
         })}
       </div>
-
       {showChat && (
         <Message
           onClose={setShowChat}

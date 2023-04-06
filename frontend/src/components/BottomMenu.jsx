@@ -7,8 +7,8 @@ const BottomMenu = () => {
   const normalLink =
     "w-full py-3 flex flex-col gap-1 justify-center items-center text-gray-500 text-xs  hover:text-green-500 font-semibold";
   return (
-    <div className="bg-white h-[10vh] md:hidden">
-      <div className="grid auto-cols-fr grid-flow-col">
+    <div className="bg-white h-[8vh] md:hidden flex items-center">
+      <div className="grid auto-cols-fr grid-flow-col w-full h-full">
         {dashboard.navLinks.map((i, index) => {
           return (
             <NavLink

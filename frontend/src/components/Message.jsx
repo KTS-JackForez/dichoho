@@ -100,7 +100,7 @@ const Message = (props) => {
         </div>
       </div>
       <div className="h-[80%]">
-        <div className="h-full px-2.5 bg-gray-200 my-auto shadow-inner overflow-y-auto">
+        <div className="h-full px-2.5 bg-orange-100 my-auto shadow-inner overflow-y-auto">
           {messages?.length > 0 ? (
             <ul className="space-y-2">
               {messages?.map((m, i) => {

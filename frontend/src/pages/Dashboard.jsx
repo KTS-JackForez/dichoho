@@ -12,7 +12,7 @@ const Dashboard = () => {
   return (
     <div className="flex">
       <DbSidebar />
-      <div className="bg-gray-400 flex-1">
+      <div className="bg-gray-200 flex-1">
         <DbHeader />
         <div className="h-[80vh] overflow-auto md:h-[90vh]">
           <Routes>

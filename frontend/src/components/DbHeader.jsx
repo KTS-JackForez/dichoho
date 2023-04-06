@@ -65,8 +65,8 @@ const DbHeader = () => {
     }
   };
   return (
-    <div className="h-[10vh]">
-      <div className="bg-white px-3 py-4 flex justify-between items-center">
+    <div className="h-[10vh] flex justify-between items-center">
+      <div className="bg-white px-3 flex justify-between items-center w-full h-full">
         <h3 className="uppercase font-bold">{header}</h3>
         <div className="flex gap-3 items-center">
           <div
