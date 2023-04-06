@@ -5,7 +5,7 @@ import Message from "../components/Message";
 import { io } from "socket.io-client";
 import { ktsSocket } from "../../ultis/config";
 import TimeAgo from "timeago-react";
-
+import { search } from "../../ultis/ktsFunc";
 import vi from "timeago.js/lib/lang/vi";
 import * as timeago from "timeago.js";
 timeago.register("vi", vi);
@@ -15,6 +15,7 @@ const Messages = () => {
   const [msg, setMsg] = useState({});
   const [showChat, setShowChat] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  const [query, setQuery] = useState("");
   const { currentUser } = useSelector((state) => state.user);
   const { token } = currentUser;
   const socket = useRef();
@@ -56,6 +57,9 @@ const Messages = () => {
     };
     fetchData();
   }, [refresh]);
+  const search = (data) => {
+    return data.filter((item) => item["title"].toLowerCase().includes(query));
+  };
   const textAvatar = (text) => {
     let name = text.split(" ");
     if (name.length === 1) {
@@ -72,52 +76,84 @@ const Messages = () => {
       <div
         className={`rounded ${
           showChat && "hidden"
-        } md:block w-full max-h-full overflow-auto divide-y divide-primary divide-dashed`}
+        } md:block w-full max-h-full overflow-auto`}
       >
-        {data?.map((c, i) => {
-          return (
-            <div
-              key={i}
-              className={`flex w-full bg-white p-2 justify-between cursor-pointer hover:bg-slate-300 `}
-              onClick={() => {
-                setMsg(c);
-                setShowChat(true);
-              }}
-            >
-              <div className="flex flex-1">
-                <div className="rounded-full h-14 w-14 bg-orange-500 flex justify-center items-center text-white overflow-hidden">
-                  {c.otherImg ? (
-                    <img
-                      src={c.otherImg}
-                      alt=""
-                      className="w-full h-full object-cover object-center"
-                    />
-                  ) : (
-                    textAvatar(c.title)
-                  )}
-                </div>
+        <div className="flex w-full md:w-1/2 relative pb-2">
+          <input
+            type="text"
+            name="name"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-3 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
+            placeholder="Tìm kiếm shop ..."
+            required="a-z"
+            onChange={(e) => {
+              setQuery(e.target.value);
+            }}
+          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2}
+            stroke="currentColor"
+            className="w-6 h-6 absolute right-2 top-3 text-gray-500"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+            />
+          </svg>
+        </div>
+        {search(data).length > 0 ? (
+          <div className=" divide-y divide-primary divide-dashed rounded-md overflow-hidden">
+            {search(data)?.map((c, i) => {
+              return (
                 <div
-                  className={`${
-                    c.status === 0 ? "" : "text-gray-700"
-                  } text-start px-3`}
+                  key={i}
+                  className={`flex w-full bg-white p-2 justify-between cursor-pointer hover:bg-slate-300 `}
+                  onClick={() => {
+                    setMsg(c);
+                    setShowChat(true);
+                  }}
                 >
-                  <p className="truncate">{c.title}</p>
-                  <div
-                    className={`text-xs ${
-                      c.senderId === currentUser._id && "text-gray-400"
-                    }`}
-                  >
-                    {currentUser._id === c.senderId && <span>Bạn: </span>}{" "}
-                    <span>{c.text}</span>
+                  <div className="flex flex-1">
+                    <div className="rounded-full h-14 w-14 min-w-[3.5rem] bg-orange-500 flex justify-center items-center text-white overflow-hidden">
+                      {c.otherImg ? (
+                        <img
+                          src={c.otherImg}
+                          alt=""
+                          className="w-full h-full object-cover object-center"
+                        />
+                      ) : (
+                        textAvatar(c.title)
+                      )}
+                    </div>
+                    <div
+                      className={`${
+                        c.status === 0 ? "" : "text-gray-700"
+                      } text-start px-3`}
+                    >
+                      <p className="line-clamp-1">{c.title}</p>
+                      <div
+                        className={`text-xs ${
+                          c.senderId === currentUser._id && "text-gray-400"
+                        }`}
+                      >
+                        {currentUser._id === c.senderId && <span>Bạn: </span>}{" "}
+                        <span>{c.text}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-xs text-gray-800">
+                    <TimeAgo datetime={c.time} locale="vi" />
                   </div>
                 </div>
-              </div>
-              <div className="text-xs text-gray-800">
-                <TimeAgo datetime={c.time} locale="vi" />
-              </div>
-            </div>
-          );
-        })}
+              );
+            })}
+          </div>
+        ) : (
+          <div>Không có dữ liệu phù hợp</div>
+        )}
       </div>
       {showChat && (
         <Message

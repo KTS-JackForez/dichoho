@@ -70,7 +70,6 @@ const DbOrder = () => {
             required="a-z"
             onChange={(e) => {
               {
-                console.log(query);
                 setQuery(e.target.value);
               }
             }}

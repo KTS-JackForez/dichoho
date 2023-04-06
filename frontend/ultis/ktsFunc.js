@@ -4,3 +4,9 @@ export const vnd = (stringToCurency) => {
     currency: "VND",
   }).format(stringToCurency);
 };
+
+export const search = (keys, dataToSearch, query) => {
+  return dataToSearch.filter((item) => {
+    keys.some((key) => item[key].toLowerCase().includes(query));
+  });
+};
