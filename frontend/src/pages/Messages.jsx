@@ -5,7 +5,6 @@ import Message from "../components/Message";
 import { io } from "socket.io-client";
 import { ktsSocket } from "../../ultis/config";
 import TimeAgo from "timeago-react";
-import { search } from "../../ultis/ktsFunc";
 import vi from "timeago.js/lib/lang/vi";
 import * as timeago from "timeago.js";
 timeago.register("vi", vi);
