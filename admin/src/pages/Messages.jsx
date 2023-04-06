@@ -20,7 +20,7 @@ const Messages = () => {
   const socket = useRef();
 
   useEffect(() => {
-    socket.current = io(ktsSocket);
+    socket.current = io(ktsSocket, { secure: true });
     socket.current.on("welcome", (data) => {
       console.log(data);
     });

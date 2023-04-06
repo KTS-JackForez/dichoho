@@ -15,7 +15,7 @@ const Message = (props) => {
   const scrollRef = useRef();
 
   timeago.register("vi", vi);
-  const socket = io.connect(ktsSocket);
+  const socket = io.connect(ktsSocket, { secure: true });
 
   socket.on("newNoti", () => {
     setRefresh(true);
