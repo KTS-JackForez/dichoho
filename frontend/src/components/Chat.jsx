@@ -20,7 +20,7 @@ const Chat = (props) => {
       return;
     }
   }, [props]);
-  const socket = io.connect(ktsSocket, { secure: true });
+  const socket = io.connect(ktsSocket);
 
   socket.on("newNoti", () => {
     setRefresh(true);
