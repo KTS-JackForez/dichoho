@@ -10,22 +10,24 @@ import BottomMenu from "../components/BottomMenu";
 
 const Dashboard = () => {
   return (
-    <div className="w-screen flex">
+    <div className="flex">
       <DbSidebar />
-      <div className="bg-gray-200 flex-1">
+      <div className="bg-gray-400 flex-1">
         <DbHeader />
-        <Routes>
-          <Route path="home" element={<DbHome />} />
-          <Route path="don-hang">
-            <Route index element={<DbOrder />} />
-          </Route>
-          <Route path="tai-khoan">
-            <Route index element={<MyAccount />} />
-          </Route>
-          <Route path="tin-nhan">
-            <Route index element={<Messages />} />
-          </Route>
-        </Routes>
+        <div className="h-[80vh] overflow-auto md:h-[90vh]">
+          <Routes>
+            <Route path="home" element={<DbHome />} />
+            <Route path="don-hang">
+              <Route index element={<DbOrder />} />
+            </Route>
+            <Route path="tai-khoan">
+              <Route index element={<MyAccount />} />
+            </Route>
+            <Route path="tin-nhan">
+              <Route index element={<Messages />} />
+            </Route>
+          </Routes>
+        </div>
         <BottomMenu />
       </div>
     </div>

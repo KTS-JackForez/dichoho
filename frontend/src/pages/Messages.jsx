@@ -68,13 +68,13 @@ const Messages = () => {
     }
   };
   return (
-    <div className="w-full h-[85vh] p-2 md:grid md:auto-cols-fr md:grid-flow-col gap-2">
-      <div className="rounded space-y-3 w-full h-full overflow-auto">
+    <div className="w-full h-full bg-red-500 p-2 md:grid md:auto-cols-fr md:grid-flow-col gap-2">
+      <div className="rounded w-full max-h-full overflow-auto divide-y divide-primary divide-dashed">
         {data?.map((c, i) => {
           return (
             <div
               key={i}
-              className="flex w-full bg-white p-2 rounded gap-2 justify-between cursor-pointer"
+              className="flex w-full bg-white p-2 gap-2 justify-between cursor-pointer hover:bg-slate-300"
               onClick={() => {
                 setMsg(c);
                 setShowChat(true);

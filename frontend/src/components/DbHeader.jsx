@@ -65,8 +65,8 @@ const DbHeader = () => {
     }
   };
   return (
-    <div className="w-full p-2">
-      <div className="bg-white rounded px-2 py-4 flex justify-between items-center">
+    <div className="h-[10vh]">
+      <div className="bg-white px-3 py-4 flex justify-between items-center">
         <h3 className="uppercase font-bold">{header}</h3>
         <div className="flex gap-3 items-center">
           <div
@@ -140,7 +140,10 @@ const DbHeader = () => {
               </div>
             )}
           </div>
-          <h3 className="font-bold"> {currentUser.displayName}</h3>
+          <h3 className="font-bold hidden md:block">
+            {" "}
+            {currentUser.displayName}
+          </h3>
           <img src="" alt="" />
           <div className="group rounded-full h-12 w-12 bg-orange-500 flex justify-center items-center text-white font-bold overflow-hidden border-2 border-primary">
             {currentUser.img ? (
