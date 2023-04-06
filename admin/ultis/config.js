@@ -81,6 +81,6 @@ export const dashboard = {
 };
 
 //online
-export const ktsSocket = "http://api.sale168.vn:9100";
+// export const ktsSocket = "ws://api.sale168.vn:9100";
 //offline
-// export const ktsSocket = "http://localhost:9100";
+export const ktsSocket = "ws://localhost:9200";

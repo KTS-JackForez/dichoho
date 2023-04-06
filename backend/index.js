@@ -44,15 +44,32 @@ const connect = () => {
     });
 };
 let sockets = [];
+// let users = [];
+
+const addUser = (userId, userName, socketId) => {
+  !sockets.some((sk) => sk.userId === userId) &&
+    // sockets.push({ userId, userName, socketId });
+    sockets.push({ sid: socketId, uid: userId, uname: userName });
+};
+
+const removeUser = (socketId) => {
+  sockets = sockets.filter((sk) => sk.socketId !== socketId);
+};
+
+const getUser = (userId) => {
+  return sockets.find((sk) => sk.uid === userId);
+};
+
 io.on("connection", (socket) => {
   socket.on("newUser", (data) => {
-    sockets.push({ sid: socket.id, uid: data.uid, uname: data.uname });
+    // sockets.push({ sid: socket.id, uid: data.uid, uname: data.uname });
+    addUser(data.uid, data.uname, socket.id);
   });
-  socket.on("dathang", (data) => {
-    const { buyerId } = data;
-    const { buyerName } = data;
+  socket.on("dathang", ({ buyerId, buyerName, products }) => {
+    // const { buyerId } = data;
+    // const { buyerName } = data;
     Promise.all(
-      data.products.map(async (i) => {
+      products.map(async (i) => {
         const newNoti = new Notification({
           buyerId,
           salerId: i.shopID,
@@ -83,7 +100,8 @@ io.on("connection", (socket) => {
     // if (index > -1) {
     //   sockets.splice(index, 1);
     // }
-    sockets = sockets.filter((s) => s.uid !== socket.uid);
+    // sockets = sockets.filter((s) => s.uid !== socket.uid);
+    removeUser(socket.id);
   });
 });
 //
@@ -121,7 +139,7 @@ app.listen(PORT || 8000, () => {
   connect();
   //log
   console.log(`Kết nối Server thành công tại cổng ${PORT}`);
-  server.listen(9100, () => {
-    console.log("socket: 9100");
+  server.listen(9200, () => {
+    console.log("socket: 9200");
   });
 });

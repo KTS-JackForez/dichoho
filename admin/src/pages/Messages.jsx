@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import ktsRequest from "../../ultis/ktsrequest";
 import { useSelector } from "react-redux";
 import Message from "./Message";
-import io from "socket.io-client";
+import { io } from "socket.io-client";
 import { ktsSocket } from "../../ultis/config";
 import TimeAgo from "timeago-react";
 
@@ -17,12 +17,19 @@ const Messages = () => {
   const [refresh, setRefresh] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
   const { token } = currentUser;
-  const socket = io.connect(ktsSocket);
-  socket.on("newNoti", () => {
-    setRefresh(true);
-  });
+  const socket = useRef();
+
   useEffect(() => {
-    socket.emit("newUser", {
+    socket.current = io(ktsSocket);
+    socket.current.on("welcome", (data) => {
+      console.log(data);
+    });
+    socket.current.on("newNoti", () => {
+      setRefresh(true);
+    });
+  }, []);
+  useEffect(() => {
+    socket.current.emit("newUser", {
       uid: currentUser._id,
       uname: currentUser.username,
     });
@@ -38,7 +45,7 @@ const Messages = () => {
           },
         });
         setData(res.data);
-        console.log(res.data);
+        // console.log(res.data);
       } catch (error) {
         console.log(error);
         // toast.error(

@@ -1,24 +1,30 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import io from "socket.io-client";
+import { io } from "socket.io-client";
 import ktsRequest from "../../ultis/ktsrequest";
 import { dashboard } from "../../ultis/config";
 import { ktsSocket } from "../../ultis/config";
 const Header = () => {
-  const socket = io.connect(ktsSocket);
   const { currentUser } = useSelector((state) => state.user);
   const { token } = currentUser;
   const [refresh, setRefresh] = useState(false);
   const [data, setData] = useState([]);
   const [header, setHeader] = useState("");
   const { pathname } = useLocation();
-  socket.on("newNoti", () => {
-    setRefresh(true);
-  });
+  const socket = useRef();
+
   useEffect(() => {
-    socket.emit("newUser", {
+    socket.current = io(ktsSocket);
+    socket.current.on("welcome", (data) => {
+      console.log(data);
+    });
+    socket.current.on("newNoti", () => {
+      setRefresh(true);
+    });
+  }, []);
+  useEffect(() => {
+    socket.current.emit("newUser", {
       uid: currentUser._id,
       uname: currentUser.username,
     });
