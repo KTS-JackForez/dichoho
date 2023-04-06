@@ -78,14 +78,14 @@ const Messages = () => {
           return (
             <div
               key={i}
-              className="flex w-full bg-white p-2 gap-2 justify-between cursor-pointer hover:bg-slate-300"
+              className={`flex w-full bg-white p-2 justify-between cursor-pointer hover:bg-slate-300 `}
               onClick={() => {
                 setMsg(c);
                 setShowChat(true);
               }}
             >
-              <div className="flex gap-3">
-                <div className="rounded-full h-12 w-12 bg-orange-500 flex justify-center items-center text-white font-bold overflow-hidden">
+              <div className="flex flex-1">
+                <div className="rounded-full h-14 w-14 bg-orange-500 flex justify-center items-center text-white overflow-hidden">
                   {c.otherImg ? (
                     <img
                       src={c.otherImg}
@@ -98,11 +98,15 @@ const Messages = () => {
                 </div>
                 <div
                   className={`${
-                    c.status === 0 ? "font-semibold" : "text-gray-700"
-                  } text-start`}
+                    c.status === 0 ? "" : "text-gray-700"
+                  } text-start px-3`}
                 >
-                  <div>{c.title}</div>
-                  <div className="text-xs">
+                  <p className="truncate">{c.title}</p>
+                  <div
+                    className={`text-xs ${
+                      c.senderId === currentUser._id && "text-gray-400"
+                    }`}
+                  >
                     {currentUser._id === c.senderId && <span>Bạn: </span>}{" "}
                     <span>{c.text}</span>
                   </div>
