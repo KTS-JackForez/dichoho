@@ -1,11 +1,12 @@
 import { useEffect, useRef } from "react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { io } from "socket.io-client";
 import ktsRequest from "../../ultis/ktsrequest";
 import { dashboard } from "../../ultis/config";
 import { ktsSocket } from "../../ultis/config";
+import { logout } from "../redux/userSlice";
 const DbHeader = () => {
   const { currentUser } = useSelector((state) => state.user);
   const { token } = currentUser;
@@ -15,7 +16,7 @@ const DbHeader = () => {
   const [header, setHeader] = useState("");
   const { pathname } = useLocation();
   const socket = useRef();
-
+  const dispatch = useDispatch();
   useEffect(() => {
     socket.current = io(ktsSocket);
     socket.current.on("welcome", (data) => {
@@ -141,7 +142,7 @@ const DbHeader = () => {
           </div>
           <h3 className="font-bold"> {currentUser.displayName}</h3>
           <img src="" alt="" />
-          <div className="rounded-full h-12 w-12 bg-orange-500 flex justify-center items-center text-white font-bold overflow-hidden border-2 border-primary">
+          <div className="group rounded-full h-12 w-12 bg-orange-500 flex justify-center items-center text-white font-bold overflow-hidden border-2 border-primary">
             {currentUser.img ? (
               <img
                 src={currentUser.img}
@@ -151,6 +152,18 @@ const DbHeader = () => {
             ) : (
               textAvatar(currentUser.username)
             )}
+
+            <div className="group-hover:flex absolute top-16 right-0 rounded border border-primary bg-white hidden">
+              <button
+                className="hover:bg-primary px-4 py-2 hover:text-white text-black w-48"
+                onClick={(e) => {
+                  e.preventDefault();
+                  dispatch(logout());
+                }}
+              >
+                Đăng xuất
+              </button>
+            </div>
           </div>
         </div>
       </div>

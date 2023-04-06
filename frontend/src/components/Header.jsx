@@ -303,7 +303,7 @@ const Header = () => {
                   Trang cá nhân
                 </button>
                 <a
-                  href="http://quantri.sale168.com"
+                  href="http://quantri.sale168.vn"
                   className="hover:bg-primary p-2"
                 >
                   Bạn là người bán
