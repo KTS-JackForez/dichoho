@@ -26,6 +26,13 @@ import { updateConfig } from "./controllers/config.js";
 const app = express();
 dotenv.config();
 const PORT = process.env.PORT;
+
+//online
+// const server = https.createServer({
+//   key: readFileSync('/etc/letsencrypt/live/api.sale168.vn/privkey.pem'),
+//   cert: readFileSync('/etc/letsencrypt/live/api.sale168.vn/cert.pem'),
+//    },app);
+//offline
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
@@ -44,12 +51,13 @@ const connect = () => {
       throw err;
     });
 };
+// mảng lưu socket các user đã đăng nhập
 let sockets = [];
-// let users = [];
+//mảng lưu socket các khách hàng
+let guests = [];
 
 const addUser = (userId, userName, socketId) => {
   !sockets.some((sk) => sk.userId === userId) &&
-    // sockets.push({ userId, userName, socketId });
     sockets.push({ sid: socketId, uid: userId, uname: userName });
 };
 
@@ -63,12 +71,12 @@ const getUser = (userId) => {
 
 io.on("connection", (socket) => {
   socket.on("newUser", (data) => {
-    // sockets.push({ sid: socket.id, uid: data.uid, uname: data.uname });
     addUser(data.uid, data.uname, socket.id);
   });
+  socket.on("newGuest", () => {
+    guests.push({ sid: socket.id });
+  });
   socket.on("dathang", ({ buyerId, buyerName, products }) => {
-    // const { buyerId } = data;
-    // const { buyerName } = data;
     Promise.all(
       products.map(async (i) => {
         const newNoti = new Notification({
@@ -89,20 +97,20 @@ io.on("connection", (socket) => {
     );
   });
   socket.on("refresh", (data) => {
-    // const sk = sockets.find((s) => s.uid === data.uid);
-    // io.to(sk.sid).emit("newNoti");
     const sks = sockets.filter((s) => s.uid === data.uid);
     sks.map((i) => {
       io.to(i.sid).emit("newNoti");
     });
   });
+  socket.on("addComment", (data) => {
+    guests.map((i) => {
+      io.to(i.sid).emit("newComment", data);
+    });
+  });
   socket.on("disconnect", () => {
-    // const index = sockets.indexOf((e) => e.sid === socket.id);
-    // if (index > -1) {
-    //   sockets.splice(index, 1);
-    // }
     // sockets = sockets.filter((s) => s.uid !== socket.uid);
     removeUser(socket.id);
+    guests = guests.filter((sk) => sk !== socket.id);
   });
 });
 //
