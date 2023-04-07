@@ -15,6 +15,8 @@ const Messages = () => {
   const [msg, setMsg] = useState({});
   const [showChat, setShowChat] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  const [query, setQuery] = useState("");
+
   const { currentUser } = useSelector((state) => state.user);
   const { token } = currentUser;
   const socket = useRef();
@@ -66,55 +68,95 @@ const Messages = () => {
       );
     }
   };
+  const search = (data) => {
+    return data.filter((item) => item["title"].toLowerCase().includes(query));
+  };
   return (
-    <div className="w-full h-[85vh] p-2 md:grid md:auto-cols-fr md:grid-flow-col gap-2">
-      <div className="rounded space-y-3 w-full h-full overflow-auto">
-        {data ? (
-          data.map((c, i) => {
-            return (
-              <div
-                key={i}
-                className="flex w-full bg-white p-2 rounded gap-2 justify-between cursor-pointer"
-                onClick={() => {
-                  setMsg(c);
-                  setShowChat(true);
-                }}
-              >
-                <div className="flex gap-3">
-                  <div className="rounded-full h-12 w-12 bg-orange-500 flex justify-center items-center text-white font-bold overflow-hidden">
-                    {c.otherImg ? (
-                      <img
-                        src={c.otherImg}
-                        alt=""
-                        className="w-full h-full object-cover object-center"
-                      />
-                    ) : (
-                      textAvatar(c.title)
-                    )}
-                  </div>
-                  <div
-                    className={`${
-                      c.status === 0 ? "font-semibold" : "text-gray-700"
-                    } text-start`}
-                  >
-                    <div>{c.title}</div>
-                    <div className="text-xs">
-                      {currentUser._id === c.senderId && <span>Bạn: </span>}{" "}
-                      <span>{c.text}</span>
+    <div className="w-full h-full p-2 md:grid md:auto-cols-fr md:grid-flow-col gap-2">
+      <div
+        className={`rounded ${
+          showChat && "hidden"
+        } md:block w-full max-h-full overflow-auto`}
+      >
+        <div className="flex w-full md:w-1/2 relative pb-2">
+          <input
+            type="text"
+            name="name"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-3 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
+            placeholder="Tìm kiếm shop ..."
+            required="a-z"
+            onChange={(e) => {
+              setQuery(e.target.value);
+            }}
+          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2}
+            stroke="currentColor"
+            className="w-6 h-6 absolute right-2 top-3 text-gray-500"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+            />
+          </svg>
+        </div>
+        {search(data).length > 0 ? (
+          <div className=" divide-y divide-primary divide-dashed rounded-md overflow-hidden">
+            {search(data)?.map((c, i) => {
+              return (
+                <div
+                  key={i}
+                  className={`flex w-full bg-white p-2 justify-between cursor-pointer hover:bg-slate-300 `}
+                  onClick={() => {
+                    setMsg(c);
+                    setShowChat(true);
+                  }}
+                >
+                  <div className="flex flex-1">
+                    <div className="rounded-full h-14 w-14 min-w-[3.5rem] bg-orange-500 flex justify-center items-center text-white overflow-hidden">
+                      {c.otherImg ? (
+                        <img
+                          src={c.otherImg}
+                          alt=""
+                          className="w-full h-full object-cover object-center"
+                        />
+                      ) : (
+                        textAvatar(c.title)
+                      )}
+                    </div>
+                    <div
+                      className={`${
+                        c.status === 0 ? "" : "text-gray-700"
+                      } text-start px-3`}
+                    >
+                      <p className="line-clamp-1">{c.title}</p>
+                      <div
+                        className={`text-sm ${
+                          c.senderId === currentUser._id
+                            ? "text-slate-500"
+                            : "font-semibold"
+                        }`}
+                      >
+                        {currentUser._id === c.senderId && <span>Bạn: </span>}{" "}
+                        <span>{c.text}</span>
+                      </div>
                     </div>
                   </div>
+                  <div className="text-xs text-gray-800">
+                    <TimeAgo datetime={c.time} locale="vi" />
+                  </div>
                 </div>
-                <div className="text-xs text-gray-800">
-                  <TimeAgo datetime={c.time} locale="vi" />
-                </div>
-              </div>
-            );
-          })
+              );
+            })}
+          </div>
         ) : (
-          <div>Bạn chưa có tin nhắn nào</div>
+          <div>Không có dữ liệu phù hợp</div>
         )}
       </div>
-
       {showChat && (
         <Message
           onClose={setShowChat}

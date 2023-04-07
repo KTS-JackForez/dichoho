@@ -134,7 +134,7 @@ const Messages = () => {
                     >
                       <p className="line-clamp-1">{c.title}</p>
                       <div
-                        className={`text-xs ${
+                        className={`text-sm ${
                           c.senderId === currentUser._id
                             ? "text-slate-500"
                             : "font-semibold"
