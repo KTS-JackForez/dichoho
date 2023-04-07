@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/imgs/logo_v4.png";
+import logo from "../assets/imgs/Logodichoho.png";
 import empty from "../assets/imgs/no-cart.png";
 import { useDispatch, useSelector } from "react-redux";
 import { vnd } from "../../ultis/ktsFunc";
@@ -140,7 +140,7 @@ const Header = () => {
     if (query.length > 2) fetchData();
   }, [query]);
   return (
-    <div className="max-w-screen-xl mx-auto text-center flex items-center justify-between py-7 gap-2">
+    <div className="max-w-screen-xl mx-auto text-center flex items-center justify-between py-3 gap-2">
       {toggle && <Sidebar open={toggle} close={setToggle} />}
       <Link to="/" className="hidden md:block">
         <img src={logo} alt="" className="w-56 h-auto" />
