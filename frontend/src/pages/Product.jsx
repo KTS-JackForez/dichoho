@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Chat, Footer, Header, Navbar, Promotion } from "../components";
+import {
+  Chat,
+  Comment,
+  Footer,
+  Header,
+  Navbar,
+  Promotion,
+} from "../components";
 import { vnd } from "../../ultis/ktsFunc";
-import "./Products.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import ktsRequest from "../../ultis/ktsrequest";
@@ -76,69 +82,6 @@ const Product = () => {
             <div className="flex flex-col md:flex-row lg:w-3/4 gap-2">
               <div className="md:w-1/2 w-full overflow-hidden">
                 <div className="relative overflow-hidden w-full mx-center">
-                  {/* <button
-                    onClick={() =>
-                      setActiveImg((prev) =>
-                        prev === 0 ? imgs.length - 1 : prev - 1
-                      )
-                    }
-                    className="p-3 z-10  bg-green-500/30 rounded-full hover:bg-green-300 absolute top-[50%]"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-6 h-6 "
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M15.75 19.5L8.25 12l7.5-7.5"
-                      />
-                    </svg>
-                  </button>
-                  <button
-                    onClick={() =>
-                      setActiveImg((prev) =>
-                        prev === imgs.length - 1 ? 0 : prev + 1
-                      )
-                    }
-                    className="p-3 z-10 bg-green-500/30 rounded-full hover:bg-green-500 absolute top-[50%] right-0"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                      />
-                    </svg>
-                  </button> */}
-                  {/* <div
-                    className="w-full duration-500 flex"
-                    // style={{ transform: `translateX(-${activeSlide * 100}%)` }}
-                    style={{ transform: `translateX(-${activeImg * 100}%)` }}
-                  >
-                    {imgs &&
-                      imgs.map((i, index) => {
-                        return (
-                          <img
-                            key={index}
-                            src={i}
-                            alt=""
-                            className="object-cover w-full aspect-square object-fit"
-                          />
-                        );
-                      })}
-                  </div> */}
                   <ul className="flex flex-nowrap overflow-hidden scroll whitespace-nowrap scroll-smooth scrollbar-hide py-2">
                     {imgs &&
                       imgs.map((i, k) => {
@@ -251,33 +194,6 @@ const Product = () => {
                       );
                     })}
                 </ul>
-                {/* {imgs && (
-                  <div className="w-full flex overflow-hidden md:h-28 gap-1 mt-1">
-                    {imgs.map((i, k) => {
-                      return (
-                        <div
-                          key={k}
-                          className={`w-1/4 aspect-square overflow-hidden
-                            ${
-                              activeImg === k
-                                ? "opacity-100 border border-primary rounded"
-                                : "opacity-30"
-                            }
-                           cursor-pointer p-1`}
-                          onClick={() => {
-                            setActiveImg(k);
-                          }}
-                        >
-                          <img
-                            src={i}
-                            alt=""
-                            className="w-full h-full object-cover "
-                          />
-                        </div>
-                      );
-                    })}
-                  </div>
-                )} */}
               </div>
               <div className="flex md:w-1/2 w-full flex-col gap-3">
                 <h3 className="text-gray-700 text-xl font-bold">
@@ -364,9 +280,6 @@ const Product = () => {
                     <li>Đạt chuẩn an toàn VietGap</li>
                     <li>Hàng tươi mới mỗi ngày</li>
                   </ul>
-                  {/* <button className="px-4 py-2 bg-primary rounded text-white w-4/6" onClick={()=>{setShowChat(!showChat)}}>
-                  Nhắn tin cho người bán
-                </button> */}
                 </div>
 
                 <div className="bg-orange-100 rounded border border-dashed border-red-500 divide-y divide-dashed divide-red-500">
@@ -557,120 +470,15 @@ const Product = () => {
                     className={openTab === 3 ? "block" : "hidden"}
                     id="link3"
                   >
-                    <div className="product-main grid">
-                      <div className="product-footer">
-                        <div className="product-footer-content">
-                          <div className="product-footer-content-pane product-footer-content-comment active">
-                            <div className="comments">
-                              <h3>Đánh giá</h3>
-                              <p>Chưa có đánh giá nào.</p>
-                            </div>
-                            <div className="comment-form-wrapper">
-                              <div className="comment-respond">
-                                <h3 className="comment-respond-title">
-                                  Hãy là người đầu tiên nhận xét “Thực phẩm hữu
-                                  cơ sạch”{" "}
-                                </h3>
-                                <form action="" className="comment-form">
-                                  <label htmlFor="rating">
-                                    Đánh giá của bạn&nbsp;
-                                    <span className="required">*</span>
-                                  </label>
-                                  <div className="product-item-rating-selected">
-                                    <div className="product-item__rating active">
-                                      <i className="product-item__star-gold fas fa-star"></i>
-                                    </div>
-                                    <div className="product-item__rating">
-                                      <i className="product-item__star-gold fas fa-star"></i>
-                                      <i className="product-item__star-gold fas fa-star"></i>
-                                    </div>
-                                    <div className="product-item__rating">
-                                      <i className="product-item__star-gold fas fa-star"></i>
-                                      <i className="product-item__star-gold fas fa-star"></i>
-                                      <i className="product-item__star-gold fas fa-star"></i>
-                                    </div>
-                                    <div className="product-item__rating">
-                                      <i className="product-item__star-gold fas fa-star"></i>
-                                      <i className="product-item__star-gold fas fa-star"></i>
-                                      <i className="product-item__star-gold fas fa-star"></i>
-                                      <i className="product-item__star-gold fas fa-star"></i>
-                                    </div>
-                                    <div className="product-item__rating">
-                                      <i className="product-item__star-gold fas fa-star"></i>
-                                      <i className="product-item__star-gold fas fa-star"></i>
-                                      <i className="product-item__star-gold fas fa-star"></i>
-                                      <i className="product-item__star-gold fas fa-star"></i>
-                                      <i className="product-item__star-gold fas fa-star"></i>
-                                    </div>
-                                  </div>
-                                  <label htmlFor="comment">
-                                    Nhận xét của bạn&nbsp;
-                                    <span className="required">*</span>
-                                  </label>
-                                  <textarea
-                                    id="comment"
-                                    name="comment"
-                                    cols="45"
-                                    rows="8"
-                                    required=""
-                                  ></textarea>
-                                  <div className="modal-comment">
-                                    <div className="modal-comment-author">
-                                      <div>
-                                        <label
-                                          htmlFor="name"
-                                          className="modal-label"
-                                        >
-                                          Tên&nbsp;
-                                        </label>
-                                        <input
-                                          id="name"
-                                          type="text"
-                                          className="modal-input"
-                                          placeholder="Nhập tên của bạn"
-                                        />
-                                      </div>
-
-                                      <div>
-                                        <label
-                                          htmlFor="email"
-                                          className="modal-label"
-                                        >
-                                          Email&nbsp;
-                                        </label>
-                                        <input
-                                          id="email"
-                                          type="text"
-                                          className="modal-input"
-                                          placeholder="Nhập email của bạn"
-                                        />
-                                      </div>
-                                    </div>
-
-                                    <label
-                                      htmlFor="send"
-                                      className="modal-label"
-                                    >
-                                      <input id="send" type="checkbox" />
-                                      <span>
-                                        {" "}
-                                        Lưu tên của tôi, email, và trang web
-                                        trong trình duyệt này cho lần bình luận
-                                        kế tiếp của tôi.
-                                      </span>
-                                    </label>
-
-                                    <button className="submit btn--primary">
-                                      GỬI ĐI
-                                    </button>
-                                  </div>
-                                </form>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <Comment
+                      productId={product?._id}
+                      productName={product?.productName}
+                      userId={currentUser?._id}
+                      userName={
+                        currentUser?.displayName || currentUser?.username
+                      }
+                      userImg={currentUser?.img}
+                    />
                   </div>
                 </div>
               </div>
@@ -680,57 +488,6 @@ const Product = () => {
       </div>
       <ToastContainer />
       <Footer />
-      {/* Chat với shop */}
-      {/* <button
-        className="fixed bottom-14 right-14 px-4 py-2 bg-primary rounded-full text-white w-14 h-14"
-        onClick={() => {
-          if (!currentUser) {
-            return navigate("/login");
-          }
-          setShowChat(true);
-        }}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-6 h-10"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"
-          />
-        </svg>
-        {showNotification && (
-          <div className="absolute bottom-full right-1">
-            <div
-              className="bg-white rounded-full border border-solid text-primary text-sm absolute -top-2.5 -right-2.5"
-              onClick={(e) => {
-                setShowNotification(!showNotification);
-                e.stopPropagation();
-              }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                class="w-5 h-5"
-              >
-                <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
-              </svg>
-            </div>
-            <div className="text-black px-3.5 py-2.5 w-64 bg-slate-200 rounded-lg shadow-lg mb-2">
-              <span>👋 Click ngay để chat với Shop</span>
-            </div>
-          </div>
-        )}
-      </button>
-      {showChat && (
-        <Chat onClose={setShowChat} shop={shopId} me={currentUser} />
-      )} */}
     </div>
   );
 };
