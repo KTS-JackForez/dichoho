@@ -165,7 +165,7 @@ const Header = () => {
         </svg>
       </button>
 
-      <div className="w-1/2">
+      <div className="w-1/2 ">
         <div className="flex md:flex-1 w-3/4 justify-start md:justify-center relative mx-auto">
           <input
             type="text"
@@ -226,7 +226,7 @@ const Header = () => {
         </div>
       </div>
 
-      <div className="flex gap-4 items-center">
+      <div className="flex items-center gap-4">
         <div className="md:flex justify-center items-center gap-2 hidden">
           <div className="bg-green-600 p-3 mx-auto text-white rounded-full">
             <svg
@@ -245,7 +245,7 @@ const Header = () => {
             </svg>
           </div>
           <div className="">
-            <p className="text-md">Hỗ trợ khách hàng</p>
+            <p className="text-md hidden lg:block">Hỗ trợ khách hàng</p>
             <p className="text-primary font-extrabold">0788300894</p>
           </div>
         </div>
@@ -254,7 +254,7 @@ const Header = () => {
           onMouseOver={hoverOn}
           onMouseOut={hoverOut}
         >
-          <p className="hidden md:block text-xs uppercase">giỏ hàng</p>
+          <p className="hidden lg:block text-xs uppercase">giỏ hàng</p>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
