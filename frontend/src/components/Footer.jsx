@@ -186,9 +186,11 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className=" bg-green-600 mx-auto py-3 text-white font-semibold text-center">
-        Copyright 2023 © Thiết kế bởi sale168.com
+      <div className=" bg-green-600 mx-auto py-3 text-white font-semibold text-center flex items-center justify-center">
+        <span>Copyright 2023 © Thiết kế bởi </span>
+        <img width={100} height={100} src={logo_v3} alt="" />
       </div>
+      
     </div>
   );
 };
