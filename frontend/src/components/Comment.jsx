@@ -24,12 +24,12 @@ const CommentCard = ({ data }) => {
         <img
           src={data.createdByImg}
           alt=""
-          className="w-16 h-16 min-w-16 rounded-full "
+          className="w-16 h-16 min-w-1/4 rounded-full "
         />
       ) : (
         <div>{textAvatar(data.createdByName)}</div>
       )}
-      <div className="pl-4 ">
+      <div className="pl-4 w-3/4 flex-1">
         <div className="font-semibold">{data.createdByName}</div>
         <div className=" flex gap-1">
           {[1, 2, 3, 4, 5].map((s) => {
@@ -161,7 +161,7 @@ const Comment = ({ productId, productName, userId, userName, userImg }) => {
               <div className="flex gap-3 w-full md:w-5/6 justify-center md:justify-start">
                 {[1, 2, 3, 4, 5].map((s) => {
                   return (
-                    <button onClick={() => setScore(s)}>
+                    <button key={s} onClick={() => setScore(s)}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill={score >= s ? "green" : "none"}
@@ -187,6 +187,7 @@ const Comment = ({ productId, productName, userId, userName, userImg }) => {
               </span>
               <div className="w-full md:w-5/6 space-y-3">
                 <textarea
+                  value={desc}
                   onChange={(e) => setDesc(e.target.value)}
                   className="border border-primary outline-none w-full  p-2 rounded-md"
                   placeholder="Vui lòng không nhập các nội dung liên quan tới chính trị, tôn giáo, tình dục hoặc các nội dung bị cấm theo pháp luật nhà nước Việt Nam"
