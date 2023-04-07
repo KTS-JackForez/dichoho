@@ -471,7 +471,7 @@ const Product = () => {
                     id="link3"
                   >
                     <Comment
-                      productId={product?._id}
+                      productId={productId}
                       productName={product?.productName}
                       userId={currentUser?._id}
                       userName={

@@ -23,9 +23,6 @@ const Messages = () => {
   // });
   useEffect(() => {
     socket.current = io(ktsSocket);
-    socket.current.on("welcome", (data) => {
-      console.log(data);
-    });
     socket.current.on("newNoti", () => {
       setRefresh(true);
     });

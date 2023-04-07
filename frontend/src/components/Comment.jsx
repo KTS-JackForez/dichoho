@@ -1,11 +1,12 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ktsRequest from "../../ultis/ktsrequest";
 import { ToastContainer, toast } from "react-toastify";
+import { io } from "socket.io-client";
+import { ktsSocket } from "../../ultis/config";
 
 const CommentCard = ({ data }) => {
-  console.log(data.img);
   const textAvatar = (text) => {
     let name = text.split(" ");
     if (name.length === 1) {
@@ -18,7 +19,7 @@ const CommentCard = ({ data }) => {
     }
   };
   return (
-    <div className="flex">
+    <div className="flex p-3">
       {data.createdByImg ? (
         <img
           src={data.createdByImg}
@@ -30,7 +31,7 @@ const CommentCard = ({ data }) => {
       )}
       <div className="pl-4 ">
         <div className="font-semibold">{data.createdByName}</div>
-        <div className="pt-2 flex gap-1">
+        <div className=" flex gap-1">
           {[1, 2, 3, 4, 5].map((s) => {
             return (
               <svg
@@ -51,7 +52,7 @@ const CommentCard = ({ data }) => {
             );
           })}
         </div>
-        <div className="py-4">
+        <div className="py-2">
           {new Date(data.createdAt).toLocaleTimeString() +
             " - " +
             new Date(data.createdAt).toLocaleDateString()}
@@ -70,18 +71,32 @@ const Comment = ({ productId, productName, userId, userName, userImg }) => {
   const [refresh, setRefresh] = useState(false);
   const [score, setScore] = useState(0);
   const [desc, setDesc] = useState("");
-
+  const scrollRef = useRef();
+  const socket = useRef();
   useEffect(() => {
+    socket.current = io(ktsSocket);
+    socket.current.on("newComment", (data) => {
+      data === productId && setRefresh(true);
+    });
+  }, []);
+  useEffect(() => {
+    socket.current.emit("newGuest");
+  }, []);
+  useEffect(() => {
+    setRefresh(false);
     const fetchData = async () => {
       try {
         const res = await ktsRequest.get(`/comments/product/${productId}`);
         setData(res.data);
       } catch (err) {
-        toast.error(err.response ? err.response.message : "Nét guộc Ê rô!");
+        toast.error(err.response ? err.response.message : "Nét guộc Ê rô 1!");
       }
     };
     fetchData();
-  }, [productId]);
+  }, [productId, refresh]);
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [data]);
   const handleClick = async () => {
     const { token } = currentUser;
     if (score < 1 || score > 5) {
@@ -89,7 +104,7 @@ const Comment = ({ productId, productName, userId, userName, userImg }) => {
       return;
     }
     if (!desc) {
-      toast.warn("Muốn bình loạn phải nói vài câu chứ má ơi!");
+      toast.warn("Muốn bình loạn thì phải có vài chữ má ơi!");
       return;
     }
     try {
@@ -112,14 +127,20 @@ const Comment = ({ productId, productName, userId, userName, userImg }) => {
         }
       );
       toast.success(res.data);
+      socket.current.emit("addComment", productId);
+      setRefresh(true);
+      setDesc("");
+      setScore(0);
     } catch (err) {
-      toast.error(err.response ? err.response.message : "Nét guộc Ê rô!");
+      console.log(err);
+      toast.error(err.response ? err.response.message : "Nét guộc Ê rô 2!");
     }
   };
   return (
     <div className="">
       {data && data?.length > 0 ? (
-        <div className="space-y-4 h-[80vh] overflow-y-auto">
+        <div className="space-y-4 h-[80vh] overflow-y-auto divide-y divide-dashed divide-primary">
+          <div ref={scrollRef}></div>
           {data.map((c, i) => {
             return <CommentCard key={i} data={c} />;
           })}
