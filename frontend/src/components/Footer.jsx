@@ -2,6 +2,7 @@ import React from "react";
 import logo_v3 from "../assets/imgs/logo_v3.png";
 import tinnhiemmang from "../assets/imgs/tinnhiemmang.webp";
 import bocongthuong from "../assets/imgs/bocongthuong.webp";
+import DCMA from "../assets/imgs/DMCA.jpg";
 import { Link } from "react-router-dom";
 import p1 from "../assets/imgs/p1.webp";
 import p2 from "../assets/imgs/p2.webp";
@@ -164,7 +165,7 @@ const Footer = () => {
                 <a href="/news/640ffc63f73dc135c1d7d1ed"> Hướng dẫn đặt hàng</a>
               </li>
               <li>Phương thức vận chuyển</li>
-              <div className="flex justify-center">
+              <li className="flex justify-center">
                 <img
                   src={bocongthuong}
                   alt=""
@@ -175,7 +176,12 @@ const Footer = () => {
                   alt=""
                   className="md:w-full w-1/2 md:h-1/2 object-contain"
                 />
-              </div>
+              </li>
+              <li>
+                <a href="https://www.dmca.com/r/331pzk9" className="block">
+                <img src={DCMA} alt="" className="-mt-8"/>
+                </a>
+              </li>
             </ul>
           </div>
         </div>
