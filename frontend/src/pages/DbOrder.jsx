@@ -105,7 +105,7 @@ const DbOrder = () => {
                 const st = o.status;
                 const orderDate = new Date(o.createdAt);
                 return (
-                  <div className="">
+                  <div className="" key={i}>
                     <div
                       className="hidden w-full md:flex p-1 gap-1 items-center"
                       key={i}

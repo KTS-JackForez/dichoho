@@ -74,11 +74,11 @@ const Messages = () => {
           showChat && "hidden"
         } md:block w-full max-h-full overflow-auto`}
       >
-        <div className="flex w-full md:w-1/2 relative pb-2">
+        <div className="flex w-full relative pb-2">
           <input
             type="text"
             name="name"
-            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-3 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 py-3 pl-10 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
             placeholder="Tìm kiếm shop ..."
             required="a-z"
             onChange={(e) => {
@@ -91,7 +91,7 @@ const Messages = () => {
             viewBox="0 0 24 24"
             strokeWidth={2}
             stroke="currentColor"
-            className="w-6 h-6 absolute right-2 top-3 text-gray-500"
+            className="w-6 h-6 absolute left-2 top-2.5 text-gray-500"
           >
             <path
               strokeLinecap="round"
@@ -106,7 +106,7 @@ const Messages = () => {
               return (
                 <div
                   key={i}
-                  className={`flex w-full bg-white p-2 justify-between cursor-pointer hover:bg-slate-300 `}
+                  className={`flex w-full bg-white p-2 justify-between cursor-pointer hover:bg-slate-100 `}
                   onClick={() => {
                     setMsg(c);
                     setShowChat(true);
@@ -150,7 +150,11 @@ const Messages = () => {
             })}
           </div>
         ) : (
-          <div>Không có dữ liệu phù hợp</div>
+          <div
+            className={`flex w-full bg-white p-3 justify-between hover:bg-slate-300 rounded `}
+          >
+            Không có dữ liệu phù hợp
+          </div>
         )}
       </div>
       {showChat && (
