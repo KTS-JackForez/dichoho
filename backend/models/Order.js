@@ -20,6 +20,18 @@ const OrderSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    shopId: {
+      type: String,
+      required: true,
+    },
+    shopName: {
+      type: String,
+      required: true,
+    },
+    shopPhone: {
+      type: String,
+      required: true,
+    },
     // Ghi chú của người mua
     note: {
       type: String,
@@ -49,6 +61,38 @@ const OrderSchema = new mongoose.Schema(
     // mã giao dịch (nếu có)
     payCode: {
       type: String,
+    },
+    fromCity:{
+      type:String,
+      required:true,
+    },
+    fromDistrict:{
+      type:String,
+      required:true,
+    },
+    fromWard:{
+      type:String,
+      required:true,
+    },
+    fromAddress:{
+      type:String,
+      required:true,
+    },
+    toCity:{
+      type:String,
+      required:true,
+    },
+    toDistrict:{
+      type:String,
+      required:true,
+    },
+    toWard:{
+      type:String,
+      required:true,
+    },
+    toAddress:{
+      type:String,
+      required:true,
     },
   },
   { timestamps: true }

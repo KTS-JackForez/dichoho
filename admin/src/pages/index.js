@@ -18,3 +18,4 @@ export { default as Report } from "./Report";
 export { default as Categories } from "./Categories";
 export { default as Messages } from "./Messages";
 export { default as Message } from "./Message";
+export { default as Delivery } from "./Delivery";
