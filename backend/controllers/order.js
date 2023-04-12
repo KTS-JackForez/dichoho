@@ -80,3 +80,21 @@ export const getOrder = async (req, res, next) => {
     next(createError(500, `Lỗi không xác định`));
   }
 };
+export const updateById = async (req, res, next) => {
+  if (!permistion.includes(req.user.role))
+    return res
+      .status(403)
+      .json("Bạn không được cấp quyền thực hiện chức năng này!");
+  try {
+    const order = await Order.findById(req.params.id);
+    if (!order) return res.status(404).json("Đơn hàng không khả dụng");
+    await Order.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
+      { new: true }
+    );
+    res.status(200).json("Cập nhật đơn hàng thành công");
+  } catch (error) {
+    next(createError(500, `Lỗi không xác định`));
+  }
+};

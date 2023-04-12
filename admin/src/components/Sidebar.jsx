@@ -39,7 +39,7 @@ const Sidebar = () => {
           />
         </svg>
       </button>
-      <div className="py-6 h-20 text-center">
+      <div className="py-6 h-16 text-center">
         <Link className="uppercase font-bold text-2xl" to="/admin">
           {open && <span>dashboard</span>}
         </Link>
