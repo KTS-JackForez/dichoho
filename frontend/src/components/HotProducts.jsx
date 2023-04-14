@@ -93,7 +93,6 @@ const HotProducts = (props) => {
             );
           })}
         </ul>
-        <ToastContainer />
       </div>
     </div>
   );

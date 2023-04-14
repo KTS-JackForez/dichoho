@@ -11,7 +11,6 @@ import { ToastContainer, toast } from "react-toastify";
 import ktsRequest from "../../ultis/ktsrequest";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-
 const Shop = () => {
   const [shopInfo, setShopInfo] = useState({});
   const [data, setData] = useState([]);
@@ -19,13 +18,17 @@ const Shop = () => {
   const [showChat, setShowChat] = useState(false);
 
   const { currentUser } = useSelector((state) => state.user);
+  const [refresh, setRefresh] = useState(false);
   const keys = ["productName"];
   const { shopId } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
+    setRefresh(false);
     const fetchData = async () => {
       try {
-        const res = await ktsRequest.get(`/products/shop/${shopId}`);
+        const res = await ktsRequest.get(
+          `/products/shop/${shopId}/${currentUser?._id || `sale168.vn`}`
+        );
         setData(res.data.products);
         setShopInfo(res.data.shop);
       } catch (err) {
@@ -34,11 +37,35 @@ const Shop = () => {
       }
     };
     fetchData();
-  }, [window.location.pathname]);
+  }, [window.location.pathname, refresh]);
   const search = (data) => {
     return data.filter((item) =>
       keys.some((key) => item[key].toLowerCase().includes(query))
     );
+  };
+  const handleFollow = async () => {
+    if (!currentUser) {
+      return toast.warn("Vui lòng đăng nhập");
+    }
+    const { token } = currentUser;
+    try {
+      const res = await ktsRequest.put(
+        `/users/${shopInfo.followed ? `unfollow` : `follow`}/${data[0].shopID}`,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success(res.data);
+      setRefresh(true);
+    } catch (error) {
+      toast.error(
+        `${error.response ? error.response.data : `Lét guộc ê rô!!`}`
+      );
+    }
   };
   return (
     <div>
@@ -66,8 +93,8 @@ const Shop = () => {
                 className="w-6 h-6"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
                 />
               </svg>
@@ -102,31 +129,39 @@ const Shop = () => {
                 {shopInfo.address}
               </span>
             </div>
-            <button
-              className="flex items-center gap-4 pl-1 pr-4 py-2 bg-primary rounded hover:bg-green-700"
-              onClick={() => {
-                if (!currentUser) {
-                  return navigate("/login");
-                }
-                setShowChat(true);
-              }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6 inline pl-0.5"
+            <div className="flex gap-2">
+              <button
+                className="bg-white rounded text-primary px-4 py-2 hover:text-white hover:bg-primary active:scale-90 duration-500"
+                onClick={handleFollow}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z"
-                />
-              </svg>
-              <span>Nhắn tin cho Shop </span>
-            </button>
+                {shopInfo.followed ? "Hủy theo dõi" : "Theo dõi"}
+              </button>
+              <button
+                className="flex items-center gap-4 pl-1 pr-4 py-2 bg-primary rounded hover:bg-green-700"
+                onClick={() => {
+                  if (!currentUser) {
+                    return navigate("/login");
+                  }
+                  setShowChat(true);
+                }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6 inline pl-0.5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z"
+                  />
+                </svg>
+                <span>Nhắn tin cho Shop </span>
+              </button>
+            </div>
           </div>
           <div className="w-1/3 px-4">
             <ul className="space-y-4">
@@ -167,7 +202,9 @@ const Shop = () => {
                 </svg>
 
                 <span>Số người theo dõi:</span>
-                <span className="text-orange-300 font-semibold">300</span>
+                <span className="text-orange-300 font-semibold">
+                  {shopInfo.numberFolower}
+                </span>
               </li>
               <li className="space-x-4">
                 <svg
@@ -248,7 +285,7 @@ const Shop = () => {
         {showChat && (
           <Chat onClose={setShowChat} shop={shopId} me={currentUser} />
         )}
-        <ToastContainer />
+        {/* <ToastContainer /> */}
       </div>
       <Footer />
     </div>

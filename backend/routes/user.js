@@ -3,11 +3,13 @@ import {
   changePwd,
   deleteUser,
   dislike,
+  follow,
   getByPhone,
   getUser,
   getUsers,
   like,
   setUserStatus,
+  unFollow,
   updateUser,
   updateUserRole,
 } from "../controllers/user.js";
@@ -26,6 +28,8 @@ router.put("/:id", verifyToken, updateUser);
 router.put("/:id/status/:newstatus", verifyToken, setUserStatus);
 router.put("/like/:productid", verifyToken, like);
 router.put("/dislike/:productid", verifyToken, dislike);
+router.put("/follow/:shopId", verifyToken, follow);
+router.put("/unfollow/:shopId", verifyToken, unFollow);
 router.put("/changepwd/:id", verifyToken, changePwd);
 //update quyền của user
 router.post("/updaterole", verifyToken, updateUserRole);

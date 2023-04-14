@@ -31,7 +31,7 @@ router.get("/hotest/:limit", getHostest);
 router.get("/my", verifyToken, getMyProducts);
 //lấy ra sản phẩm cụ thể theo id
 router.get("/:id", getProduct);
-router.get("/shop/:shopId", getShopProducts);
+router.get("/shop/:shopId/:userId", getShopProducts);
 //lấy ra sản phẩm the tags/categories
 router.get("/tags", verifyToken, getProductByTag);
 //thêm một like cho sản phẩm

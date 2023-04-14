@@ -1,7 +1,6 @@
 import React from "react";
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { toast, ToastContainer } from "react-toastify";
+
 import {
   Navbar,
   Footer,
@@ -29,14 +28,12 @@ const Home = () => {
         <Slider />
         <Sidebar />
         <Category />
-        {/* <MySlider /> */}
         <HotProducts title="nổi bật" />
         <Lastest />
         <ProductCat catTitle="rau - củ - quả" picCover={raucuqua} />
         <ProductCat catTitle="thịt - cá" picCover={thitca} />
         <ProductCat catTitle="mì - cháo - phở" picCover={michaopho} />
       </div>
-      {/* <ToastContainer /> */}
       <Footer />
     </div>
   );

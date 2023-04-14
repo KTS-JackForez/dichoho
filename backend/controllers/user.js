@@ -183,3 +183,33 @@ export const dislike = async (req, res, next) => {
     next(err);
   }
 };
+export const follow = async (req, res, next) => {
+  const id = req.user.id;
+  const shopId = req.params.shopId;
+  try {
+    const p = await User.findByIdAndUpdate(shopId, {
+      $addToSet: { likedBy: id },
+      // $pull: { dislikedBy: id },
+    });
+    res.status(200).json("followed");
+  } catch (err) {
+    next(err);
+  }
+};
+export const unFollow = async (req, res, next) => {
+  const id = req.user.id;
+  const shopId = req.params.shopId;
+  try {
+    const p = await User.findByIdAndUpdate(
+      shopId,
+      {
+        // $addToSet: { dislikedBy: id },
+        $pull: { likedBy: id },
+      },
+      { new: true }
+    );
+    res.status(200).json("UnFollowed");
+  } catch (err) {
+    next(err);
+  }
+};

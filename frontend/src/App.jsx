@@ -20,6 +20,7 @@ import {
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import ktsRequest from "../ultis/ktsrequest";
+import { ToastContainer } from "react-toastify";
 function App() {
   const { currentUser } = useSelector((state) => state.user);
   const ProtectedRoute = ({ children }) => {
@@ -36,6 +37,7 @@ function App() {
   }, []);
   return (
     <BrowserRouter>
+      <ToastContainer />
       <Routes>
         <Route path="/">
           <Route index element={<Home />} />
