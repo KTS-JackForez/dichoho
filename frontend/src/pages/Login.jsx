@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { loginFailure, loginStart, loginSuccess } from "../redux/userSlice";
 import { setMsg } from "../redux/msgSlice";
 import ktsRequest from "../../ultis/ktsrequest";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 
 const Login = () => {
@@ -82,7 +82,6 @@ const Login = () => {
               >
                 Đăng nhập
               </button>
-              <ToastContainer />
               <div className="flex items-start justify-between">
                 <Link
                   to="/"

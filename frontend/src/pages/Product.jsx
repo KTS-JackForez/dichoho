@@ -9,7 +9,7 @@ import {
 } from "../components";
 import { vnd } from "../../ultis/ktsFunc";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import ktsRequest from "../../ultis/ktsrequest";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/cartReducer";
@@ -486,7 +486,6 @@ const Product = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
       <Footer />
     </div>
   );

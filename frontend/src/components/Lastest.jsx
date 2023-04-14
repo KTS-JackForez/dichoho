@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ItemCard from "./ItemCard";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import ktsRequest from "../../ultis/ktsrequest";
 import icon_ns from "../assets/imgs/icon_ns.webp";
 import { Link } from "react-router-dom";
@@ -54,7 +54,6 @@ const Lastest = () => {
           })}
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };

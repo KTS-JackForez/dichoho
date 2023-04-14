@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ItemCard from "./ItemCard";
 import icon_hotsale from "../assets/imgs/icon_hotsale.webp";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import ktsRequest from "../../ultis/ktsrequest";
 const HotProducts = (props) => {
   const slideLeft = () => {
