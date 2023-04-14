@@ -404,7 +404,7 @@ const Product = () => {
                   Mô tả
                 </a>
               </li>
-              <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
+              {/* <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
                 <a
                   className={
                     "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
@@ -422,7 +422,7 @@ const Product = () => {
                 >
                   thông tin bổ sung
                 </a>
-              </li>
+              </li> */}
               <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
                 <a
                   className={
@@ -452,7 +452,7 @@ const Product = () => {
                       dangerouslySetInnerHTML={{ __html: product.description }}
                     ></p>
                   </div>
-                  <div className={openTab === 2 ? "flex" : "hidden"} id="link2">
+                  {/* <div className={openTab === 2 ? "flex" : "hidden"} id="link2">
                     <table>
                       <thead>
                         <tr>
@@ -465,7 +465,7 @@ const Product = () => {
                         </tr>
                       </tbody>
                     </table>
-                  </div>
+                  </div> */}
                   <div
                     className={openTab === 3 ? "block" : "hidden"}
                     id="link3"
