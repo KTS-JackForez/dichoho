@@ -108,7 +108,7 @@ const MyAccount = () => {
         storage,
         `images/users/${currentUser._id}/${name}`
       );
-      const uploadTask = uploadBytesResumable(storageRef, file);
+      const uploadTask = await uploadBytesResumable(storageRef, file);
       uploadTask.on(
         "state_changed",
         (snapshot) => {},

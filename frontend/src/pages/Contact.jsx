@@ -80,7 +80,20 @@ const Contact = () => {
               alt=""
               className=" w-1/3 object-contain"
             /> */}
-            <div className="w-full h-full"><div className="w-full h-full"><iframe className="w-full pr-3 pt-3.5 h-full" id="gmap_canvas" src="https://maps.google.com/maps?q=Nhà hát lớn Thành Phố Hải Phòng&t=&z=10&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><br/></div></div>
+            <div className="w-full h-full">
+              <div className="w-full h-full">
+                <iframe
+                  className="w-full pr-3 pt-3.5 h-full"
+                  id="gmap_canvas"
+                  src="https://maps.google.com/maps?q=766 Nguyễn Văn Linh Hải Phòngg&t=&z=10&ie=UTF8&iwloc=&output=embed"
+                  frameborder="0"
+                  scrolling="no"
+                  marginheight="0"
+                  marginwidth="0"
+                ></iframe>
+                <br />
+              </div>
+            </div>
           </div>
           <div className="w-full md:w-1/2">
             <form className="w-full flex flex-col gap-2">
