@@ -4,26 +4,17 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../../ultis/firebase";
 import ktsRequest from "../../ultis/ktsrequest";
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 const EditUser = () => {
   const { currentUser } = useSelector((state) => state.user);
+  const { userId } = useParams();
   const { token } = currentUser;
-  const [displayName, setDisplayName] = useState(currentUser.displayName);
-  const [phone, setPhone] = useState(currentUser.phone);
-  const [email, setEmail] = useState(currentUser.email);
+  const navigate = useNavigate();
   const [cities, setCities] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
-  const [cityCode, setCityCode] = useState(currentUser?.cityCode);
-  const [districtCode, setDistrictCode] = useState(currentUser?.districtCode);
-  const [wardCode, setWardCode] = useState(currentUser?.wardCode);
-  const [cityName, setCityName] = useState("");
-  const [districtName, setDistrictName] = useState("");
-  const [wardName, setWardName] = useState("");
-  const [cityFullName, setCityFullName] = useState("");
-  const [districtFullName, setDistrictFullName] = useState("");
-  const [wardFullName, setWardFullName] = useState("");
 
   const [editName, setEditName] = useState(false);
   const [editPhone, setEditPhone] = useState(false);
@@ -35,7 +26,6 @@ const EditUser = () => {
   const [check, setCheck] = useState(false);
   const [checkChangePwd, setCheckChangePwd] = useState(false);
   const [inputs, setInputs] = useState({});
-  const [pwd, setPwd] = useState("");
   const [newpwd, setNewPwd] = useState("");
   const [rePwd, setRePwd] = useState("");
   const handleChange = (e) => {
@@ -44,7 +34,28 @@ const EditUser = () => {
       return { ...prev, [e.target.name]: e.target.value };
     });
   };
-
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (!["admin", "staff"].includes(currentUser.role)) {
+        return navigate("/notfound");
+      }
+      if (currentUser._id === userId) {
+        return navigate("/admin/thong-tin-tai-khoan");
+      }
+      try {
+        const res = await ktsRequest.get(`users/${userId}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setInputs(res.data);
+      } catch (error) {
+        toast.error(error);
+      }
+    };
+    fetchUser();
+  }, [window.location.pathname]);
   useEffect(() => {
     const getCities = async () => {
       try {
@@ -61,17 +72,15 @@ const EditUser = () => {
     const getDistricts = async () => {
       try {
         const resd = await axios.get(
-          `https://api.ktscorp.vn/api/cities/districts/${cityCode}`
+          `https://api.ktscorp.vn/api/cities/districts/${inputs?.cityCode}`
         );
-        const cName = cities.find((city) => city.code === cityCode);
+        const cName = cities.find((city) => city.code === inputs?.cityCode);
         const data = Object.values(resd.data);
         setDistricts(data);
-        setCityName(cName.name);
-        setCityFullName(cName.name_with_type);
         setInputs((prev) => {
           return {
             ...prev,
-            cityCode,
+            cityCode: inputs?.cityCode,
             cityName: cName?.name,
             cityFullName: cName?.name_with_type,
           };
@@ -82,22 +91,20 @@ const EditUser = () => {
       }
     };
     getDistricts();
-  }, [cityCode]);
+  }, [inputs?.cityCode]);
   useEffect(() => {
     const getWards = async () => {
       try {
         const resw = await axios.get(
-          `https://api.ktscorp.vn/api/cities/wards/${districtCode}`
+          `https://api.ktscorp.vn/api/cities/wards/${inputs?.districtCode}`
         );
         const data = Object.values(resw.data);
-        const dName = districts.find((d) => d.code === districtCode);
+        const dName = districts.find((d) => d.code === inputs?.districtCode);
         setWards(data);
-        setDistrictName(dName.name);
-        setDistrictFullName(dName.name_with_type);
         setInputs((prev) => {
           return {
             ...prev,
-            districtCode,
+            districtCode: inputs?.districtCode,
             districtName: dName?.name,
             districtFullName: dName?.name_with_type,
           };
@@ -108,17 +115,15 @@ const EditUser = () => {
       }
     };
     getWards();
-  }, [districtCode]);
+  }, [inputs?.districtCode]);
   useEffect(() => {
     const getWard = () => {
-      if (wardCode) {
-        const wName = wards.find((w) => w.code === wardCode);
-        setWardName(wName?.name);
-        setWardFullName(wName?.name_with_type);
+      if (inputs?.wardCode) {
+        const wName = wards.find((w) => w.code === inputs?.wardCode);
         setInputs((prev) => {
           return {
             ...prev,
-            wardCode,
+            wardCode: inputs?.wardCode,
             wardName: wName?.name,
             wardFullName: wName?.name_with_type,
           };
@@ -127,14 +132,11 @@ const EditUser = () => {
       }
     };
     getWard();
-  }, [wardCode]);
+  }, [inputs?.wardCode]);
   useEffect(() => {
     const uploadFile = async () => {
-      const name = new Date().getTime() + currentUser._id + "_" + file.name;
-      const storageRef = ref(
-        storage,
-        `images/users/${currentUser._id}/${name}`
-      );
+      const name = new Date().getTime() + inputs._id + "_" + file.name;
+      const storageRef = ref(storage, `images/users/${inputs._id}/${name}`);
       const uploadTask = uploadBytesResumable(storageRef, file);
       uploadTask.on(
         "state_changed",
@@ -177,11 +179,10 @@ const EditUser = () => {
       toast.error("Mật khẩu mới / xác nhận mật khẩu mới không trùng khớp");
       return;
     }
-    console.log("change PWD");
     try {
       const res = await ktsRequest.put(
-        `users/changepwd/${currentUser._id}`,
-        { password: pwd, newpwd: newpwd },
+        `users/changepwd/${inputs._id}`,
+        { password: "", newpwd: newpwd },
         {
           headers: {
             "Content-Type": "application/json",
@@ -197,12 +198,11 @@ const EditUser = () => {
   };
   return (
     <div className="w-full h-full p-2 overflow-hidden">
-      <h3>Edit user</h3>
-      <div className="w-full bg-white rounded flex flex-col md:flex-row h-full overflow-auto">
-        <div className="md:w-1/4 w-full md:py-12 py-3 px-2 flex flex-col items-center">
+      <div className="w-full bg-white rounded px-3 md:px-6 flex flex-col md:flex-row h-full overflow-auto">
+        <div className="md:w-1/3 w-full md:py-12 py-3 px-2 flex flex-col items-center">
           <div className="w-32 h-32 aspect-square rounded-full relative border-2 border-primary">
             <img
-              src={file ? URL.createObjectURL(file) : currentUser?.img}
+              src={file ? URL.createObjectURL(file) : inputs?.img}
               alt=""
               className="w-full h-full object-cover object-center rounded-full"
             />
@@ -234,9 +234,85 @@ const EditUser = () => {
             </button>
           </div>
 
-          <div className="font-semibold">#{currentUser.username}</div>
+          <div className="font-semibold">
+            #{inputs?.username}{" "}
+            <button
+              onClick={() => setEditPassword(!editPassword)}
+              className="text-orange-500 hover:text-red-500"
+              title="đổi mật khẩu của user"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-4 h-4"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"
+                />
+              </svg>
+            </button>
+          </div>
           <div className="px-2 py-0.5 bg-orange-300 text-orange-700 rounded-md">
-            {currentUser.role}
+            {inputs?.role}
+          </div>
+          <div className="w-full space-y-3">
+            {editPassword && (
+              <div className="w-full space-y-3 mt-10">
+                <div className="w-full">
+                  <label htmlFor="" className="">
+                    Mật khẩu mới
+                  </label>
+                  <div className="flex gap-2">
+                    <input
+                      type="password"
+                      name="newPassword"
+                      className=" w-full rounded border border-gray-300 px-3 py-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
+                      placeholder="*********"
+                      required="a-z"
+                      onChange={(e) => {
+                        setNewPwd(e.target.value), setCheckChangePwd(true);
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className="w-full">
+                  <label htmlFor="" className="">
+                    Xác nhận mật khẩu mới
+                  </label>
+                  <div className="flex gap-2">
+                    <input
+                      type="password"
+                      name="renewPassword"
+                      className=" w-full rounded border border-gray-300 px-3 py-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
+                      placeholder="*********"
+                      required="a-z"
+                      onChange={(e) => {
+                        setRePwd(e.target.value), setCheckChangePwd(true);
+                      }}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <button
+                    type="submit"
+                    className={`w-full rounded ${
+                      checkChangePwd
+                        ? "bg-primary hover:bg-green-700 active:scale-95 transition-transform"
+                        : "bg-slate-400"
+                    } px-5 py-3 text-center text-sm font-medium text-white md:mt-6`}
+                    onClick={handleChangePwd}
+                    disabled={!checkChangePwd}
+                  >
+                    Thay đổi mật khẩu
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
           <input
             type="file"
@@ -246,15 +322,15 @@ const EditUser = () => {
             accept="image/*"
           />
         </div>
-        <div className="md:w-3/4 w-full flex-col gap-2 p-2 flex md:flex-row">
-          <div className="md:w-1/2 w-full space-y-3">
+        <div className="md:w-2/3 w-full flex-col gap-2 p-2 flex md:flex-row">
+          <div className="w-full space-y-3">
             <h3 className="uppercase font-bold w-full">Thông tin cơ bản</h3>
             <div className="w-full">
               <label htmlFor="displayName" className="">
                 Tên hiển thị
               </label>
               <div className="flex gap-2">
-                <div className="md:w-3/4 w-full relative">
+                <div className="w-full relative">
                   <input
                     type="text"
                     name="displayName"
@@ -262,9 +338,7 @@ const EditUser = () => {
                       editName ? "" : "bg-gray-200"
                     }
                 } border-gray-300 bg-gray-50 px-3 py-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm`}
-                    placeholder={
-                      currentUser?.displayName || currentUser.username
-                    }
+                    placeholder={inputs?.displayName || inputs.username}
                     required="a-z"
                     disabled={!editName}
                     onChange={handleChange}
@@ -316,7 +390,7 @@ const EditUser = () => {
                 Số điện thoại
               </label>
               <div className="flex gap-2">
-                <div className="relative md:w-3/4 w-full">
+                <div className="relative  w-full">
                   <input
                     type="text"
                     name="phone"
@@ -324,7 +398,7 @@ const EditUser = () => {
                       editPhone ? "" : "bg-gray-200"
                     }
                 } border-gray-300 bg-gray-50 px-3 py-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm `}
-                    placeholder={currentUser.phone}
+                    placeholder={inputs?.phone}
                     required="a-z"
                     disabled={!editPhone}
                     onChange={handleChange}
@@ -377,7 +451,7 @@ const EditUser = () => {
                 Email{" "}
               </label>
               <div className="flex gap-2">
-                <div className="md:w-3/4 w-full relative">
+                <div className=" w-full relative">
                   <input
                     type="text"
                     name="email"
@@ -385,7 +459,7 @@ const EditUser = () => {
                       editEmail ? "" : "bg-gray-200"
                     }
                 } border-gray-300 bg-gray-50 px-3 py-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm`}
-                    placeholder={currentUser.email || "user@sale168.vn"}
+                    placeholder={inputs?.email || "user@sale168.vn"}
                     required="a-z"
                     disabled={!editEmail}
                     onChange={handleChange}
@@ -435,14 +509,14 @@ const EditUser = () => {
                 Địa chỉ
               </label>
               <div className="flex gap-2">
-                <div className="md:w-3/4 w-full relative">
+                <div className=" w-full relative">
                   <input
                     type="text"
                     name="address"
                     className={`w-full rounded border ${
                       editAddress ? "" : "bg-gray-200"
                     } border-gray-300 px-3 py-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm`}
-                    placeholder={currentUser.address || "766 Nguyễn Văn Linh"}
+                    placeholder={inputs?.address || "766 Nguyễn Văn Linh"}
                     required="a-z"
                     disabled={!editAddress}
                     onChange={handleChange}
@@ -494,21 +568,22 @@ const EditUser = () => {
             </div>
             {editAddress && (
               <div className="w-full justify-start flex">
-                <div className="md:w-1/4 w-1/3 flex flex-col pr-1">
+                <div className="w-1/3 flex flex-col pr-1">
                   <label htmlFor="" className="hidden md:block">
                     Tỉnh/Thành
                   </label>
                   <select
                     id="cities"
-                    class="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
-                    onChange={(e) => setCityCode(e.target.value)}
+                    name="cityCode"
+                    className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
+                    onChange={handleChange}
                   >
                     {cities.map((i) => {
                       return (
                         <option
                           value={i.code}
                           key={i.code}
-                          selected={i.code === currentUser.cityCode}
+                          selected={i.code === inputs?.cityCode}
                         >
                           {i.name_with_type}
                         </option>
@@ -516,21 +591,22 @@ const EditUser = () => {
                     })}
                   </select>
                 </div>
-                <div className="md:w-1/4 w-1/3 flex flex-col pr-1">
+                <div className="w-1/3 flex flex-col pr-1">
                   <label htmlFor="" className="hidden md:block">
                     Quận/Huyện
                   </label>
                   <select
                     id="districts"
-                    class="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
-                    onChange={(e) => setDistrictCode(e.target.value)}
+                    name="districtCode"
+                    className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
+                    onChange={handleChange}
                   >
                     {districts.map((i) => {
                       return (
                         <option
                           value={i.code}
                           key={i.code}
-                          selected={i.code === currentUser.districtCode}
+                          selected={i.code === inputs?.districtCode}
                         >
                           {i.name_with_type}
                         </option>
@@ -538,21 +614,22 @@ const EditUser = () => {
                     })}
                   </select>
                 </div>
-                <div className="md:w-1/4 w-1/3 flex flex-col">
+                <div className="w-1/3 flex flex-col">
                   <label htmlFor="" className="hidden md:block">
                     Phường/Xã
                   </label>
                   <select
                     id="wards"
-                    class="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
-                    onChange={(e) => setWardCode(e.target.value)}
+                    name="wardCode"
+                    className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
+                    onChange={handleChange}
                   >
                     {wards.map((i) => {
                       return (
                         <option
                           value={i.code}
                           key={i.code}
-                          selected={i.code === currentUser.districtCode}
+                          selected={i.code === inputs?.wardCode}
                         >
                           {i.name_with_type}
                         </option>
@@ -565,130 +642,17 @@ const EditUser = () => {
             <div className="w-full">
               <button
                 type="submit"
-                className={`md:w-3/4 w-full rounded ${
+                className={` w-full rounded ${
                   check
                     ? "bg-primary hover:bg-green-700 active:scale-95 transition-transform"
                     : "bg-slate-400"
-                } px-5 py-3 text-center text-sm font-medium text-white md:mt-12 mt-3`}
+                } px-5 py-3 text-center text-sm font-medium text-white md:mt-6 mt-3`}
                 onClick={handleChangeInfo}
                 disabled={!check}
               >
                 Cập nhật thông tin
               </button>
             </div>
-          </div>
-          <div className="md:w-1/2 w-full space-y-3">
-            <h3 className="uppercase font-bold w-full">Bảo mật</h3>
-            <div className="w-full">
-              <label htmlFor="password" className="">
-                {editPassword ? "Mật khẩu cũ" : "Mật khẩu"}
-              </label>
-              <div className="flex gap-2">
-                <div className="md:w-3/4 w-full relative">
-                  <input
-                    type="password"
-                    name="password"
-                    className={`w-full rounded border ${
-                      editPassword ? "" : "bg-gray-200"
-                    } border-gray-300 px-3 py-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm`}
-                    placeholder="*********"
-                    required="a-z"
-                    disabled={!editPassword}
-                    onChange={(e) => setPwd(e.target.value)}
-                  />
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-4 h-4 absolute right-3 top-2.5 text-gray-600"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"
-                    />
-                  </svg>
-                </div>
-
-                <button
-                  onClick={() => setEditPassword(!editPassword)}
-                  className={`px-2.5 ${
-                    editPassword
-                      ? "bg-orange-400 text-white"
-                      : "text-orange-400 bg-white"
-                  } rounded border border-orange-400  hover:border-orange-400 hover:bg-orange-400 hover:text-white`}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-4 h-4"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </div>
-            {editPassword && (
-              <div className="w-full space-y-3">
-                <div className="w-full">
-                  <label htmlFor="" className="">
-                    Mật khẩu mới
-                  </label>
-                  <div className="flex gap-2">
-                    <input
-                      type="password"
-                      name="newPassword"
-                      className="md:w-3/4 w-full rounded border border-gray-300 px-3 py-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-                      placeholder="*********"
-                      required="a-z"
-                      onChange={(e) => {
-                        setNewPwd(e.target.value), setCheckChangePwd(true);
-                      }}
-                    />
-                  </div>
-                </div>
-                <div className="w-full">
-                  <label htmlFor="" className="">
-                    Xác nhận mật khẩu mới
-                  </label>
-                  <div className="flex gap-2">
-                    <input
-                      type="password"
-                      name="renewPassword"
-                      className="md:w-3/4 w-full rounded border border-gray-300 px-3 py-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-                      placeholder="*********"
-                      required="a-z"
-                      onChange={(e) => {
-                        setRePwd(e.target.value), setCheckChangePwd(true);
-                      }}
-                    />
-                  </div>
-                </div>
-                <div className="w-full">
-                  <button
-                    type="submit"
-                    className={`md:w-3/4 w-full rounded ${
-                      checkChangePwd
-                        ? "bg-primary hover:bg-green-700 active:scale-95 transition-transform"
-                        : "bg-slate-400"
-                    } px-5 py-3 text-center text-sm font-medium text-white mt-5`}
-                    onClick={handleChangePwd}
-                    disabled={!checkChangePwd}
-                  >
-                    Thay đổi mật khẩu
-                  </button>
-                </div>
-              </div>
-            )}
           </div>
         </div>
         <ToastContainer />

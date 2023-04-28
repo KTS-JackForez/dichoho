@@ -551,7 +551,7 @@ const MyAccount = () => {
                         <option
                           value={i.code}
                           key={i.code}
-                          selected={i.code === currentUser.districtCode}
+                          selected={i.code === currentUser.wardCode}
                         >
                           {i.name_with_type}
                         </option>
