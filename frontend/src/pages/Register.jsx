@@ -121,7 +121,7 @@ const Register = () => {
       username: name,
       password,
       phone,
-      displayName,
+      displayName: displayName || name,
       cityCode,
       districtCode,
       wardCode,
@@ -145,7 +145,14 @@ const Register = () => {
     };
     ktsRequest(config)
       .then(function (response) {
-        toast.success("Đăng ký thành công!");
+        toast.success(
+          <div>
+            <p>Bạn đã đăng ký là người bán hàng</p>
+            <a href="https://quantri.sale168.vn" className="text-green-600">
+              Vui lòng đăng nhập tại đây
+            </a>
+          </div>
+        );
         setName("");
         setDisplayName("");
         setPassword("");
