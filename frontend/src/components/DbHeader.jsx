@@ -156,7 +156,7 @@ const DbHeader = () => {
               textAvatar(currentUser.username)
             )}
 
-            <div className="group-hover:flex absolute top-16 right-0 rounded border border-primary bg-white hidden">
+            <div className="group-hover:flex absolute top-14 right-0 rounded border border-primary bg-white hidden">
               <button
                 className="hover:bg-primary px-4 py-2 hover:text-white text-black w-48"
                 onClick={(e) => {

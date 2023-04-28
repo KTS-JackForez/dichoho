@@ -1,11 +1,10 @@
 import { useEffect, useState, useRef } from "react";
 import ktsRequest from "../../ultis/ktsrequest";
 import { useSelector } from "react-redux";
-import Message from "./Message";
+import Message from "../components/Message";
 import { io } from "socket.io-client";
 import { ktsSocket } from "../../ultis/config";
 import TimeAgo from "timeago-react";
-
 import vi from "timeago.js/lib/lang/vi";
 import * as timeago from "timeago.js";
 timeago.register("vi", vi);
@@ -16,16 +15,14 @@ const Messages = () => {
   const [showChat, setShowChat] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const [query, setQuery] = useState("");
-
   const { currentUser } = useSelector((state) => state.user);
   const { token } = currentUser;
   const socket = useRef();
-
+  // socket.on("newNoti", () => {
+  //   setRefresh(true);
+  // });
   useEffect(() => {
     socket.current = io(ktsSocket);
-    socket.current.on("welcome", (data) => {
-      console.log(data);
-    });
     socket.current.on("newNoti", () => {
       setRefresh(true);
     });
@@ -47,7 +44,6 @@ const Messages = () => {
           },
         });
         setData(res.data);
-        // console.log(res.data);
       } catch (error) {
         console.log(error);
         // toast.error(
@@ -57,6 +53,9 @@ const Messages = () => {
     };
     fetchData();
   }, [refresh]);
+  const search = (data) => {
+    return data.filter((item) => item["title"].toLowerCase().includes(query));
+  };
   const textAvatar = (text) => {
     let name = text.split(" ");
     if (name.length === 1) {
@@ -68,9 +67,6 @@ const Messages = () => {
       );
     }
   };
-  const search = (data) => {
-    return data.filter((item) => item["title"].toLowerCase().includes(query));
-  };
   return (
     <div className="w-full h-full p-2 md:grid md:auto-cols-fr md:grid-flow-col gap-2">
       <div
@@ -78,11 +74,11 @@ const Messages = () => {
           showChat && "hidden"
         } md:block w-full max-h-full overflow-auto`}
       >
-        <div className="flex w-full md:w-1/2 relative pb-2">
+        <div className="flex w-full relative pb-2">
           <input
             type="text"
             name="name"
-            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-3 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 py-3 pl-10 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
             placeholder="Tìm kiếm shop ..."
             required="a-z"
             onChange={(e) => {
@@ -95,7 +91,7 @@ const Messages = () => {
             viewBox="0 0 24 24"
             strokeWidth={2}
             stroke="currentColor"
-            className="w-6 h-6 absolute right-2 top-3 text-gray-500"
+            className="w-6 h-6 absolute left-2 top-2.5 text-gray-500"
           >
             <path
               strokeLinecap="round"
@@ -110,7 +106,7 @@ const Messages = () => {
               return (
                 <div
                   key={i}
-                  className={`flex w-full bg-white p-2 justify-between cursor-pointer hover:bg-slate-300 `}
+                  className={`flex w-full bg-white p-2 justify-between cursor-pointer hover:bg-slate-100 `}
                   onClick={() => {
                     setMsg(c);
                     setShowChat(true);
@@ -154,7 +150,11 @@ const Messages = () => {
             })}
           </div>
         ) : (
-          <div>Không có dữ liệu phù hợp</div>
+          <div
+            className={`flex w-full bg-white p-3 justify-between hover:bg-slate-300 rounded `}
+          >
+            Không có dữ liệu phù hợp
+          </div>
         )}
       </div>
       {showChat && (
