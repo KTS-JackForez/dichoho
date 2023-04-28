@@ -130,7 +130,10 @@ const Header = () => {
               </div>
             </div>
           </div>
-          <h3 className="font-bold"> {currentUser.displayName}</h3>
+          <h3 className="font-bold hidden md:block">
+            {" "}
+            {currentUser.displayName}
+          </h3>
           <img src="" alt="" />
           <div className="rounded-full h-12 w-12 bg-orange-500 flex justify-center items-center text-white font-bold overflow-hidden border-2 border-primary">
             {currentUser.img ? (

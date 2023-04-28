@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../../ultis/firebase";
+import ktsRequest from "../../ultis/ktsrequest";
+import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
 
 const MyAccount = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -9,6 +12,18 @@ const MyAccount = () => {
   const [displayName, setDisplayName] = useState(currentUser.displayName);
   const [phone, setPhone] = useState(currentUser.phone);
   const [email, setEmail] = useState(currentUser.email);
+  const [cities, setCities] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [wards, setWards] = useState([]);
+  const [cityCode, setCityCode] = useState(currentUser?.cityCode);
+  const [districtCode, setDistrictCode] = useState(currentUser?.districtCode);
+  const [wardCode, setWardCode] = useState(currentUser?.wardCode);
+  const [cityName, setCityName] = useState("");
+  const [districtName, setDistrictName] = useState("");
+  const [wardName, setWardName] = useState("");
+  const [cityFullName, setCityFullName] = useState("");
+  const [districtFullName, setDistrictFullName] = useState("");
+  const [wardFullName, setWardFullName] = useState("");
 
   const [editName, setEditName] = useState(false);
   const [editPhone, setEditPhone] = useState(false);
@@ -16,41 +31,147 @@ const MyAccount = () => {
   const [editAddress, setEditAddress] = useState(false);
   const [editPassword, setEditPassword] = useState(false);
   const [file, setFile] = useState(null);
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState(currentUser?.img);
   const [check, setCheck] = useState(false);
+  const [checkChangePwd, setCheckChangePwd] = useState(false);
   const [inputs, setInputs] = useState({});
-  // const handleChange = (e) => {
-  //   setCheck(true);
-  //   setInputs((prev) => {
-  //     return { ...prev, [e.target.name]: e.target.value };
-  //   });
-  // };
+  const [pwd, setPwd] = useState("");
+  const [newpwd, setNewPwd] = useState("");
+  const [rePwd, setRePwd] = useState("");
+  const handleChange = (e) => {
+    setCheck(true);
+    setInputs((prev) => {
+      return { ...prev, [e.target.name]: e.target.value };
+    });
+  };
+
   useEffect(() => {
-    // const uploadFile = async () => {
-    //   const name = new Date().getTime() + currentUser._id + "_" + file.name;
-    //   const storageRef = ref(
-    //     storage,
-    //     `images/users/${currentUser._id}/${name}`
-    //   );
-    //   const uploadTask = uploadBytesResumable(storageRef, file);
-    //   uploadTask.on(
-    //     "state_changed",
-    //     (snapshot) => {},
-    //     (error) => {},
-    //     () => {
-    //       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-    //         setUrl((prev) => [...prev, downloadURL]);
-    //       });
-    //     }
-    //   );
-    // };
-    // file && uploadFile();
+    const getCities = async () => {
+      try {
+        const res = await axios.get("https://api.ktscorp.vn/api/cities");
+        const data = Object.values(res.data);
+        setCities(data);
+      } catch (error) {
+        toast.error(error);
+      }
+    };
+    getCities();
+  }, []);
+  useEffect(() => {
+    const getDistricts = async () => {
+      try {
+        const resd = await axios.get(
+          `https://api.ktscorp.vn/api/cities/districts/${cityCode}`
+        );
+        const cName = cities.find((city) => city.code === cityCode);
+        const data = Object.values(resd.data);
+        setDistricts(data);
+        setCityName(cName.name);
+        setCityFullName(cName.name_with_type);
+      } catch (error) {
+        toast.error(error);
+      }
+    };
+    getDistricts();
+  }, [cityCode]);
+  useEffect(() => {
+    const getWards = async () => {
+      try {
+        const resw = await axios.get(
+          `https://api.ktscorp.vn/api/cities/wards/${districtCode}`
+        );
+        const data = Object.values(resw.data);
+        const dName = districts.find((d) => d.code === districtCode);
+        setWards(data);
+        setDistrictName(dName.name);
+        setDistrictFullName(dName.name_with_type);
+      } catch (error) {
+        toast.error(error);
+      }
+    };
+    getWards();
+  }, [districtCode]);
+  useEffect(() => {
+    const getWard = () => {
+      if (wardCode) {
+        const wName = wards.find((w) => w.code === wardCode);
+        setWardName(wName?.name);
+        setWardFullName(wName?.name_with_type);
+      }
+    };
+    getWard();
+  }, [wardCode]);
+  useEffect(() => {
+    const uploadFile = async () => {
+      const name = new Date().getTime() + currentUser._id + "_" + file.name;
+      const storageRef = ref(
+        storage,
+        `images/users/${currentUser._id}/${name}`
+      );
+      const uploadTask = await uploadBytesResumable(storageRef, file);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {},
+        (error) => {},
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setUrl(downloadURL);
+          });
+        }
+      );
+    };
+    file && uploadFile();
   }, [file]);
+  const handleChangeInfo = async () => {
+    try {
+      const res = await ktsRequest.put(
+        `users/${currentUser._id}`,
+        { ...inputs, img: url },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success(res.data);
+    } catch (error) {
+      toast.error(error.response ? error.response.data : "Network Error!");
+    }
+    // setRefresh(true);
+  };
+  const handleChangePwd = async () => {
+    if (!newpwd) {
+      toast.error("Mật khẩu mới không được để trống");
+      return;
+    }
+    if (newpwd !== rePwd) {
+      toast.error("Mật khẩu mới / xác nhận mật khẩu mới không trùng khớp");
+      return;
+    }
+    console.log("change PWD");
+    try {
+      const res = await ktsRequest.put(
+        `users/changepwd/${currentUser._id}`,
+        { password: pwd, newpwd: newpwd },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success(res.data);
+    } catch (error) {
+      toast.error(error.response ? error.response.data : "Network Error!");
+    }
+    // setRefresh(true);
+  };
   return (
     <div className="w-full px-2">
-      <div className="w-full bg-white rounded flex overflow-hidden h-[calc(100vh-100px)]">
-        <div className="w-1/4 py-12 px-2 flex flex-col items-center">
-          <div className="w-32 h-32 rounded-full relative border-2 border-primary">
+      <div className="w-full bg-white rounded flex flex-col md:flex-row md:h-[calc(100vh-100px)] h-full mb-[4.75rem] overflow-auto">
+        <div className="md:w-1/4 w-full md:py-12 py-3 px-2 flex flex-col items-center">
+          <div className="w-32 h-32 aspect-square rounded-full relative border-2 border-primary">
             <img
               src={file ? URL.createObjectURL(file) : currentUser?.img}
               alt=""
@@ -96,15 +217,15 @@ const MyAccount = () => {
             accept="image/*"
           />
         </div>
-        <div className="w-3/4 gap-2 p-2 flex">
-          <div className="w-1/2 space-y-3">
+        <div className="md:w-3/4 w-full flex-col gap-2 p-2 flex md:flex-row">
+          <div className="md:w-1/2 w-full space-y-3">
             <h3 className="uppercase font-bold w-full">Thông tin cơ bản</h3>
             <div className="w-full">
               <label htmlFor="displayName" className="">
                 Tên hiển thị
               </label>
               <div className="flex gap-2">
-                <div className="w-3/4 relative">
+                <div className="md:w-3/4 w-full relative">
                   <input
                     type="text"
                     name="displayName"
@@ -112,9 +233,12 @@ const MyAccount = () => {
                       editName ? "" : "bg-gray-200"
                     }
                 } border-gray-300 bg-gray-50 px-3 py-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm`}
-                    placeholder="JackForez"
+                    placeholder={
+                      currentUser?.displayName || currentUser.username
+                    }
                     required="a-z"
                     disabled={!editName}
+                    onChange={handleChange}
                   />
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -163,7 +287,7 @@ const MyAccount = () => {
                 Số điện thoại
               </label>
               <div className="flex gap-2">
-                <div className="relative w-3/4">
+                <div className="relative md:w-3/4 w-full">
                   <input
                     type="text"
                     name="phone"
@@ -174,6 +298,7 @@ const MyAccount = () => {
                     placeholder={currentUser.phone}
                     required="a-z"
                     disabled={!editPhone}
+                    onChange={handleChange}
                   />
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -223,7 +348,7 @@ const MyAccount = () => {
                 Email{" "}
               </label>
               <div className="flex gap-2">
-                <div className="w-3/4 relative">
+                <div className="md:w-3/4 w-full relative">
                   <input
                     type="text"
                     name="email"
@@ -234,6 +359,7 @@ const MyAccount = () => {
                     placeholder={currentUser.email || "user@sale168.com"}
                     required="a-z"
                     disabled={!editEmail}
+                    onChange={handleChange}
                   />
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -280,7 +406,7 @@ const MyAccount = () => {
                 Địa chỉ
               </label>
               <div className="flex gap-2">
-                <div className="w-3/4 relative">
+                <div className="md:w-3/4 w-full relative">
                   <input
                     type="text"
                     name="address"
@@ -290,6 +416,7 @@ const MyAccount = () => {
                     placeholder={currentUser.address || "766 Nguyễn Văn Linh"}
                     required="a-z"
                     disabled={!editAddress}
+                    onChange={handleChange}
                   />
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -338,55 +465,70 @@ const MyAccount = () => {
             </div>
             {editAddress && (
               <div className="w-full justify-start flex">
-                <div className="w-1/4 flex flex-col pr-1">
-                  <label htmlFor="">Tỉnh/Thành</label>
+                <div className="md:w-1/4 w-1/3 flex flex-col pr-1">
+                  <label htmlFor="" className="hidden md:block">
+                    Tỉnh/Thành
+                  </label>
                   <select
                     id="districts"
                     class="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
                     // onChange={(e) => setDistrictCode(e.target.value)}
                   >
-                    <option selected>Quận/Huyện</option>
-                    {/* {districts.map((i) => {
-                  return (
-                    <option value={i.code} key={i.code}>
-                      {i.name_with_type}
-                    </option>
-                  );
-                })} */}
+                    {cities.map((i) => {
+                      return (
+                        <option
+                          value={i.code}
+                          key={i.code}
+                          selected={i.code === currentUser.cityCode}
+                        >
+                          {i.name_with_type}
+                        </option>
+                      );
+                    })}
                   </select>
                 </div>
-                <div className="w-1/4 flex flex-col pr-1">
-                  <label htmlFor="">Quận/Huyện</label>
+                <div className="md:w-1/4 w-1/3 flex flex-col pr-1">
+                  <label htmlFor="" className="hidden md:block">
+                    Quận/Huyện
+                  </label>
                   <select
                     id="districts"
                     class="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
                     // onChange={(e) => setDistrictCode(e.target.value)}
                   >
-                    <option selected>Quận/Huyện</option>
-                    {/* {districts.map((i) => {
-                  return (
-                    <option value={i.code} key={i.code}>
-                      {i.name_with_type}
-                    </option>
-                  );
-                })} */}
+                    {districts.map((i) => {
+                      return (
+                        <option
+                          value={i.code}
+                          key={i.code}
+                          selected={i.code === currentUser.districtCode}
+                        >
+                          {i.name_with_type}
+                        </option>
+                      );
+                    })}
                   </select>
                 </div>
-                <div className="w-1/4 flex flex-col">
-                  <label htmlFor="">Phường/Xã</label>
+                <div className="md:w-1/4 w-1/3 flex flex-col">
+                  <label htmlFor="" className="hidden md:block">
+                    Phường/Xã
+                  </label>
                   <select
                     id="districts"
                     class="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
                     // onChange={(e) => setDistrictCode(e.target.value)}
                   >
-                    <option selected>Quận/Huyện</option>
-                    {/* {districts.map((i) => {
-                  return (
-                    <option value={i.code} key={i.code}>
-                      {i.name_with_type}
-                    </option>
-                  );
-                })} */}
+                    {wards.map((i) => {
+                      return (
+                        <option
+                          value={i.code}
+                          key={i.code}
+                          selected={i.code === currentUser.districtCode}
+                        >
+                          {i.name_with_type}
+                        </option>
+                      );
+                    })}
                   </select>
                 </div>
               </div>
@@ -394,28 +536,28 @@ const MyAccount = () => {
             <div className="w-full">
               <button
                 type="submit"
-                className={`w-3/4 rounded ${
+                className={`md:w-3/4 w-full rounded ${
                   check
                     ? "bg-primary hover:bg-green-700 active:scale-95 transition-transform"
                     : "bg-slate-400"
-                } px-5 py-3 text-center text-sm font-medium text-white mt-12`}
-                onClick={() => console.log(inputs)}
+                } px-5 py-3 text-center text-sm font-medium text-white md:mt-12 mt-3`}
+                onClick={handleChangeInfo}
                 disabled={!check}
               >
                 Cập nhật thông tin
               </button>
             </div>
           </div>
-          <div className="w-1/2 space-y-3">
+          <div className="md:w-1/2 w-full space-y-3">
             <h3 className="uppercase font-bold w-full">Bảo mật</h3>
             <div className="w-full">
               <label htmlFor="password" className="">
                 {editPassword ? "Mật khẩu cũ" : "Mật khẩu"}
               </label>
               <div className="flex gap-2">
-                <div className="w-3/4 relative">
+                <div className="md:w-3/4 w-full relative">
                   <input
-                    type="text"
+                    type="password"
                     name="password"
                     className={`w-full rounded border ${
                       editPassword ? "" : "bg-gray-200"
@@ -423,6 +565,7 @@ const MyAccount = () => {
                     placeholder="*********"
                     required="a-z"
                     disabled={!editPassword}
+                    onChange={(e) => setPwd(e.target.value)}
                   />
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -473,11 +616,14 @@ const MyAccount = () => {
                   </label>
                   <div className="flex gap-2">
                     <input
-                      type="text"
-                      name="name"
-                      className="w-3/4 rounded border border-gray-300 px-3 py-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
+                      type="password"
+                      name="newPassword"
+                      className="md:w-3/4 w-full rounded border border-gray-300 px-3 py-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
                       placeholder="*********"
                       required="a-z"
+                      onChange={(e) => {
+                        setNewPwd(e.target.value), setCheckChangePwd(true);
+                      }}
                     />
                   </div>
                 </div>
@@ -487,24 +633,27 @@ const MyAccount = () => {
                   </label>
                   <div className="flex gap-2">
                     <input
-                      type="text"
-                      name="name"
-                      className="w-3/4 rounded border border-gray-300 px-3 py-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
+                      type="password"
+                      name="renewPassword"
+                      className="md:w-3/4 w-full rounded border border-gray-300 px-3 py-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
                       placeholder="*********"
                       required="a-z"
+                      onChange={(e) => {
+                        setRePwd(e.target.value), setCheckChangePwd(true);
+                      }}
                     />
                   </div>
                 </div>
                 <div className="w-full">
                   <button
                     type="submit"
-                    className={`w-3/4 rounded ${
-                      check
+                    className={`md:w-3/4 w-full rounded ${
+                      checkChangePwd
                         ? "bg-primary hover:bg-green-700 active:scale-95 transition-transform"
                         : "bg-slate-400"
-                    } px-5 py-3 text-center text-sm font-medium text-white mt-6`}
-                    onClick={() => console.log(inputs)}
-                    disabled={!check}
+                    } px-5 py-3 text-center text-sm font-medium text-white mt-5`}
+                    onClick={handleChangePwd}
+                    disabled={!checkChangePwd}
                   >
                     Thay đổi mật khẩu
                   </button>
@@ -514,6 +663,7 @@ const MyAccount = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

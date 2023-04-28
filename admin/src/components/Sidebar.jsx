@@ -15,7 +15,7 @@ const Sidebar = () => {
   return (
     <div
       className={`h-screen ${
-        open ? "w-64" : "w-24"
+        open ? "w-72" : "w-24"
       } px-3 hidden md:block relative duration-300`}
     >
       <button
