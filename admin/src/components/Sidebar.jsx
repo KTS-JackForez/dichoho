@@ -11,7 +11,7 @@ const Sidebar = () => {
   const { currentUser } = useSelector((state) => state.user);
   const { role } = currentUser;
   const activeLink = `flex items-center gap-5 pl-4 py-2 mx-2 rounded  text-white font-semibold`;
-  const normalLink = `flex items-center gap-5 pl-4 py-2 mx-2 rounded text-xs text-gray-500 hover:bg-light-gray font-semibold border border-white hover:border-primary`;
+  const normalLink = `flex items-center gap-5 pl-4 py-2 mx-2 rounded text-sm text-gray-600 hover:bg-light-gray font-semibold border border-white hover:border-primary`;
   return (
     <div
       className={`h-screen ${
@@ -44,7 +44,7 @@ const Sidebar = () => {
           {open && <span>dashboard</span>}
         </Link>
       </div>
-      <div className="flex flex-col gap-1.5 uppercase">
+      <div className="flex flex-col gap-1.5 capitalize">
         {dashboard.navLinks.map((i, index) => {
           return (
             i.role.includes(role) && (

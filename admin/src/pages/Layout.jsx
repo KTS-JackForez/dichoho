@@ -29,7 +29,7 @@ const Layout = () => {
       <Sidebar />
       <div className="bg-gray-200 flex-1 h-screen">
         <Header />
-        <div className="h-[90vh]">
+        <div className="h-[85vh] overflow-auto">
           <Routes>
             <Route index element={<Home />} />
             <Route path="san-pham">
