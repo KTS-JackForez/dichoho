@@ -115,7 +115,7 @@ const Login = () => {
               <ToastContainer />
               <div className="flex items-center justify-between">
                 <a
-                  to="https://sale168.vn"
+                  href="https://dichoho.top"
                   className="text-sm font-medium text-primary hover:underline"
                 >
                   Trang chủ

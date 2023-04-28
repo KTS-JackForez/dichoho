@@ -102,7 +102,7 @@ const Login = () => {
                   <p className="text-sm font-light text-gray-500">
                     Bạn là người bán?
                     <a
-                      href="http://quantri.sale168.com"
+                      href="http://quantri.sale168.vn"
                       target="_blank"
                       className="ml-2 font-medium text-primary hover:underline"
                     >
