@@ -238,16 +238,18 @@ const EditUser = () => {
             #{inputs?.username}{" "}
             <button
               onClick={() => setEditPassword(!editPassword)}
-              className="text-orange-500 hover:text-red-500"
+              className={`${
+                editPassword ? "text-orange-500" : "text-gray-700"
+              } relative`}
               title="đổi mật khẩu của user"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                strokeWidth={1.5}
+                strokeWidth={2}
                 stroke="currentColor"
-                className="w-4 h-4"
+                className="w-4 h-4 absolute -top-3"
               >
                 <path
                   strokeLinecap="round"

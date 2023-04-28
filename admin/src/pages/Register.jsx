@@ -289,7 +289,7 @@ const Register = () => {
                 />
                 <span className="text-xs">
                   Bằng việc ấn vào nút đăng ký, tôi đồng ý với điều khoản sử
-                  dụng của sale168.com
+                  dụng của sale168.vn
                 </span>
               </div>
             </div>
