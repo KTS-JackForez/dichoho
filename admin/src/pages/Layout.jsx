@@ -20,6 +20,7 @@ import {
   Messages,
   Message,
   Delivery,
+  EditUser,
 } from "../pages";
 import NewCategories from "./NewCategories";
 
@@ -40,7 +41,10 @@ const Layout = () => {
             <Route path="don-hang" element={<Orders />} />
             <Route path="tai-khoan" element={<Account />} />
             <Route path="giao-nhan" element={<Delivery />} />
-            <Route path="thong-tin-tai-khoan" element={<MyAccount />} />
+            <Route path="thong-tin-tai-khoan">
+              <Route index element={<MyAccount />} />
+              <Route path=":userId" element={<EditUser />} />
+            </Route>
             <Route path="thong-bao">
               <Route index element={<Notifications />} />
               <Route path=":notificationId" element={<Notification />} />

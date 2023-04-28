@@ -263,7 +263,7 @@ const Account = () => {
                   </div>
                   <div className="w-2/12 flex gap-2">
                     <Link
-                      to={`/admin/thong-tin-tai-khoan/`}
+                      to={`/admin/thong-tin-tai-khoan/${u._id}`}
                       className="p-1.5 bg-white rounded border border-blue-400 text-blue-400 hover:border-blue-400 hover:bg-blue-400 hover:text-white"
                     >
                       <svg

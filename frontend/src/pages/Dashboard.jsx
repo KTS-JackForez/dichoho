@@ -14,7 +14,7 @@ const Dashboard = () => {
       <DbSidebar />
       <div className="bg-gray-200 flex-1">
         <DbHeader />
-        <div className="h-[80vh] overflow-auto md:h-[90vh]">
+        <div className="h-[80vh] overflow-auto md:h-[90vh] bg-slate-200">
           <Routes>
             <Route path="home" element={<DbHome />} />
             <Route path="don-hang">

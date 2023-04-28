@@ -6,7 +6,7 @@ import ktsRequest from "../../ultis/ktsrequest";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 
-const MyAccount = () => {
+const EditUser = () => {
   const { currentUser } = useSelector((state) => state.user);
   const { token } = currentUser;
   const [displayName, setDisplayName] = useState(currentUser.displayName);
@@ -197,6 +197,7 @@ const MyAccount = () => {
   };
   return (
     <div className="w-full h-full p-2 overflow-hidden">
+      <h3>Edit user</h3>
       <div className="w-full bg-white rounded flex flex-col md:flex-row h-full overflow-auto">
         <div className="md:w-1/4 w-full md:py-12 py-3 px-2 flex flex-col items-center">
           <div className="w-32 h-32 aspect-square rounded-full relative border-2 border-primary">
@@ -696,4 +697,4 @@ const MyAccount = () => {
   );
 };
 
-export default MyAccount;
+export default EditUser;

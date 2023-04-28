@@ -68,6 +68,15 @@ const MyAccount = () => {
         setDistricts(data);
         setCityName(cName.name);
         setCityFullName(cName.name_with_type);
+        setInputs((prev) => {
+          return {
+            ...prev,
+            cityCode,
+            cityName: cName?.name,
+            cityFullName: cName?.name_with_type,
+          };
+        });
+        setCheck(true);
       } catch (error) {
         toast.error(error);
       }
@@ -85,6 +94,15 @@ const MyAccount = () => {
         setWards(data);
         setDistrictName(dName.name);
         setDistrictFullName(dName.name_with_type);
+        setInputs((prev) => {
+          return {
+            ...prev,
+            districtCode,
+            districtName: dName?.name,
+            districtFullName: dName?.name_with_type,
+          };
+        });
+        setCheck(true);
       } catch (error) {
         toast.error(error);
       }
@@ -97,6 +115,15 @@ const MyAccount = () => {
         const wName = wards.find((w) => w.code === wardCode);
         setWardName(wName?.name);
         setWardFullName(wName?.name_with_type);
+        setInputs((prev) => {
+          return {
+            ...prev,
+            wardCode,
+            wardName: wName?.name,
+            wardFullName: wName?.name_with_type,
+          };
+        });
+        setCheck(true);
       }
     };
     getWard();
@@ -108,7 +135,7 @@ const MyAccount = () => {
         storage,
         `images/users/${currentUser._id}/${name}`
       );
-      const uploadTask = await uploadBytesResumable(storageRef, file);
+      const uploadTask = uploadBytesResumable(storageRef, file);
       uploadTask.on(
         "state_changed",
         (snapshot) => {},
@@ -116,6 +143,7 @@ const MyAccount = () => {
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             setUrl(downloadURL);
+            setCheck(true);
           });
         }
       );
@@ -168,8 +196,8 @@ const MyAccount = () => {
     // setRefresh(true);
   };
   return (
-    <div className="w-full px-2">
-      <div className="w-full bg-white rounded flex flex-col md:flex-row md:h-[calc(100vh-100px)] h-full mb-[4.75rem] overflow-auto">
+    <div className="w-full h-full p-2 overflow-hidden">
+      <div className="w-full bg-white rounded flex flex-col md:flex-row h-full overflow-auto">
         <div className="md:w-1/4 w-full md:py-12 py-3 px-2 flex flex-col items-center">
           <div className="w-32 h-32 aspect-square rounded-full relative border-2 border-primary">
             <img
@@ -356,7 +384,7 @@ const MyAccount = () => {
                       editEmail ? "" : "bg-gray-200"
                     }
                 } border-gray-300 bg-gray-50 px-3 py-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm`}
-                    placeholder={currentUser.email || "user@sale168.com"}
+                    placeholder={currentUser.email || "user@sale168.vn"}
                     required="a-z"
                     disabled={!editEmail}
                     onChange={handleChange}
@@ -470,9 +498,9 @@ const MyAccount = () => {
                     Tỉnh/Thành
                   </label>
                   <select
-                    id="districts"
+                    id="cities"
                     class="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
-                    // onChange={(e) => setDistrictCode(e.target.value)}
+                    onChange={(e) => setCityCode(e.target.value)}
                   >
                     {cities.map((i) => {
                       return (
@@ -494,7 +522,7 @@ const MyAccount = () => {
                   <select
                     id="districts"
                     class="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
-                    // onChange={(e) => setDistrictCode(e.target.value)}
+                    onChange={(e) => setDistrictCode(e.target.value)}
                   >
                     {districts.map((i) => {
                       return (
@@ -514,9 +542,9 @@ const MyAccount = () => {
                     Phường/Xã
                   </label>
                   <select
-                    id="districts"
+                    id="wards"
                     class="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
-                    // onChange={(e) => setDistrictCode(e.target.value)}
+                    onChange={(e) => setWardCode(e.target.value)}
                   >
                     {wards.map((i) => {
                       return (
@@ -662,8 +690,8 @@ const MyAccount = () => {
             )}
           </div>
         </div>
+        <ToastContainer />
       </div>
-      <ToastContainer />
     </div>
   );
 };

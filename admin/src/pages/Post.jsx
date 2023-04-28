@@ -106,10 +106,9 @@ const Post = () => {
       </div>
       <div className="w-full mt-4 border rounded bg-white shadow-lg overflow-hidden">
         <div className=" flex p-3 font-semibold items-center bg-primary text-white">
-          <div className="w-6/12">Bài viêt</div>
+          <div className="w-7/12">Bài viêt</div>
           <div className="w-2/12 text-center">Tác giả</div>
           <div className="w-2/12 text-center">Ngày đăng ký</div>
-          <div className="w-1/12 text-center">Trạng thái</div>
           <div className="w-1/12 text-center">Thao tác</div>
         </div>
         {search.length > 0 ? (
@@ -118,7 +117,7 @@ const Post = () => {
               const st = status.find((s) => s.id === p.status);
               return (
                 <div className="w-full flex p-1 gap-1 items-center" key={i}>
-                  <div className="w-6/12 flex items-center gap-3">
+                  <div className="w-7/12 flex items-center gap-3">
                     <div className="w-1/5 h-20 rounded-md overflow-hidden">
                       <img
                         src={
@@ -131,11 +130,21 @@ const Post = () => {
                     </div>
                     <div className="overflow-hidden w-4/5">
                       <Link
-                        to={`/admin/bai-viet/${p._id}`}
-                        className="font-semibold text-lg hover:text-primary line-clamp-1"
+                        to={`${
+                          currentUser?.role === "admin"
+                            ? `/admin/bai-viet/${p._id}`
+                            : `#`
+                        }`}
+                        className="font-semibold hover:text-primary line-clamp-1"
                       >
+                        <span
+                          className={`${st.bgColor} ${st.textColor} px-2 py-0.5 text-xs font-semibold rounded`}
+                        >
+                          {st.name}
+                        </span>{" "}
                         {p.title}
                       </Link>
+
                       <p className="line-clamp-2">{p.description}</p>
                     </div>
                   </div>
@@ -147,15 +156,7 @@ const Post = () => {
                   <div className="w-2/12 text-center">
                     <span>{new Date(p.createdAt).toLocaleString()}</span>
                   </div>
-                  <div
-                    className={`w-1/12  rounded-md justify-center text-xs text-center`}
-                  >
-                    <span
-                      className={`${st.bgColor} ${st.textColor} px-2 py-1 font-semibold rounded`}
-                    >
-                      {st.name}
-                    </span>
-                  </div>
+
                   <div className="w-1/12 flex justify-around">
                     <Link
                       to={`edit/${p._id}`}
