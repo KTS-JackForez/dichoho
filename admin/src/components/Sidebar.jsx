@@ -10,18 +10,18 @@ const Sidebar = () => {
   const [open, setOpen] = useState(true);
   const { currentUser } = useSelector((state) => state.user);
   const { role } = currentUser;
-  const activeLink = `flex items-center gap-5 pl-4 py-2 mx-2 rounded  text-white font-semibold`;
-  const normalLink = `flex items-center gap-5 pl-4 py-2 mx-2 rounded text-sm text-gray-600 hover:bg-light-gray font-semibold border border-white hover:border-primary`;
+  const activeLink = `flex items-center gap-5 pl-4 py-2 mx-2 rounded  text-white`;
+  const normalLink = `flex items-center gap-5 pl-4 py-2 mx-2 rounded text-sm text-gray-800 hover:bg-light-gray border border-white hover:border-primary`;
   return (
     <div
       className={`h-screen ${
-        open ? "w-80" : "w-24"
+        open ? "w-64" : "w-24"
       } px-3 hidden md:block relative duration-300`}
     >
       <button
         className={`p-3 rounded-full border border-primary bg-white ${
           open && "rotate-180"
-        } duration-500 absolute top-7 -right-5`}
+        } duration-500 absolute top-5 -right-5`}
         onClick={() => setOpen(!open)}
       >
         <svg
@@ -79,7 +79,7 @@ const Sidebar = () => {
           );
         })}
         <button
-          className="flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded  border-primary border text-md m-2 font-semibold hover:bg-primary hover:text-white uppercase "
+          className="flex items-center gap-5 pl-4 py-2 rounded  border-primary border text-sm m-2 font-semibold hover:bg-primary hover:text-white uppercase "
           onClick={(e) => {
             e.preventDefault();
             dispatch(logout());
@@ -101,7 +101,9 @@ const Sidebar = () => {
             />
           </svg>
 
-          {open && <span>đăng xuất</span>}
+          {open && (
+            <span className="whitespace-pre absolute left-20">đăng xuất</span>
+          )}
         </button>
       </div>
     </div>
