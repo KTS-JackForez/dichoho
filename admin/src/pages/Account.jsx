@@ -178,7 +178,7 @@ const Account = () => {
     setRefresh(true);
   };
   return (
-    <div className="p-3 text-xs md:text-base h-[90vh] overflow-scroll">
+    <div className="p-3 text-xs md:text-base h-[90vh] overflow-y-auto">
       <div className="flex justify-between">
         <div className="flex w-1/2">
           <input
