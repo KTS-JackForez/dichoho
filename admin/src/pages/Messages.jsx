@@ -106,14 +106,14 @@ const Messages = () => {
               return (
                 <div
                   key={i}
-                  className={`flex w-full bg-white p-2 justify-between cursor-pointer hover:bg-slate-100 `}
+                  className={`flex w-full bg-white p-2 justify-between cursor-pointer hover:bg-slate-200 `}
                   onClick={() => {
                     setMsg(c);
                     setShowChat(true);
                   }}
                 >
                   <div className="flex flex-1">
-                    <div className="rounded-full h-14 w-14 min-w-[3.5rem] bg-orange-500 flex justify-center items-center text-white overflow-hidden">
+                    <div className="rounded-full h-12 w-12 min-w-[3rem] bg-orange-500 flex justify-center items-center text-white overflow-hidden">
                       {c.otherImg ? (
                         <img
                           src={c.otherImg}
