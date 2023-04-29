@@ -15,3 +15,4 @@ export { default as Chat } from "./Chat";
 export { default as BottomMenu } from "./BottomMenu";
 export { default as Message } from "./Message";
 export { default as Comment } from "./Comment";
+export { default as Modal } from "./Modal";

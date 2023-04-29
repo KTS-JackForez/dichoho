@@ -87,7 +87,7 @@ const Header = () => {
               </div>
             )}
             {/* showNotify */}
-            <div className="group-hover:block w-96 right-0 bg-white absolute top-full border rounded-sm border-gray-400 hidden">
+            <div className="group-hover:block w-96 right-0 bg-white absolute top-full border rounded-sm border-gray-400 hidden z-10">
               <div className="h-10 bg-white">
                 <h3 className="ml-3 leading-10 font-semibold text-gray-600">
                   Thông Báo Mới Nhận

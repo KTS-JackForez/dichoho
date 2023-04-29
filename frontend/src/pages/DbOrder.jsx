@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { vnd } from "../../../admin/ultis/ktsFunc";
 import ktsRequest from "../../ultis/ktsrequest";
+import { Modal } from "../components";
 const DbOrder = () => {
   const { currentUser } = useSelector((state) => state.user);
   const { token } = currentUser;
@@ -60,6 +61,7 @@ const DbOrder = () => {
   };
   return (
     <div className="p-3 text-xs md:text-base">
+      <Modal />
       <div className="flex justify-between">
         <div className="flex w-full md:w-1/2 relative">
           <input

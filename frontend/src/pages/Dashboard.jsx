@@ -10,7 +10,7 @@ import BottomMenu from "../components/BottomMenu";
 
 const Dashboard = () => {
   return (
-    <div className="flex">
+    <div className="flex relative">
       <DbSidebar />
       <div className="bg-gray-200 flex-1">
         <DbHeader />
