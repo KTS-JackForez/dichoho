@@ -34,7 +34,6 @@ export const createOrder = async (req, res, next) => {
 export const getOrders = async (req, res, next) => {
   try {
     const { limit } = req.query;
-    console.log(limit);
     const orders = permistion.includes(req.user.role)
       ? await Order.find()
       : await Order.find({ buyerId: req.user.id });
