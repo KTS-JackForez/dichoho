@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  cancel,
   createOrder,
   getMyOrders,
   getOrder,
@@ -15,5 +16,6 @@ router.get("/", verifyToken, getOrders);
 router.get("/:id", verifyToken, getOrder);
 router.post("/my", verifyToken, getMyOrders);
 router.put("/:id", verifyToken, updateById);
+router.put("/cancel/:id", verifyToken, cancel);
 
 export default router;

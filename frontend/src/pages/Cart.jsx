@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
@@ -9,7 +9,7 @@ import { addToCart, removeItem, resetCart } from "../redux/cartReducer";
 import QR_Code from "../assets/imgs/QR_CodeFull.jpg";
 import io from "socket.io-client";
 import { ktsSocket } from "../../ultis/config";
-
+import axios from "axios";
 const Cart = () => {
   const [payment, setPayment] = useState("cod");
   const [payCode, setPayCode] = useState("");
@@ -18,6 +18,21 @@ const Cart = () => {
   const [orderNumber, setOrderNumber] = useState("");
   const { currentUser } = useSelector((state) => state.user);
   const { products } = useSelector((state) => state.cart);
+  const [editAddress, setEditAddress] = useState(false);
+  const [cities, setCities] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [wards, setWards] = useState([]);
+  const [inputs, setInputs] = useState({
+    buyerName: currentUser.displayName || "",
+    buyerPhone: currentUser.phone || "",
+    buyerAddress: currentUser.address || "",
+    cityCode: currentUser.cityCode || -1,
+    districtCode: currentUser.districtCode || -1,
+    wardCode: currentUser.wardCode || -1,
+    wardFullName: currentUser.wardFullName,
+    districtFullName: currentUser.districtFullName,
+    cityFullName: currentUser.cityFullName,
+  });
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const socket = io.connect(ktsSocket);
@@ -28,6 +43,88 @@ const Cart = () => {
     });
     return total;
   };
+  useEffect(() => {
+    const getCities = async () => {
+      try {
+        const res = await axios.get("https://api.ktscorp.vn/api/cities");
+        const data = Object.values(res.data);
+        setCities(data);
+      } catch (error) {
+        toast.error(error);
+      }
+    };
+    getCities();
+  }, []);
+  useEffect(() => {
+    const getDistricts = async () => {
+      try {
+        const resd = await axios.get(
+          `https://api.ktscorp.vn/api/cities/districts/${inputs?.cityCode}`
+        );
+        const cName = cities.find((city) => city.code === inputs?.cityCode);
+        const data = Object.values(resd.data);
+        setDistricts(data);
+        setInputs((prev) => {
+          return {
+            ...prev,
+            cityCode: inputs?.cityCode,
+            cityName: cName?.name,
+            cityFullName: cName?.name_with_type,
+          };
+        });
+      } catch (error) {
+        toast.error(error);
+      }
+    };
+    getDistricts();
+  }, [inputs?.cityCode]);
+  const handleChange = (e) => {
+    true;
+    setInputs((prev) => {
+      return { ...prev, [e.target.name]: e.target.value };
+    });
+  };
+  useEffect(() => {
+    const getWards = async () => {
+      try {
+        const resw = await axios.get(
+          `https://api.ktscorp.vn/api/cities/wards/${inputs?.districtCode}`
+        );
+        const data = Object.values(resw.data);
+        const dName = districts.find((d) => d.code === inputs?.districtCode);
+        setWards(data);
+        setInputs((prev) => {
+          return {
+            ...prev,
+            districtCode: inputs?.districtCode,
+            districtName: dName?.name,
+            districtFullName: dName?.name_with_type,
+          };
+        });
+        true;
+      } catch (error) {
+        toast.error(error);
+      }
+    };
+    getWards();
+  }, [inputs?.districtCode]);
+  useEffect(() => {
+    const getWard = () => {
+      if (inputs?.wardCode) {
+        const wName = wards.find((w) => w.code === inputs?.wardCode);
+        setInputs((prev) => {
+          return {
+            ...prev,
+            wardCode: inputs?.wardCode,
+            wardName: wName?.name,
+            wardFullName: wName?.name_with_type,
+          };
+        });
+        true;
+      }
+    };
+    getWard();
+  }, [inputs?.wardCode]);
   const handleClick = async () => {
     if (!currentUser) {
       return navigate("/login");
@@ -73,7 +170,123 @@ const Cart = () => {
       <Promotion />
       <Header />
       <Navbar />
-      <div className="max-w-screen-xl mx-auto my-10 min-h-[30vh]">
+      <div className="max-w-screen-xl mx-auto my-10 min-h-[30vh] space-y-2">
+        <div className="border border-primary rounded p-2 md:grid grid-cols-5 gap-1">
+          <div className="mt-2 md:mt-0">
+            <label>Tên người nhận hàng: </label>
+            <input
+              className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
+              placeholder={inputs?.buyerName}
+            />
+          </div>
+          <div className="mt-2 md:mt-0">
+            <label>Số điện thoại: </label>
+            <input
+              className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
+              placeholder={inputs?.buyerPhone}
+            />
+          </div>
+          <div className="col-span-3 mt-2 md:mt-0">
+            <div className="flex justify-between">
+              <label>Địa chỉ: </label>
+              <span
+                className="hover:text-primary hover:underline cursor-pointer"
+                onClick={() => setEditAddress(!editAddress)}
+              >
+                Thay đổi
+              </span>
+            </div>
+            <div className="">
+              <input
+                className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
+                placeholder={
+                  editAddress
+                    ? inputs?.buyerAddress
+                    : currentUser.address +
+                      ", " +
+                      currentUser.wardFullName +
+                      ", " +
+                      currentUser.districtFullName +
+                      ", " +
+                      currentUser.cityFullName
+                }
+              />
+              {editAddress && (
+                <div className="w-full justify-start flex mt-1">
+                  <div className="w-1/3 flex flex-col pr-1">
+                    <label htmlFor="" className="hidden md:block">
+                      Tỉnh/Thành
+                    </label>
+                    <select
+                      id="cities"
+                      name="cityCode"
+                      className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
+                      onChange={handleChange}
+                    >
+                      {cities.map((i) => {
+                        return (
+                          <option
+                            value={i.code}
+                            key={i.code}
+                            selected={i.code === inputs?.cityCode}
+                          >
+                            {i.name_with_type}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                  <div className="w-1/3 flex flex-col pr-1">
+                    <label htmlFor="" className="hidden md:block">
+                      Quận/Huyện
+                    </label>
+                    <select
+                      id="districts"
+                      name="districtCode"
+                      className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
+                      onChange={handleChange}
+                    >
+                      {districts.map((i) => {
+                        return (
+                          <option
+                            value={i.code}
+                            key={i.code}
+                            selected={i.code === inputs?.districtCode}
+                          >
+                            {i.name_with_type}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                  <div className="w-1/3 flex flex-col">
+                    <label htmlFor="" className="hidden md:block">
+                      Phường/Xã
+                    </label>
+                    <select
+                      id="wards"
+                      name="wardCode"
+                      className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
+                      onChange={handleChange}
+                    >
+                      {wards.map((i) => {
+                        return (
+                          <option
+                            value={i.code}
+                            key={i.code}
+                            selected={i.code === inputs?.wardCode}
+                          >
+                            {i.name_with_type}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
         {products.length > 0 ? (
           <div className="flex gap-3 flex-wrap md:flex-nowrap border border-primary rounded">
             <div className="md:w-3/4 w-full divide-primary divide-dashed divide-y shadow-lg">
@@ -133,6 +346,9 @@ const Cart = () => {
                           >
                             {i.productName}
                           </Link>
+                          <span className="italic text-red-500">
+                            {i?.shopName}
+                          </span>
                           <span className="text-start text-sm mt-3 md:hidden">
                             Đơn giá: {vnd(i.currentPrice)}
                           </span>

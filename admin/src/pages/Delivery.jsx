@@ -13,6 +13,8 @@ const Delivery = () => {
   const [refresh, setRefresh] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [orderId, setOrderId] = useState("");
+  const [openSearch, setOpenSearch] = useState(false);
+  const [query, setQuery] = useState("");
   const socket = io.connect(ktsSocket);
   const status = [
     {
@@ -101,11 +103,68 @@ const Delivery = () => {
         : toast.error("Network Error!");
     }
   };
+  const search = (data) => {
+    return data.filter((item) =>
+      ["orderNumber"].some((key) => item[key].toLowerCase().includes(query))
+    );
+  };
   return (
     <div className="w-full h-full p-2">
       <div className="w-full bg-white shadow-lg rounded-md overflow-hidden">
         <div className=" flex p-3 font-semibold items-center bg-primary text-white">
-          <div className="w-2/12 flex">Đơn hàng</div>
+          <div className="w-2/12">
+            {openSearch ? (
+              <div className="w-full pr-2 relative text-gray-900 font-normal">
+                <input
+                  placeholder="mã đơn hàng..."
+                  className="w-full rounded focus:border-primary focus:outline-none focus:ring-primary-600"
+                  onChange={(e) => setQuery(e.target.value)}
+                />
+                <button
+                  className="absolute right-2.5 top-0.5 hover:bg-red-500 p-0.5 rounded hover:text-white bg-white"
+                  onClick={() => setOpenSearch(false)}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1}
+                    stroke="currentColor"
+                    className="w-4 h-4"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
+            ) : (
+              <div className="flex">
+                <button
+                  className="border hover:border-white px-1 rounded border-primary mt-0.5 mr-2"
+                  onClick={() => setOpenSearch(true)}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-4 h-4"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                    />
+                  </svg>
+                </button>
+                <span>Đơn hàng</span>
+              </div>
+            )}
+          </div>
           <div className="w-3/12">Chi tiết đơn hàng</div>
           <div className="w-5/12 flex">
             <div className="w-1/2 text-start">Khách hàng</div>
@@ -113,9 +172,9 @@ const Delivery = () => {
           </div>
           <div className="w-2/12">Thao tác</div>
         </div>
-        {data?.length > 0 ? (
+        {search(data)?.length > 0 ? (
           <div className="rounded divide-y divide-primary divide-dashed text-gray-800">
-            {data.map((o, i) => {
+            {search(data).map((o, i) => {
               const st = o.status;
               return (
                 <div className="w-full flex p-1 gap-1 items-center" key={i}>
@@ -181,24 +240,19 @@ const Delivery = () => {
                   </div>
                   <div className="w-2/12 text-xs">
                     <button
-                      className="block p-2 hover:bg-primary"
+                      className="block p-2 hover:bg-primary rounded hover:text-white"
                       onClick={() => handleClick1(o?._id, 2)}
                     >
-                      XN giao xong
+                      Xác nhận giao xong
                     </button>
                     <button
-                      className="block p-2 hover:bg-primary"
-                      onClick={() =>
-                        toast.success(
-                          "Chuyển thông tin giao nhận qua 3PL thành công",
-                          { onClose: handleClick1(o?._id, 1) }
-                        )
-                      }
+                      className="block p-2 hover:bg-blue-500 rounded hover:text-white"
+                      onClick={() => handleClick1(o?._id, 1)}
                     >
                       Điều giao nhận
                     </button>
                     <button
-                      className="block p-2 hover:bg-primary"
+                      className="block p-2 hover:bg-red-500 rounded hover:text-white"
                       onClick={() => handleClick1(o?._id, 3)}
                     >
                       Hủy giao nhận

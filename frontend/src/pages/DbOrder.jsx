@@ -9,6 +9,7 @@ const DbOrder = () => {
   const { token } = currentUser;
   const [data, setData] = useState([]);
   const [query, setQuery] = useState("");
+  const [openModal, setOpenModal] = useState(false);
   const keys = ["productName"];
   const status = [
     {
@@ -49,10 +50,6 @@ const DbOrder = () => {
     fetchData();
   }, []);
   const search = (data) => {
-    // return data.filter((item) => {
-    //   keys.some((key) => item[key].toLowerCase().includes(query));
-    // });
-
     return data.filter((item) =>
       item.products.some((product) =>
         product.productName.toLowerCase().includes(query)
@@ -61,7 +58,6 @@ const DbOrder = () => {
   };
   return (
     <div className="p-3 text-xs md:text-base">
-      <Modal />
       <div className="flex justify-between">
         <div className="flex w-full md:w-1/2 relative">
           <input
@@ -171,6 +167,9 @@ const DbOrder = () => {
                           }`}
                           disabled={st > 1}
                           title="chi tiết đơn hàng"
+                          onClick={() => {
+                            setOpenModal(true);
+                          }}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -315,6 +314,7 @@ const DbOrder = () => {
           <div className="py-4 text-center">Bạn chưa có đơn hàng nào</div>
         )}
       </div>
+      {openModal && <Modal close={setOpenModal} />}
     </div>
   );
 };

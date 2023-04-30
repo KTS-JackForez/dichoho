@@ -102,6 +102,7 @@ const NewProduct = () => {
           ...inputs,
           imgs: urls,
           shopID: currentUser._id,
+          shopName: currentUser.displayName || "Sale168.vn",
           description: value,
         },
       };

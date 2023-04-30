@@ -15,6 +15,10 @@ const ProductSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    shopName: {
+      type: String,
+      default: "Sale168.vn",
+    },
     // ảnh sản phẩm
     imgs: [String],
     // giá niêm yết sản phẩm
@@ -52,8 +56,8 @@ const ProductSchema = new mongoose.Schema(
     likedBy: [String],
     dislikeBy: [String],
     tags: [String],
-    cat:{
-      type:String,
+    cat: {
+      type: String,
     },
     updatedBy: {
       type: String,

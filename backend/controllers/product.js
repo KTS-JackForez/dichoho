@@ -81,7 +81,7 @@ export const getShopProducts = async (req, res, next) => {
     const shop = await User.findById(shopId);
     if (!shop) return res.status(404).json("Shop không khả dụng");
     if (shop.status < 1) return res.status(403).json("Shop không khả dụng");
-    const checkFollow = shop.likedBy.includes(req.params.userId)
+    const checkFollow = shop.likedBy.includes(req.params.userId);
     const products = await Product.find({ shopID: shopId });
     const address =
       shop.address +

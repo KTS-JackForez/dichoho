@@ -75,6 +75,27 @@ export const dashboard = {
     },
   ],
 };
+export const status = [
+  {
+    id: 0,
+    bgColor: "bg-blue-300",
+    name: "Đơn mới",
+    textColor: "text-blue-700",
+  },
+  {
+    id: 1,
+    bgColor: "bg-orange-300",
+    name: "Đang giao",
+    textColor: "text-orange-700",
+  },
+  {
+    id: 2,
+    bgColor: "bg-green-300",
+    name: "Giao xong",
+    textColor: "text-green-700",
+  },
+  { id: 3, bgColor: "bg-red-300", name: "Đã hủy", textColor: "text-red-700" },
+];
 //online
 export const ktsSocket = "https://api.sale168.vn:9200";
 //local

@@ -64,6 +64,7 @@ const Product = () => {
       description: product.description,
       currentPrice: product.currentPrice,
       shopID: product.shopID,
+      shopName: product.shopName || "Sale168.vn",
       img: product.imgs[0],
       quantity,
     };
@@ -302,9 +303,7 @@ const Product = () => {
                   </div>
                 </div>
                 <div className="flex my-5">
-                  <span className="font-bold text-gray-700">
-                    Trọng lượng (KG)
-                  </span>
+                  <span className="font-bold text-gray-700">Số lượng</span>
                   <div className="flex w-1/2 mx-auto gap-1">
                     <button
                       className="bg-gray-300 px-2.5 hover:bg-gray-500 rounded"

@@ -141,6 +141,7 @@ const EditProduct = () => {
           ...inputs,
           imgs: [...purls, ...urls],
           updatedBy: currentUser.username,
+          shopName: currentUser.displayName || "Sale168.vn",
           description: value,
         },
       };

@@ -98,3 +98,23 @@ export const updateById = async (req, res, next) => {
     next(createError(500, `Lỗi không xác định`));
   }
 };
+export const cancel = async (req, res, next) => {
+  try {
+    const order = await Order.findById(req.params.id);
+    if (!order) return res.status(404).json("Đơn hàng không khả dụng");
+    if (!permistion.includes(req.user.role) && req.user.id !== order.buyerId)
+      return res
+        .status(403)
+        .json("Bạn không được cấp quyền thực hiện chức năng này!");
+    if (order.status > 0)
+      return res.status(403).json("Trạng thái đơn hàng không cho phép hủy đơn");
+    await Order.findByIdAndUpdate(
+      req.params.id,
+      { $set: { status: 3 } },
+      { new: true }
+    );
+    res.status(200).json("Hủy đơn hàng thành công");
+  } catch (error) {
+    next(createError(500, `Lỗi không xác định`));
+  }
+};
