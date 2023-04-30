@@ -165,11 +165,8 @@ const Delivery = () => {
               </div>
             )}
           </div>
-          <div className="w-3/12">Chi tiết đơn hàng</div>
-          <div className="w-5/12 flex">
-            <div className="w-1/2 text-start">Khách hàng</div>
-            <div className="w-1/2 text-start">Shop</div>
-          </div>
+          <div className="w-5/12">Chi tiết đơn hàng</div>
+          <div className="w-3/12 flex">Khách hàng</div>
           <div className="w-2/12">Thao tác</div>
         </div>
         {search(data)?.length > 0 ? (
@@ -187,7 +184,7 @@ const Delivery = () => {
                       {status[st].name}
                     </div>
                   </div>
-                  <div className="w-3/12">
+                  <div className="w-5/12">
                     <ul className="space-y-1">
                       {o.products.map((p, j) => {
                         return (
@@ -204,6 +201,9 @@ const Delivery = () => {
                                 <span className="font-semibold">
                                   {p.productName}
                                 </span>
+                                <p className="text-xs text-red-500">
+                                  {p.shopName}
+                                </p>
                                 <div className="">
                                   <span>{vnd(p.currentPrice) + " * "}</span>
                                   <span>{p.quantity + " = "}</span>
@@ -226,24 +226,17 @@ const Delivery = () => {
                       Tổng thu: {vnd(subTotal(o.products))}
                     </span>
                   </div>
-                  <div className="w-5/12 flex">
-                    <div className="w-1/2 text-start">
-                      <div>{o?.buyerName}</div>
-                      <div>{o?.buyerPhone}</div>
-                      <div>
-                        {o?.toAddress +
-                          ", " +
-                          o?.toWard +
-                          ", " +
-                          o?.toDistrict +
-                          ", " +
-                          o?.toCity}
-                      </div>
-                    </div>
-                    <div className="w-1/2">
-                      <div>{o?.buyerName}</div>
-                      <div>{o?.buyerPhone}</div>
-                      <div>{o?.toAddress}</div>
+                  <div className="w-3/12">
+                    <div>{o?.buyerName}</div>
+                    <div>{o?.buyerPhone}</div>
+                    <div>
+                      {o?.toAddress +
+                        ", " +
+                        o?.toWard +
+                        ", " +
+                        o?.toDistrict +
+                        ", " +
+                        o?.toCity}
                     </div>
                   </div>
                   <div className="w-2/12">

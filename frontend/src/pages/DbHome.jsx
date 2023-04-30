@@ -43,8 +43,7 @@ const DbHome = () => {
       <div className="w-full mt-3 rounded bg-white shadow-lg overflow-hidden">
         <div className="hidden md:flex p-3 font-semibold items-center bg-primary text-white">
           <div className="w-2/12">Đơn hàng</div>
-          <div className="w-2/12">Ngày</div>
-          <div className="w-3/12">Chi tiết</div>
+          <div className="w-5/12">Chi tiết</div>
           <div className="w-2/12 text-center">Thành tiền</div>
           <div className="w-2/12 text-center">Trạng thái</div>
           <div className="w-1/12">Thao tác</div>

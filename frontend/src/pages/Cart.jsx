@@ -26,12 +26,12 @@ const Cart = () => {
     buyerName: currentUser?.displayName || "",
     buyerPhone: currentUser?.phone || "",
     buyerAddress: currentUser?.address || "",
-    fromCityCode: currentUser?.cityCode || -1,
+    cityCode: currentUser?.cityCode || -1,
     districtCode: currentUser?.districtCode || -1,
     wardCode: currentUser?.wardCode || -1,
-    warName: currentUser?.wardName || "",
-    districName: currentUser?.districtName || "",
-    citName: currentUser?.cityName || "",
+    wardName: currentUser?.wardName || "",
+    districtName: currentUser?.districtName || "",
+    cityName: currentUser?.cityName || "",
     wardFullName: currentUser?.wardFullName || "",
     districtFullName: currentUser?.districtFullName || "",
     cityFullName: currentUser?.cityFullName || "",
@@ -82,11 +82,11 @@ const Cart = () => {
     getDistricts();
   }, [inputs?.cityCode]);
   const handleChange = (e) => {
-    true;
     setInputs((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
   };
+  console.log(inputs);
   useEffect(() => {
     const getWards = async () => {
       try {
@@ -104,7 +104,6 @@ const Cart = () => {
             districtFullName: dName?.name_with_type,
           };
         });
-        true;
       } catch (error) {
         toast.error(error);
       }
@@ -123,7 +122,6 @@ const Cart = () => {
             wardFullName: wName?.name_with_type,
           };
         });
-        true;
       }
     };
     getWard();
@@ -183,15 +181,19 @@ const Cart = () => {
             <div className="mt-2 md:mt-0">
               <label>Tên người nhận hàng: </label>
               <input
+                name="buyerName"
                 className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
                 placeholder={inputs?.buyerName}
+                onChange={handleChange}
               />
             </div>
             <div className="mt-2 md:mt-0">
               <label>Số điện thoại: </label>
               <input
+                name="buyerPhone"
                 className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
                 placeholder={inputs?.buyerPhone}
+                onChange={handleChange}
               />
             </div>
             <div className="col-span-3 mt-2 md:mt-0">
@@ -206,17 +208,19 @@ const Cart = () => {
               </div>
               <div className="">
                 <input
+                  name="buyerAddress"
+                  onChange={handleChange}
                   className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
                   placeholder={
                     editAddress
                       ? inputs?.buyerAddress
-                      : currentUser?.address +
+                      : inputs?.buyerAddress +
                         ", " +
-                        currentUser?.wardFullName +
+                        inputs?.wardFullName +
                         ", " +
-                        currentUser?.districtFullName +
+                        inputs?.districtFullName +
                         ", " +
-                        currentUser?.cityFullName
+                        inputs?.cityFullName
                   }
                 />
                 {editAddress && (
