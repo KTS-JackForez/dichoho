@@ -2,10 +2,9 @@ import { vnd } from "../../ultis/ktsFunc";
 import { status } from "../../ultis/config";
 import { toast } from "react-toastify";
 import ktsRequest from "../../ultis/ktsrequest";
-const OrderCard = ({ data, openmodal, token }) => {
+const OrderCard = ({ data, openmodal, token, details }) => {
   const st = data.status;
   const orderDate = new Date(data.createdAt);
-  console.log(st);
   const handleCancel = async () => {
     try {
       const res = await ktsRequest.put(
@@ -83,7 +82,7 @@ const OrderCard = ({ data, openmodal, token }) => {
             disabled={st > 1}
             title="chi tiết đơn hàng"
             onClick={() => {
-              toast.success("ok");
+              details(data);
               openmodal(true);
             }}
           >
@@ -163,13 +162,18 @@ const OrderCard = ({ data, openmodal, token }) => {
           })}
         </div>
         <div className="flex gap-2 justify-end">
-          <button
+          {/* <button
             className={`p-1.5  rounded border ${
               st > 1
                 ? "bg-gray-300 border-gray-300"
                 : "bg-white border-orange-400 text-orange-400 hover:border-orange-400 hover:bg-orange-400 hover:text-white"
             }`}
-            disabled={st > 1}
+            // disabled={st > 1}
+            title="chi tiết đơn hàng"
+          > */}
+          <button
+            className={`p-1.5  rounded border bg-white border-orange-400 text-orange-400 hover:border-orange-400 hover:bg-orange-400 hover:text-white`}
+            // disabled={st > 1}
             title="chi tiết đơn hàng"
           >
             <svg

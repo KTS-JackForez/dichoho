@@ -58,6 +58,7 @@ const DbHome = () => {
                   key={i}
                   openmodal={setOpenModal}
                   token={token}
+                  details={setOrderDetails}
                 />
               );
             })}

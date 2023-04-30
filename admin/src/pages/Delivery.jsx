@@ -243,7 +243,7 @@ const Delivery = () => {
                     <div className="w-1/2">
                       <div>{o?.buyerName}</div>
                       <div>{o?.buyerPhone}</div>
-                      <div>{o?.buyerPhone}</div>
+                      <div>{o?.toAddress}</div>
                     </div>
                   </div>
                   <div className="w-2/12">

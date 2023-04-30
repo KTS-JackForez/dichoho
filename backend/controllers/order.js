@@ -9,6 +9,11 @@ export const createOrder = async (req, res, next) => {
       ...req.body,
       buyerId: req.user.id,
       orderNumber,
+      tracking: {
+        status: 0,
+        desc: "tạo đơn thành công",
+        time: new Date(),
+      },
     });
     await newOrder.save();
     Promise.all(
@@ -103,7 +108,16 @@ export const updateById = async (req, res, next) => {
     if (!order) return res.status(404).json("Đơn hàng không khả dụng");
     await Order.findByIdAndUpdate(
       req.params.id,
-      { $set: req.body },
+      {
+        $set: req.body,
+        $push: {
+          tracking: {
+            status: req.body.status,
+            desc: "Thay đổi trạng thái đơn hàng",
+            time: new Date(),
+          },
+        },
+      },
       { new: true }
     );
     res.status(200).json("Cập nhật đơn hàng thành công");
