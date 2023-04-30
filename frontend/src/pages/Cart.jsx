@@ -86,7 +86,6 @@ const Cart = () => {
       return { ...prev, [e.target.name]: e.target.value };
     });
   };
-  console.log(inputs);
   useEffect(() => {
     const getWards = async () => {
       try {

@@ -175,14 +175,14 @@ const Delivery = () => {
               const st = o.status;
               return (
                 <div className="w-full flex p-1 gap-1 items-center" key={i}>
-                  <div className="w-2/12">
-                    <div>{new Date(o.createdAt).toLocaleString()}</div>
-                    <div>{o.orderNumber}</div>
-                    <div
+                  <div className="w-2/12 space-x-2">
+                    <span
                       className={`${status[st].bgColor} ${status[st].textColor} px-1.5 py-0.5 text-xs font-semibold rounded inline`}
                     >
-                      {status[st].name}
-                    </div>
+                      {status[st].name + " "}
+                    </span>
+                    <span>{o.orderNumber}</span>
+                    <p>{new Date(o.createdAt).toLocaleString()}</p>
                   </div>
                   <div className="w-5/12">
                     <ul className="space-y-1">
