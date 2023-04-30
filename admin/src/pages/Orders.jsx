@@ -79,8 +79,8 @@ const Orders = () => {
       <div className="w-full mt-4 bg-white shadow-lg rounded-md overflow-hidden">
         <div className=" flex p-3 font-semibold items-center bg-primary text-white">
           <div className="w-1/4 flex">
-          <div className="w-1/2">Ngày</div>
-          <div className="w-1/2">Mã đơn hàng</div>
+            <div className="w-1/2">Ngày</div>
+            <div className="w-1/2">Mã đơn hàng</div>
           </div>
           <div className="w-3/12">Chi tiết đơn hàng</div>
           <div className="w-1/12">Thành tiền</div>
@@ -94,12 +94,12 @@ const Orders = () => {
               const st = o.status;
               return (
                 <div className="w-full flex p-1 gap-1 items-center" key={i}>
-                 <div className="w-1/4 flex">
-                 <div className="w-1/2">
-                    {new Date(o.createdAt).toLocaleString()}
+                  <div className="w-1/4 flex">
+                    <div className="w-1/2">
+                      {new Date(o.createdAt).toLocaleString()}
+                    </div>
+                    <div className="w-1/2">{o.orderNumber}</div>
                   </div>
-                  <div className="w-1/2">{o.orderNumber}</div>
-                 </div>
                   <div className="w-3/12">
                     <ul className="space-y-1">
                       {o.products.map((p, j) => {
@@ -114,9 +114,10 @@ const Orders = () => {
                                 />
                               </div>
                               <div>
-                                <span className="font-semibold">
-                                  {p.productName}
-                                </span>
+                                <p className="font-semibold">{p.productName}</p>
+                                <p className="text-xs italic text-red-500">
+                                  {p.shopName}
+                                </p>
                                 <div className="">
                                   <span>{vnd(p.currentPrice) + " * "}</span>
                                   <span>{p.quantity + " = "}</span>
@@ -138,9 +139,7 @@ const Orders = () => {
                     <div>{o?.buyerName}</div>
                     <div>{o?.buyerPhone}</div>
                   </div>
-                  <div className="w-2/12">
-                    {o?.note}
-                  </div>
+                  <div className="w-2/12">{o?.note}</div>
                   <div className="w-1/12">
                     {" "}
                     <span

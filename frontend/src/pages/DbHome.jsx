@@ -7,20 +7,21 @@ const DbHome = () => {
   const [postData, setPostData] = useState([]);
   const [orderData, setOrderData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const [orderDetails, setOrderDetails] = useState({});
   const { currentUser } = useSelector((state) => state.user);
   const { token } = currentUser;
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res1 = await ktsRequest.get("/posts");
-        const res = await ktsRequest.get("/orders", {
+        const res = await ktsRequest.get("/orders?limit=5", {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
         });
         setPostData(res1.data.slice(0.5));
-        setOrderData(res.data.slice(0, 5));
+        setOrderData(res.data);
       } catch (error) {
         console.log(error);
       }
@@ -29,7 +30,7 @@ const DbHome = () => {
   }, []);
   return (
     <div className="w-full p-2">
-      {openModal && <Modal close={setOpenModal} />}
+      {openModal && <Modal close={setOpenModal} data={orderDetails} />}
       <div className="flex justify-between px-4 py-3 bg-orange-300 rounded-md">
         <h3 className="uppercase font-bold">Đơn hàng gần nhất</h3>
         <Link

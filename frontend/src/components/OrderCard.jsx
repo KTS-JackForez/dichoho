@@ -49,7 +49,8 @@ const OrderCard = ({ data, openmodal, token }) => {
                       />
                     </div>
                     <div>
-                      <span className="font-semibold">{p.productName}</span>
+                      <span className="font-semibold">{p.productName} - </span>
+                      <span className="text-red-500 italic">{p.shopName}</span>
                       <div className="">
                         <span>{vnd(p.currentPrice) + " * "}</span>
                         <span>{p.quantity + " = "}</span>

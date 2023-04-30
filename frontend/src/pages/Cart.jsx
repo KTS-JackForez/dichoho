@@ -23,15 +23,18 @@ const Cart = () => {
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
   const [inputs, setInputs] = useState({
-    buyerName: currentUser.displayName || "",
-    buyerPhone: currentUser.phone || "",
-    buyerAddress: currentUser.address || "",
-    cityCode: currentUser.cityCode || -1,
-    districtCode: currentUser.districtCode || -1,
-    wardCode: currentUser.wardCode || -1,
-    wardFullName: currentUser.wardFullName,
-    districtFullName: currentUser.districtFullName,
-    cityFullName: currentUser.cityFullName,
+    buyerName: currentUser?.displayName || "",
+    buyerPhone: currentUser?.phone || "",
+    buyerAddress: currentUser?.address || "",
+    fromCityCode: currentUser?.cityCode || -1,
+    districtCode: currentUser?.districtCode || -1,
+    wardCode: currentUser?.wardCode || -1,
+    warName: currentUser?.wardName || "",
+    districName: currentUser?.districtName || "",
+    citName: currentUser?.cityName || "",
+    wardFullName: currentUser?.wardFullName || "",
+    districtFullName: currentUser?.districtFullName || "",
+    cityFullName: currentUser?.cityFullName || "",
   });
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -135,8 +138,12 @@ const Cart = () => {
         "/orders",
         {
           buyerId: currentUser._id,
-          buyerName: currentUser.username,
-          buyerPhone: currentUser.phone,
+          buyerName: inputs.buyerName || currentUser.displayName,
+          buyerPhone: inputs.buyerPhone || currentUser.phone,
+          toAddress: inputs.buyerAddress || currentUser.address,
+          toWard: inputs.wardFullName || currentUser.wardFullName,
+          toDistrict: inputs.districtFullName || currentUser.districtFullName,
+          toCity: inputs.cityFullName || currentUser.cityFullName,
           total: total(products),
           payCode,
           products,
@@ -171,122 +178,124 @@ const Cart = () => {
       <Header />
       <Navbar />
       <div className="max-w-screen-xl mx-auto my-10 min-h-[30vh] space-y-2">
-        <div className="border border-primary rounded p-2 md:grid grid-cols-5 gap-1">
-          <div className="mt-2 md:mt-0">
-            <label>Tên người nhận hàng: </label>
-            <input
-              className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-              placeholder={inputs?.buyerName}
-            />
-          </div>
-          <div className="mt-2 md:mt-0">
-            <label>Số điện thoại: </label>
-            <input
-              className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-              placeholder={inputs?.buyerPhone}
-            />
-          </div>
-          <div className="col-span-3 mt-2 md:mt-0">
-            <div className="flex justify-between">
-              <label>Địa chỉ: </label>
-              <span
-                className="hover:text-primary hover:underline cursor-pointer"
-                onClick={() => setEditAddress(!editAddress)}
-              >
-                Thay đổi
-              </span>
-            </div>
-            <div className="">
+        {currentUser && (
+          <div className="border border-primary rounded p-2 md:grid grid-cols-5 gap-1">
+            <div className="mt-2 md:mt-0">
+              <label>Tên người nhận hàng: </label>
               <input
                 className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-                placeholder={
-                  editAddress
-                    ? inputs?.buyerAddress
-                    : currentUser.address +
-                      ", " +
-                      currentUser.wardFullName +
-                      ", " +
-                      currentUser.districtFullName +
-                      ", " +
-                      currentUser.cityFullName
-                }
+                placeholder={inputs?.buyerName}
               />
-              {editAddress && (
-                <div className="w-full justify-start flex mt-1">
-                  <div className="w-1/3 flex flex-col pr-1">
-                    <label htmlFor="" className="hidden md:block">
-                      Tỉnh/Thành
-                    </label>
-                    <select
-                      id="cities"
-                      name="cityCode"
-                      className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
-                      onChange={handleChange}
-                    >
-                      {cities.map((i) => {
-                        return (
-                          <option
-                            value={i.code}
-                            key={i.code}
-                            selected={i.code === inputs?.cityCode}
-                          >
-                            {i.name_with_type}
-                          </option>
-                        );
-                      })}
-                    </select>
+            </div>
+            <div className="mt-2 md:mt-0">
+              <label>Số điện thoại: </label>
+              <input
+                className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
+                placeholder={inputs?.buyerPhone}
+              />
+            </div>
+            <div className="col-span-3 mt-2 md:mt-0">
+              <div className="flex justify-between">
+                <label>Địa chỉ: </label>
+                <span
+                  className="hover:text-primary hover:underline cursor-pointer"
+                  onClick={() => setEditAddress(!editAddress)}
+                >
+                  {editAddress ? "Áp dụng" : "Thay đổi"}
+                </span>
+              </div>
+              <div className="">
+                <input
+                  className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
+                  placeholder={
+                    editAddress
+                      ? inputs?.buyerAddress
+                      : currentUser?.address +
+                        ", " +
+                        currentUser?.wardFullName +
+                        ", " +
+                        currentUser?.districtFullName +
+                        ", " +
+                        currentUser?.cityFullName
+                  }
+                />
+                {editAddress && (
+                  <div className="w-full justify-start flex mt-1">
+                    <div className="w-1/3 flex flex-col pr-1">
+                      <label htmlFor="" className="hidden md:block">
+                        Tỉnh/Thành
+                      </label>
+                      <select
+                        id="cities"
+                        name="cityCode"
+                        className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
+                        onChange={handleChange}
+                      >
+                        {cities.map((i) => {
+                          return (
+                            <option
+                              value={i.code}
+                              key={i.code}
+                              selected={i.code === inputs?.cityCode}
+                            >
+                              {i.name_with_type}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                    <div className="w-1/3 flex flex-col pr-1">
+                      <label htmlFor="" className="hidden md:block">
+                        Quận/Huyện
+                      </label>
+                      <select
+                        id="districts"
+                        name="districtCode"
+                        className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
+                        onChange={handleChange}
+                      >
+                        {districts.map((i) => {
+                          return (
+                            <option
+                              value={i.code}
+                              key={i.code}
+                              selected={i.code === inputs?.districtCode}
+                            >
+                              {i.name_with_type}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                    <div className="w-1/3 flex flex-col">
+                      <label htmlFor="" className="hidden md:block">
+                        Phường/Xã
+                      </label>
+                      <select
+                        id="wards"
+                        name="wardCode"
+                        className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
+                        onChange={handleChange}
+                      >
+                        {wards.map((i) => {
+                          return (
+                            <option
+                              value={i.code}
+                              key={i.code}
+                              selected={i.code === inputs?.wardCode}
+                            >
+                              {i.name_with_type}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
                   </div>
-                  <div className="w-1/3 flex flex-col pr-1">
-                    <label htmlFor="" className="hidden md:block">
-                      Quận/Huyện
-                    </label>
-                    <select
-                      id="districts"
-                      name="districtCode"
-                      className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
-                      onChange={handleChange}
-                    >
-                      {districts.map((i) => {
-                        return (
-                          <option
-                            value={i.code}
-                            key={i.code}
-                            selected={i.code === inputs?.districtCode}
-                          >
-                            {i.name_with_type}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </div>
-                  <div className="w-1/3 flex flex-col">
-                    <label htmlFor="" className="hidden md:block">
-                      Phường/Xã
-                    </label>
-                    <select
-                      id="wards"
-                      name="wardCode"
-                      className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
-                      onChange={handleChange}
-                    >
-                      {wards.map((i) => {
-                        return (
-                          <option
-                            value={i.code}
-                            key={i.code}
-                            selected={i.code === inputs?.wardCode}
-                          >
-                            {i.name_with_type}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        )}
         {products.length > 0 ? (
           <div className="flex gap-3 flex-wrap md:flex-nowrap border border-primary rounded">
             <div className="md:w-3/4 w-full divide-primary divide-dashed divide-y shadow-lg">

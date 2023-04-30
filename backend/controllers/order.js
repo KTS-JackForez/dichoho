@@ -28,14 +28,23 @@ export const createOrder = async (req, res, next) => {
 
 export const getOrders = async (req, res, next) => {
   try {
+    const { limit } = req.query;
+    console.log(limit);
     const orders = permistion.includes(req.user.role)
       ? await Order.find()
       : await Order.find({ buyerId: req.user.id });
     if (!orders) {
       res.status(403).json("Không có dữ liệu đơn hàng nào");
     }
-    res.status(200).json(orders);
+    res
+      .status(200)
+      .json(
+        limit
+          ? orders.sort((a, b) => b.createdAt - a.createdAt).slice(0, limit)
+          : orders.sort((a, b) => b.createdAt - a.createdAt)
+      );
   } catch (error) {
+    console.log(error);
     next(createError(500, `Lỗi không xác định`));
   }
 };
@@ -48,6 +57,10 @@ export const getMyOrders = async (req, res, next) => {
     if (!orders) {
       res.status(403).json("Không có dữ liệu đơn hàng nào");
     }
+    if (permistion.includes(req.user.role))
+      return res
+        .status(200)
+        .json(orders.sort((a, b) => b.createdAt - a.createdAt));
     orders.map((o) => {
       const products = o.products.filter((i) => i.shopID === req.user.id);
       const order = {

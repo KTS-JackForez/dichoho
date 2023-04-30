@@ -173,7 +173,7 @@ const Delivery = () => {
           <div className="w-2/12">Thao tác</div>
         </div>
         {search(data)?.length > 0 ? (
-          <div className="rounded divide-y divide-primary divide-dashed text-gray-800">
+          <div className="rounded divide-y divide-primary divide-dashed text-sm text-gray-800">
             {search(data).map((o, i) => {
               const st = o.status;
               return (
@@ -230,7 +230,15 @@ const Delivery = () => {
                     <div className="w-1/2 text-start">
                       <div>{o?.buyerName}</div>
                       <div>{o?.buyerPhone}</div>
-                      <div>{o?.buyerPhone}</div>
+                      <div>
+                        {o?.toAddress +
+                          ", " +
+                          o?.toWard +
+                          ", " +
+                          o?.toDistrict +
+                          ", " +
+                          o?.toCity}
+                      </div>
                     </div>
                     <div className="w-1/2">
                       <div>{o?.buyerName}</div>
@@ -238,7 +246,7 @@ const Delivery = () => {
                       <div>{o?.buyerPhone}</div>
                     </div>
                   </div>
-                  <div className="w-2/12 text-xs">
+                  <div className="w-2/12">
                     <button
                       className="block p-2 hover:bg-primary rounded hover:text-white"
                       onClick={() => handleClick1(o?._id, 2)}

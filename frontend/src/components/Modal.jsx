@@ -1,6 +1,6 @@
 import React from "react";
 
-const Modal = ({ close }) => {
+const Modal = ({ data, close }) => {
   return (
     <div className="h-screen w-screen absolute top-0 left-0 bg-black/50 z-50 flex items-center">
       <div className="bg-white w-1/2 h-1/2 mx-auto rounded overflow-hidden">
@@ -15,7 +15,11 @@ const Modal = ({ close }) => {
             </button>
           </div>
         </div>
-        <div>Nội dung đơn hàng</div>
+        <div>
+          <div>Tên người nhận hàng: {data.buyerName}</div>
+          <div>Số điện thoại nhận hàng: {data.buyerPhone} </div>
+          <div>Dịa chỉ nhận hàng: {data.buyerAddress}</div>
+        </div>
       </div>
     </div>
   );
