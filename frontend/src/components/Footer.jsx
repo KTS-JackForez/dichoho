@@ -44,25 +44,6 @@ const Footer = () => {
       <div className="flex justify-between md:flex-row flex-col mt-2 mx-auto max-w-screen-xl p-3 text-gray-700 gap-8 md:gap-2 md:h-72">
         <div className="flex gap-4">
           <div className="flex flex-col lg:flex-row">
-            {/* <div className="px-4 md:w-1/2 md:flex flex-col hidden">
-              <img
-                src={logo_v3}
-                alt=""
-                className="w-1/2 md:h-1/3 object-contain md:w-full"
-                style={{ height: 44 }}
-              />
-              <img
-                src="https://green.web5phut.com/wp-content/uploads/2021/10/Untitled-7.png"
-                alt=""
-                className="md:w-full w-1/2 md:h-1/6 object-contain"
-              />
-              <img
-                src={tinnhiemmang}
-                alt=""
-                className="md:w-full w-1/2 md:h-1/6 object-contain"
-              />
-            </div> */}
-
             <ul className="flex flex-col gap-2 w-full">
               <h3 className="uppercase font-semibold text-xl">Về chúng tôi</h3>
               <li className="flex gap-2 items-center">
@@ -179,7 +160,7 @@ const Footer = () => {
               </li>
               <li>
                 <a href="https://www.dmca.com/r/331pzk9" className="block">
-                <img src={DCMA} alt="" className="-mt-8"/>
+                  <img src={DCMA} alt="" className="-mt-8" />
                 </a>
               </li>
             </ul>
@@ -188,9 +169,10 @@ const Footer = () => {
       </div>
       <div className=" bg-green-600 mx-auto py-3 text-white font-semibold text-center flex items-center justify-center">
         <span>Copyright 2023 © Thiết kế bởi </span>
-        <img width={100} height={100} src={logo_v3} alt="" />
+        <a href="https://sale168.vn">
+          <img width={100} height={100} src={logo_v3} alt="" />
+        </a>
       </div>
-      
     </div>
   );
 };
