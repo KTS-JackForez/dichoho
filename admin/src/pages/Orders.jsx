@@ -23,17 +23,23 @@ const Orders = () => {
     },
     {
       id: 1,
+      bgColor: "border border-green-500",
+      name: "Sẵn sàng thu gom",
+      textColor: "text-green-700",
+    },
+    {
+      id: 2,
       bgColor: "bg-orange-300",
       name: "Đang giao",
       textColor: "text-orange-700",
     },
     {
-      id: 2,
+      id: 3,
       bgColor: "bg-green-300",
       name: "Giao xong",
       textColor: "text-green-700",
     },
-    { id: 3, bgColor: "bg-red-300", name: "Đã hủy", textColor: "text-red-700" },
+    { id: 4, bgColor: "bg-red-300", name: "Đã hủy", textColor: "text-red-700" },
   ];
   socket.on("newNoti", () => {
     setRefresh(true);
