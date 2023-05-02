@@ -48,7 +48,6 @@ export const getByPhone = async (req, res, next) => {
 };
 //update thông tin user
 export const updateUser = async (req, res, next) => {
-  console.log("update");
   if (!req.params.id === req.user.id && permission.includes(req.user.role)) {
     return next(
       createError(
@@ -76,7 +75,6 @@ export const updateUser = async (req, res, next) => {
       });
     }
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
@@ -125,7 +123,6 @@ export const changePwd = async (req, res, next) => {
   }
 };
 export const setUserStatus = async (req, res, next) => {
-  console.log(req.params);
   const role = process.env.ROLE;
   const newStatus = req.params.newstatus;
   // if (!role.includes(req.user.role) && req.body.new_role !== "admin") {
