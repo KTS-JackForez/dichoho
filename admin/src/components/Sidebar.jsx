@@ -10,8 +10,8 @@ const Sidebar = () => {
   const [open, setOpen] = useState(true);
   const { currentUser } = useSelector((state) => state.user);
   const { role } = currentUser;
-  const activeLink = `flex items-center gap-5 pl-4 py-2 mx-2 rounded  text-white`;
-  const normalLink = `flex items-center gap-5 pl-4 py-2 mx-2 rounded text-sm text-gray-800 hover:bg-light-gray border border-white hover:border-primary`;
+  const activeLink = `flex items-center gap-5 pl-4 py-1.5 mx-2 rounded  text-white`;
+  const normalLink = `flex items-center gap-5 pl-4 py-1.5 mx-2 rounded text-sm text-gray-800 hover:text-primary`;
   return (
     <div
       className={`h-screen ${
@@ -39,7 +39,7 @@ const Sidebar = () => {
           />
         </svg>
       </button>
-      <div className="h-[12vh]">
+      <div className="h-[13vh]">
         <Link className="" to="/admin">
           {open && <img src={logo} className="mx-auto " />}
         </Link>
@@ -80,7 +80,7 @@ const Sidebar = () => {
         })}
         <a
           href={`https://dichoho.top/shop/${currentUser._id}`}
-          className="flex items-center gap-5 pl-4 py-2 rounded border-white text-gray-800 hover:border-primary border text-sm m-2 capitalize "
+          className="flex items-center gap-5 pl-4 py-1.5 mx-2 rounded text-sm text-gray-800 hover:text-primary"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
