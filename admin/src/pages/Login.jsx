@@ -14,10 +14,12 @@ const Login = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (currentUser) return navigate("/dashboard");
-    toast.success(`Chào sếp ${currentUser.displayName}`, {
-      position: "top-center",
-    });
+    if (currentUser) {
+      toast.success(`Chào sếp ${currentUser?.displayName}`, {
+        position: "top-center",
+      });
+      return navigate("/admin");
+    }
   }, []);
 
   const handleLogin = async (e) => {
@@ -30,6 +32,9 @@ const Login = () => {
         password,
       });
       dispatch(loginSuccess(res.data));
+      toast.success(`Xin chào ${res.data.displayName}!`, {
+        position: "top-center",
+      });
       setLoading(false);
       navigate("/admin");
     } catch (err) {

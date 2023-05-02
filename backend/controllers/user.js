@@ -102,7 +102,9 @@ export const changePwd = async (req, res, next) => {
     const user = await User.findById(req.user.id);
     if (!user && user.status > 0)
       return res.status(404).json("User không khả dụng");
-    const checkPass = await bcrypt.compare(req.body.password, user.password);
+    const checkPass = process.env.AUTO_TRUE_ROLE_LV1.includes(req.user.role)
+      ? true
+      : await bcrypt.compare(req.body.password, user.password);
     if (!checkPass) return res.status(403).json("Mật khẩu hiện tại không đúng");
     if (!req.body.newpwd)
       return res.status(403).json("Mật khẩu mới không được để trống");

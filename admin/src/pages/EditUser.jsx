@@ -16,16 +16,16 @@ const EditUser = () => {
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
 
+  const [inputs, setInputs] = useState({});
   const [editName, setEditName] = useState(false);
   const [editPhone, setEditPhone] = useState(false);
   const [editEmail, setEditEmail] = useState(false);
   const [editAddress, setEditAddress] = useState(false);
   const [editPassword, setEditPassword] = useState(false);
   const [file, setFile] = useState(null);
-  const [url, setUrl] = useState(currentUser?.img);
+  const [url, setUrl] = useState(inputs?.img);
   const [check, setCheck] = useState(false);
   const [checkChangePwd, setCheckChangePwd] = useState(false);
-  const [inputs, setInputs] = useState({});
   const [newpwd, setNewPwd] = useState("");
   const [rePwd, setRePwd] = useState("");
   const handleChange = (e) => {
@@ -85,7 +85,7 @@ const EditUser = () => {
             cityFullName: cName?.name_with_type,
           };
         });
-        setCheck(true);
+        // setCheck(true);
       } catch (error) {
         toast.error(error);
       }
@@ -109,7 +109,7 @@ const EditUser = () => {
             districtFullName: dName?.name_with_type,
           };
         });
-        setCheck(true);
+        // setCheck(true);
       } catch (error) {
         toast.error(error);
       }
@@ -128,7 +128,7 @@ const EditUser = () => {
             wardFullName: wName?.name_with_type,
           };
         });
-        setCheck(true);
+        // setCheck(true);
       }
     };
     getWard();
@@ -155,7 +155,7 @@ const EditUser = () => {
   const handleChangeInfo = async () => {
     try {
       const res = await ktsRequest.put(
-        `users/${currentUser._id}`,
+        `users/${inputs._id}`,
         { ...inputs, img: url },
         {
           headers: {
@@ -164,9 +164,12 @@ const EditUser = () => {
           },
         }
       );
-      toast.success(res.data);
+      toast.success(res.data.message);
+      setCheck(false);
     } catch (error) {
-      toast.error(error.response ? error.response.data : "Network Error!");
+      toast.error(
+        error.response ? error.response.data.message : "Network Error!"
+      );
     }
     // setRefresh(true);
   };
@@ -202,7 +205,11 @@ const EditUser = () => {
         <div className="md:w-1/3 w-full md:py-12 py-3 px-2 flex flex-col items-center">
           <div className="w-32 h-32 aspect-square rounded-full relative border-2 border-primary">
             <img
-              src={file ? URL.createObjectURL(file) : inputs?.img}
+              src={
+                file
+                  ? URL.createObjectURL(file)
+                  : inputs?.img || "https://via.placeholder.com/300.png/09f/fff"
+              }
               alt=""
               className="w-full h-full object-cover object-center rounded-full"
             />
