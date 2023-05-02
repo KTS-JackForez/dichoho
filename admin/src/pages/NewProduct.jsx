@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { storage } from "../../ultis/firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -328,7 +328,6 @@ const NewProduct = () => {
               "Tạo mới"
             )}
           </button>
-          <ToastContainer />
           <div className="flex items-center justify-between">
             <Link
               to="/admin/san-pham"

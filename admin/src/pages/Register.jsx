@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import ktsRequest from "../../ultis/ktsrequest";
 const Register = () => {
   const [username, setUserName] = useState("");
@@ -306,7 +306,6 @@ const Register = () => {
               </button>
             </div>
 
-            <ToastContainer />
             <div className="flex items-center justify-between">
               <Link
                 to="/"

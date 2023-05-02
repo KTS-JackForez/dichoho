@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ktsRequest from "../../ultis/ktsrequest";
 import { vnd } from "../../ultis/ktsFunc";
 import { useSelector } from "react-redux";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import Modal from "../components/Modal";
 
 const Categories = () => {
@@ -17,13 +17,13 @@ const Categories = () => {
   const { currentUser } = useSelector((state) => state.user);
   const { token } = currentUser;
   useEffect(() => {
-    setRefresh(false)
+    setRefresh(false);
     const fetchData = async () => {
       try {
         const res = await ktsRequest.get("/categories");
         setData(res.data);
       } catch (error) {
-        console.log(error.response)
+        console.log(error.response);
         toast.error(
           `${error.response ? error.response.data : "Network error!"}`
         );
@@ -39,9 +39,9 @@ const Categories = () => {
   const handleClick = async (cat) => {
     setRefresh(true);
     try {
-      const res=await ktsRequest.put(
+      const res = await ktsRequest.put(
         `/categories/${cat._id}`,
-        { ...cat, status: cat.status===0?1:0 },
+        { ...cat, status: cat.status === 0 ? 1 : 0 },
         {
           headers: {
             "Content-Type": "application/json",
@@ -54,8 +54,8 @@ const Categories = () => {
     }
   };
   const handleNew = async () => {
-    setRefresh(true)
-    setLoading(true)
+    setRefresh(true);
+    setLoading(true);
     try {
       await ktsRequest.post(
         "/categories",
@@ -69,11 +69,9 @@ const Categories = () => {
           },
         }
       );
-      setLoading(false)
+      setLoading(false);
     } catch (error) {
-      toast.error(
-        `${error.response ? error.response.data : "Network error!"}`
-      );
+      toast.error(`${error.response ? error.response.data : "Network error!"}`);
     }
   };
   return (
@@ -152,47 +150,46 @@ const Categories = () => {
                   onClick={handleNew}
                 >
                   {loading ? (
-              <svg
-                className="h-5  w-5 animate-spin text-white mx-auto"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                ></circle>
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
-              </svg>
-            ) : (
-              <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 64 64"
-                    stroke="white"
-                    strokeWidth={1.5}
-                    className="h-5 w-5"
-                  >
-                    <g>
-                      <path d="M35.267 6.041h-8v10h8v-10zm-1.897 8.102h-4.205V7.94h4.205v6.204zM41 47.041H21a1 1 0 100 2h20a1 1 0 100-2zM41 39.041H21a1 1 0 100 2h20a1 1 0 100-2z"></path>
-                      <path d="M12 56.041h38v-26H12v26zm2-24h34v22H14v-22z"></path>
-                      <path d="M49.381.041L49.361 0H7a4 4 0 00-4 4v56a4 4 0 004 4h50a4 4 0 004-4V11.696L49.381.041zm-9.42 2.04V20H14.038V2.082H39.96zM59 60c0 1.103-.897 2-2 2H7c-1.103 0-2-.897-2-2V4c0-1.103.897-2 2-2h5v20.041h30V2h6.51L59 12.523V60z"></path>
-                    </g>
-                  </svg>
-            )}
-                  
+                    <svg
+                      className="h-5  w-5 animate-spin text-white mx-auto"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 64 64"
+                      stroke="white"
+                      strokeWidth={1.5}
+                      className="h-5 w-5"
+                    >
+                      <g>
+                        <path d="M35.267 6.041h-8v10h8v-10zm-1.897 8.102h-4.205V7.94h4.205v6.204zM41 47.041H21a1 1 0 100 2h20a1 1 0 100-2zM41 39.041H21a1 1 0 100 2h20a1 1 0 100-2z"></path>
+                        <path d="M12 56.041h38v-26H12v26zm2-24h34v22H14v-22z"></path>
+                        <path d="M49.381.041L49.361 0H7a4 4 0 00-4 4v56a4 4 0 004 4h50a4 4 0 004-4V11.696L49.381.041zm-9.42 2.04V20H14.038V2.082H39.96zM59 60c0 1.103-.897 2-2 2H7c-1.103 0-2-.897-2-2V4c0-1.103.897-2 2-2h5v20.041h30V2h6.51L59 12.523V60z"></path>
+                      </g>
+                    </svg>
+                  )}
                 </button>
                 <button
                   className="px-3 rounded bg-red-500 hover:bg-red-700"
-                  onClick={()=>setOpenNew(!openNew)}
+                  onClick={() => setOpenNew(!openNew)}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -226,7 +223,12 @@ const Categories = () => {
           <div className="divide-y divide-primary divide-dashed">
             {data.map((c, i) => {
               return (
-                <div className={`w-full flex p-1 gap-1 items-center ${c.status<0?"bg-gray-300 text-gray-800":""}`} key={i}>
+                <div
+                  className={`w-full flex p-1 gap-1 items-center ${
+                    c.status < 0 ? "bg-gray-300 text-gray-800" : ""
+                  }`}
+                  key={i}
+                >
                   <div className="w-2/12">{c?.code}</div>
                   <div className="w-5/12">{c?.name}</div>
                   <div className="w-2/12">
@@ -235,29 +237,29 @@ const Categories = () => {
                   <div className="w-2/12">
                     <div
                       className={`w-12 h-6 bg-${
-                        c?.status===1 ? "primary" : "slate-400"
+                        c?.status === 1 ? "primary" : "slate-400"
                       } rounded-full relative`}
                     >
                       <button
-                      disabled={c.status<0}
+                        disabled={c.status < 0}
                         onClick={() => handleClick(c)}
                         className={`w-5 h-5 bg-white rounded-full ${
-                          c?.status===1 ? "right-1" : "left-1"
+                          c?.status === 1 ? "right-1" : "left-1"
                         }
                         } top-0.5 absolute text-xs`}
                       >
-                        {c.status===0?"off":"on"}</button>
+                        {c.status === 0 ? "off" : "on"}
+                      </button>
                     </div>
                   </div>
                   <div className="w-1/12 flex justify-around">
                     <button
-                     disabled={c.status<0}
-                      onClick={()=>{
-                        setOpenNew(true)
+                      disabled={c.status < 0}
+                      onClick={() => {
+                        setOpenNew(true);
                       }}
                       className="p-1.5 bg-white rounded border border-orange-400 text-orange-400 hover:border-orange-400 hover:bg-orange-400 hover:text-white"
                     >
-                      
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -273,10 +275,14 @@ const Categories = () => {
                         />
                       </svg>
                     </button>
-                    <button disabled={c.status<0} onClick={() => {
-                          setDelCat(c);
-                          setOpenModal(true);
-                        }} className="p-1.5 bg-white rounded border border-red-600 text-red-600 hover:border-red-600 hover:bg-red-600 hover:text-white">
+                    <button
+                      disabled={c.status < 0}
+                      onClick={() => {
+                        setDelCat(c);
+                        setOpenModal(true);
+                      }}
+                      className="p-1.5 bg-white rounded border border-red-600 text-red-600 hover:border-red-600 hover:bg-red-600 hover:text-white"
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -284,7 +290,6 @@ const Categories = () => {
                         strokeWidth={1.5}
                         stroke="currentColor"
                         className="w-4 h-4"
-                        
                       >
                         <path
                           strokeLinecap="round"
@@ -314,7 +319,6 @@ const Categories = () => {
           <div className="p-2 text-center text-gray-700">Không có dữ liệu</div>
         )}
       </div>
-      <ToastContainer />
     </div>
   );
 };

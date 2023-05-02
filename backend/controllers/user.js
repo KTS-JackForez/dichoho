@@ -48,7 +48,7 @@ export const getByPhone = async (req, res, next) => {
 };
 //update thông tin user
 export const updateUser = async (req, res, next) => {
-  console.log(req.body);
+  console.log("update");
   if (!req.params.id === req.user.id && permission.includes(req.user.role)) {
     return next(
       createError(
@@ -62,20 +62,21 @@ export const updateUser = async (req, res, next) => {
     if (!user) {
       return res.status(403).json("Không tìm thấy thông tin user");
     } else {
-      if (user.role === "admin")
+      if (user.role === "admin" && req.user.role !== "admin")
         return res.status(403).json("Tài khoản admin không được phép truy cập");
-      await User.findByIdAndUpdate(
+      const updatedUser = await User.findByIdAndUpdate(
         req.params.id,
         { $set: req.body },
         { new: true }
-      );
+      ).select(["-password"]);
+      res.status(200).json({
+        message:
+          "Cập nhật thông tin tài khoản thành công, bạn cần đăng nhập lại để áp dụng (các) thay đổi",
+        data: updatedUser,
+      });
     }
-    res
-      .status(200)
-      .json(
-        "Cập nhật thông tin tài khoản thành công, bạn cần đăng nhập lại để áp dụng (các) thay đổi"
-      );
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };

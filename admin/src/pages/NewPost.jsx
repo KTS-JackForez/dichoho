@@ -6,7 +6,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useSelector } from "react-redux";
 import ktsRequest from "../../ultis/ktsrequest";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const NewPost = () => {
   const [value, setValue] = useState("");
@@ -205,7 +205,6 @@ const NewPost = () => {
           đăng ký bài viết
         </button>
       </div>
-      <ToastContainer />
     </div>
   );
 };

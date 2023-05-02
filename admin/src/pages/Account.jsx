@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ktsRequest from "../../ultis/ktsrequest";
 import { useSelector } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import Modal from "../components/Modal";
 const AccountCard = ({ u }) => {
   return (
@@ -372,7 +372,6 @@ const Account = () => {
           <div className="p-2 text-center text-gray-700">Không có dữ liệu</div>
         )}
       </div>
-      <ToastContainer autoClose={1000} />
     </div>
   );
 };

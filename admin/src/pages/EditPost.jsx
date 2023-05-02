@@ -5,7 +5,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useSelector } from "react-redux";
 import ktsRequest from "../../ultis/ktsrequest";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 const EditPost = () => {
   const [value, setValue] = useState("");
@@ -216,7 +216,6 @@ const EditPost = () => {
           Lưu bài viết
         </button>
       </div>
-      <ToastContainer />
     </div>
   );
 };

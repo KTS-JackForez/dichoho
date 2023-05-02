@@ -2,28 +2,23 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginFailure, loginStart, loginSuccess } from "../redux/userSlice";
-import { setMsg } from "../redux/msgSlice";
 import ktsRequest from "../../ultis/ktsrequest";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import axios from "axios";
 const Login = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const { currentUser } = useSelector((state) => state.user);
-  const { currentMsg } = useSelector((state) => state.msg);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   if (currentUser) return navigate("/dashboard");
-  //   if (currentMsg) {
-  //     toast.warn(currentMsg);
-  //     dispatch(setMsg(null));
-  //   }
-  //   <ToastContainer />;
-  // }, []);
+  useEffect(() => {
+    if (currentUser) return navigate("/dashboard");
+    toast.success(`Chào sếp ${currentUser.displayName}`, {
+      position: "top-center",
+    });
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -40,13 +35,8 @@ const Login = () => {
     } catch (err) {
       dispatch(loginFailure());
       setLoading(false);
-      err.response
-        ? toast.error(err.response.data)
-        : toast.error("Network Error!");
-      <ToastContainer />;
+      toast.error(err.response ? err.response.data : "Network Error!");
     }
-
-    // if(name==="jackforez" && pass)
   };
   return (
     // <div className="flex h-screen items-center bg-primary bg-cover bg-fixed bg-center bg-no-repeat">
@@ -112,7 +102,6 @@ const Login = () => {
                   "Đăng nhập"
                 )}
               </button>
-              <ToastContainer />
               <div className="flex items-center justify-between">
                 <a
                   href="https://dichoho.top"

@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../../ultis/firebase";
 import ktsRequest from "../../ultis/ktsrequest";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import axios from "axios";
+import { loginSuccess } from "../redux/userSlice";
 
 const MyAccount = () => {
   const { currentUser } = useSelector((state) => state.user);
   const { token } = currentUser;
+  const dispatch = useDispatch();
   const [displayName, setDisplayName] = useState(currentUser.displayName);
   const [phone, setPhone] = useState(currentUser.phone);
   const [email, setEmail] = useState(currentUser.email);
@@ -44,7 +46,6 @@ const MyAccount = () => {
       return { ...prev, [e.target.name]: e.target.value };
     });
   };
-
   useEffect(() => {
     const getCities = async () => {
       try {
@@ -76,7 +77,7 @@ const MyAccount = () => {
             cityFullName: cName?.name_with_type,
           };
         });
-        setCheck(true);
+        // setCheck(true);
       } catch (error) {
         toast.error(error);
       }
@@ -102,7 +103,7 @@ const MyAccount = () => {
             districtFullName: dName?.name_with_type,
           };
         });
-        setCheck(true);
+        // setCheck(true);
       } catch (error) {
         toast.error(error);
       }
@@ -123,7 +124,7 @@ const MyAccount = () => {
             wardFullName: wName?.name_with_type,
           };
         });
-        setCheck(true);
+        // setCheck(true);
       }
     };
     getWard();
@@ -162,7 +163,8 @@ const MyAccount = () => {
           },
         }
       );
-      toast.success(res.data);
+      toast.success(res.data.message);
+      dispatch(loginSuccess({ ...res.data.data, token: token }));
     } catch (error) {
       toast.error(error.response ? error.response.data : "Network Error!");
     }
@@ -177,7 +179,6 @@ const MyAccount = () => {
       toast.error("Mật khẩu mới / xác nhận mật khẩu mới không trùng khớp");
       return;
     }
-    console.log("change PWD");
     try {
       const res = await ktsRequest.put(
         `users/changepwd/${currentUser._id}`,
@@ -690,7 +691,6 @@ const MyAccount = () => {
             )}
           </div>
         </div>
-        <ToastContainer />
       </div>
     </div>
   );

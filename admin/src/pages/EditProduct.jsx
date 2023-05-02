@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { storage } from "../../ultis/firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -407,7 +407,6 @@ const EditProduct = () => {
               <span className="uppercase">cập nhật</span>
             )}
           </button>
-          <ToastContainer />
           <div className="flex items-center justify-between">
             <Link
               to="/admin/san-pham"

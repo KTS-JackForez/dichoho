@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ktsRequest from "../../ultis/ktsrequest";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import io from "socket.io-client";
 import { ktsSocket } from "../../ultis/config";
@@ -45,7 +45,6 @@ const Notification = () => {
         <p>{data.desc}</p>
       </div>
       <div></div>
-      <ToastContainer />
     </div>
   );
 };

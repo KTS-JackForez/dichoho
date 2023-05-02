@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../../ultis/firebase";
 import ktsRequest from "../../ultis/ktsrequest";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
@@ -657,7 +657,6 @@ const EditUser = () => {
             </div>
           </div>
         </div>
-        <ToastContainer />
       </div>
     </div>
   );

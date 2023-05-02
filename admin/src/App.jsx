@@ -3,6 +3,7 @@ import { Login, NotFound, Register } from "./pages";
 import Layout from "./pages/Layout";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -30,6 +31,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
+      <ToastContainer />
     </BrowserRouter>
   );
 }

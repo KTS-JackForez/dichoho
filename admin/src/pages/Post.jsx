@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ktsRequest from "../../ultis/ktsrequest";
-import { vnd } from "../../ultis/ktsFunc";
 import { useSelector } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const Post = () => {
   const [data, setData] = useState([]);
@@ -210,7 +209,6 @@ const Post = () => {
           <div className="p-2 text-center text-gray-700">Không có dữ liệu</div>
         )}
       </div>
-      <ToastContainer />
     </div>
   );
 };
