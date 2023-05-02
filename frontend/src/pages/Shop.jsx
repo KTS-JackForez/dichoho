@@ -83,7 +83,7 @@ const Shop = () => {
                   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTSHHIp_HJ8NpKbzLv_CRPR1uIjXlRVGKLhQ&usqp=CAU"
                 }
                 alt=""
-                className="w-40 h-40 mx-auto rounded-full"
+                className="w-40 h-40 mx-auto rounded-full object-cover"
               />
             </div>
 
