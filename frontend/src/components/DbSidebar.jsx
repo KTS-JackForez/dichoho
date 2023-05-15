@@ -7,10 +7,8 @@ import { logout } from "../redux/userSlice";
 const DbSidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const activeLink =
-    "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded  text-white  text-md m-2 font-semibold";
-  const normalLink =
-    "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded text-xs text-gray-500 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2 font-semibold";
+  const activeLink = `flex items-center gap-5 pl-4 py-1.5 mx-2 rounded  text-white`;
+  const normalLink = `flex items-center gap-5 pl-4 py-1.5 mx-2 rounded text-sm text-gray-800 hover:text-primary`;
   return (
     <div className="border border-r-gray-300 h-screen w-72 px-3 hidden md:block">
       <Link className="w-full h-28 block" to="/">
@@ -47,7 +45,7 @@ const DbSidebar = () => {
           );
         })}
         <button
-          className="flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded  border-primary border text-md m-2 font-semibold mt-12 hover:bg-primary hover:text-white uppercase "
+          className="flex items-center gap-5 pl-4 pt-2.5 pb-2 rounded  border-primary border text-md m-2 font-semibold mt-12 hover:bg-primary hover:text-white uppercase "
           onClick={(e) => {
             e.preventDefault();
             dispatch(logout());

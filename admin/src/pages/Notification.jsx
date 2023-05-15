@@ -27,7 +27,7 @@ const Notification = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [window.location.pathname]);
   useEffect(() => {
     socket.emit("refresh", {
       uid: currentUser._id,
