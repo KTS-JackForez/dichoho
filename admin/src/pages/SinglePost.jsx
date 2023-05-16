@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import ktsRequest from "../../ultis/ktsrequest";
 import "./singlepost.css";
 const SinglePost = () => {
@@ -78,7 +78,7 @@ const SinglePost = () => {
               <h3 className="text-3xl font-bold">{post?.title}</h3>
               <div>
                 <span className="text-red-500 font-semibold">
-                  {post?.author || "sale168.com"},
+                  {post?.author || "dichoho.top"},
                 </span>
                 <span className="">
                   <svg
@@ -156,7 +156,6 @@ const SinglePost = () => {
             className="text-justify baiviet"
           ></div>
         </div>
-        <ToastContainer />
       </div>
     </div>
   );

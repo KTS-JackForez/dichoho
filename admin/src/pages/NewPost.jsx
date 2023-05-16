@@ -66,7 +66,7 @@ const NewPost = () => {
     const postData = {
       postType: type,
       title,
-      author: currentUser.displayName || "sale168.com",
+      author: currentUser.displayName || "dichoho.top",
       description,
       content: value,
       thumbnail: url,
