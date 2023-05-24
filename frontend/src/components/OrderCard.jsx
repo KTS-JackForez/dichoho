@@ -215,6 +215,10 @@ const OrderCard = ({ data, openmodal, token, details }) => {
             className={`p-1.5  rounded border bg-white border-orange-400 text-orange-400 hover:border-orange-400 hover:bg-orange-400 hover:text-white`}
             // disabled={st > 1}
             title="chi tiết đơn hàng"
+            onClick={() => {
+              details(data);
+              openmodal(true);
+            }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -244,6 +248,7 @@ const OrderCard = ({ data, openmodal, token, details }) => {
             }`}
             disabled={st > 1}
             title="hủy đơn"
+            onClick={() => setOpenAlert(!openAlert)}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

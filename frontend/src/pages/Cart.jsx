@@ -19,6 +19,7 @@ const Cart = () => {
   const { currentUser } = useSelector((state) => state.user);
   const { products } = useSelector((state) => state.cart);
   const [editAddress, setEditAddress] = useState(false);
+  const [shipMode, setShipMode] = useState(0);
   const [cities, setCities] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
@@ -39,6 +40,7 @@ const Cart = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const socket = io.connect(ktsSocket);
+  const shipCost = [20000, 35000];
   const total = (products) => {
     let total = 0;
     products.map((item) => {
@@ -70,6 +72,10 @@ const Cart = () => {
         setInputs((prev) => {
           return {
             ...prev,
+            districtCode:
+              data.findIndex((el) => el.code === inputs.districtCode) > -1
+                ? inputs.districtCode
+                : data[0].code,
             cityCode: inputs?.cityCode,
             cityName: cName?.name,
             cityFullName: cName?.name_with_type,
@@ -95,9 +101,14 @@ const Cart = () => {
         const data = Object.values(resw.data);
         const dName = districts.find((d) => d.code === inputs?.districtCode);
         setWards(data);
+        console.log("district changed");
         setInputs((prev) => {
           return {
             ...prev,
+            wardCode:
+              data.findIndex((el) => el.code === inputs.wardCode) > -1
+                ? inputs.wardCode
+                : data[0].code,
             districtCode: inputs?.districtCode,
             districtName: dName?.name,
             districtFullName: dName?.name_with_type,
@@ -141,7 +152,7 @@ const Cart = () => {
           toWard: inputs.wardFullName || currentUser.wardFullName,
           toDistrict: inputs.districtFullName || currentUser.districtFullName,
           toCity: inputs.cityFullName || currentUser.cityFullName,
-          total: total(products),
+          total: total(products + shipCost[shipMode]),
           payCode,
           products,
           note,
@@ -181,118 +192,170 @@ const Cart = () => {
               <label>Tên người nhận hàng: </label>
               <input
                 name="buyerName"
-                className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-                placeholder={inputs?.buyerName}
+                className={`block w-full rounded border border-gray-300 ${
+                  editAddress ? "bg-gray-50" : "bg-gray-200"
+                } p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm `}
+                value={inputs?.buyerName}
                 onChange={handleChange}
+                disabled={!editAddress}
               />
             </div>
             <div className="mt-2 md:mt-0">
               <label>Số điện thoại: </label>
               <input
                 name="buyerPhone"
-                className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-                placeholder={inputs?.buyerPhone}
+                className={`block w-full rounded border border-gray-300 ${
+                  editAddress ? "bg-gray-50" : "bg-gray-200"
+                } p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm `}
+                value={inputs?.buyerPhone}
                 onChange={handleChange}
+                disabled={!editAddress}
               />
             </div>
             <div className="col-span-3 mt-2 md:mt-0">
               <div className="flex justify-between">
                 <label>Địa chỉ: </label>
-                <span
-                  className="hover:text-primary hover:underline cursor-pointer"
-                  onClick={() => setEditAddress(!editAddress)}
-                >
-                  {editAddress ? "Áp dụng" : "Thay đổi"}
-                </span>
+                {editAddress ? (
+                  <span className="space-x-3">
+                    <span
+                      className="hover:text-primary hover:underline cursor-pointer"
+                      onClick={() => {
+                        setInputs({
+                          buyerName: currentUser?.displayName || "",
+                          buyerPhone: currentUser?.phone || "",
+                          buyerAddress: currentUser?.address || "",
+                          cityCode: currentUser?.cityCode || -1,
+                          districtCode: currentUser?.districtCode || -1,
+                          wardCode: currentUser?.wardCode || -1,
+                          wardName: currentUser?.wardName || "",
+                          districtName: currentUser?.districtName || "",
+                          cityName: currentUser?.cityName || "",
+                          wardFullName: currentUser?.wardFullName || "",
+                          districtFullName: currentUser?.districtFullName || "",
+                          cityFullName: currentUser?.cityFullName || "",
+                        });
+                        setEditAddress(false);
+                      }}
+                    >
+                      Xóa
+                    </span>
+                    <span
+                      className="hover:text-primary hover:underline cursor-pointer"
+                      onClick={() => setEditAddress(false)}
+                    >
+                      Áp dụng
+                    </span>
+                  </span>
+                ) : (
+                  <span
+                    className="hover:text-primary hover:underline cursor-pointer"
+                    onClick={() => setEditAddress(true)}
+                  >
+                    Thay đổi
+                  </span>
+                )}
               </div>
               <div className="">
-                <input
-                  name="buyerAddress"
-                  onChange={handleChange}
-                  className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
-                  placeholder={
-                    editAddress
-                      ? inputs?.buyerAddress
-                      : inputs?.buyerAddress +
+                {editAddress ? (
+                  <>
+                    <input
+                      name="buyerAddress"
+                      onChange={handleChange}
+                      className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-gray-900 focus:border-primary focus:outline-none focus:ring-primary-600 sm:text-sm"
+                      placeholder={
+                        (inputs?.buyerAddress || currentUser.address) +
                         ", " +
-                        inputs?.wardFullName +
+                        (inputs?.wardFullName || currentUser.wardFullName) +
                         ", " +
-                        inputs?.districtFullName +
+                        (inputs?.districtFullName ||
+                          currentUser.districtFullName) +
                         ", " +
-                        inputs?.cityFullName
-                  }
-                />
-                {editAddress && (
-                  <div className="w-full justify-start flex mt-1">
-                    <div className="w-1/3 flex flex-col pr-1">
-                      <label htmlFor="" className="hidden md:block">
-                        Tỉnh/Thành
-                      </label>
-                      <select
-                        id="cities"
-                        name="cityCode"
-                        className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
-                        onChange={handleChange}
-                      >
-                        {cities.map((i) => {
-                          return (
-                            <option
-                              value={i.code}
-                              key={i.code}
-                              selected={i.code === inputs?.cityCode}
-                            >
-                              {i.name_with_type}
-                            </option>
-                          );
-                        })}
-                      </select>
+                        (inputs?.cityFullName || currentUser.cityFullName)
+                      }
+                      value={inputs?.buyerAddress}
+                    />
+                    <div className="w-full justify-start flex mt-1">
+                      <div className="w-1/3 flex flex-col pr-1">
+                        <label htmlFor="" className="hidden md:block">
+                          Tỉnh/Thành
+                        </label>
+                        <select
+                          id="cities"
+                          name="cityCode"
+                          className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
+                          onChange={handleChange}
+                        >
+                          {cities.map((i) => {
+                            return (
+                              <option
+                                value={i.code}
+                                key={i.code}
+                                selected={i.code === inputs?.cityCode}
+                              >
+                                {i.name_with_type}
+                              </option>
+                            );
+                          })}
+                        </select>
+                      </div>
+                      <div className="w-1/3 flex flex-col pr-1">
+                        <label htmlFor="" className="hidden md:block">
+                          Quận/Huyện
+                        </label>
+                        <select
+                          id="districts"
+                          name="districtCode"
+                          className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
+                          onChange={handleChange}
+                        >
+                          {districts.map((i) => {
+                            return (
+                              <option
+                                value={i.code}
+                                key={i.code}
+                                selected={i.code === inputs?.districtCode}
+                              >
+                                {i.name_with_type}
+                              </option>
+                            );
+                          })}
+                        </select>
+                      </div>
+                      <div className="w-1/3 flex flex-col">
+                        <label htmlFor="" className="hidden md:block">
+                          Phường/Xã
+                        </label>
+                        <select
+                          id="wards"
+                          name="wardCode"
+                          className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
+                          onChange={handleChange}
+                        >
+                          {wards.map((i) => {
+                            return (
+                              <option
+                                value={i.code}
+                                key={i.code}
+                                selected={i.code === inputs?.wardCode}
+                              >
+                                {i.name_with_type}
+                              </option>
+                            );
+                          })}
+                        </select>
+                      </div>
                     </div>
-                    <div className="w-1/3 flex flex-col pr-1">
-                      <label htmlFor="" className="hidden md:block">
-                        Quận/Huyện
-                      </label>
-                      <select
-                        id="districts"
-                        name="districtCode"
-                        className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
-                        onChange={handleChange}
-                      >
-                        {districts.map((i) => {
-                          return (
-                            <option
-                              value={i.code}
-                              key={i.code}
-                              selected={i.code === inputs?.districtCode}
-                            >
-                              {i.name_with_type}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </div>
-                    <div className="w-1/3 flex flex-col">
-                      <label htmlFor="" className="hidden md:block">
-                        Phường/Xã
-                      </label>
-                      <select
-                        id="wards"
-                        name="wardCode"
-                        className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary"
-                        onChange={handleChange}
-                      >
-                        {wards.map((i) => {
-                          return (
-                            <option
-                              value={i.code}
-                              key={i.code}
-                              selected={i.code === inputs?.wardCode}
-                            >
-                              {i.name_with_type}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </div>
+                  </>
+                ) : (
+                  <div className="block w-full rounded border border-gray-300 p-2 text-gray-900 bg-gray-200 sm:text-sm">
+                    {(inputs?.buyerAddress || currentUser.address) +
+                      ", " +
+                      (inputs?.wardFullName || currentUser.wardFullName) +
+                      ", " +
+                      (inputs?.districtFullName ||
+                        currentUser.districtFullName) +
+                      ", " +
+                      (inputs?.cityFullName || currentUser.cityFullName)}
                   </div>
                 )}
               </div>
@@ -323,7 +386,7 @@ const Cart = () => {
                       <div className="flex w-4/5 md:w-2/5 text-xs items-center">
                         <div className="text-center pr-2">
                           <button
-                            className="bg-white p-2 rounded-full hover:bg-primary hover:text-white"
+                            className="bg-white p-2 rounded-full hover:bg-red-500 hover:text-white"
                             onClick={() => {
                               dispatch(removeItem(i.id));
                             }}
@@ -354,7 +417,7 @@ const Cart = () => {
                         <div className="flex flex-col justify-between ml-4 flex-grow">
                           <Link
                             to={`/products/${i.id}`}
-                            className="font-bold text-sm"
+                            className="font-bold text-xs"
                           >
                             {i.productName}
                           </Link>
@@ -413,10 +476,10 @@ const Cart = () => {
                           </svg>
                         </button>
                       </div>
-                      <span className="text-center w-1/5 font-semibold text-sm hidden md:block">
+                      <span className="text-center w-1/5  text-sm hidden md:block">
                         {vnd(i.currentPrice)}
                       </span>
-                      <span className="text-center w-1/5 font-semibold text-sm hidden md:block">
+                      <span className="text-center w-1/5  text-sm hidden md:block">
                         {vnd(i.quantity * i.currentPrice)}
                       </span>
                     </div>
@@ -428,24 +491,31 @@ const Cart = () => {
               <h1 className="uppercase p-3 font-bold">đơn hàng</h1>
               <div className="p-3 flex gap-3 flex-col">
                 <div className="flex justify-between">
-                  <span className="font-semibold text-sm uppercase py-3">
-                    tiền hàng
-                  </span>
-                  <span className="font-semibold text-sm py-3">
-                    {vnd(total(products))}
+                  <span className=" text-sm uppercase py-3">tiền hàng</span>
+                  <span className=" text-sm py-3">{vnd(total(products))}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font- text-sm uppercase py-3">cước</span>
+                  <span className="font- text-sm py-3">
+                    {vnd(shipCost[shipMode])}
                   </span>
                 </div>
                 <div>
-                  <label className="font-medium inline-block text-sm uppercase">
+                  <label className=" inline-block text-sm uppercase">
                     phương thức vận chuyển
                   </label>
-                  <select className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:outline-none focus:border-primary focus:ring-primary">
-                    <option>Tiêu chuẩn</option>
-                    <option>Siêu tốc</option>
+                  <select
+                    className="block w-full rounded border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:outline-none focus:border-primary focus:ring-primary"
+                    onChange={(e) => {
+                      setShipMode(e.target.value);
+                    }}
+                  >
+                    <option value={0}>Tiêu chuẩn</option>
+                    <option value={1}>Siêu tốc</option>
                   </select>
                 </div>
                 <div>
-                  <label className="font-medium inline-block text-sm uppercase">
+                  <label className=" inline-block text-sm uppercase">
                     phương thức thanh toán
                   </label>
                   <select
@@ -469,7 +539,7 @@ const Cart = () => {
                   <div className="">
                     <label
                       htmlFor="payCode"
-                      className="font-semibold inline-block text-sm uppercase"
+                      className=" inline-block text-sm uppercase"
                     >
                       Mã giao dịch (chuyển khoản)
                     </label>
@@ -486,7 +556,7 @@ const Cart = () => {
                 <div className="">
                   <label
                     htmlFor="note"
-                    className="font-semibold inline-block text-sm uppercase"
+                    className=" inline-block text-sm uppercase"
                   >
                     Ghi chú
                   </label>
@@ -501,10 +571,10 @@ const Cart = () => {
                 <div className="border-t mt-8">
                   <div className="flex font-semibold justify-between py-6 text-sm uppercase">
                     <span>tổng tiền đơn hàng</span>
-                    <span>{vnd(total(products))}</span>
+                    <span>{vnd(total(products) + shipCost[shipMode])}</span>
                   </div>
                   <button
-                    className="bg-primary font-semibold hover:bg-primary rounded py-3 text-sm text-white uppercase w-full"
+                    className="bg-primary  hover:bg-primary rounded py-3 text-sm text-white uppercase w-full"
                     onClick={handleClick}
                   >
                     đặt hàng
@@ -533,7 +603,7 @@ const Cart = () => {
                 </svg>
                 <p className="mt-1">
                   Cảm ơn bạn đã đặt hàng! Mã đơn hàng của bạn là:{" "}
-                  <span className="bg-gray-200 px-3 py-1 font-semibold rounded-md">
+                  <span className="bg-gray-200 px-3 py-1  rounded-md">
                     {orderNumber}
                   </span>
                   Chúng tôi đang chuẩn bị hàng giao đến bạn
@@ -563,7 +633,7 @@ const Cart = () => {
           <div>
             <Link
               to="/"
-              className="flex font-semibold text-primary text-sm mt-10 hover:text-green-700"
+              className="flex  text-primary text-sm mt-10 hover:text-green-700"
             >
               <svg
                 className="fill-current mr-2 text-primary w-4"
