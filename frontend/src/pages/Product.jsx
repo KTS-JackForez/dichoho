@@ -262,19 +262,21 @@ const Product = () => {
                   </div>
                 </div>
 
-                <div className="flex text-xl">
-                  <span className="font-semibold text-primary">
-                    {vnd(product.currentPrice)}
-                  </span>
-
-                  {!checkPrice && (
-                    <span>
-                      <span className="mx-2">-</span>
-                      <span className="font-semibold text-red-500 line-through">
-                        {vnd(product.stockPrice)}{" "}
-                      </span>
-                    </span>
-                  )}
+                <div className="flex text-xl justify-between w-1/2">
+                  <p className="mb-1 text-primary font-semibold line-clamp-2">
+                    {product?.stockPrice > 0
+                      ? vnd(product?.currentPrice)
+                      : "Liên hệ"}
+                  </p>
+                  <p
+                    className={`mb-1  ${
+                      product?.stockPrice - product?.currentPrice > 0
+                        ? "text-red-600 line-through"
+                        : "hidden"
+                    }  font-semibold `}
+                  >
+                    {vnd(product?.stockPrice)}
+                  </p>
                 </div>
                 <div className="flex justify-between">
                   <ul className="list-disc ml-5">
@@ -367,9 +369,20 @@ const Product = () => {
                         <p to={`/products/${p._id}`} className="font-semibold">
                           {p?.productName}
                         </p>
-                        <p className="text-green-500 font-semibold">
-                          {vnd(p.currentPrice)}
-                        </p>
+                        <div className="flex gap-2 text-sm justify-between">
+                          <p className="mb-1 text-primary font-semibold line-clamp-2">
+                            {p.stockPrice > 0 ? vnd(p.currentPrice) : "Liên hệ"}
+                          </p>
+                          <p
+                            className={`mb-1  ${
+                              p.stockPrice - p.currentPrice > 0
+                                ? "text-red-600 line-through"
+                                : "hidden"
+                            }  font-semibold `}
+                          >
+                            {vnd(p.stockPrice)}
+                          </p>
+                        </div>
                       </div>
                     </Link>
                   );

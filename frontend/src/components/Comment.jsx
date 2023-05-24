@@ -203,7 +203,7 @@ const Comment = ({ productId, productName, userId, userName, userImg }) => {
           </div>
         ) : (
           <div className="">
-            <h3 className="py-3">Đăng nhập một phát, bình loạn nát gáo!!!</h3>
+            <h3 className="py-3">Đăng nhập để gửi bình luận!!!</h3>
             <div className="w-full grid grid-cols-2 gap-2">
               <Link
                 to="/register"
