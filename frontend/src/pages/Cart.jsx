@@ -152,7 +152,7 @@ const Cart = () => {
           toWard: inputs.wardFullName || currentUser.wardFullName,
           toDistrict: inputs.districtFullName || currentUser.districtFullName,
           toCity: inputs.cityFullName || currentUser.cityFullName,
-          total: total(products + shipCost[shipMode]),
+          total: total(products) + shipCost[shipMode],
           payCode,
           products,
           note,
