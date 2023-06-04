@@ -75,7 +75,7 @@ const Cart = () => {
             districtCode:
               data.findIndex((el) => el.code === inputs.districtCode) > -1
                 ? inputs.districtCode
-                : data[0].code,
+                : data[0]?.code,
             cityCode: inputs?.cityCode,
             cityName: cName?.name,
             cityFullName: cName?.name_with_type,
@@ -101,14 +101,13 @@ const Cart = () => {
         const data = Object.values(resw.data);
         const dName = districts.find((d) => d.code === inputs?.districtCode);
         setWards(data);
-        console.log("district changed");
         setInputs((prev) => {
           return {
             ...prev,
             wardCode:
               data.findIndex((el) => el.code === inputs.wardCode) > -1
                 ? inputs.wardCode
-                : data[0].code,
+                : data[0]?.code,
             districtCode: inputs?.districtCode,
             districtName: dName?.name,
             districtFullName: dName?.name_with_type,
