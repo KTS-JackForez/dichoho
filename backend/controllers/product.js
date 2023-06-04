@@ -66,7 +66,7 @@ export const getMyProducts = async (req, res, next) => {
   try {
     const products = permission.includes(req.user.role)
       ? await Product.find()
-      : await Product.find({ shopID: req.user.id, active: true });
+      : await Product.find({ shopID: req.user.id });
     if (!products) {
       return res.status(403).json("Chưa có thông tin sản phẩm");
     }
