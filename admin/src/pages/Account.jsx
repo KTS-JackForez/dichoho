@@ -283,11 +283,11 @@ const Account = () => {
                     </Link>
                     <button
                       className={`p-1.5 bg-white rounded border ${
-                        u.role === "admin" || u.status === -1
+                        ["admin", "special"].includes(u.role)
                           ? "bg-gray-400 border-gray-400 "
                           : "border-orange-400 text-orange-400 hover:border-orange-400 hover:bg-orange-400 hover:text-white"
                       } `}
-                      disabled={u.status === -1}
+                      disabled={["admin", "special"].includes(u.role)}
                       onClick={() => {
                         setDelUser(u);
                         setEditData({ status: u.status === 0 ? 1 : 0 });
@@ -351,18 +351,6 @@ const Account = () => {
                         />
                       </svg>
                     </button>
-                    {openModal && (
-                      <Modal
-                        title="cảnh báo"
-                        message={text}
-                        to={`/users/`}
-                        close={setOpenModal}
-                        token={token}
-                        data={delUser}
-                        editedData={editData}
-                        refreshData={setRefresh}
-                      />
-                    )}
                   </div>
                 </div>
               );
@@ -372,6 +360,18 @@ const Account = () => {
           <div className="p-2 text-center text-gray-700">Không có dữ liệu</div>
         )}
       </div>
+      {openModal && (
+        <Modal
+          title="cảnh báo"
+          message={text}
+          to={`/users/`}
+          close={setOpenModal}
+          token={token}
+          data={delUser}
+          editedData={editData}
+          refreshData={setRefresh}
+        />
+      )}
     </div>
   );
 };
