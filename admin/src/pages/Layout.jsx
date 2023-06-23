@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { Header, Sidebar } from "../components";
 import {
   Home,
@@ -23,8 +23,21 @@ import {
   EditUser,
 } from "../pages";
 import NewCategories from "./NewCategories";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const Layout = () => {
+  const { currentUser } = useSelector((state) => state.user);
+  const ProtectedRoute = ({ children }) => {
+    if (!currentUser) {
+      return <Navigate to="/login" />;
+    }
+    if (currentUser.role !== "admin") {
+      toast.warn("Bạn không được cấp quyền thực hiện chức năng này");
+      return <Navigate to="/admin" />;
+    }
+    return children;
+  };
   return (
     <div className="flex relative">
       <Sidebar />
@@ -39,8 +52,22 @@ const Layout = () => {
               <Route path=":productid" element={<EditProduct />} />
             </Route>
             <Route path="don-hang" element={<Orders />} />
-            <Route path="tai-khoan" element={<Account />} />
-            <Route path="giao-nhan" element={<Delivery />} />
+            <Route
+              path="tai-khoan"
+              element={
+                <ProtectedRoute>
+                  <Account />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="giao-nhan"
+              element={
+                <ProtectedRoute>
+                  <Delivery />
+                </ProtectedRoute>
+              }
+            />
             <Route path="thong-tin-tai-khoan">
               <Route index element={<MyAccount />} />
               <Route path=":userId" element={<EditUser />} />
@@ -54,16 +81,65 @@ const Layout = () => {
               <Route path=":chatId" element={<Message />} />
             </Route>
             <Route path="bai-viet">
-              <Route index element={<Post />} />
-              <Route path="new" element={<NewPost />} />
-              <Route path="edit/:postid" element={<EditPost />} />
-              <Route path=":postid" element={<SinglePost />} />
+              <Route
+                index
+                element={
+                  <ProtectedRoute>
+                    <Post />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="new"
+                element={
+                  <ProtectedRoute>
+                    <NewPost />{" "}
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="edit/:postid"
+                element={
+                  <ProtectedRoute>
+                    <EditPost />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path=":postid"
+                element={
+                  <ProtectedRoute>
+                    <SinglePost />
+                  </ProtectedRoute>
+                }
+              />
             </Route>
-            <Route path="bao-cao" element={<Report />} />
+            <Route
+              path="bao-cao"
+              element={
+                <ProtectedRoute>
+                  <Report />
+                </ProtectedRoute>
+              }
+            />
             {/* <Route path="danh-muc" element={<Categories/>}/> */}
             <Route path="danh-muc">
-              <Route index element={<Categories />} />
-              <Route path="new" element={<NewCategories />} />
+              <Route
+                index
+                element={
+                  <ProtectedRoute>
+                    <Categories />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="new"
+                element={
+                  <ProtectedRoute>
+                    <NewCategories />
+                  </ProtectedRoute>
+                }
+              />
             </Route>
           </Routes>
         </div>
