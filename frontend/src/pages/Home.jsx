@@ -1,5 +1,3 @@
-import React from "react";
-
 import {
   Navbar,
   Footer,
@@ -26,7 +24,7 @@ const Home = () => {
         <Sidebar />
         <Category />
         <HotProducts title="nổi bật" />
-        <Lastest />
+        {/* <Lastest /> */}
         <ProductCat catTitle="rau - củ - quả" picCover={raucuqua} />
         <ProductCat catTitle="thịt - cá" picCover={thitca} />
         <ProductCat catTitle="mì - cháo - phở" picCover={michaopho} />
