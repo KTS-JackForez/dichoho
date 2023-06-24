@@ -5,7 +5,7 @@ export const updateConfig = async (req, res, next) => {
     await Config.findOneAndUpdate({
       $inc: { visitorsCount: 1 },
     });
-    res.status(200);
+    res.status(200).json("+1");
   } catch (error) {
     next(error);
   }

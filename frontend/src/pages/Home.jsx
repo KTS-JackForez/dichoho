@@ -1,5 +1,4 @@
 import React from "react";
-import { useSelector } from "react-redux";
 
 import {
   Navbar,
@@ -7,7 +6,6 @@ import {
   Slider,
   Promotion,
   Category,
-  ItemCard,
   ProductCat,
   HotProducts,
   Header,
@@ -18,7 +16,6 @@ import raucuqua from "../assets/imgs/banner_prduct3.webp";
 import thitca from "../assets/imgs/banner_prduct2.webp";
 import michaopho from "../assets/imgs/banner_prduct1.webp";
 const Home = () => {
-  const { currentMsg } = useSelector((state) => state.msg);
   return (
     <div>
       <Promotion />
