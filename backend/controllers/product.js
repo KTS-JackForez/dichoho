@@ -22,9 +22,8 @@ export const createProduct = async (req, res, next) => {
 
 export const getProducts = async (req, res, next) => {
   try {
-    console.log(req.query);
     const { q } = req.query;
-    const { l } = req.qurery || 0;
+    const { l } = req.query;
     const query = q ? q.replaceAll(" - ", " ") : "";
     const products = await Product.find({
       active: true,
@@ -32,10 +31,9 @@ export const getProducts = async (req, res, next) => {
     });
 
     if (!products) return res.status(404).json("chưa có dữ liệu");
-    const list =
-      l > 0
-        ? products.sort((a, b) => b.createdAt - a.createdAt).slice(0, l)
-        : products.sort((a, b) => b.createdAt - a.createdAt);
+    const list = l
+      ? products.sort((a, b) => b.createdAt - a.createdAt).slice(0, l)
+      : products.sort((a, b) => b.createdAt - a.createdAt);
     res.status(200).json(list);
   } catch (error) {
     next(error);

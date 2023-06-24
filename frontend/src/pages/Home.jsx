@@ -12,9 +12,6 @@ import {
   Lastest,
   Sidebar,
 } from "../components";
-import raucuqua from "../assets/imgs/banner_prduct3.webp";
-import thitca from "../assets/imgs/banner_prduct2.webp";
-import michaopho from "../assets/imgs/banner_prduct1.webp";
 const Home = () => {
   return (
     <div>
@@ -27,9 +24,18 @@ const Home = () => {
         <Category />
         <HotProducts title="nổi bật" />
         <Lastest />
-        <ProductCat catTitle="rau - củ - quả" picCover={raucuqua} />
-        <ProductCat catTitle="thịt - cá" picCover={thitca} />
-        <ProductCat catTitle="mì - cháo - phở" picCover={michaopho} />
+        <ProductCat
+          catTitle="rau - củ - quả"
+          picCover={import("../assets/imgs/banner_prduct3.webp")}
+        />
+        <ProductCat
+          catTitle="thịt - cá"
+          picCover={import("../assets/imgs/banner_prduct2.webp")}
+        />
+        <ProductCat
+          catTitle="mì - cháo - phở"
+          picCover={import("../assets/imgs/banner_prduct1.webp")}
+        />
       </div>
       <Footer />
     </div>
