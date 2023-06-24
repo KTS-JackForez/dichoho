@@ -1,24 +1,22 @@
-import "./App.css";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
+import { useEffect, lazy } from "react";
 
-import {
-  Home,
-  News,
-  Product,
-  Login,
-  Register,
-  NotFound,
-  Contact,
-  About,
-  Cart,
-  Post,
-  Products,
-  Dashboard,
-  Shop,
-} from "./pages";
+import { Home } from "./pages";
+const News = lazy(() => import("./pages/News"));
+const Product = lazy(() => import("./pages"));
+const Login = lazy(() => import("./pages"));
+const Register = lazy(() => import("./pages"));
+const NotFound = lazy(() => import("./pages"));
+const Contact = lazy(() => import("./pages"));
+const About = lazy(() => import("./pages"));
+const Cart = lazy(() => import("./pages"));
+const Post = lazy(() => import("./pages"));
+const Products = lazy(() => import("./pages"));
+const Dashboard = lazy(() => import("./pages"));
+const Shop = lazy(() => import("./pages"));
+
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
 import ktsRequest from "../ultis/ktsrequest";
 import { ToastContainer } from "react-toastify";
 function App() {
