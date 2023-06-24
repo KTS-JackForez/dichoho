@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import banner1 from "../assets/imgs/1.webp";
-import banner2 from "../assets/imgs/2.webp";
-import banner3 from "../assets/imgs/3.webp";
+import banner1 from "../assets/imgs/1_1.webp";
+import banner2 from "../assets/imgs/1_2.webp";
+import banner3 from "../assets/imgs/1_3.webp";
 const Slider = () => {
   const dots = [1, 2, 3];
   const [activeImg, setActiveImg] = useState(0);
