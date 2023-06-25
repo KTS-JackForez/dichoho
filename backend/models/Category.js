@@ -2,26 +2,31 @@ import mongoose from "mongoose";
 
 const CategorySchema = new mongoose.Schema(
   {
-    code:{
-        type:String,
-        required:true,
-        unique:true
+    //mã danh mục
+    code: {
+      type: String,
+      required: true,
+      unique: true,
     },
-    name:{
-        type:String,
-        required:true
+    // tên danh mục
+    name: {
+      type: String,
+      required: true,
     },
-    status:{
-        type:Number,
-        default:1
+    // trạng thái danh mục
+    status: {
+      type: Number,
+      default: 1,
     },
-    createdBy:{
-        type:String,
-        required:true,
+    // user tạo danh mục
+    createdBy: {
+      type: String,
+      required: true,
     },
-    updatedBy:{
-        type:String
-    }
+    // user cập nhật danh mục
+    updatedBy: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

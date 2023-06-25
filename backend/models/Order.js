@@ -20,18 +20,6 @@ const OrderSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // shopId: {
-    //   type: String,
-    //   required: true,
-    // },
-    // shopName: {
-    //   type: String,
-    //   required: true,
-    // },
-    // shopPhone: {
-    //   type: String,
-    //   required: true,
-    // },
     // Ghi chú của người mua
     note: {
       type: String,
