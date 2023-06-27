@@ -16,6 +16,7 @@ import categoryRoute from "./routes/category.js";
 import chatRoute from "./routes/chat.js";
 import messagesRoute from "./routes/message.js";
 import commentRoute from "./routes/comment.js";
+import admRoute from "./routes/admin.js";
 //socket
 import http from "http";
 import { Server } from "socket.io";
@@ -132,6 +133,7 @@ app.use("/api/categories", categoryRoute);
 app.use("/api/chat", chatRoute);
 app.use("/api/messages", messagesRoute);
 app.use("/api/comments", commentRoute);
+app.use("/api/admin", admRoute);
 //error handler
 app.use((err, req, res, next) => {
   const status = err.status || 500;
