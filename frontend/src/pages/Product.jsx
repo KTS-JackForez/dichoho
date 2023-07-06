@@ -69,7 +69,7 @@ const Product = () => {
       quantity,
     };
     dispatch(addToCart(data));
-
+    toast.success("Đã thêm vào giỏ hàng", { autoClose: 500 });
     type ? "" : navigate("/cart");
   };
   return (
