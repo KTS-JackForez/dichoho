@@ -146,7 +146,7 @@ const Footer = () => {
                 <a href="/news/640ffc63f73dc135c1d7d1ed"> Hướng dẫn đặt hàng</a>
               </li>
               <li>Phương thức vận chuyển</li>
-              <li className="flex justify-center">
+              {/* <li className="flex justify-center">
                 <img
                   src={bocongthuong}
                   alt=""
@@ -157,18 +157,19 @@ const Footer = () => {
                   alt=""
                   className="md:w-full w-1/2 md:h-1/2 object-contain"
                 />
-              </li>
+              </li> */}
               <li>
                 <a href="https://www.dmca.com/r/331pzk9" className="block">
-                  <img src={DCMA} alt="" className="-mt-8" />
+                  {/* <img src={DCMA} alt="" className="-mt-8" /> */}
+                  <img src={DCMA} alt="" className="" />
                 </a>
               </li>
             </ul>
           </div>
         </div>
       </div>
-      <div className=" bg-green-600 mx-auto py-3 text-white font-semibold text-center flex items-center justify-center">
-        <span>Copyright 2023 © Thiết kế bởi </span>
+      <div className=" bg-green-600 mx-auto py-3 text-white text-center flex items-center justify-center">
+        <span>Copyright 2023 © Thiết kế và vận hành bởi </span>
         <a href="https://sale168.vn">
           <img width={100} height={100} src={logo_v3} alt="" />
         </a>

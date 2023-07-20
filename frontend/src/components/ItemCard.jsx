@@ -18,10 +18,31 @@ const ItemCard = (props) => {
   let { likedBy } = props?.data;
 
   const handleLike = async () => {
+    // if (!currentUser) {
+    //   return toast.warn("Vui lòng đăng nhập", {
+    //     onClose: () => navigate("/login"),
+    //   });
+    // }
     if (!currentUser) {
-      return toast.warn("Vui lòng đăng nhập", {
-        onClose: () => navigate("/login"),
-      });
+      return toast.warn(
+        <div className="">
+          <h3 className="py-3">Vui lòng đăng nhập!</h3>
+          <div className="space-x-3">
+            <Link
+              className="px-2 py-1.5 rounded text-white bg-green-500 hover:bg-green-700"
+              to="/register"
+            >
+              Đăng ký
+            </Link>
+            <Link
+              className="hover:bg-green-500 hover:text-white px-2 py-1.5 rounded"
+              to="/login"
+            >
+              Đăng nhập
+            </Link>
+          </div>
+        </div>
+      );
     }
     const { token } = currentUser;
     if (liked && likedBy.includes(currentUser?._id)) {

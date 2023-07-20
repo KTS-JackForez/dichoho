@@ -120,7 +120,7 @@ const Header = () => {
     });
     return total;
   };
-  const textAvatar = (text) => {
+  const textAvatar = (text = "dichoho.top") => {
     let name = text.split(" ");
     if (name.length === 1) {
       return name[0].charAt().toUpperCase();
