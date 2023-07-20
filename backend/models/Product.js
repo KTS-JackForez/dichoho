@@ -21,7 +21,11 @@ const ProductSchema = new mongoose.Schema(
       type: String,
       default: "Sale168.vn",
     },
-    // ảnh sản phẩm
+    //thumbnail
+    thumbnail: {
+      type: String,
+    },
+    // ảnh chi tiết sản phẩm
     imgs: [String],
     // giá niêm yết sản phẩm
     stockPrice: {
