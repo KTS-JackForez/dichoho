@@ -10,6 +10,7 @@ import ReactQuill from "react-quill";
 const NewProduct = () => {
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState([]);
+  const [testFiles, setTestFiles] = useState([]);
   const [urls, setUrls] = useState([]);
   const [cats, setCats] = useState([]);
   const [inputs, setInputs] = useState({});
@@ -18,36 +19,35 @@ const NewProduct = () => {
   const [percs, setPercs] = useState(0);
   const { currentUser } = useSelector((state) => state.user);
   const { token } = currentUser;
-  useEffect(() => {
-    // https://stackoverflow.com/questions/75570241/cant-get-urls-after-upload-fire-to-firebase
-    const uploadFile = async () => {
-      setUrls([]);
-      setPercs(0);
-      await Promise.all(
-        file.map((f, i) => {
-          const name = new Date().getTime() + currentUser._id + "_" + f.name;
-          const storageRef = ref(
-            storage,
-            `images/products/${currentUser._id}/${name}`
-          );
-          const uploadTask = uploadBytesResumable(storageRef, f);
+  // useEffect(() => {
+  //   const uploadFile = async () => {
+  //     setUrls([]);
+  //     setPercs(0);
+  //     await Promise.all(
+  //       file.map((f, i) => {
+  //         const name = new Date().getTime() + currentUser._id + "_" + f.name;
+  //         const storageRef = ref(
+  //           storage,
+  //           `images/products/${currentUser._id}/${name}`
+  //         );
+  //         const uploadTask = uploadBytesResumable(storageRef, f);
 
-          uploadTask.on(
-            "state_changed",
-            (snapshot) => {},
-            (error) => {},
-            () => {
-              getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                setUrls((prev) => [...prev, downloadURL]);
-              });
-            }
-          );
-        })
-      );
-      setPercs(100);
-    };
-    file && uploadFile();
-  }, [file]);
+  //         uploadTask.on(
+  //           "state_changed",
+  //           (snapshot) => {},
+  //           (error) => {},
+  //           () => {
+  //             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+  //               setUrls((prev) => [...prev, downloadURL]);
+  //             });
+  //           }
+  //         );
+  //       })
+  //     );
+  //     setPercs(100);
+  //   };
+  //   file && uploadFile();
+  // }, [file]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -118,6 +118,40 @@ const NewProduct = () => {
       toast.error(`${error.response ? error.response.data : "Network error!"}`);
     }
   };
+  const handleUploadImage = () => {
+    if (!testFiles) {
+      return toast.warn("Bạn cần nhập ít nhất một ảnh sản phẩm");
+    }
+  };
+  // useEffect(() => {
+  //   const uploadFile = async () => {
+  //     setUrls([]);
+  //     setPercs(0);
+  //     await Promise.all(
+  //       file.map((f, i) => {
+  //         const name = new Date().getTime() + currentUser._id + "_" + f.name;
+  //         const storageRef = ref(
+  //           storage,
+  //           `images/products/${currentUser._id}/${name}`
+  //         );
+  //         const uploadTask = uploadBytesResumable(storageRef, f);
+
+  //         uploadTask.on(
+  //           "state_changed",
+  //           (snapshot) => {},
+  //           (error) => {},
+  //           () => {
+  //             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+  //               setUrls((prev) => [...prev, downloadURL]);
+  //             });
+  //           }
+  //         );
+  //       })
+  //     );
+  //     setPercs(100);
+  //   };
+  //   file && uploadFile();
+  // }, [file]);
   return (
     <div className="p-3">
       <h3 className="py-3 uppercase font-bold">thêm mới sản phẩm</h3>
@@ -298,6 +332,81 @@ const NewProduct = () => {
               className="block w-full"
               placeholder="Mô tả sản phẩm"
             />
+          </div>
+          <div className="p-3">
+            <h3>test</h3>
+            <input
+              type="file"
+              multiple
+              className="bg-red-500"
+              onChange={(e) => {
+                setTestFiles(Array.from(e.target.files));
+              }}
+            />
+            {/* https://firebase.google.com/docs/storage/web/upload-files */}
+            {/* // from an input element
+                var filesToUpload = input.files;
+                var file = filesToUpload[0];
+
+                var img = document.createElement("img");
+                var reader = new FileReader();  
+                reader.onload = function(e) {img.src = e.target.result}
+                reader.readAsDataURL(file);
+
+                var ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0);
+
+                var MAX_WIDTH = 800;
+                var MAX_HEIGHT = 600;
+                var width = img.width;
+                var height = img.height;
+
+                if (width > height) {
+                  if (width > MAX_WIDTH) {
+                    height *= MAX_WIDTH / width;
+                    width = MAX_WIDTH;
+                  }
+                } else {
+                  if (height > MAX_HEIGHT) {
+                    width *= MAX_HEIGHT / height;
+                    height = MAX_HEIGHT;
+                  }
+                }
+                canvas.width = width;
+                canvas.height = height;
+                var ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0, width, height);
+
+                var dataurl = canvas.toDataURL("image/png");
+
+                //Post dataurl to the server with AJAX */}
+            <button>upload</button>
+            <div className="flex">
+              {testFiles?.map((file, i) => {
+                const check = file.size > 2000000;
+                return (
+                  <div
+                    key={i}
+                    className="w-[300px] h-[300px] bg-gray-100 rounded relative overflow-hidden"
+                  >
+                    <img
+                      src={URL.createObjectURL(file)}
+                      alt=""
+                      className="object-cover w-full h-full rounded-md"
+                    />
+                    <div>
+                      <h3
+                        className={`${
+                          check ? "bg-green-500" : "bg-red-500 "
+                        } absolute bottom-0 text-white line-clamp-1 p-2 w-full`}
+                      >
+                        {check ? file.size : "file vượt quá dung lượng (2MB)"}
+                      </h3>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
           <button
             onClick={handleClick}
