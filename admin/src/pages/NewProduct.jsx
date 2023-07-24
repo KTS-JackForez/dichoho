@@ -383,11 +383,12 @@ const NewProduct = () => {
             <button>upload</button>
             <div className="flex">
               {testFiles?.map((file, i) => {
-                const check = file.size > 2000000;
+                const check = file.size < import.meta.env.VITE_KTS_MAX_SIZE_IMG;
+                console.log(file);
                 return (
                   <div
                     key={i}
-                    className="w-[300px] h-[300px] bg-gray-100 rounded relative overflow-hidden"
+                    className="w-full h-auto bg-gray-100 rounded relative overflow-hidden"
                   >
                     <img
                       src={URL.createObjectURL(file)}
@@ -400,7 +401,11 @@ const NewProduct = () => {
                           check ? "bg-green-500" : "bg-red-500 "
                         } absolute bottom-0 text-white line-clamp-1 p-2 w-full`}
                       >
-                        {check ? file.size : "file vượt quá dung lượng (2MB)"}
+                        {check
+                          ? file.size
+                          : `file vượt quá dung lượng (${Math.floor(
+                              file.size / 1024
+                            )}KB)`}
                       </h3>
                     </div>
                   </div>
