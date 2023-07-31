@@ -140,7 +140,7 @@ const Header = () => {
     if (query.length > 2) fetchData();
   }, [query]);
   return (
-    <div className="max-w-screen-xl mx-auto text-center flex items-center justify-between py-3 gap-2">
+    <div className="max-w-screen-xl mx-auto text-center flex items-center justify-between py-3 gap-2 px-3 md:px-0">
       {toggle && <Sidebar open={toggle} close={setToggle} />}
       <Link to="/" className="hidden md:block">
         <img src={logo} alt="" className="w-56 h-auto" />

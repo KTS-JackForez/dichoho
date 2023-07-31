@@ -5,9 +5,9 @@ import { ktsConfig } from "../../ultis/config";
 const Sidebar = (props) => {
   return (
     props.open && (
-      <div className="md:w-1/2 w-full bg-black h-screen absolute z-20 top-0 opacity-80 flex duration-1000">
+      <div className="md:w-1/2 w-full bg-black h-screen absolute z-20 top-0 left-0 opacity-80 flex duration-1000">
         <button
-          className="text-white absolute right-0 "
+          className="text-white absolute right-3 top-3 "
           onClick={() => props.close(false)}
         >
           <svg

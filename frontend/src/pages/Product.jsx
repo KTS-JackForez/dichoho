@@ -278,12 +278,12 @@ const Product = () => {
                     {vnd(product?.stockPrice)}
                   </p>
                 </div>
-                <div className="flex justify-between">
+                {/* <div className="flex justify-between">
                   <ul className="list-disc ml-5">
                     <li>Đạt chuẩn an toàn VietGap</li>
                     <li>Hàng tươi mới mỗi ngày</li>
                   </ul>
-                </div>
+                </div> */}
 
                 <div className="bg-orange-100 rounded border border-dashed border-red-500 divide-y divide-dashed divide-red-500">
                   <div className="flex gap-3 p-3 items-center">
@@ -294,13 +294,16 @@ const Product = () => {
                     />
                     <h3 className="uppercase font-semibold">
                       khuyến mãi trị giá{" "}
-                      <span className="font-bold">{vnd(300000)}</span>
+                      <span className="font-bold">{vnd(200000)}</span>
                     </h3>
                   </div>
                   <div className="p-3">
                     <ul className="list-decimal ml-5 ">
-                      <li>Đạt chuẩn an toàn VietGap</li>
-                      <li>Hàng tươi mới mỗi ngày</li>
+                      <li>
+                        Qùa tặng theo chương trình "Mua hàng ngay - Quà liền
+                        tay"{" "}
+                      </li>
+                      <li>Áp dụng tới khi hết quà tặng</li>
                     </ul>
                   </div>
                 </div>

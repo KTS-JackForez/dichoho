@@ -19,7 +19,7 @@ const Home = () => {
       <Promotion />
       <Header />
       <Navbar />
-      <div className="max-w-screen-xl bg-gray-100 mx-auto">
+      <div className="max-w-screen-xl bg-gray-100 mx-auto p-3">
         <Slider />
         <Sidebar />
         <Category />
