@@ -28,7 +28,7 @@ const Post = () => {
       <Promotion />
       <Header />
       <Navbar />
-      <div className="mb-12 max-w-screen-md mx-auto py-4 flex gap-3 flex-col">
+      <div className="mb-12 max-w-screen-md mx-auto py-4 flex gap-3 flex-col px-3 md:px-0">
         <div>
           <h3 className="text-3xl font-bold">{post?.title}</h3>
           <div>

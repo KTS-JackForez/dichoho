@@ -34,8 +34,8 @@ const MyCart = ({
 };
 const Footer = () => {
   return (
-    <div className="w-full bg-green-100 pt-4">
-      <div className="max-w-screen-xl mx-auto grid grid-cols-2 md:grid-cols-4 justify-around pt-3 mb-8 gap-2">
+    <div className="w-full bg-green-100 pt-4 ">
+      <div className="max-w-screen-xl mx-auto grid grid-cols-2 md:grid-cols-4 justify-around pt-3 mb-8 gap-2 px-3 md:px-0">
         <MyCart img={p1} text1="sản phẩm" text2="chất lượng" size="56" />
         <MyCart img={p2} text1="chủng loại" text2="phong phú" size="56" />
         <MyCart img={p3} text1="giá cả" text2="cạnh tranh" size="56" />
