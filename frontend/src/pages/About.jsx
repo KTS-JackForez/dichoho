@@ -7,7 +7,7 @@ const About = () => {
       <Promotion />
       <Header />
       <Navbar />
-      <div className="max-w-screen-lg bg-white mx-auto px-5 py-7">
+      <div className="max-w-screen-lg bg-white mx-auto px-5 py-7 text-justify">
         <img
           src={banner}
           alt=""
