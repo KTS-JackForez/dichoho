@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import img from "../assets/imgs/promo-7c4c4254.webp";
+import img from "../assets/imgs/top-banner.png";
 import { Link } from "react-router-dom";
 const Promotion = () => {
   const [show, setShow] = useState(true);
   return (
     show && (
       <Link
-        to="/news/64bb56f78197f230d267d848"
+        to="/news/655715257ad509540aa35de2"
         className="w-full mx-auto relative md:flex hidden bg-primary"
       >
         <img src={img} alt="" className="mx-auto object-cover object-center" />

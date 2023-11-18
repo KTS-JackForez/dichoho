@@ -9,6 +9,7 @@ import {
   Header,
   Lastest,
   Sidebar,
+  MidBanner,
 } from "../components";
 import raucuqua from "../assets/imgs/banner_prduct3.webp";
 import thitca from "../assets/imgs/banner_prduct2.webp";
@@ -21,6 +22,7 @@ const Home = () => {
       <Navbar />
       <div className="max-w-screen-xl bg-gray-100 mx-auto p-3">
         <Slider />
+        <MidBanner />
         <Sidebar />
         <Category />
         <HotProducts title="nổi bật" />
