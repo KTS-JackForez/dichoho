@@ -5,13 +5,19 @@ const Promotion = () => {
   const [show, setShow] = useState(true);
   return (
     show && (
-      <Link
-        to="/news/655715257ad509540aa35de2"
-        className="w-full mx-auto relative md:flex hidden bg-primary"
-      >
-        <img src={img} alt="" className="mx-auto object-cover object-center" />
+      <>
+        <Link
+          to="/news/655715257ad509540aa35de2"
+          className="w-full mx-auto relative md:flex hidden bg-primary"
+        >
+          <img
+            src={img}
+            alt=""
+            className="mx-auto object-cover object-center"
+          />
+        </Link>
         <button
-          className="absolute top-2 right-2 rounded-full bg-white/50 p-1 text-gray-800 hover:bg-white"
+          className="absolute top-2 right-2 rounded-full bg-white/50 p-1 text-gray-800 hover:bg-white z-10"
           onClick={() => setShow(false)}
         >
           <svg
@@ -29,7 +35,7 @@ const Promotion = () => {
             />
           </svg>
         </button>
-      </Link>
+      </>
     )
   );
 };
