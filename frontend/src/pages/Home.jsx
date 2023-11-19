@@ -22,9 +22,9 @@ const Home = () => {
       <Navbar />
       <div className="max-w-screen-xl bg-gray-100 mx-auto p-3">
         <Slider />
-        <MidBanner />
         <Sidebar />
         <Category />
+        <MidBanner />
         <HotProducts title="nổi bật" />
         <Lastest />
         <ProductCat catTitle="rau - củ - quả" picCover={raucuqua} />
