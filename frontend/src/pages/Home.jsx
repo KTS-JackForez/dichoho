@@ -10,6 +10,7 @@ import {
   Lastest,
   Sidebar,
   MidBanner,
+  News1,
 } from "../components";
 import raucuqua from "../assets/imgs/banner_prduct3.webp";
 import thitca from "../assets/imgs/banner_prduct2.webp";
@@ -21,7 +22,7 @@ const Home = () => {
       <Header />
       <Navbar />
       <div className="max-w-screen-xl bg-gray-100 mx-auto p-3">
-        <Slider />
+        {/* <Slider /> */}
         <Sidebar />
         <Category />
         <MidBanner />
@@ -31,6 +32,7 @@ const Home = () => {
         <ProductCat catTitle="thịt - cá" picCover={thitca} />
         <ProductCat catTitle="mì - cháo - phở" picCover={michaopho} />
       </div>
+      <News1/>
       <Footer />
     </div>
   );
