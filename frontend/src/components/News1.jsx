@@ -48,14 +48,7 @@ const News1 = () => {
     const hot = data.length > 4 ? data.slice(0, 4) : data;
 
     return (
-        <div className="w-full bg-[#fbf9fa]">
-            {/* <div className="max-w-screen-xl mx-auto pt-6 mb-6 md:px-11 px-3.5">
-                <div className="">
-                    <a href="https://dichoho.top/">
-                        <img src={picNews} alt="" className="rounded-2xl block w-full" />
-                    </a>
-                </div>
-            </div> */}
+      
             <div className="max-w-screen-xl mx-auto md:px-11 px-3.5">
                 <div className="flex justify-between">
                     <h2 className="text-lg font-bold mb-3.5">TIN TỨC & SỰ KIỆN</h2>
@@ -78,7 +71,7 @@ const News1 = () => {
                     }): <div className='text-center my-4'>Đang tải dữ liệu...</div>}
                 </div>
             </div>
-        </div>)
+      )
 }
 
 export default News1
