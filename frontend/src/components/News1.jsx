@@ -49,7 +49,7 @@ const News1 = () => {
 
     return (
       
-            <div className="max-w-screen-xl mx-auto md:px-11 px-3.5">
+            <div className="max-w-screen-xl mx-auto px-2">
                 <div className="flex justify-between">
                     <h2 className="text-lg font-bold mb-3.5">TIN TỨC & SỰ KIỆN</h2>
                     <Link to="/news" className="font-medium text-lg text-[#D7480E]">

@@ -1,5 +1,5 @@
 import React from "react";
-import bn5 from "../assets/imgs/Banner5.jpg";
+import bn5 from "../assets/imgs/Banner5.webp";
 const MidBanner = () => {
   return (
     <div className="mt-3">
