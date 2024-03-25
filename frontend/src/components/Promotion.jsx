@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import img from "../assets/imgs/top-banner.png";
+import img from "../assets/imgs/top-banner.webp";
 import { Link } from "react-router-dom";
 const Promotion = () => {
   const [show, setShow] = useState(true);
@@ -7,7 +7,8 @@ const Promotion = () => {
     show && (
       <>
         <Link
-          to="/news/655715257ad509540aa35de2"
+          // to="/news/655715257ad509540aa35de2"
+          to="#"
           className="w-full mx-auto relative md:flex hidden bg-primary"
         >
           <img

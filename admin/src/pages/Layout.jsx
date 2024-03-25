@@ -21,6 +21,7 @@ import {
   Message,
   Delivery,
   EditUser,
+  PageSetting,
 } from "../pages";
 import NewCategories from "./NewCategories";
 import { useSelector } from "react-redux";
@@ -119,6 +120,14 @@ const Layout = () => {
               element={
                 <ProtectedRoute>
                   <Report />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="page-settings"
+              element={
+                <ProtectedRoute>
+                  <PageSetting />
                 </ProtectedRoute>
               }
             />
