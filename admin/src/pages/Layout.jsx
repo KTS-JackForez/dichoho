@@ -40,6 +40,17 @@ const Layout = () => {
     }
     return children;
   };
+  const ReportProtectedRoute = ({ children }) => {
+    if (!currentUser) {
+      toast.error("Bạn cần đăng nhập để thực hiện chức năng này");
+      return <Navigate to="/login" />;
+    }
+    if (!["admin", "special"].includes(currentUser.role)) {
+      toast.warn("Bạn không được cấp quyền thực hiện chức năng này");
+      return <Navigate to="/admin" />;
+    }
+    return children;
+  };
   return (
     <div className="flex relative">
       <Sidebar />
@@ -119,9 +130,9 @@ const Layout = () => {
             <Route
               path="bao-cao"
               element={
-                <ProtectedRoute>
+                <ReportProtectedRoute>
                   <Report />
-                </ProtectedRoute>
+                </ReportProtectedRoute>
               }
             />
             <Route
