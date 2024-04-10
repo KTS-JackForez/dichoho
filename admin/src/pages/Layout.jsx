@@ -31,6 +31,7 @@ const Layout = () => {
   const { currentUser } = useSelector((state) => state.user);
   const ProtectedRoute = ({ children }) => {
     if (!currentUser) {
+      toast.error("Bạn cần đăng nhập để thực hiện chức năng này");
       return <Navigate to="/login" />;
     }
     if (currentUser.role !== "admin") {

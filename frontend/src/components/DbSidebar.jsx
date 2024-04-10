@@ -11,8 +11,8 @@ const DbSidebar = () => {
   const normalLink = `flex items-center gap-5 pl-4 py-1.5 mx-2 rounded text-sm text-gray-800 hover:text-primary`;
   return (
     <div className="border border-r-gray-300 h-screen w-72 px-3 hidden md:block">
-      <Link className="w-full h-28 block" to="/">
-        <img src={logo} alt="" className="w-full h-full object-none" />
+      <Link className="block" to="/">
+        <img src={logo} alt="" className="w-64 h-auto mx-auto" />
       </Link>
       <div className="flex flex-col gap-3 uppercase">
         {dashboard.navLinks.map((i, index) => {
