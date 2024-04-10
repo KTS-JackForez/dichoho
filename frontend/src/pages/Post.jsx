@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import ktsRequest from "../../ultis/ktsrequest";
 import { Footer, Header, Navbar, Promotion } from "../components";
-
+import "./post.css";
 const Post = () => {
   const navigate = useNavigate();
   const { postId } = useParams();
