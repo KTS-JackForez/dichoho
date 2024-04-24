@@ -11,7 +11,7 @@ const PageSetting = () => {
         </h3>
         <div className="p-2 space-y-2 ">
           <div className="flex flex-row space-x-3">
-            <span className="w-1/6">Link bài viết</span>
+            <span className="w-1/6">ID bài viết</span>
             <input
               type="text"
               className="focus:bg-white focus:outline-primary rounded flex-1 px-2 py-1 bg-gray-200"
@@ -90,7 +90,7 @@ const PageSetting = () => {
           </div>
           <img src="" alt="" className="w-full h-32" />
           <div className="flex justify-between items-center">
-            <span className="px-2">link</span>
+            <span className="px-2">ID bài viết</span>
             <div className="p-2">
               <button className="px-3">sửa link</button>
               <button className="px-3">xóa banner</button>
