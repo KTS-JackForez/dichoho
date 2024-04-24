@@ -7,8 +7,7 @@ const Promotion = () => {
     show && (
       <>
         <Link
-          // to="/news/655715257ad509540aa35de2"
-          to="#"
+          to="/news/66277a8bc6cb38bfb139e072"
           className="w-full mx-auto relative md:flex hidden bg-primary"
         >
           <img

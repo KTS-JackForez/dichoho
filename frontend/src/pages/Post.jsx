@@ -30,7 +30,7 @@ const Post = () => {
       <Navbar />
       <div className="mb-12 max-w-screen-md mx-auto py-4 flex gap-3 flex-col px-3 md:px-0">
         <div>
-          <h3 className="text-3xl font-bold">{post?.title}</h3>
+          <h3 className="text-3xl font-bold text-justify">{post?.title}</h3>
           <div>
             <span className="text-red-500 font-semibold">
               {post?.author || "sale168.com"},
@@ -56,7 +56,7 @@ const Post = () => {
             </span>
           </div>
         </div>
-        <div className="w-full h-96">
+        <div className="w-full h-full object-contain object-center">
           <img
             src={post?.thumbnail}
             alt=""
